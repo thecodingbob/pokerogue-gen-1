@@ -17,7 +17,6 @@ const DEFAULT_SHINY_RATE = 128;
 const GACHA_SHINY_UP_SHINY_RATE = 64;
 const SAME_SPECIES_EGG_SHINY_RATE = 24;
 const SAME_SPECIES_EGG_HA_RATE = 8;
-const MANAPHY_EGG_MANAPHY_RATE = 8;
 const GACHA_EGG_HA_RATE = 192;
 
 // 1/x for legendary eggs, 1/x*2 for epic eggs, 1/x*4 for rare eggs, and 1/x*8 for common eggs
@@ -186,15 +185,7 @@ export class Egg {
   // #region Public methods
   ////
 
-  public isManaphyEgg(): boolean {
-    return (this._species === Species.PHIONE || this._species === Species.MANAPHY) ||
-       this._tier === EggTier.COMMON && !(this._id % 204) && !this._species;
-  }
-
   public getKey(): string {
-    if (this.isManaphyEgg()) {
-      return "manaphy";
-    }
     return this._tier.toString();
   }
 
@@ -206,11 +197,7 @@ export class Egg {
       this._species = this.rollSpecies(scene!)!; // TODO: are these bangs correct?
     }
 
-    let pokemonSpecies = getPokemonSpecies(this._species);
-    // Special condition to have Phione eggs also have a chance of generating Manaphy
-    if (this._species === Species.PHIONE) {
-      pokemonSpecies = getPokemonSpecies(Utils.randSeedInt(MANAPHY_EGG_MANAPHY_RATE) ? Species.PHIONE : Species.MANAPHY);
-    }
+    const pokemonSpecies = getPokemonSpecies(this._species);
 
     // Sets the hidden ability if a hidden ability exists and
     // the override is set or the egg hits the chance
@@ -241,9 +228,6 @@ export class Egg {
   }
 
   public getEggDescriptor(): string {
-    if (this.isManaphyEgg()) {
-      return "Manaphy";
-    }
     switch (this.tier) {
     case EggTier.GREAT:
       return i18next.t("egg:greatTier");
@@ -310,10 +294,6 @@ export class Egg {
   }
 
   private getEggTierDefaultHatchWaves(eggTier?: EggTier): number {
-    if (this._species === Species.PHIONE || this._species === Species.MANAPHY) {
-      return 50;
-    }
-
     switch (eggTier ?? this._tier) {
     case EggTier.COMMON:
       return 10;
@@ -336,14 +316,10 @@ export class Egg {
       return null;
     }
     /**
-     * Manaphy eggs have a 1/8 chance of being Manaphy and 7/8 chance of being Phione
      * Legendary eggs pulled from the legendary gacha have a 50% of being converted into
      * the species that was the legendary focus at the time
      */
-    if (this.isManaphyEgg()) {
-      const rand = Utils.randSeedInt(MANAPHY_EGG_MANAPHY_RATE);
-      return rand ? Species.PHIONE : Species.MANAPHY;
-    } else if (this.tier === EggTier.MASTER
+    if (this.tier === EggTier.MASTER
       && this._sourceType === EggSourceType.GACHA_LEGENDARY) {
       if (!Utils.randSeedInt(2)) {
         return getLegendaryGachaSpeciesForTimestamp(scene, this.timestamp);
@@ -372,12 +348,10 @@ export class Egg {
       break;
     }
 
-    const ignoredSpecies = [Species.PHIONE, Species.MANAPHY, Species.ETERNATUS];
-
     let speciesPool = Object.keys(speciesStarters)
       .filter(s => speciesStarters[s] >= minStarterValue && speciesStarters[s] <= maxStarterValue)
       .map(s => parseInt(s) as Species)
-      .filter(s => !pokemonPrevolutions.hasOwnProperty(s) && getPokemonSpecies(s).isObtainable() && ignoredSpecies.indexOf(s) === -1);
+      .filter(s => !pokemonPrevolutions.hasOwnProperty(s) && getPokemonSpecies(s).isObtainable());
 
     // If this is the 10th egg without unlocking something new, attempt to force it.
     if (scene.gameData.unlockPity[this.tier] >= 9) {
@@ -490,11 +464,6 @@ export class Egg {
 
   private increasePullStatistic(scene: BattleScene): void {
     scene.gameData.gameStats.eggsPulled++;
-    if (this.isManaphyEgg()) {
-      scene.gameData.gameStats.manaphyEggsPulled++;
-      this._hatchWaves = this.getEggTierDefaultHatchWaves(EggTier.ULTRA);
-      return;
-    }
     switch (this.tier) {
     case EggTier.GREAT:
       scene.gameData.gameStats.rareEggsPulled++;

@@ -47,15 +47,7 @@ import { ReloadSessionPhase } from "#app/phases/reload-session-phase.js";
 import { RUN_HISTORY_LIMIT } from "#app/ui/run-history-ui-handler";
 
 export const defaultStarterSpecies: Species[] = [
-  Species.BULBASAUR, Species.CHARMANDER, Species.SQUIRTLE,
-  Species.CHIKORITA, Species.CYNDAQUIL, Species.TOTODILE,
-  Species.TREECKO, Species.TORCHIC, Species.MUDKIP,
-  Species.TURTWIG, Species.CHIMCHAR, Species.PIPLUP,
-  Species.SNIVY, Species.TEPIG, Species.OSHAWOTT,
-  Species.CHESPIN, Species.FENNEKIN, Species.FROAKIE,
-  Species.ROWLET, Species.LITTEN, Species.POPPLIO,
-  Species.GROOKEY, Species.SCORBUNNY, Species.SOBBLE,
-  Species.SPRIGATITO, Species.FUECOCO, Species.QUAXLY
+  Species.BULBASAUR, Species.CHARMANDER, Species.SQUIRTLE, Species.PIKACHU, Species.EEVEE
 ];
 
 const saveKey = "x0i2O7WRiANTqPmZ"; // Temporary; secure encryption is not yet necessary

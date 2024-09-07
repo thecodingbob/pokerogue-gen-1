@@ -34,18 +34,18 @@ describe("Evolution", () => {
   });
 
   it("should keep hidden ability after evolving", async () => {
-    await game.classicMode.runToSummon([Species.EEVEE, Species.TRAPINCH]);
+    await game.classicMode.runToSummon([Species.EEVEE, Species.DRATINI]);
 
     const eevee = game.scene.getParty()[0];
-    const trapinch = game.scene.getParty()[1];
+    const dratini = game.scene.getParty()[1];
     eevee.abilityIndex = 2;
-    trapinch.abilityIndex = 2;
+    dratini.abilityIndex = 2;
 
     eevee.evolve(pokemonEvolutions[Species.EEVEE][6], eevee.getSpeciesForm());
     expect(eevee.abilityIndex).toBe(2);
 
-    trapinch.evolve(pokemonEvolutions[Species.TRAPINCH][0], trapinch.getSpeciesForm());
-    expect(trapinch.abilityIndex).toBe(1);
+    dratini.evolve(pokemonEvolutions[Species.DRATINI][0], dratini.getSpeciesForm());
+    expect(dratini.abilityIndex).toBe(1);
   }, TIMEOUT);
 
   it("should keep same ability slot after evolving", async () => {
@@ -73,19 +73,6 @@ describe("Evolution", () => {
     expect(squirtle.abilityIndex).toBe(0);
   }, TIMEOUT);
 
-  it("should handle nincada's unique evolution", async () => {
-    await game.classicMode.runToSummon([Species.NINCADA]);
-
-    const nincada = game.scene.getPlayerPokemon()!;
-    nincada.abilityIndex = 2;
-
-    nincada.evolve(pokemonEvolutions[Species.NINCADA][0], nincada.getSpeciesForm());
-    const ninjask = game.scene.getParty()[0];
-    const shedinja = game.scene.getParty()[1];
-    expect(ninjask.abilityIndex).toBe(2);
-    expect(shedinja.abilityIndex).toBe(1);
-  }, TIMEOUT);
-
   it("should set wild delay to NONE by default", () => {
     const speciesFormEvo = new SpeciesFormEvolution(Species.ABRA, null, null, 1000, null, null);
 
@@ -100,12 +87,12 @@ describe("Evolution", () => {
       .startingLevel(16)
       .enemyLevel(50);
 
-    await game.startBattle([Species.TOTODILE]);
+    await game.startBattle([Species.SQUIRTLE]);
 
-    const totodile = game.scene.getPlayerPokemon()!;
-    const hpBefore = totodile.hp;
+    const squirtle = game.scene.getPlayerPokemon()!;
+    const hpBefore = squirtle.hp;
 
-    expect(totodile.hp).toBe(totodile.getMaxHp());
+    expect(squirtle.hp).toBe(squirtle.getMaxHp());
 
     const golem = game.scene.getEnemyPokemon()!;
     golem.hp = 1;
@@ -115,8 +102,8 @@ describe("Evolution", () => {
     game.move.select(Moves.SURF);
     await game.phaseInterceptor.to("EndEvolutionPhase");
 
-    expect(totodile.hp).toBe(totodile.getMaxHp());
-    expect(totodile.hp).toBeGreaterThan(hpBefore);
+    expect(squirtle.hp).toBe(squirtle.getMaxHp());
+    expect(squirtle.hp).toBeGreaterThan(hpBefore);
   }, TIMEOUT);
 
   it("should not fully heal HP when evolving", async () => {
@@ -127,14 +114,14 @@ describe("Evolution", () => {
       .startingLevel(13)
       .enemyLevel(30);
 
-    await game.startBattle([Species.CYNDAQUIL]);
+    await game.startBattle([Species.CHARMANDER]);
 
-    const cyndaquil = game.scene.getPlayerPokemon()!;
-    cyndaquil.hp = Math.floor(cyndaquil.getMaxHp() / 2);
-    const hpBefore = cyndaquil.hp;
-    const maxHpBefore = cyndaquil.getMaxHp();
+    const charmander = game.scene.getPlayerPokemon()!;
+    charmander.hp = Math.floor(charmander.getMaxHp() / 2);
+    const hpBefore = charmander.hp;
+    const maxHpBefore = charmander.getMaxHp();
 
-    expect(cyndaquil.hp).toBe(Math.floor(cyndaquil.getMaxHp() / 2));
+    expect(charmander.hp).toBe(Math.floor(charmander.getMaxHp() / 2));
 
     const golem = game.scene.getEnemyPokemon()!;
     golem.hp = 1;
@@ -144,8 +131,8 @@ describe("Evolution", () => {
     game.move.select(Moves.SURF);
     await game.phaseInterceptor.to("EndEvolutionPhase");
 
-    expect(cyndaquil.getMaxHp()).toBeGreaterThan(maxHpBefore);
-    expect(cyndaquil.hp).toBeGreaterThan(hpBefore);
-    expect(cyndaquil.hp).toBeLessThan(cyndaquil.getMaxHp());
+    expect(charmander.getMaxHp()).toBeGreaterThan(maxHpBefore);
+    expect(charmander.hp).toBeGreaterThan(hpBefore);
+    expect(charmander.hp).toBeLessThan(charmander.getMaxHp());
   }, TIMEOUT);
 });

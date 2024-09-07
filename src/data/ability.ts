@@ -24,7 +24,6 @@ import { Abilities } from "#enums/abilities";
 import { ArenaTagType } from "#enums/arena-tag-type";
 import { BattlerTagType } from "#enums/battler-tag-type";
 import { Moves } from "#enums/moves";
-import { Species } from "#enums/species";
 import { MovePhase } from "#app/phases/move-phase";
 import { PokemonHealPhase } from "#app/phases/pokemon-heal-phase";
 import { ShowAbilityPhase } from "#app/phases/show-ability-phase";
@@ -2410,7 +2409,7 @@ export class PostSummonFormChangeByWeatherAbAttr extends PostSummonAbAttr {
    * @returns whether the form change was triggered
    */
   applyPostSummon(pokemon: Pokemon, passive: boolean, simulated: boolean, args: any[]): boolean {
-    if (pokemon.species.speciesId === Species.CASTFORM && this.ability === Abilities.FORECAST) {
+    if (this.ability === Abilities.FORECAST) {
       if (simulated) {
         return simulated;
       }
@@ -3105,7 +3104,7 @@ export class PostWeatherChangeFormChangeAbAttr extends PostWeatherChangeAbAttr {
    * @returns whether the form change was triggered
    */
   applyPostWeatherChange(pokemon: Pokemon, passive: boolean, simulated: boolean, weather: WeatherType, args: any[]): boolean {
-    if (pokemon.species.speciesId === Species.CASTFORM && this.ability === Abilities.FORECAST) {
+    if (this.ability === Abilities.FORECAST) {
       if (simulated) {
         return simulated;
       }
@@ -4703,7 +4702,7 @@ function setAbilityRevealed(pokemon: Pokemon): void {
  */
 function getPokemonWithWeatherBasedForms(scene: BattleScene) {
   return scene.getField(true).filter(p =>
-    p.hasAbility(Abilities.FORECAST) && p.species.speciesId === Species.CASTFORM
+    p.hasAbility(Abilities.FORECAST)
   );
 }
 
@@ -5769,9 +5768,5 @@ export function initAbilities() {
       .attr(UncopiableAbilityAbAttr)
       .attr(UnswappableAbilityAbAttr)
       .unimplemented(),
-    new Ability(Abilities.POISON_PUPPETEER, 9)
-      .attr(UncopiableAbilityAbAttr)
-      .attr(UnswappableAbilityAbAttr)
-      .conditionalAttr(pokemon => pokemon.species.speciesId===Species.PECHARUNT, ConfusionOnStatusEffectAbAttr, StatusEffect.POISON, StatusEffect.TOXIC)
   );
 }

@@ -205,9 +205,13 @@ export class LoadingScene extends SceneBase {
 
     Utils.getEnumValues(TrainerType).map(tt => {
       const config = trainerConfigs[tt];
-      this.loadAtlas(config.getSpriteKey(), "trainer");
-      if (config.doubleOnly || config.hasDouble) {
-        this.loadAtlas(config.getSpriteKey(true), "trainer");
+      if (config !== undefined) {
+        this.loadAtlas(config.getSpriteKey(), "trainer");
+        if (config.doubleOnly || config.hasDouble) {
+          this.loadAtlas(config.getSpriteKey(true), "trainer");
+        }
+      } else {
+        console.log(tt + " " + TrainerType[tt]);
       }
     });
 

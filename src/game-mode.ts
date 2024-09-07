@@ -7,7 +7,6 @@ import { Arena } from "./field/arena";
 import Overrides from "#app/overrides";
 import * as Utils from "./utils";
 import { Biome } from "#enums/biome";
-import { Species } from "#enums/species";
 import { Challenges } from "./enums/challenges";
 
 export enum GameModes {
@@ -188,7 +187,7 @@ export class GameMode implements GameModeConfig {
   getOverrideSpecies(waveIndex: integer): PokemonSpecies | null {
     if (this.isDaily && this.isWaveFinal(waveIndex)) {
       const allFinalBossSpecies = allSpecies.filter(s => (s.subLegendary || s.legendary || s.mythical)
-        && s.baseTotal >= 600 && s.speciesId !== Species.ETERNATUS && s.speciesId !== Species.ARCEUS);
+        && s.baseTotal >= 600);
       return Utils.randSeedItem(allFinalBossSpecies);
     }
 

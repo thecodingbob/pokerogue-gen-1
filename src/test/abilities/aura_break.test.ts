@@ -30,7 +30,7 @@ describe("Abilities - Aura Break", () => {
     game.override.moveset([Moves.MOONBLAST, Moves.DARK_PULSE, Moves.MOONBLAST, Moves.DARK_PULSE]);
     game.override.enemyMoveset(SPLASH_ONLY);
     game.override.enemyAbility(Abilities.AURA_BREAK);
-    game.override.enemySpecies(Species.SHUCKLE);
+    game.override.enemySpecies(Species.FARFETCHD);
   });
 
   it("reverses the effect of fairy aura", async () => {

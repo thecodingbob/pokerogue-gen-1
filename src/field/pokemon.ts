@@ -49,7 +49,6 @@ import { BerryType } from "#enums/berry-type";
 import { Biome } from "#enums/biome";
 import { Moves } from "#enums/moves";
 import { Species } from "#enums/species";
-import { Challenges } from "#enums/challenges";
 import { getPokemonNameWithAffix } from "#app/messages.js";
 import { DamagePhase } from "#app/phases/damage-phase.js";
 import { FaintPhase } from "#app/phases/faint-phase.js";
@@ -1036,7 +1035,9 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
    * @returns {Ability} The passive ability of the pokemon
    */
   getPassiveAbility(): Ability {
+    console.log("Handling passive ability for " + this.name);
     if (Overrides.PASSIVE_ABILITY_OVERRIDE && this.isPlayer()) {
+      console.log("Overrides passive ability player");
       return allAbilities[Overrides.PASSIVE_ABILITY_OVERRIDE];
     }
     if (Overrides.OPP_PASSIVE_ABILITY_OVERRIDE && !this.isPlayer()) {
@@ -1047,6 +1048,8 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     while (pokemonPrevolutions.hasOwnProperty(starterSpeciesId)) {
       starterSpeciesId = pokemonPrevolutions[starterSpeciesId];
     }
+    console.log("Starte species id: " + starterSpeciesId);
+    console.log("Starter passive abilities: " + starterPassiveAbilities[starterSpeciesId]);
     return allAbilities[starterPassiveAbilities[starterSpeciesId]];
   }
 
@@ -1127,6 +1130,8 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
         if (p.getAbility().hasAttr(SuppressFieldAbilitiesAbAttr) && p.canApplyAbility()) {
           p.getAbility().getAttrs(SuppressFieldAbilitiesAbAttr).map(a => a.apply(this, false, false, suppressed, [ability]));
         }
+        console.log(p);
+        console.log(p.getPassiveAbility());
         if (p.getPassiveAbility().hasAttr(SuppressFieldAbilitiesAbAttr) && p.canApplyAbility(true)) {
           p.getPassiveAbility().getAttrs(SuppressFieldAbilitiesAbAttr).map(a => a.apply(this, true, false, suppressed, [ability]));
         }
@@ -3525,8 +3530,6 @@ export class PlayerPokemon extends Pokemon {
     }
     return new Promise(resolve => {
       this.pauseEvolutions = false;
-      // Handles Nincada evolving into Ninjask + Shedinja
-      this.handleSpecialEvolutions(evolution);
       const isFusion = evolution instanceof FusionSpeciesFormEvolution;
       if (!isFusion) {
         this.species = getPokemonSpecies(evolution.speciesId);
@@ -3584,42 +3587,6 @@ export class PlayerPokemon extends Pokemon {
         updateAndResolve();
       }
     });
-  }
-
-  private handleSpecialEvolutions(evolution: SpeciesFormEvolution) {
-    const isFusion = evolution instanceof FusionSpeciesFormEvolution;
-
-    const evoSpecies = (!isFusion ? this.species : this.fusionSpecies);
-    if (evoSpecies?.speciesId === Species.NINCADA && evolution.speciesId === Species.NINJASK) {
-      const newEvolution = pokemonEvolutions[evoSpecies.speciesId][1];
-
-      if (newEvolution.condition?.predicate(this)) {
-        const newPokemon = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, this.formIndex, undefined, this.shiny, this.variant, this.ivs, this.nature);
-        newPokemon.natureOverride = this.natureOverride;
-        newPokemon.passive = this.passive;
-        newPokemon.moveset = this.moveset.slice();
-        newPokemon.moveset = this.copyMoveset();
-        newPokemon.luck = this.luck;
-        newPokemon.fusionSpecies = this.fusionSpecies;
-        newPokemon.fusionFormIndex = this.fusionFormIndex;
-        newPokemon.fusionAbilityIndex = this.fusionAbilityIndex;
-        newPokemon.fusionShiny = this.fusionShiny;
-        newPokemon.fusionVariant = this.fusionVariant;
-        newPokemon.fusionGender = this.fusionGender;
-        newPokemon.fusionLuck = this.fusionLuck;
-
-        this.scene.getParty().push(newPokemon);
-        newPokemon.evolve((!isFusion ? newEvolution : new FusionSpeciesFormEvolution(this.id, newEvolution)), evoSpecies);
-        const modifiers = this.scene.findModifiers(m => m instanceof PokemonHeldItemModifier
-          && m.pokemonId === this.id, true) as PokemonHeldItemModifier[];
-        modifiers.forEach(m => {
-          const clonedModifier = m.clone() as PokemonHeldItemModifier;
-          clonedModifier.pokemonId = newPokemon.id;
-          this.scene.addModifier(clonedModifier, true);
-        });
-        this.scene.updateModifiers(true);
-      }
-    }
   }
 
   getPossibleForm(formChange: SpeciesFormChange): Promise<Pokemon> {
@@ -3831,40 +3798,6 @@ export class EnemyPokemon extends Pokemon {
     } else {
       this.bossSegments = 0;
       this.bossSegmentIndex = 0;
-    }
-  }
-
-  generateAndPopulateMoveset(formIndex?: integer): void {
-    switch (true) {
-    case (this.species.speciesId === Species.SMEARGLE):
-      this.moveset = [
-        new PokemonMove(Moves.SKETCH),
-        new PokemonMove(Moves.SKETCH),
-        new PokemonMove(Moves.SKETCH),
-        new PokemonMove(Moves.SKETCH)
-      ];
-      break;
-    case (this.species.speciesId === Species.ETERNATUS):
-      this.moveset = (formIndex !== undefined ? formIndex : this.formIndex)
-        ? [
-          new PokemonMove(Moves.DYNAMAX_CANNON),
-          new PokemonMove(Moves.CROSS_POISON),
-          new PokemonMove(Moves.FLAMETHROWER),
-          new PokemonMove(Moves.RECOVER, 0, -4)
-        ]
-        : [
-          new PokemonMove(Moves.ETERNABEAM),
-          new PokemonMove(Moves.SLUDGE_BOMB),
-          new PokemonMove(Moves.FLAMETHROWER),
-          new PokemonMove(Moves.COSMIC_POWER)
-        ];
-      if (this.scene.gameMode.hasChallenge(Challenges.INVERSE_BATTLE)) {
-        this.moveset[2] = new PokemonMove(Moves.THUNDERBOLT);
-      }
-      break;
-    default:
-      super.generateAndPopulateMoveset();
-      break;
     }
   }
 

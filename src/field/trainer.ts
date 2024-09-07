@@ -329,24 +329,9 @@ export default class Trainer extends Phaser.GameObjects.Container {
 
         // If the index is even, use the species pool for the main trainer (that way he only uses his own pokemon in battle)
         if (!(index % 2)) {
-          // Since the only currently allowed double battle with named trainers is Tate & Liza, we need to make sure that Solrock is the first pokemon in the party for Tate and Lunatone for Liza
-          if (index === 0 && (TrainerType[this.config.trainerType] === TrainerType[TrainerType.TATE])) {
-            newSpeciesPool = [Species.SOLROCK];
-          } else if (index === 0 && (TrainerType[this.config.trainerType] === TrainerType[TrainerType.LIZA])) {
-            newSpeciesPool = [Species.LUNATONE];
-          } else {
-            newSpeciesPool = speciesPoolFiltered;
-          }
+          newSpeciesPool = speciesPoolFiltered;
         } else {
-          // If the index is odd, use the species pool for the partner trainer (that way he only uses his own pokemon in battle)
-          // Since the only currently allowed double battle with named trainers is Tate & Liza, we need to make sure that Solrock is the first pokemon in the party for Tate and Lunatone for Liza
-          if (index === 1 && (TrainerType[this.config.trainerTypeDouble] === TrainerType[TrainerType.TATE])) {
-            newSpeciesPool = [Species.SOLROCK];
-          } else if (index === 1 && (TrainerType[this.config.trainerTypeDouble] === TrainerType[TrainerType.LIZA])) {
-            newSpeciesPool = [Species.LUNATONE];
-          } else {
-            newSpeciesPool = speciesPoolPartnerFiltered;
-          }
+          newSpeciesPool = speciesPoolPartnerFiltered;
         }
         // Fallback for when the species pool is empty
         if (newSpeciesPool.length === 0) {

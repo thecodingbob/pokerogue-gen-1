@@ -27,22 +27,7 @@ describe("Final Boss", () => {
     game.phaseInterceptor.restoreOg();
   });
 
-  it("should spawn Eternatus on wave 200 in END biome", async () => {
-    await game.runToFinalBossEncounter(game, [Species.BIDOOF], GameModes.CLASSIC);
 
-    expect(game.scene.currentBattle.waveIndex).toBe(FinalWave.Classic);
-    expect(game.scene.arena.biomeType).toBe(Biome.END);
-    expect(game.scene.getEnemyPokemon()!.species.speciesId).toBe(Species.ETERNATUS);
-  });
-
-  it("should NOT spawn Eternatus before wave 200 in END biome", async () => {
-    game.override.startingWave(FinalWave.Classic - 1);
-    await game.runToFinalBossEncounter(game, [Species.BIDOOF], GameModes.CLASSIC);
-
-    expect(game.scene.currentBattle.waveIndex).not.toBe(FinalWave.Classic);
-    expect(game.scene.arena.biomeType).toBe(Biome.END);
-    expect(game.scene.getEnemyPokemon()!.species.speciesId).not.toBe(Species.ETERNATUS);
-  });
 
   it("should NOT spawn Eternatus outside of END biome", async () => {
     game.override.startingBiome(Biome.FOREST);

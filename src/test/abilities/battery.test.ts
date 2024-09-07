@@ -28,7 +28,7 @@ describe("Abilities - Battery", () => {
   beforeEach(() => {
     game = new GameManager(phaserGame);
     game.override.battleType("double");
-    game.override.enemySpecies(Species.SHUCKLE);
+    game.override.enemySpecies(Species.FARFETCHD);
     game.override.enemyAbility(Abilities.BALL_FETCH);
     game.override.moveset([Moves.TACKLE, Moves.BREAKING_SWIPE, Moves.SPLASH, Moves.DAZZLING_GLEAM]);
     game.override.enemyMoveset(SPLASH_ONLY);
@@ -40,7 +40,7 @@ describe("Abilities - Battery", () => {
 
     vi.spyOn(moveToCheck, "calculateBattlePower");
 
-    await game.startBattle([Species.PIKACHU, Species.CHARJABUG]);
+    await game.startBattle([Species.PIKACHU, Species.CATERPIE]);
 
     game.move.select(Moves.DAZZLING_GLEAM);
     game.move.select(Moves.SPLASH, 1);
@@ -55,7 +55,7 @@ describe("Abilities - Battery", () => {
 
     vi.spyOn(moveToCheck, "calculateBattlePower");
 
-    await game.startBattle([Species.PIKACHU, Species.CHARJABUG]);
+    await game.startBattle([Species.PIKACHU, Species.CATERPIE]);
 
     game.move.select(Moves.BREAKING_SWIPE);
     game.move.select(Moves.SPLASH, 1);
@@ -70,7 +70,7 @@ describe("Abilities - Battery", () => {
 
     vi.spyOn(moveToCheck, "calculateBattlePower");
 
-    await game.startBattle([Species.CHARJABUG, Species.PIKACHU]);
+    await game.startBattle([Species.CATERPIE, Species.PIKACHU]);
 
     game.move.select(Moves.DAZZLING_GLEAM);
     game.move.select(Moves.SPLASH, 1);

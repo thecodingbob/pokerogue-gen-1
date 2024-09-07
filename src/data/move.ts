@@ -1,6 +1,6 @@
 import { ChargeAnim, MoveChargeAnim, initMoveAnim, loadMoveAnimAssets } from "./battle-anims";
 import { BattleStat, getBattleStatName } from "./battle-stat";
-import { EncoreTag, GulpMissileTag, HelpingHandTag, SemiInvulnerableTag, ShellTrapTag, StockpilingTag, TrappedTag, TypeBoostTag } from "./battler-tags";
+import { EncoreTag, HelpingHandTag, SemiInvulnerableTag, ShellTrapTag, StockpilingTag, TrappedTag, TypeBoostTag } from "./battler-tags";
 import { getPokemonNameWithAffix } from "../messages";
 import Pokemon, { AttackMoveResult, EnemyPokemon, HitResult, MoveResult, PlayerPokemon, PokemonMove, TurnMove } from "../field/pokemon";
 import { StatusEffect, getStatusEffectHealText, isNonVolatileStatusEffect, getNonVolatileStatusEffects } from "./status-effect";
@@ -25,7 +25,6 @@ import { ArenaTagType } from "#enums/arena-tag-type";
 import { BattlerTagType } from "#enums/battler-tag-type";
 import { Biome } from "#enums/biome";
 import { Moves } from "#enums/moves";
-import { Species } from "#enums/species";
 import { MoveUsedEvent } from "#app/events/battle-scene";
 import { PartyStatusCurePhase } from "#app/phases/party-status-cure-phase";
 import { BattleEndPhase } from "#app/phases/battle-end-phase";
@@ -1918,16 +1917,6 @@ export class ChangeMultiHitTypeAttr extends MoveAttr {
   }
 }
 
-export class WaterShurikenMultiHitTypeAttr extends ChangeMultiHitTypeAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (user.species.speciesId === Species.GRENINJA && user.hasAbility(Abilities.BATTLE_BOND) && user.formIndex === 2) {
-      (args[0] as Utils.IntegerHolder).value = MultiHitType._3;
-      return true;
-    }
-    return false;
-  }
-}
-
 export class StatusEffectAttr extends MoveEffectAttr {
   public effect: StatusEffect;
   public cureTurn: integer | null;
@@ -3420,16 +3409,6 @@ export class PresentPowerAttr extends VariablePowerAttr {
   }
 }
 
-export class WaterShurikenPowerAttr extends VariablePowerAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (user.species.speciesId === Species.GRENINJA && user.hasAbility(Abilities.BATTLE_BOND) && user.formIndex === 2) {
-      (args[0] as Utils.IntegerHolder).value = 20;
-      return true;
-    }
-    return false;
-  }
-}
-
 /**
  * Attribute used to calculate the power of attacks that scale with Stockpile stacks (i.e. Spit Up).
  */
@@ -3858,146 +3837,6 @@ export class ShellSideArmCategoryAttr extends VariableMoveCategoryAttr {
 
 export class VariableMoveTypeAttr extends MoveAttr {
   apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    return false;
-  }
-}
-
-export class FormChangeItemTypeAttr extends VariableMoveTypeAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const moveType = args[0];
-    if (!(moveType instanceof Utils.NumberHolder)) {
-      return false;
-    }
-
-    if ([user.species.speciesId, user.fusionSpecies?.speciesId].includes(Species.ARCEUS) || [user.species.speciesId, user.fusionSpecies?.speciesId].includes(Species.SILVALLY)) {
-      const form = user.species.speciesId === Species.ARCEUS || user.species.speciesId === Species.SILVALLY ? user.formIndex : user.fusionSpecies?.formIndex!; // TODO: is this bang correct?
-
-      moveType.value = Type[Type[form]];
-      return true;
-    }
-
-    return false;
-  }
-}
-
-export class TechnoBlastTypeAttr extends VariableMoveTypeAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const moveType = args[0];
-    if (!(moveType instanceof Utils.NumberHolder)) {
-      return false;
-    }
-
-    if ([user.species.speciesId, user.fusionSpecies?.speciesId].includes(Species.GENESECT)) {
-      const form = user.species.speciesId === Species.GENESECT ? user.formIndex : user.fusionSpecies?.formIndex;
-
-      switch (form) {
-      case 1: // Shock Drive
-        moveType.value = Type.ELECTRIC;
-        break;
-      case 2: // Burn Drive
-        moveType.value = Type.FIRE;
-        break;
-      case 3: // Chill Drive
-        moveType.value = Type.ICE;
-        break;
-      case 4: // Douse Drive
-        moveType.value = Type.WATER;
-        break;
-      default:
-        moveType.value = Type.NORMAL;
-        break;
-      }
-      return true;
-    }
-
-    return false;
-  }
-}
-
-export class AuraWheelTypeAttr extends VariableMoveTypeAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const moveType = args[0];
-    if (!(moveType instanceof Utils.NumberHolder)) {
-      return false;
-    }
-
-    if ([user.species.speciesId, user.fusionSpecies?.speciesId].includes(Species.MORPEKO)) {
-      const form = user.species.speciesId === Species.MORPEKO ? user.formIndex : user.fusionSpecies?.formIndex;
-
-      switch (form) {
-      case 1: // Hangry Mode
-        moveType.value = Type.DARK;
-        break;
-      default: // Full Belly Mode
-        moveType.value = Type.ELECTRIC;
-        break;
-      }
-      return true;
-    }
-
-    return false;
-  }
-}
-
-export class RagingBullTypeAttr extends VariableMoveTypeAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const moveType = args[0];
-    if (!(moveType instanceof Utils.NumberHolder)) {
-      return false;
-    }
-
-    if ([user.species.speciesId, user.fusionSpecies?.speciesId].includes(Species.PALDEA_TAUROS)) {
-      const form = user.species.speciesId === Species.PALDEA_TAUROS ? user.formIndex : user.fusionSpecies?.formIndex;
-
-      switch (form) {
-      case 1: // Blaze breed
-        moveType.value = Type.FIRE;
-        break;
-      case 2: // Aqua breed
-        moveType.value = Type.WATER;
-        break;
-      default:
-        moveType.value = Type.FIGHTING;
-        break;
-      }
-      return true;
-    }
-
-    return false;
-  }
-}
-
-export class IvyCudgelTypeAttr extends VariableMoveTypeAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const moveType = args[0];
-    if (!(moveType instanceof Utils.NumberHolder)) {
-      return false;
-    }
-
-    if ([user.species.speciesId, user.fusionSpecies?.speciesId].includes(Species.OGERPON)) {
-      const form = user.species.speciesId === Species.OGERPON ? user.formIndex : user.fusionSpecies?.formIndex;
-
-      switch (form) {
-      case 1: // Wellspring Mask
-      case 5: // Wellspring Mask Tera
-        moveType.value = Type.WATER;
-        break;
-      case 2: // Hearthflame Mask
-      case 6: // Hearthflame Mask Tera
-        moveType.value = Type.FIRE;
-        break;
-      case 3: // Cornerstone Mask
-      case 7: // Cornerstone Mask Tera
-        moveType.value = Type.ROCK;
-        break;
-      case 4: // Teal Mask Tera
-      default:
-        moveType.value = Type.GRASS;
-        break;
-      }
-      return true;
-    }
-
     return false;
   }
 }
@@ -4502,46 +4341,6 @@ export class AddBattlerTagAttr extends MoveEffectAttr {
       moveChance = 100;
     }
     return Math.floor(this.getTagTargetBenefitScore(user, target, move)! * (moveChance / 100)); // TODO: is the bang correct?
-  }
-}
-
-/**
- * Adds the appropriate battler tag for Gulp Missile when Surf or Dive is used.
- * @extends MoveEffectAttr
- */
-export class GulpMissileTagAttr extends MoveEffectAttr {
-  constructor() {
-    super(true);
-  }
-
-  /**
-   * Adds BattlerTagType from GulpMissileTag based on the Pokemon's HP ratio.
-   * @param {Pokemon} user The Pokemon using the move.
-   * @param {Pokemon} target The Pokemon being targeted by the move.
-   * @param {Move} move The move being used.
-   * @param {any[]} args Additional arguments, if any.
-   * @returns Whether the BattlerTag is applied.
-   */
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean | Promise<boolean> {
-    if (!super.apply(user, target, move, args)) {
-      return false;
-    }
-
-    if (user.hasAbility(Abilities.GULP_MISSILE) && user.species.speciesId === Species.CRAMORANT) {
-      if (user.getHpRatio() >= .5) {
-        user.addTag(BattlerTagType.GULP_MISSILE_ARROKUDA, 0, move.id);
-      } else {
-        user.addTag(BattlerTagType.GULP_MISSILE_PIKACHU, 0, move.id);
-      }
-      return true;
-    }
-
-    return false;
-  }
-
-  getUserBenefitScore(user: Pokemon, target: Pokemon, move: Move): integer {
-    const isCramorant = user.hasAbility(Abilities.GULP_MISSILE) && user.species.speciesId === Species.CRAMORANT;
-    return isCramorant && !user.getTag(GulpMissileTag) ? 10 : 0;
   }
 }
 
@@ -6503,8 +6302,7 @@ export function initMoves() {
     new AttackMove(Moves.HYDRO_PUMP, Type.WATER, MoveCategory.SPECIAL, 110, 80, 5, -1, 0, 1),
     new AttackMove(Moves.SURF, Type.WATER, MoveCategory.SPECIAL, 90, 100, 15, -1, 0, 1)
       .target(MoveTarget.ALL_NEAR_OTHERS)
-      .attr(HitsTagAttr, BattlerTagType.UNDERWATER, true)
-      .attr(GulpMissileTagAttr),
+      .attr(HitsTagAttr, BattlerTagType.UNDERWATER, true),
     new AttackMove(Moves.ICE_BEAM, Type.ICE, MoveCategory.SPECIAL, 90, 100, 10, 10, 0, 1)
       .attr(StatusEffectAttr, StatusEffect.FREEZE),
     new AttackMove(Moves.BLIZZARD, Type.ICE, MoveCategory.SPECIAL, 110, 70, 5, 10, 0, 1)
@@ -7178,7 +6976,6 @@ export function initMoves() {
       .partial(),
     new AttackMove(Moves.DIVE, Type.WATER, MoveCategory.PHYSICAL, 80, 100, 10, -1, 0, 3)
       .attr(ChargeAttr, ChargeAnim.DIVE_CHARGING, i18next.t("moveTriggers:hidUnderwater", {pokemonName: "{USER}"}), BattlerTagType.UNDERWATER, true)
-      .attr(GulpMissileTagAttr)
       .ignoresVirtual(),
     new AttackMove(Moves.ARM_THRUST, Type.FIGHTING, MoveCategory.PHYSICAL, 15, 100, 20, -1, 0, 3)
       .attr(MultiHitAttr),
@@ -7614,8 +7411,7 @@ export function initMoves() {
     new AttackMove(Moves.CHATTER, Type.FLYING, MoveCategory.SPECIAL, 65, 100, 20, 100, 0, 4)
       .attr(ConfuseAttr)
       .soundBased(),
-    new AttackMove(Moves.JUDGMENT, Type.NORMAL, MoveCategory.SPECIAL, 100, 100, 10, -1, 0, 4)
-      .attr(FormChangeItemTypeAttr),
+    new AttackMove(Moves.JUDGMENT, Type.NORMAL, MoveCategory.SPECIAL, 100, 100, 10, -1, 0, 4),
     new AttackMove(Moves.BUG_BITE, Type.BUG, MoveCategory.PHYSICAL, 60, 100, 20, -1, 0, 4)
       .attr(StealEatBerryAttr),
     new AttackMove(Moves.CHARGE_BEAM, Type.ELECTRIC, MoveCategory.SPECIAL, 50, 90, 10, 70, 0, 4)
@@ -7875,8 +7671,7 @@ export function initMoves() {
       .attr(StatusEffectAttr, StatusEffect.BURN)
       .ballBombMove()
       .target(MoveTarget.ALL_NEAR_OTHERS),
-    new AttackMove(Moves.TECHNO_BLAST, Type.NORMAL, MoveCategory.SPECIAL, 120, 100, 5, -1, 0, 5)
-      .attr(TechnoBlastTypeAttr),
+    new AttackMove(Moves.TECHNO_BLAST, Type.NORMAL, MoveCategory.SPECIAL, 120, 100, 5, -1, 0, 5),
     new AttackMove(Moves.RELIC_SONG, Type.NORMAL, MoveCategory.SPECIAL, 75, 100, 10, 10, 0, 5)
       .attr(StatusEffectAttr, StatusEffect.SLEEP)
       .soundBased()
@@ -8025,9 +7820,7 @@ export function initMoves() {
     new AttackMove(Moves.HYPERSPACE_HOLE, Type.PSYCHIC, MoveCategory.SPECIAL, 80, -1, 5, -1, 0, 6)
       .ignoresProtect(),
     new AttackMove(Moves.WATER_SHURIKEN, Type.WATER, MoveCategory.SPECIAL, 15, 100, 20, -1, 1, 6)
-      .attr(MultiHitAttr)
-      .attr(WaterShurikenPowerAttr)
-      .attr(WaterShurikenMultiHitTypeAttr),
+      .attr(MultiHitAttr),
     new AttackMove(Moves.MYSTICAL_FIRE, Type.FIRE, MoveCategory.SPECIAL, 75, 100, 10, 100, 0, 6)
       .attr(StatChangeAttr, BattleStat.SPATK, -1),
     new SelfStatusMove(Moves.SPIKY_SHIELD, Type.GRASS, -1, 10, -1, 4, 6)
@@ -8390,8 +8183,7 @@ export function initMoves() {
       .attr(FlinchAttr),
     new AttackMove(Moves.NATURES_MADNESS, Type.FAIRY, MoveCategory.SPECIAL, -1, 90, 10, -1, 0, 7)
       .attr(TargetHalfHpDamageAttr),
-    new AttackMove(Moves.MULTI_ATTACK, Type.NORMAL, MoveCategory.PHYSICAL, 120, 100, 10, -1, 0, 7)
-      .attr(FormChangeItemTypeAttr),
+    new AttackMove(Moves.MULTI_ATTACK, Type.NORMAL, MoveCategory.PHYSICAL, 120, 100, 10, -1, 0, 7),
     /* Unused */
     new AttackMove(Moves.TEN_MILLION_VOLT_THUNDERBOLT, Type.ELECTRIC, MoveCategory.SPECIAL, 195, -1, 1, -1, 0, 7)
       .partial()
@@ -8623,9 +8415,7 @@ export function initMoves() {
     new AttackMove(Moves.BEHEMOTH_BASH, Type.STEEL, MoveCategory.PHYSICAL, 100, 100, 5, -1, 0, 8),
     new AttackMove(Moves.AURA_WHEEL, Type.ELECTRIC, MoveCategory.PHYSICAL, 110, 100, 10, 100, 0, 8)
       .attr(StatChangeAttr, BattleStat.SPD, 1, true)
-      .makesContact(false)
-      .attr(AuraWheelTypeAttr)
-      .condition((user, target, move) => [user.species.speciesId, user.fusionSpecies?.speciesId].includes(Species.MORPEKO)), // Missing custom fail message
+      .makesContact(false),
     new AttackMove(Moves.BREAKING_SWIPE, Type.DRAGON, MoveCategory.PHYSICAL, 60, 100, 15, 100, 0, 8)
       .target(MoveTarget.ALL_NEAR_ENEMIES)
       .attr(StatChangeAttr, BattleStat.ATK, -1),
@@ -9014,7 +8804,6 @@ export function initMoves() {
       .attr(StatChangeAttr, BattleStat.SPD, 1, true)
       .danceMove(),
     new AttackMove(Moves.RAGING_BULL, Type.NORMAL, MoveCategory.PHYSICAL, 90, 100, 10, -1, 0, 9)
-      .attr(RagingBullTypeAttr)
       .attr(RemoveScreensAttr),
     new AttackMove(Moves.MAKE_IT_RAIN, Type.STEEL, MoveCategory.SPECIAL, 120, 100, 5, -1, 0, 9)
       .attr(MoneyAttr)
@@ -9118,7 +8907,6 @@ export function initMoves() {
       .ballBombMove()
       .partial(),
     new AttackMove(Moves.IVY_CUDGEL, Type.GRASS, MoveCategory.PHYSICAL, 100, 100, 10, -1, 0, 9)
-      .attr(IvyCudgelTypeAttr)
       .attr(HighCritAttr)
       .makesContact(false),
     new AttackMove(Moves.ELECTRO_SHOT, Type.ELECTRIC, MoveCategory.SPECIAL, 130, 100, 10, 100, 0, 9)

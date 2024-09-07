@@ -175,44 +175,6 @@ export class Arena {
   }
 
   getSpeciesFormIndex(species: PokemonSpecies): integer {
-    switch (species.speciesId) {
-    case Species.BURMY:
-    case Species.WORMADAM:
-      switch (this.biomeType) {
-      case Biome.BEACH:
-        return 1;
-      case Biome.SLUM:
-        return 2;
-      }
-      break;
-    case Species.ROTOM:
-      switch (this.biomeType) {
-      case Biome.VOLCANO:
-        return 1;
-      case Biome.SEA:
-        return 2;
-      case Biome.ICE_CAVE:
-        return 3;
-      case Biome.MOUNTAIN:
-        return 4;
-      case Biome.TALL_GRASS:
-        return 5;
-      }
-      break;
-    case Species.LYCANROC:
-      const timeOfDay = this.getTimeOfDay();
-      switch (timeOfDay) {
-      case TimeOfDay.DAY:
-      case TimeOfDay.DAWN:
-        return 0;
-      case TimeOfDay.DUSK:
-        return 2;
-      case TimeOfDay.NIGHT:
-        return 1;
-      }
-      break;
-    }
-
     return 0;
   }
 
@@ -339,7 +301,7 @@ export class Arena {
    */
   triggerWeatherBasedFormChanges(): void {
     this.scene.getField(true).forEach( p => {
-      if (p.hasAbility(Abilities.FORECAST) && p.species.speciesId === Species.CASTFORM) {
+      if (p.hasAbility(Abilities.FORECAST)) {
         new ShowAbilityPhase(this.scene, p.getBattlerIndex());
         this.scene.triggerPokemonFormChange(p, SpeciesFormChangeWeatherTrigger);
       }
@@ -351,7 +313,7 @@ export class Arena {
    */
   triggerWeatherBasedFormChangesToNormal(): void {
     this.scene.getField(true).forEach( p => {
-      if (p.hasAbility(Abilities.FORECAST, false, true) && p.species.speciesId === Species.CASTFORM) {
+      if (p.hasAbility(Abilities.FORECAST, false, true)) {
         new ShowAbilityPhase(this.scene, p.getBattlerIndex());
         return this.scene.triggerPokemonFormChange(p, SpeciesFormChangeRevertWeatherFormTrigger);
       }

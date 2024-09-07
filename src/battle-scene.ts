@@ -65,7 +65,6 @@ import { Species } from "#enums/species";
 import { UiTheme } from "#enums/ui-theme";
 import { TimedEventManager } from "#app/timed-event-manager.js";
 import i18next from "i18next";
-import { TrainerType } from "#enums/trainer-type";
 import { battleSpecDialogue } from "./data/dialogue";
 import { LoadingScene } from "./loading-scene";
 import { LevelCapPhase } from "./phases/level-cap-phase";
@@ -1106,7 +1105,7 @@ export default class BattleScene extends SceneBase {
           playerField.forEach(p => applyAbAttrs(DoubleBattleChanceAbAttr, p, null, false, doubleChance));
           doubleTrainer = !Utils.randSeedInt(doubleChance.value);
           // Add a check that special trainers can't be double except for tate and liza - they should use the normal double chance
-          if (trainerConfigs[trainerType].trainerTypeDouble && ![ TrainerType.TATE, TrainerType.LIZA ].includes(trainerType)) {
+          if (trainerConfigs[trainerType].trainerTypeDouble) {
             doubleTrainer = false;
           }
         }
@@ -1244,70 +1243,13 @@ export default class BattleScene extends SceneBase {
     if (!species.forms?.length) {
       return 0;
     }
-
     switch (species.speciesId) {
-    case Species.UNOWN:
-    case Species.SHELLOS:
-    case Species.GASTRODON:
-    case Species.BASCULIN:
-    case Species.DEERLING:
-    case Species.SAWSBUCK:
-    case Species.FROAKIE:
-    case Species.FROGADIER:
-    case Species.SCATTERBUG:
-    case Species.SPEWPA:
-    case Species.VIVILLON:
-    case Species.FLABEBE:
-    case Species.FLOETTE:
-    case Species.FLORGES:
-    case Species.FURFROU:
-    case Species.PUMPKABOO:
-    case Species.GOURGEIST:
-    case Species.ORICORIO:
-    case Species.MAGEARNA:
-    case Species.ZARUDE:
-    case Species.SQUAWKABILLY:
-    case Species.TATSUGIRI:
-    case Species.GIMMIGHOUL:
-    case Species.PALDEA_TAUROS:
-      return Utils.randSeedInt(species.forms.length);
     case Species.PIKACHU:
       return Utils.randSeedInt(8);
     case Species.EEVEE:
       return Utils.randSeedInt(2);
-    case Species.GRENINJA:
-      return Utils.randSeedInt(2);
-    case Species.ZYGARDE:
-      return Utils.randSeedInt(3);
-    case Species.MINIOR:
-      return Utils.randSeedInt(6);
-    case Species.ALCREMIE:
-      return Utils.randSeedInt(9);
-    case Species.MEOWSTIC:
-    case Species.INDEEDEE:
-    case Species.BASCULEGION:
-    case Species.OINKOLOGNE:
-      return gender === Gender.FEMALE ? 1 : 0;
-    case Species.TOXTRICITY:
-      const lowkeyNatures = [ Nature.LONELY, Nature.BOLD, Nature.RELAXED, Nature.TIMID, Nature.SERIOUS, Nature.MODEST, Nature.MILD, Nature.QUIET, Nature.BASHFUL, Nature.CALM, Nature.GENTLE, Nature.CAREFUL ];
-      if (nature !== undefined && lowkeyNatures.indexOf(nature) > -1) {
-        return 1;
-      }
-      return 0;
     }
-
-    if (ignoreArena) {
-      switch (species.speciesId) {
-      case Species.BURMY:
-      case Species.WORMADAM:
-      case Species.ROTOM:
-      case Species.LYCANROC:
-        return Utils.randSeedInt(species.forms.length);
-      }
-      return 0;
-    }
-
-    return this.arena.getSpeciesFormIndex(species);
+    return 0;
   }
 
   private getGeneratedOffsetGym(): boolean {
@@ -2653,7 +2595,7 @@ export default class BattleScene extends SceneBase {
       // in case this is NECROZMA, determine which forms this
       const matchingFormChangeOpts = pokemonFormChanges[pokemon.species.speciesId].filter(fc => fc.findTrigger(formChangeTriggerType) && fc.canChange(pokemon));
       let matchingFormChange: SpeciesFormChange | null;
-      if (pokemon.species.speciesId === Species.NECROZMA && matchingFormChangeOpts.length > 1) {
+      if (matchingFormChangeOpts.length > 1) {
         // Ultra Necrozma is changing its form back, so we need to figure out into which form it devolves.
         const formChangeItemModifiers = (this.findModifiers(m => m instanceof PokemonFormChangeItemModifier && m.pokemonId === pokemon.id) as PokemonFormChangeItemModifier[]).filter(m => m.active).map(m => m.formChangeItem);
 

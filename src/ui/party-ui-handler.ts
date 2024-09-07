@@ -20,7 +20,6 @@ import MoveInfoOverlay from "./move-info-overlay";
 import i18next from "i18next";
 import BBCodeText from "phaser3-rex-plugins/plugins/bbcodetext";
 import { Moves } from "#enums/moves";
-import { Species } from "#enums/species";
 import { getPokemonNameWithAffix } from "#app/messages.js";
 import { CommandPhase } from "#app/phases/command-phase.js";
 import { SelectModifierPhase } from "#app/phases/select-modifier-phase.js";
@@ -1091,9 +1090,6 @@ export default class PartyUiHandler extends MessageUiHandler {
     if (formChangeItemModifiers.find(m => m.active)) {
       // a form is currently active. the user has to disable the form or activate ULTRANECROZIUM_Z
       formChangeItemModifiers = formChangeItemModifiers.filter(m => m.active || m.formChangeItem === FormChangeItem.ULTRANECROZIUM_Z);
-    } else if (pokemon.species.speciesId === Species.NECROZMA) {
-      // no form is currently active. the user has to activate some form, except ULTRANECROZIUM_Z
-      formChangeItemModifiers = formChangeItemModifiers.filter(m => m.formChangeItem !== FormChangeItem.ULTRANECROZIUM_Z);
     }
     return formChangeItemModifiers;
   }

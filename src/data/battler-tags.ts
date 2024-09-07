@@ -15,7 +15,6 @@ import { SpeciesFormChangeManualTrigger } from "./pokemon-forms";
 import { Abilities } from "#enums/abilities";
 import { BattlerTagType } from "#enums/battler-tag-type";
 import { Moves } from "#enums/moves";
-import { Species } from "#enums/species";
 import i18next from "#app/plugins/i18n.js";
 import { CommonAnimPhase } from "#app/phases/common-anim-phase.js";
 import { MoveEffectPhase } from "#app/phases/move-effect-phase.js";
@@ -1771,9 +1770,8 @@ export class GulpMissileTag extends BattlerTag {
   canAdd(pokemon: Pokemon): boolean {
     const isSurfOrDive = [ Moves.SURF, Moves.DIVE ].includes(this.sourceMove);
     const isNormalForm = pokemon.formIndex === 0 && !pokemon.getTag(BattlerTagType.GULP_MISSILE_ARROKUDA) && !pokemon.getTag(BattlerTagType.GULP_MISSILE_PIKACHU);
-    const isCramorant = pokemon.species.speciesId === Species.CRAMORANT;
 
-    return isSurfOrDive && isNormalForm && isCramorant;
+    return isSurfOrDive && isNormalForm;
   }
 
   onAdd(pokemon: Pokemon): void {

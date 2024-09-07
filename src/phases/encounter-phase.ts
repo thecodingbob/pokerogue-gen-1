@@ -6,12 +6,11 @@ import { TrainerSlot } from "#app/data/trainer-config";
 import { getRandomWeatherType } from "#app/data/weather";
 import { BattleSpec } from "#app/enums/battle-spec";
 import { PlayerGender } from "#app/enums/player-gender";
-import { Species } from "#app/enums/species";
 import { EncounterPhaseEvent } from "#app/events/battle-scene";
 import Pokemon, { FieldPosition } from "#app/field/pokemon";
 import { getPokemonNameWithAffix } from "#app/messages";
 import { regenerateModifierPoolThresholds, ModifierPoolType } from "#app/modifier/modifier-type";
-import { IvScannerModifier, TurnHeldItemTransferModifier } from "#app/modifier/modifier";
+import { IvScannerModifier } from "#app/modifier/modifier";
 import { achvs } from "#app/system/achv";
 import { handleTutorial, Tutorial } from "#app/tutorial";
 import { Mode } from "#app/ui/ui";
@@ -80,24 +79,6 @@ export class EncounterPhase extends BattlePhase {
       if (!this.loaded) {
         this.scene.gameData.setPokemonSeen(enemyPokemon, true, battle.battleType === BattleType.TRAINER);
       }
-
-      if (enemyPokemon.species.speciesId === Species.ETERNATUS) {
-        if (this.scene.gameMode.isClassic && (battle.battleSpec === BattleSpec.FINAL_BOSS || this.scene.gameMode.isWaveFinal(battle.waveIndex))) {
-          if (battle.battleSpec !== BattleSpec.FINAL_BOSS) {
-            enemyPokemon.formIndex = 1;
-            enemyPokemon.updateScale();
-          }
-          enemyPokemon.setBoss();
-        } else if (!(battle.waveIndex % 1000)) {
-          enemyPokemon.formIndex = 1;
-          enemyPokemon.updateScale();
-          const bossMBH = this.scene.findModifier(m => m instanceof TurnHeldItemTransferModifier && m.pokemonId === enemyPokemon.id, false) as TurnHeldItemTransferModifier;
-          this.scene.removeModifier(bossMBH!);
-          bossMBH?.setTransferrableFalse();
-          this.scene.addEnemyModifier(bossMBH!);
-        }
-      }
-
       totalBst += enemyPokemon.getSpeciesForm().baseTotal;
 
       loadEnemyAssets.push(enemyPokemon.loadAssets());

@@ -440,8 +440,8 @@ export class SingleGenerationChallenge extends Challenge {
   }
 
   applyPokemonInBattle(pokemon: Pokemon, valid: Utils.BooleanHolder): boolean {
-    const baseGeneration = pokemon.species.speciesId === Species.VICTINI ? 5 : getPokemonSpecies(pokemon.species.speciesId).generation;
-    const fusionGeneration = pokemon.isFusion() ? pokemon.fusionSpecies?.speciesId === Species.VICTINI ? 5 : getPokemonSpecies(pokemon.fusionSpecies!.speciesId).generation : 0; // TODO: is the bang on fusionSpecies correct?
+    const baseGeneration = getPokemonSpecies(pokemon.species.speciesId).generation;
+    const fusionGeneration = pokemon.isFusion()? getPokemonSpecies(pokemon.fusionSpecies!.speciesId).generation : 0; // TODO: is the bang on fusionSpecies correct?
     if (pokemon.isPlayer() && (baseGeneration !== this.value || (pokemon.isFusion() && fusionGeneration !== this.value))) {
       valid.value = false;
       return true;
@@ -453,19 +453,19 @@ export class SingleGenerationChallenge extends Challenge {
     let trainerTypes: TrainerType[] = [];
     switch (waveIndex) {
     case 182:
-      trainerTypes = [ TrainerType.LORELEI, TrainerType.WILL, TrainerType.SIDNEY, TrainerType.AARON, TrainerType.SHAUNTAL, TrainerType.MALVA, Utils.randSeedItem([ TrainerType.HALA, TrainerType.MOLAYNE ]), TrainerType.MARNIE_ELITE, TrainerType.RIKA ];
+      trainerTypes = [ TrainerType.LORELEI ];
       break;
     case 184:
-      trainerTypes = [ TrainerType.BRUNO, TrainerType.KOGA, TrainerType.PHOEBE, TrainerType.BERTHA, TrainerType.MARSHAL, TrainerType.SIEBOLD, TrainerType.OLIVIA, TrainerType.NESSA_ELITE, TrainerType.POPPY ];
+      trainerTypes = [ TrainerType.BRUNO ];
       break;
     case 186:
-      trainerTypes = [ TrainerType.AGATHA, TrainerType.BRUNO, TrainerType.GLACIA, TrainerType.FLINT, TrainerType.GRIMSLEY, TrainerType.WIKSTROM, TrainerType.ACEROLA, Utils.randSeedItem([TrainerType.BEA_ELITE, TrainerType.ALLISTER_ELITE]), TrainerType.LARRY_ELITE ];
+      trainerTypes = [ TrainerType.AGATHA ];
       break;
     case 188:
-      trainerTypes = [ TrainerType.LANCE, TrainerType.KAREN, TrainerType.DRAKE, TrainerType.LUCIAN, TrainerType.CAITLIN, TrainerType.DRASNA, TrainerType.KAHILI, TrainerType.RAIHAN_ELITE, TrainerType.HASSEL ];
+      trainerTypes = [ TrainerType.LANCE ];
       break;
     case 190:
-      trainerTypes = [ TrainerType.BLUE, Utils.randSeedItem([ TrainerType.RED, TrainerType.LANCE_CHAMPION ]), Utils.randSeedItem([ TrainerType.STEVEN, TrainerType.WALLACE ]), TrainerType.CYNTHIA, Utils.randSeedItem([ TrainerType.ALDER, TrainerType.IRIS ]), TrainerType.DIANTHA, TrainerType.HAU, TrainerType.LEON, Utils.randSeedItem([ TrainerType.GEETA, TrainerType.NEMONA ]) ];
+      trainerTypes = [ TrainerType.BLUE, TrainerType.RED ];
       break;
     }
     if (trainerTypes.length === 0) {
@@ -522,23 +522,10 @@ export class SingleGenerationChallenge extends Challenge {
   }
 }
 
-interface monotypeOverride {
-  /** The species to override */
-  species: Species;
-  /** The type to count as */
-  type: Type;
-  /** If part of a fusion, should we check the fused species instead of the base species? */
-  fusion: boolean;
-}
-
 /**
  * Implements a mono type challenge.
  */
 export class SingleTypeChallenge extends Challenge {
-  private static TYPE_OVERRIDES: monotypeOverride[] = [
-    {species: Species.MELOETTA, type: Type.PSYCHIC, fusion: true},
-    {species: Species.CASTFORM, type: Type.NORMAL, fusion: false},
-  ];
 
   constructor() {
     super(Challenges.SINGLE_TYPE, 18);
@@ -576,8 +563,7 @@ export class SingleTypeChallenge extends Challenge {
   }
 
   applyPokemonInBattle(pokemon: Pokemon, valid: Utils.BooleanHolder): boolean {
-    if (pokemon.isPlayer() && !pokemon.isOfType(this.value - 1, false, false, true)
-      && !SingleTypeChallenge.TYPE_OVERRIDES.some(o => o.type === (this.value - 1) && (pokemon.isFusion() && o.fusion ? pokemon.fusionSpecies! : pokemon.species).speciesId === o.species)) { // TODO: is the bang on fusionSpecies correct?
+    if (pokemon.isPlayer() && !pokemon.isOfType(this.value - 1, false, false, true)) { // TODO: is the bang on fusionSpecies correct?
       valid.value = false;
       return true;
     }

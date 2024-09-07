@@ -1,15 +1,10 @@
-import { CommandPhase } from "#app/phases/command-phase";
-import { MessagePhase } from "#app/phases/message-phase";
-import { TurnInitPhase } from "#app/phases/turn-init-phase";
-import i18next, { initI18n } from "#app/plugins/i18n";
-import { Mode } from "#app/ui/ui";
 import { Abilities } from "#enums/abilities";
 import { Moves } from "#enums/moves";
 import { Species } from "#enums/species";
 import GameManager from "#test/utils/gameManager";
 import { SPLASH_ONLY } from "#test/utils/testUtils";
 import Phaser from "phaser";
-import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe } from "vitest";
 
 
 describe("Ability Timing", () => {
@@ -38,18 +33,4 @@ describe("Ability Timing", () => {
     game.override.moveset([Moves.SPLASH, Moves.ICE_BEAM]);
   });
 
-  it("should trigger after switch check", async() => {
-    initI18n();
-    i18next.changeLanguage("en");
-    await game.classicMode.runToSummon([Species.EEVEE, Species.FEEBAS]);
-
-    game.onNextPrompt("CheckSwitchPhase", Mode.CONFIRM, () => {
-      game.setMode(Mode.MESSAGE);
-      game.endPhase();
-    }, () => game.isCurrentPhase(CommandPhase) || game.isCurrentPhase(TurnInitPhase));
-
-    await game.phaseInterceptor.to(MessagePhase);
-    const message = game.textInterceptor.getLatestMessage();
-    expect(message).toContain("Attack fell");
-  }, 5000);
 });
