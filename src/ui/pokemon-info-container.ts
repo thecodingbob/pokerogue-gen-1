@@ -1,8 +1,6 @@
 import { getVariantTint } from "#app/data/variant";
-import BBCodeText from "phaser3-rex-plugins/plugins/bbcodetext";
 import BattleScene from "../battle-scene";
 import { Gender, getGenderColor, getGenderSymbol } from "../data/gender";
-import { getNatureName } from "../data/nature";
 import { Type } from "../data/type";
 import Pokemon from "../field/pokemon";
 import i18next from "i18next";
@@ -10,7 +8,7 @@ import { DexAttr } from "../system/game-data";
 import * as Utils from "../utils";
 import ConfirmUiHandler from "./confirm-ui-handler";
 import { StatsContainer } from "./stats-container";
-import { TextStyle, addBBCodeTextObject, addTextObject, getTextColor } from "./text";
+import { TextStyle, addTextObject, getTextColor } from "./text";
 import { addWindow } from "./ui-theme";
 
 interface LanguageSetting {
@@ -54,8 +52,6 @@ export default class PokemonInfoContainer extends Phaser.GameObjects.Container {
   private pokemonGenderNewText: Phaser.GameObjects.Text;
   private pokemonAbilityLabelText: Phaser.GameObjects.Text;
   private pokemonAbilityText: Phaser.GameObjects.Text;
-  private pokemonNatureLabelText: Phaser.GameObjects.Text;
-  private pokemonNatureText: BBCodeText;
   private pokemonShinyIcon: Phaser.GameObjects.Image;
   private pokemonShinyNewIcon: Phaser.GameObjects.Text;
   private pokemonFusionShinyIcon: Phaser.GameObjects.Image;
@@ -175,16 +171,6 @@ export default class PokemonInfoContainer extends Phaser.GameObjects.Container {
     this.pokemonAbilityText.setName("text-pkmn-ability");
     this.add(this.pokemonAbilityText);
 
-    this.pokemonNatureLabelText = addTextObject(this.scene, infoContainerLabelXPos, 39, i18next.t("pokemonInfoContainer:nature"), TextStyle.WINDOW, { fontSize: infoContainerTextSize });
-    this.pokemonNatureLabelText.setOrigin(1, 0);
-    this.pokemonNatureLabelText.setName("text-pkmn-nature-label");
-    this.add(this.pokemonNatureLabelText);
-
-    this.pokemonNatureText = addBBCodeTextObject(this.scene, infoContainerTextXPos, 39, "", TextStyle.WINDOW, { fontSize: infoContainerTextSize, lineSpacing: 3, maxLines: 2 });
-    this.pokemonNatureText.setOrigin(0, 0);
-    this.pokemonNatureText.setName("text-pkmn-nature");
-    this.add(this.pokemonNatureText);
-
     this.pokemonShinyIcon = this.scene.add.image(-43.5, 48.5, "shiny_star");
     this.pokemonShinyIcon.setOrigin(0, 0);
     this.pokemonShinyIcon.setScale(0.75);
@@ -276,19 +262,6 @@ export default class PokemonInfoContainer extends Phaser.GameObjects.Container {
       } else {
         this.pokemonAbilityLabelText.setColor(getTextColor(TextStyle.WINDOW, false, this.scene.uiTheme));
         this.pokemonAbilityLabelText.setShadowColor(getTextColor(TextStyle.WINDOW, true, this.scene.uiTheme));
-      }
-
-      this.pokemonNatureText.setText(getNatureName(pokemon.getNature(), true, false, false, this.scene.uiTheme));
-
-      const dexNatures = pokemon.scene.gameData.dexData[pokemon.species.speciesId].natureAttr;
-      const newNature = 1 << (pokemon.nature + 1);
-
-      if (!(dexNatures & newNature)) {
-        this.pokemonNatureLabelText.setColor(getTextColor(TextStyle.SUMMARY_BLUE, false, this.scene.uiTheme));
-        this.pokemonNatureLabelText.setShadowColor(getTextColor(TextStyle.SUMMARY_BLUE, true, this.scene.uiTheme));
-      } else {
-        this.pokemonNatureLabelText.setColor(getTextColor(TextStyle.WINDOW, false, this.scene.uiTheme));
-        this.pokemonNatureLabelText.setShadowColor(getTextColor(TextStyle.WINDOW, true, this.scene.uiTheme));
       }
 
       const isFusion = pokemon.isFusion();

@@ -40,7 +40,7 @@ export function generateStarter(scene, species?: Species[]) {
     const starterGender = starter.species.malePercent !== null
       ? !starterProps.female ? Gender.MALE : Gender.FEMALE
       : Gender.GENDERLESS;
-    const starterPokemon = scene.addPlayerPokemon(starter.species, startingLevel, starter.abilityIndex, starterFormIndex, starterGender, starterProps.shiny, starterProps.variant, undefined, starter.nature);
+    const starterPokemon = scene.addPlayerPokemon(starter.species, startingLevel, starter.abilityIndex, starterFormIndex, starterGender, starterProps.shiny, starterProps.variant, undefined);
     starter.moveset = starterPokemon.moveset;
   }
   return starters;
@@ -56,13 +56,12 @@ function getTestRunStarters(scene, seed, species) {
   for (const specie of species) {
     const starterSpeciesForm = getPokemonSpeciesForm(specie, 0);
     const starterSpecies = getPokemonSpecies(starterSpeciesForm.speciesId);
-    const pokemon = new PlayerPokemon(scene, starterSpecies, startingLevel, undefined, 0, undefined, undefined, undefined, undefined, undefined, undefined);
+    const pokemon = new PlayerPokemon(scene, starterSpecies, startingLevel, undefined, 0, undefined, undefined, undefined, undefined, undefined);
     const starter: Starter = {
       species: starterSpecies,
       dexAttr: pokemon.getDexAttr(),
       abilityIndex: pokemon.abilityIndex,
       passive: false,
-      nature: pokemon.getNature(),
       pokerus: pokemon.pokerus
     };
     starters.push(starter);

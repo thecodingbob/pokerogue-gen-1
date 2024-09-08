@@ -4154,18 +4154,6 @@ export class WeightMultiplierAbAttr extends AbAttr {
   }
 }
 
-export class SyncEncounterNatureAbAttr extends AbAttr {
-  constructor() {
-    super(false);
-  }
-
-  apply(pokemon: Pokemon, passive: boolean, simulated: boolean, cancelled: Utils.BooleanHolder, args: any[]): boolean {
-    (args[0] as Pokemon).setNature(pokemon.getNature());
-
-    return true;
-  }
-}
-
 export class MoveAbilityBypassAbAttr extends AbAttr {
   private moveIgnoreFunc: (pokemon: Pokemon, move: Move) => boolean;
 
@@ -4803,9 +4791,6 @@ export function initAbilities() {
       .ignorable(),
     new Ability(Abilities.EFFECT_SPORE, 3)
       .attr(EffectSporeAbAttr),
-    new Ability(Abilities.SYNCHRONIZE, 3)
-      .attr(SyncEncounterNatureAbAttr)
-      .unimplemented(),
     new Ability(Abilities.CLEAR_BODY, 3)
       .attr(ProtectStatAbAttr)
       .ignorable(),

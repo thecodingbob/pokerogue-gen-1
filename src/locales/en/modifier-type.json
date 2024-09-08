@@ -42,10 +42,6 @@
     "PokemonPpUpModifierType": {
       "description": "Permanently increases PP for one Pokémon move by {{upPoints}} for every 5 maximum PP (maximum 3)."
     },
-    "PokemonNatureChangeModifierType": {
-      "name": "{{natureName}} Mint",
-      "description": "Changes a Pokémon's nature to {{natureName}} and permanently unlocks the nature for the starter."
-    },
     "DoubleBattleChanceBoosterModifierType": {
       "description": "Doubles the chance of an encounter being a double battle for {{battleCount}} battles."
     },
@@ -186,8 +182,6 @@
     "LEEK": { "name": "Leek", "description": "This very long and stiff stalk of leek boosts the critical-hit ratio of Farfetch'd's moves."},
 
     "EVIOLITE": { "name": "Eviolite", "description": "This mysterious evolutionary lump boosts the Defense and Sp. Def stats when held by a Pokémon that can still evolve." },
-
-    "SOUL_DEW": { "name": "Soul Dew", "description": "Increases the influence of a Pokémon's nature on its stats by 10% (additive)." },
 
     "NUGGET": { "name": "Nugget" },
     "BIG_NUGGET": { "name": "Big Nugget" },

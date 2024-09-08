@@ -17,7 +17,6 @@ import BattleScene from "../battle-scene";
 import { VoucherType, getVoucherTypeIcon, getVoucherTypeName } from "../system/voucher";
 import { FormChangeItem, SpeciesFormChangeCondition, SpeciesFormChangeItemTrigger, pokemonFormChanges } from "../data/pokemon-forms";
 import { ModifierTier } from "./modifier-tier";
-import { Nature, getNatureName, getNatureStatMultiplier } from "#app/data/nature";
 import i18next from "i18next";
 import { getModifierTierTextTint } from "#app/ui/text";
 import Overrides from "#app/overrides";
@@ -394,30 +393,6 @@ export class PokemonPpUpModifierType extends PokemonMoveModifierType {
 
   getDescription(scene: BattleScene): string {
     return i18next.t("modifierType:ModifierType.PokemonPpUpModifierType.description", { upPoints: this.upPoints });
-  }
-}
-
-export class PokemonNatureChangeModifierType extends PokemonModifierType {
-  protected nature: Nature;
-
-  constructor(nature: Nature) {
-    super("", `mint_${Utils.getEnumKeys(Stat).find(s => getNatureStatMultiplier(nature, Stat[s]) > 1)?.toLowerCase() || "neutral" }`, ((_type, args) => new Modifiers.PokemonNatureChangeModifier(this, (args[0] as PlayerPokemon).id, this.nature)),
-      ((pokemon: PlayerPokemon) => {
-        if (pokemon.getNature() === this.nature) {
-          return PartyUiHandler.NoEffectMessage;
-        }
-        return null;
-      }), "mint");
-
-    this.nature = nature;
-  }
-
-  get name(): string {
-    return i18next.t("modifierType:ModifierType.PokemonNatureChangeModifierType.name", { natureName: getNatureName(this.nature) });
-  }
-
-  getDescription(scene: BattleScene): string {
-    return i18next.t("modifierType:ModifierType.PokemonNatureChangeModifierType.description", { natureName: getNatureName(this.nature, true, true, true) });
   }
 }
 
@@ -932,7 +907,7 @@ class SpeciesStatBoosterModifierTypeGenerator extends ModifierTypeGenerator {
   /** Object comprised of the currently available species-based stat boosting held items */
   public static items = {
     LIGHT_BALL: { stats: [Stat.ATK, Stat.SPATK], multiplier: 2, species: [Species.PIKACHU] },
-    THICK_CLUB: { stats: [Stat.ATK], multiplier: 2, species: [Species.CUBONE, Species.MAROWAK, Species.ALOLA_MAROWAK] },
+    THICK_CLUB: { stats: [Stat.ATK], multiplier: 2, species: [Species.CUBONE, Species.MAROWAK] },
     METAL_POWDER: { stats: [Stat.DEF], multiplier: 2, species: [Species.DITTO] },
     QUICK_POWDER: { stats: [Stat.SPD], multiplier: 2, species: [Species.DITTO] },
   };
@@ -1051,37 +1026,12 @@ class FormChangeItemModifierTypeGenerator extends ModifierTypeGenerator {
 
       const formChangeItemPool = [...new Set(party.filter(p => pokemonFormChanges.hasOwnProperty(p.species.speciesId)).map(p => {
         const formChanges = pokemonFormChanges[p.species.speciesId];
-        let formChangeItemTriggers = formChanges.filter(fc => ((fc.formKey.indexOf(SpeciesFormKey.MEGA) === -1 && fc.formKey.indexOf(SpeciesFormKey.PRIMAL) === -1) || party[0].scene.getModifiers(Modifiers.MegaEvolutionAccessModifier).length)
+        const formChangeItemTriggers = formChanges.filter(fc => ((fc.formKey.indexOf(SpeciesFormKey.MEGA) === -1 && fc.formKey.indexOf(SpeciesFormKey.PRIMAL) === -1) || party[0].scene.getModifiers(Modifiers.MegaEvolutionAccessModifier).length)
           && ((fc.formKey.indexOf(SpeciesFormKey.GIGANTAMAX) === -1 && fc.formKey.indexOf(SpeciesFormKey.ETERNAMAX) === -1) || party[0].scene.getModifiers(Modifiers.GigantamaxAccessModifier).length)
           && (!fc.conditions.length || fc.conditions.filter(cond => cond instanceof SpeciesFormChangeCondition && cond.predicate(p)).length)
           && (fc.preFormKey === p.getFormKey()))
           .map(fc => fc.findTrigger(SpeciesFormChangeItemTrigger) as SpeciesFormChangeItemTrigger)
           .filter(t => t && t.active && !p.scene.findModifier(m => m instanceof Modifiers.PokemonFormChangeItemModifier && m.pokemonId === p.id && m.formChangeItem === t.item));
-
-        if (p.species.speciesId === Species.NECROZMA) {
-          // technically we could use a simplified version and check for formChanges.length > 3, but in case any code changes later, this might break...
-
-          let foundULTRA_Z = false,
-            foundN_LUNA = false,
-            foundN_SOLAR = false;
-          formChangeItemTriggers.forEach((fc, i) => {
-            switch (fc.item) {
-            case FormChangeItem.ULTRANECROZIUM_Z:
-              foundULTRA_Z = true;
-              break;
-            case FormChangeItem.N_LUNARIZER:
-              foundN_LUNA = true;
-              break;
-            case FormChangeItem.N_SOLARIZER:
-              foundN_SOLAR = true;
-              break;
-            }
-          });
-          if (foundULTRA_Z && foundN_LUNA && foundN_SOLAR) {
-            // all three items are present -> user hasn't acquired any of the N_*ARIZERs -> block ULTRANECROZIUM_Z acquisition.
-            formChangeItemTriggers = formChangeItemTriggers.filter(fc => fc.item !== FormChangeItem.ULTRANECROZIUM_Z);
-          }
-        }
         return formChangeItemTriggers;
       }).flat().flatMap(fc => fc.item))];
       // convert it into a set to remove duplicate values, which can appear when the same species with a potential form change is in the party.
@@ -1240,10 +1190,6 @@ export type GeneratorModifierOverride = {
       type?: Stat;
     }
   | {
-      name: keyof Pick<typeof modifierTypes, "MINT">;
-      type?: Nature;
-    }
-  | {
       name: keyof Pick<typeof modifierTypes, "ATTACK_TYPE_BOOSTER" | "TERA_SHARD">;
       type?: Type;
     }
@@ -1345,13 +1291,6 @@ export const modifierTypes = {
 
   ATTACK_TYPE_BOOSTER: () => new AttackTypeBoosterModifierTypeGenerator(),
 
-  MINT: () => new ModifierTypeGenerator((party: Pokemon[], pregenArgs?: any[]) => {
-    if (pregenArgs && (pregenArgs.length === 1) && (pregenArgs[0] in Nature)) {
-      return new PokemonNatureChangeModifierType(pregenArgs[0] as Nature);
-    }
-    return new PokemonNatureChangeModifierType(Utils.randSeedInt(Utils.getEnumValues(Nature).length) as Nature);
-  }),
-
   TERA_SHARD: () => new ModifierTypeGenerator((party: Pokemon[], pregenArgs?: any[]) => {
     if (pregenArgs && (pregenArgs.length === 1) && (pregenArgs[0] in Type)) {
       return new TerastallizeModifierType(pregenArgs[0] as Type);
@@ -1409,11 +1348,9 @@ export const modifierTypes = {
   SOOTHE_BELL: () => new PokemonFriendshipBoosterModifierType("modifierType:ModifierType.SOOTHE_BELL", "soothe_bell"),
 
   SCOPE_LENS: () => new PokemonHeldItemModifierType("modifierType:ModifierType.SCOPE_LENS", "scope_lens", (type, args) => new Modifiers.CritBoosterModifier(type, (args[0] as Pokemon).id, 1)),
-  LEEK: () => new PokemonHeldItemModifierType("modifierType:ModifierType.LEEK", "leek", (type, args) => new Modifiers.SpeciesCritBoosterModifier(type, (args[0] as Pokemon).id, 2, [Species.FARFETCHD, Species.GALAR_FARFETCHD, Species.SIRFETCHD])),
+  LEEK: () => new PokemonHeldItemModifierType("modifierType:ModifierType.LEEK", "leek", (type, args) => new Modifiers.SpeciesCritBoosterModifier(type, (args[0] as Pokemon).id, 2, [Species.FARFETCHD])),
 
   EVIOLITE: () => new PokemonHeldItemModifierType("modifierType:ModifierType.EVIOLITE", "eviolite", (type, args) => new Modifiers.EvolutionStatBoosterModifier(type, (args[0] as Pokemon).id, [Stat.DEF, Stat.SPDEF], 1.5)),
-
-  SOUL_DEW: () => new PokemonHeldItemModifierType("modifierType:ModifierType.SOUL_DEW", "soul_dew", (type, args) => new Modifiers.PokemonNatureWeightModifier(type, (args[0] as Pokemon).id)),
 
   NUGGET: () => new MoneyRewardModifierType("modifierType:ModifierType.NUGGET", "nugget", 1, "modifierType:ModifierType.MoneyRewardModifierType.extra.small"),
   BIG_NUGGET: () => new MoneyRewardModifierType("modifierType:ModifierType.BIG_NUGGET", "big_nugget", 2.5, "modifierType:ModifierType.MoneyRewardModifierType.extra.moderate"),
@@ -1593,7 +1530,6 @@ const modifierPool: ModifierPool = {
     new WeightedModifierType(modifierTypes.MAX_LURE, skipInLastClassicWaveOrDefault(4)),
     new WeightedModifierType(modifierTypes.BIG_NUGGET, skipInLastClassicWaveOrDefault(12)),
     new WeightedModifierType(modifierTypes.PP_MAX, 3),
-    new WeightedModifierType(modifierTypes.MINT, 4),
     new WeightedModifierType(modifierTypes.RARE_EVOLUTION_ITEM, (party: Pokemon[]) => Math.min(Math.ceil(party[0].scene.currentBattle.waveIndex / 15) * 4, 32), 32),
     new WeightedModifierType(modifierTypes.AMULET_COIN, skipInLastClassicWaveOrDefault(3)),
     new WeightedModifierType(modifierTypes.EVIOLITE, (party: Pokemon[]) => {
@@ -1604,7 +1540,7 @@ const modifierPool: ModifierPool = {
     }),
     new WeightedModifierType(modifierTypes.SPECIES_STAT_BOOSTER, 12),
     new WeightedModifierType(modifierTypes.LEEK, (party: Pokemon[]) => {
-      const checkedSpecies = [ Species.FARFETCHD, Species.GALAR_FARFETCHD, Species.SIRFETCHD ];
+      const checkedSpecies = [ Species.FARFETCHD ];
       // If a party member doesn't already have a Leek and is one of the relevant species, Leek can appear
       return party.some(p => !p.getHeldItems().some(i => i instanceof Modifiers.SpeciesCritBoosterModifier) && (checkedSpecies.includes(p.getSpeciesForm(true).speciesId) || (p.isFusion() && checkedSpecies.includes(p.getFusionSpeciesForm(true).speciesId)))) ? 12 : 0;
     }, 12),
@@ -1653,7 +1589,6 @@ const modifierPool: ModifierPool = {
     new WeightedModifierType(modifierTypes.GRIP_CLAW, 5),
     new WeightedModifierType(modifierTypes.SCOPE_LENS, 4),
     new WeightedModifierType(modifierTypes.BATON, 2),
-    new WeightedModifierType(modifierTypes.SOUL_DEW, 7),
     //new WeightedModifierType(modifierTypes.OVAL_CHARM, 6),
     new WeightedModifierType(modifierTypes.SOOTHE_BELL, 4),
     new WeightedModifierType(modifierTypes.ABILITY_CHARM, skipInClassicAfterWave(189, 6)),
@@ -1802,7 +1737,6 @@ const dailyStarterModifierPool: ModifierPool = {
   [ModifierTier.ULTRA]: [
     new WeightedModifierType(modifierTypes.REVIVER_SEED, 4),
     new WeightedModifierType(modifierTypes.SOOTHE_BELL, 1),
-    new WeightedModifierType(modifierTypes.SOUL_DEW, 1),
     new WeightedModifierType(modifierTypes.GOLDEN_PUNCH, 1),
   ].map(m => {
     m.setTier(ModifierTier.ULTRA); return m;

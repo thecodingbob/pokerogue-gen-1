@@ -35,7 +35,6 @@ import { Gender } from "./data/gender";
 import UIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin";
 import { addUiThemeOverrides } from "./ui/ui-theme";
 import PokemonData from "./system/pokemon-data";
-import { Nature } from "./data/nature";
 import { SpeciesFormChangeManualTrigger, SpeciesFormChangeTimeOfDayTrigger, SpeciesFormChangeTrigger, pokemonFormChanges, FormChangeItem, SpeciesFormChange } from "./data/pokemon-forms";
 import { FormChangePhase } from "./phases/form-change-phase";
 import { getTypeRgb } from "./data/type";
@@ -830,8 +829,8 @@ export default class BattleScene extends SceneBase {
     return (findInParty(this.getParty()) || findInParty(this.getEnemyParty())) ?? null;
   }
 
-  addPlayerPokemon(species: PokemonSpecies, level: integer, abilityIndex?: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], nature?: Nature, dataSource?: Pokemon | PokemonData, postProcess?: (playerPokemon: PlayerPokemon) => void): PlayerPokemon {
-    const pokemon = new PlayerPokemon(this, species, level, abilityIndex, formIndex, gender, shiny, variant, ivs, nature, dataSource);
+  addPlayerPokemon(species: PokemonSpecies, level: integer, abilityIndex?: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], dataSource?: Pokemon | PokemonData, postProcess?: (playerPokemon: PlayerPokemon) => void): PlayerPokemon {
+    const pokemon = new PlayerPokemon(this, species, level, abilityIndex, formIndex, gender, shiny, variant, ivs, dataSource);
     if (postProcess) {
       postProcess(pokemon);
     }
@@ -1239,7 +1238,7 @@ export default class BattleScene extends SceneBase {
     });
   }
 
-  getSpeciesFormIndex(species: PokemonSpecies, gender?: Gender, nature?: Nature, ignoreArena?: boolean): integer {
+  getSpeciesFormIndex(species: PokemonSpecies, gender?: Gender, ignoreArena?: boolean): integer {
     if (!species.forms?.length) {
       return 0;
     }

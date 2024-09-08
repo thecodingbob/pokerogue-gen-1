@@ -42,10 +42,7 @@
     "PokemonPpUpModifierType": {
       "description": "选择一只宝可梦的一个招式使用\n使其PP最大值提升基础的20％ (最多3次)。"
     },
-    "PokemonNatureChangeModifierType": {
-      "name": "{{natureName}}薄荷",
-      "description": "将一只宝可梦的性格改为{{natureName}}并为\n该宝可梦永久解锁该性格。"
-    },
+
     "DoubleBattleChanceBoosterModifierType": {
       "description": "接下来的{{battleCount}}场战斗是双打的概率翻倍。"
     },
@@ -255,10 +252,6 @@
     "EVIOLITE": {
       "name": "进化奇石",
       "description": "携带后，还能进化的宝可梦的\n防御和特防就会提高。"
-    },
-    "SOUL_DEW": {
-      "name": "心之水滴",
-      "description": "增加10%宝可梦性格对数值的影响 (加算)。"
     },
     "NUGGET": {
       "name": "金珠"

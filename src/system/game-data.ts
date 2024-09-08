@@ -21,7 +21,6 @@ import { VoucherType, vouchers } from "./voucher";
 import { AES, enc } from "crypto-js";
 import { Mode } from "../ui/ui";
 import { clientSessionId, loggedInUser, updateUserInfo } from "../account";
-import { Nature } from "../data/nature";
 import { GameStats } from "./game-stats";
 import { Tutorial } from "../tutorial";
 import { speciesEggMoves } from "../data/egg-moves";
@@ -146,7 +145,6 @@ export interface DexData {
 export interface DexEntry {
   seenAttr: bigint;
   caughtAttr: bigint;
-  natureAttr: integer,
   seenCount: integer;
   caughtCount: integer;
   hatchedCount: integer;
@@ -197,7 +195,6 @@ export interface StarterMoveData {
 }
 
 export interface StarterAttributes {
-  nature?: integer;
   ability?: integer;
   variant?: integer;
   form?: integer;
@@ -267,7 +264,6 @@ export interface SeenDialogues {
 const systemShortKeys = {
   seenAttr: "$sa",
   caughtAttr: "$ca",
-  natureAttr: "$na",
   seenCount: "$s",
   caughtCount: "$c",
   hatchedCount: "$hc",
@@ -676,7 +672,7 @@ export class GameData {
         return ret;
       }
 
-      return k.endsWith("Attr") && ![ "natureAttr", "abilityAttr", "passiveAttr" ].includes(k) ? BigInt(v) : v;
+      return k.endsWith("Attr") && ![ "abilityAttr", "passiveAttr" ].includes(k) ? BigInt(v) : v;
     }) as SystemSaveData;
   }
 
@@ -1476,26 +1472,17 @@ export class GameData {
 
     for (const species of allSpecies) {
       data[species.speciesId] = {
-        seenAttr: 0n, caughtAttr: 0n, natureAttr: 0, seenCount: 0, caughtCount: 0, hatchedCount: 0, ivs: [ 0, 0, 0, 0, 0, 0 ]
+        seenAttr: 0n, caughtAttr: 0n, seenCount: 0, caughtCount: 0, hatchedCount: 0, ivs: [ 0, 0, 0, 0, 0, 0 ]
       };
     }
 
     const defaultStarterAttr = DexAttr.NON_SHINY | DexAttr.MALE | DexAttr.DEFAULT_VARIANT | DexAttr.DEFAULT_FORM;
 
-    const defaultStarterNatures: Nature[] = [];
-
-    this.scene.executeWithSeedOffset(() => {
-      const neutralNatures = [ Nature.HARDY, Nature.DOCILE, Nature.SERIOUS, Nature.BASHFUL, Nature.QUIRKY ];
-      for (let s = 0; s < defaultStarterSpecies.length; s++) {
-        defaultStarterNatures.push(Utils.randSeedItem(neutralNatures));
-      }
-    }, 0, "default");
 
     for (let ds = 0; ds < defaultStarterSpecies.length; ds++) {
       const entry = data[defaultStarterSpecies[ds]] as DexEntry;
       entry.seenAttr = defaultStarterAttr;
       entry.caughtAttr = defaultStarterAttr;
-      entry.natureAttr = 1 << (defaultStarterNatures[ds] + 1);
       for (const i in entry.ivs) {
         entry.ivs[i] = 10;
       }
@@ -1565,7 +1552,6 @@ export class GameData {
           ? 1 << pokemon.abilityIndex
           : AbilityAttr.ABILITY_HIDDEN;
       }
-      dexEntry.natureAttr |= 1 << (pokemon.nature + 1);
 
       const hasPrevolution = pokemonPrevolutions.hasOwnProperty(species.speciesId);
       const newCatch = !caughtAttr;
@@ -1761,32 +1747,8 @@ export class GameData {
     return abilityAttr & AbilityAttr.ABILITY_1 ? 0 : !species.ability2 || abilityAttr & AbilityAttr.ABILITY_2 ? 1 : 2;
   }
 
-  getSpeciesDefaultNature(species: PokemonSpecies): Nature {
-    const dexEntry = this.dexData[species.speciesId];
-    for (let n = 0; n < 25; n++) {
-      if (dexEntry.natureAttr & (1 << (n + 1))) {
-        return n as Nature;
-      }
-    }
-    return 0 as Nature;
-  }
-
-  getSpeciesDefaultNatureAttr(species: PokemonSpecies): integer {
-    return 1 << (this.getSpeciesDefaultNature(species));
-  }
-
   getDexAttrLuck(dexAttr: bigint): integer {
     return dexAttr & DexAttr.SHINY ? dexAttr & DexAttr.VARIANT_3 ? 3 : dexAttr & DexAttr.VARIANT_2 ? 2 : 1 : 0;
-  }
-
-  getNaturesForAttr(natureAttr: integer = 0): Nature[] {
-    const ret: Nature[] = [];
-    for (let n = 0; n < 25; n++) {
-      if (natureAttr & (1 << (n + 1))) {
-        ret.push(n);
-      }
-    }
-    return ret;
   }
 
   getSpeciesStarterValue(speciesId: Species): number {
@@ -1832,9 +1794,6 @@ export class GameData {
       const entry = dexData[k] as DexEntry;
       if (!entry.hasOwnProperty("hatchedCount")) {
         entry.hatchedCount = 0;
-      }
-      if (!entry.hasOwnProperty("natureAttr") || (entry.caughtAttr && !entry.natureAttr)) {
-        entry.natureAttr = this.defaultDexData?.[k].natureAttr || (1 << Utils.randInt(25, 1));
       }
     }
   }

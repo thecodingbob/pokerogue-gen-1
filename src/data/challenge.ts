@@ -10,7 +10,6 @@ import { Type } from "./type";
 import { Challenges } from "#enums/challenges";
 import { Species } from "#enums/species";
 import { TrainerType } from "#enums/trainer-type";
-import { Nature } from "./nature";
 import { Moves } from "#app/enums/moves.js";
 import { TypeColor, TypeShadow } from "#app/enums/color.js";
 import { Gender } from "./gender";
@@ -640,7 +639,6 @@ export class FreshStartChallenge extends Challenge {
   applyStarterModify(pokemon: Pokemon): boolean {
     pokemon.abilityIndex = 0; // Always base ability, not hidden ability
     pokemon.passive = false; // Passive isn't unlocked
-    pokemon.nature = Nature.HARDY; // Neutral nature
     pokemon.moveset = pokemon.species.getLevelMoves().filter(m => m[0] <= 5).map(lm => lm[1]).slice(0, 4).map(m => new PokemonMove(m)); // No egg moves
     pokemon.luck = 0; // No luck
     pokemon.shiny = false; // Not shiny

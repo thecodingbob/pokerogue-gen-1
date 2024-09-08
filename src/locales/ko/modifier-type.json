@@ -42,10 +42,6 @@
     "PokemonPpUpModifierType": {
       "description": "포켓몬이 기억하고 있는 기술 중 1개의 PP 최대치를 5마다 {{upPoints}}씩 상승시킨다. (최대 3)"
     },
-    "PokemonNatureChangeModifierType": {
-      "name": "{{natureName}}민트",
-      "description": "포켓몬의 성격을 {{natureName}}[[로]] 바꾸고 스타팅에도 등록한다."
-    },
     "DoubleBattleChanceBoosterModifierType": {
       "description": "{{battleCount}}번의 배틀 동안 더블 배틀이 등장할 확률이 두 배가 된다."
     },
@@ -255,10 +251,6 @@
     "EVIOLITE": {
       "name": "진화의휘석",
       "description": "진화의 이상한 덩어리. 지니게 하면 진화 전 포켓몬의 방어와 특수방어가 올라간다."
-    },
-    "SOUL_DEW": {
-      "name": "마음의물방울",
-      "description": "지닌 포켓몬의 성격의 효과가 10% 증가한다. (합연산)"
     },
     "NUGGET": {
       "name": "금구슬"

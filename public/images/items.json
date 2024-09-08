@@ -8116,27 +8116,6 @@
 					}
 				},
 				{
-					"filename": "soul_dew",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 8,
-						"y": 8,
-						"w": 16,
-						"h": 16
-					},
-					"frame": {
-						"x": 393,
-						"y": 332,
-						"w": 16,
-						"h": 16
-					}
-				},
-				{
 					"filename": "steelixite",
 					"rotated": false,
 					"trimmed": true,

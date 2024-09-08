@@ -3,7 +3,7 @@ export function getData() {
   if (!dataStr) {
     return null;
   }
-  return JSON.parse(atob(dataStr), (k, v) => k.endsWith("Attr") && ![ "natureAttr", "abilityAttr", "passiveAttr" ].includes(k) ? BigInt(v) : v);
+  return JSON.parse(atob(dataStr), (k, v) => k.endsWith("Attr") && ![ "abilityAttr", "passiveAttr" ].includes(k) ? BigInt(v) : v);
 }
 
 export function getSession() {

@@ -10,7 +10,7 @@ import * as Utils from "../utils";
 import { Type, TypeDamageMultiplier, getTypeDamageMultiplier, getTypeRgb } from "../data/type";
 import { getLevelTotalExp } from "../data/exp";
 import { Stat } from "../data/pokemon-stat";
-import { DamageMoneyRewardModifier, EnemyDamageBoosterModifier, EnemyDamageReducerModifier, EnemyEndureChanceModifier, EnemyFusionChanceModifier, HiddenAbilityRateBoosterModifier, PokemonBaseStatModifier, PokemonFriendshipBoosterModifier, PokemonHeldItemModifier, PokemonNatureWeightModifier, ShinyRateBoosterModifier, SurviveDamageModifier, TempBattleStatBoosterModifier, StatBoosterModifier, CritBoosterModifier, TerastallizeModifier } from "../modifier/modifier";
+import { DamageMoneyRewardModifier, EnemyDamageBoosterModifier, EnemyDamageReducerModifier, EnemyEndureChanceModifier, EnemyFusionChanceModifier, HiddenAbilityRateBoosterModifier, PokemonBaseStatModifier, PokemonFriendshipBoosterModifier, PokemonHeldItemModifier, ShinyRateBoosterModifier, SurviveDamageModifier, TempBattleStatBoosterModifier, StatBoosterModifier, CritBoosterModifier, TerastallizeModifier } from "../modifier/modifier";
 import { PokeballType } from "../data/pokeball";
 import { Gender } from "../data/gender";
 import { initMoveAnim, loadMoveAnimAssets } from "../data/battle-anims";
@@ -32,7 +32,6 @@ import { LevelMoves } from "../data/pokemon-level-moves";
 import { DamageAchv, achvs } from "../system/achv";
 import { DexAttr, StarterDataEntry, StarterMoveset } from "../system/game-data";
 import { QuantizerCelebi, argbFromRgba, rgbaFromArgb } from "@material/material-color-utilities";
-import { Nature, getNatureStatMultiplier } from "../data/nature";
 import { SpeciesFormChange, SpeciesFormChangeActiveTrigger, SpeciesFormChangeMoveLearnedTrigger, SpeciesFormChangePostMoveTrigger, SpeciesFormChangeStatusEffectTrigger } from "../data/pokemon-forms";
 import { TerrainType } from "../data/terrain";
 import { TrainerSlot } from "../data/trainer-config";
@@ -85,8 +84,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
   public hp: integer;
   public stats: integer[];
   public ivs: integer[];
-  public nature: Nature;
-  public natureOverride: Nature | -1;
   public moveset: (PokemonMove | null)[];
   public status: Status | null;
   public friendship: integer;
@@ -120,7 +117,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
 
   private shinySparkle: Phaser.GameObjects.Sprite;
 
-  constructor(scene: BattleScene, x: number, y: number, species: PokemonSpecies, level: integer, abilityIndex?: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], nature?: Nature, dataSource?: Pokemon | PokemonData) {
+  constructor(scene: BattleScene, x: number, y: number, species: PokemonSpecies, level: integer, abilityIndex?: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], dataSource?: Pokemon | PokemonData) {
     super(scene, x, y);
 
     if (!species.isObtainable() && this.isPlayer()) {
@@ -176,9 +173,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       if (this.variant === undefined) {
         this.variant = 0;
       }
-      this.nature = dataSource.nature || 0 as Nature;
       this.nickname = dataSource.nickname;
-      this.natureOverride = dataSource.natureOverride !== undefined ? dataSource.natureOverride : -1;
       this.moveset = dataSource.moveset;
       this.status = dataSource.status!; // TODO: is this bang correct?
       this.friendship = dataSource.friendship !== undefined ? dataSource.friendship : this.species.baseFriendship;
@@ -204,7 +199,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       }
 
       if (this.formIndex === undefined) {
-        this.formIndex = this.scene.getSpeciesFormIndex(species, this.gender, this.nature, this.isPlayer());
+        this.formIndex = this.scene.getSpeciesFormIndex(species, this.gender, this.isPlayer());
       }
 
       if (this.shiny === undefined) {
@@ -214,14 +209,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       if (this.variant === undefined) {
         this.variant = this.shiny ? this.generateVariant() : 0;
       }
-
-      if (nature !== undefined) {
-        this.setNature(nature);
-      } else {
-        this.generateNature();
-      }
-
-      this.natureOverride = -1;
 
       this.friendship = species.baseFriendship;
       this.metLevel = level;
@@ -794,31 +781,9 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
         }
       } else {
         value += 5;
-        const natureStatMultiplier = new Utils.NumberHolder(getNatureStatMultiplier(this.getNature(), s));
-        this.scene.applyModifier(PokemonNatureWeightModifier, this.isPlayer(), this, natureStatMultiplier);
-        if (natureStatMultiplier.value !== 1) {
-          value = Math.max(Math[natureStatMultiplier.value > 1 ? "ceil" : "floor"](value * natureStatMultiplier.value), 1);
-        }
       }
       this.stats[s] = value;
     }
-  }
-
-  getNature(): Nature {
-    return this.natureOverride !== -1 ? this.natureOverride : this.nature;
-  }
-
-  setNature(nature: Nature): void {
-    this.nature = nature;
-    this.calculateStats();
-  }
-
-  generateNature(naturePool?: Nature[]): void {
-    if (naturePool === undefined) {
-      naturePool = Utils.getEnumValues(Nature);
-    }
-    const nature = naturePool[Utils.randSeedInt(naturePool.length)];
-    this.setNature(nature);
   }
 
   isFullHp(): boolean {
@@ -1617,7 +1582,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       }
     }
 
-    this.fusionFormIndex = this.scene.getSpeciesFormIndex(this.fusionSpecies, this.fusionGender, this.getNature(), true);
+    this.fusionFormIndex = this.scene.getSpeciesFormIndex(this.fusionSpecies, this.fusionGender, true);
     this.fusionLuck = this.luck;
 
     this.generateName();
@@ -3325,8 +3290,8 @@ export default interface Pokemon {
 export class PlayerPokemon extends Pokemon {
   public compatibleTms: Moves[];
 
-  constructor(scene: BattleScene, species: PokemonSpecies, level: integer, abilityIndex?: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], nature?: Nature, dataSource?: Pokemon | PokemonData) {
-    super(scene, 106, 148, species, level, abilityIndex, formIndex, gender, shiny, variant, ivs, nature, dataSource);
+  constructor(scene: BattleScene, species: PokemonSpecies, level: integer, abilityIndex?: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], dataSource?: Pokemon | PokemonData) {
+    super(scene, 106, 148, species, level, abilityIndex, formIndex, gender, shiny, variant, ivs, dataSource);
 
     if (Overrides.STATUS_OVERRIDE) {
       this.status = new Status(Overrides.STATUS_OVERRIDE);
@@ -3513,12 +3478,12 @@ export class PlayerPokemon extends Pokemon {
         const originalFusionFormIndex = this.fusionFormIndex;
         this.fusionSpecies = evolutionSpecies;
         this.fusionFormIndex = evolution.evoFormKey !== null ? Math.max(evolutionSpecies.forms.findIndex(f => f.formKey === evolution.evoFormKey), 0) : this.fusionFormIndex;
-        ret = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this.nature, this);
+        ret = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
         this.fusionSpecies = originalFusionSpecies;
         this.fusionFormIndex = originalFusionFormIndex;
       } else {
         const formIndex = evolution.evoFormKey !== null && !isFusion ? Math.max(evolutionSpecies.forms.findIndex(f => f.formKey === evolution.evoFormKey), 0) : this.formIndex;
-        ret = this.scene.addPlayerPokemon(!isFusion ? evolutionSpecies : this.species, this.level, this.abilityIndex, formIndex, this.gender, this.shiny, this.variant, this.ivs, this.nature, this);
+        ret = this.scene.addPlayerPokemon(!isFusion ? evolutionSpecies : this.species, this.level, this.abilityIndex, formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
       }
       ret.loadAssets().then(() => resolve(ret));
     });
@@ -3592,7 +3557,7 @@ export class PlayerPokemon extends Pokemon {
   getPossibleForm(formChange: SpeciesFormChange): Promise<Pokemon> {
     return new Promise(resolve => {
       const formIndex = Math.max(this.species.forms.findIndex(f => f.formKey === formChange.formKey), 0);
-      const ret = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, formIndex, this.gender, this.shiny, this.variant, this.ivs, this.nature, this);
+      const ret = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
       ret.loadAssets().then(() => resolve(ret));
     });
   }
@@ -3719,7 +3684,7 @@ export class EnemyPokemon extends Pokemon {
 
   constructor(scene: BattleScene, species: PokemonSpecies, level: integer, trainerSlot: TrainerSlot, boss: boolean, dataSource?: PokemonData) {
     super(scene, 236, 84, species, level, dataSource?.abilityIndex, dataSource?.formIndex,
-      dataSource?.gender, dataSource ? dataSource.shiny : false, dataSource ? dataSource.variant : undefined, undefined, dataSource ? dataSource.nature : undefined, dataSource);
+      dataSource?.gender, dataSource ? dataSource.shiny : false, dataSource ? dataSource.variant : undefined, undefined, dataSource);
 
     this.trainerSlot = trainerSlot;
     this.isPopulatedFromDataSource = !!dataSource; // if a dataSource is provided, then it was populated from dataSource
@@ -4192,7 +4157,7 @@ export class EnemyPokemon extends Pokemon {
       this.metLevel = this.level;
       this.metBiome = this.scene.arena.biomeType;
       this.metSpecies = this.species.speciesId;
-      const newPokemon = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this.nature, this);
+      const newPokemon = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
       party.push(newPokemon);
       ret = newPokemon;
       this.scene.triggerPokemonFormChange(newPokemon, SpeciesFormChangeActiveTrigger, true);

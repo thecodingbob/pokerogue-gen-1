@@ -15,7 +15,6 @@ import { Challenges } from "#enums/challenges";
 import { getLuckString, getLuckTextTint } from "../modifier/modifier-type";
 import RoundRectangle from "phaser3-rex-plugins/plugins/roundrectangle.js";
 import { Type, getTypeRgb } from "../data/type";
-import { getNatureStatMultiplier, getNatureName } from "../data/nature";
 import { getVariantTint } from "#app/data/variant";
 import { PokemonHeldItemModifier, TerastallizeModifier } from "../modifier/modifier";
 import {modifierSortFunc} from "../modifier/modifier";
@@ -487,7 +486,7 @@ export default class RunInfoUiHandler extends UiHandler {
 
   /**
    * Parses and displays the run's player party.
-   * Default Information: Icon, Level, Nature, Ability, Passive, Shiny Status, Fusion Status, Stats, and Moves.
+   * Default Information: Icon, Level, Ability, Passive, Shiny Status, Fusion Status, Stats, and Moves.
    * B-Side Information: Icon + Held Items (Can be displayed to the user through pressing the abilityButton)
    */
  	private parsePartyInfo(): void {
@@ -518,10 +517,9 @@ export default class RunInfoUiHandler extends UiHandler {
 
       this.getUi().bringToTop(icon);
 
-      // Contains Name, Level + Nature, Ability, Passive
+      // Contains Name, Level, Ability, Passive
       const pokeInfoTextContainer = this.scene.add.container(-85, 3.5);
       const textContainerFontSize = "34px";
-      const pNature = getNatureName(pokemon.nature);
       const pName = pokemon.getNameToRender();
       //With the exception of Korean/Traditional Chinese/Simplified Chinese, the code shortens the terms for ability and passive to their first letter.
       //These languages are exempted because they are already short enough.
@@ -537,21 +535,14 @@ export default class RunInfoUiHandler extends UiHandler {
       // Japanese is set to a greater line spacing of 35px in addBBCodeTextObject() if lineSpacing < 12.
       const lineSpacing = (i18next.resolvedLanguage === "ja") ? 12 : 3;
       const pokeInfoText = addBBCodeTextObject(this.scene, 0, 0, pName, TextStyle.SUMMARY, {fontSize: textContainerFontSize, lineSpacing: lineSpacing});
-      pokeInfoText.appendText(`${i18next.t("saveSlotSelectUiHandler:lv")}${Utils.formatFancyLargeNumber(pokemon.level, 1)} - ${pNature}`);
       pokeInfoText.appendText(pAbilityInfo);
       pokeInfoText.appendText(pPassiveInfo);
       pokeInfoTextContainer.add(pokeInfoText);
 
       // Pokemon Stats
-      // Colored Arrows (Red/Blue) are placed by stats that are boosted from natures
       const pokeStatTextContainer = this.scene.add.container(-35, 6);
       const pStats : string[]= [];
       pokemon.stats.forEach((element) => pStats.push(Utils.formatFancyLargeNumber(element, 1)));
-      for (let i = 0; i < pStats.length; i++) {
-        const isMult = getNatureStatMultiplier(pokemon.nature, i);
-        pStats[i] = (isMult < 1) ? pStats[i] + "[color=#40c8f8]↓[/color]" : pStats[i];
-        pStats[i] = (isMult > 1) ? pStats[i] + "[color=#f89890]↑[/color]" : pStats[i];
-      }
       const hp = i18next.t("pokemonInfo:Stat.HPshortened")+": "+pStats[0];
       const atk = i18next.t("pokemonInfo:Stat.ATKshortened")+": "+pStats[1];
       const def = i18next.t("pokemonInfo:Stat.DEFshortened")+": "+pStats[2];

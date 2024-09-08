@@ -15,7 +15,6 @@ import { Stat, getStatName } from "../data/pokemon-stat";
 import { PokemonHeldItemModifier } from "../modifier/modifier";
 import { StatusEffect } from "../data/status-effect";
 import { getBiomeName } from "../data/biomes";
-import { Nature, getNatureName, getNatureStatMultiplier } from "../data/nature";
 import { loggedInUser } from "../account";
 import { Variant, getVariantTint } from "#app/data/variant";
 import {Button} from "#enums/buttons";
@@ -817,15 +816,12 @@ export default class SummaryUiHandler extends UiHandler {
       this.passiveContainer?.descriptionText?.setVisible(false);
 
       const closeFragment = getBBCodeFrag("", TextStyle.WINDOW_ALT);
-      const rawNature = Utils.toReadableString(Nature[this.pokemon?.getNature()!]); // TODO: is this bang correct?
-      const nature = `${getBBCodeFrag(Utils.toReadableString(getNatureName(this.pokemon?.getNature()!)), TextStyle.SUMMARY_RED)}${closeFragment}`; // TODO: is this bang correct?
 
       const memoString = i18next.t("pokemonSummary:memoString", {
         metFragment: i18next.t(`pokemonSummary:metFragment.${this.pokemon?.metBiome === -1? "apparently": "normal"}`, {
           biome: `${getBBCodeFrag(getBiomeName(this.pokemon?.metBiome!), TextStyle.SUMMARY_RED)}${closeFragment}`, // TODO: is this bang correct?
           level: `${getBBCodeFrag(this.pokemon?.metLevel.toString()!, TextStyle.SUMMARY_RED)}${closeFragment}`, // TODO: is this bang correct?
         }),
-        natureFragment: i18next.t(`pokemonSummary:natureFragment.${rawNature}`, { nature: nature })
       });
 
       const memoText = addBBCodeTextObject(this.scene, 7, 113, String(memoString), TextStyle.WINDOW_ALT);
@@ -843,9 +839,7 @@ export default class SummaryUiHandler extends UiHandler {
         const rowIndex = s % 3;
         const colIndex = Math.floor(s / 3);
 
-        const natureStatMultiplier = getNatureStatMultiplier(this.pokemon?.getNature()!, s); // TODO: is this bang correct?
-
-        const statLabel = addTextObject(this.scene, 27 + 115 * colIndex + (colIndex === 1 ?  5 : 0), 56 + 16 * rowIndex, statName, natureStatMultiplier === 1 ? TextStyle.SUMMARY : natureStatMultiplier > 1 ? TextStyle.SUMMARY_PINK : TextStyle.SUMMARY_BLUE);
+        const statLabel = addTextObject(this.scene, 27 + 115 * colIndex + (colIndex === 1 ?  5 : 0), 56 + 16 * rowIndex, statName, TextStyle.SUMMARY);
         statLabel.setOrigin(0.5, 0);
         statsContainer.add(statLabel);
 

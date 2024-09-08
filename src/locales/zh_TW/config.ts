@@ -30,7 +30,6 @@ import menuUiHandler from "./menu-ui-handler.json";
 import modifier from "./modifier.json";
 import modifierType from "./modifier-type.json";
 import move from "./move.json";
-import nature from "./nature.json";
 import partyUiHandler from "./party-ui-handler.json";
 import pokeball from "./pokeball.json";
 import pokemon from "./pokemon.json";
@@ -87,7 +86,6 @@ export const zhTwConfig = {
   modifier,
   modifierType,
   move,
-  nature,
   pokeball,
   pokemon,
   pokemonForm,

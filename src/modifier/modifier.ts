@@ -7,7 +7,7 @@ import { Stat } from "../data/pokemon-stat";
 import { addTextObject, TextStyle } from "../ui/text";
 import { Type } from "../data/type";
 import { EvolutionPhase } from "../phases/evolution-phase";
-import { FusionSpeciesFormEvolution, pokemonEvolutions, pokemonPrevolutions } from "../data/pokemon-evolutions";
+import { FusionSpeciesFormEvolution, pokemonEvolutions } from "../data/pokemon-evolutions";
 import { getPokemonNameWithAffix } from "../messages";
 import * as Utils from "../utils";
 import { TempBattleStat } from "../data/temp-battle-stat";
@@ -18,7 +18,6 @@ import { StatusEffect, getStatusEffectHealText } from "../data/status-effect";
 import { achvs } from "../system/achv";
 import { VoucherType } from "../system/voucher";
 import { FormChangeItem, SpeciesFormChangeItemTrigger } from "../data/pokemon-forms";
-import { Nature } from "#app/data/nature";
 import Overrides from "#app/overrides";
 import { ModifierType, modifierTypes } from "./modifier-type";
 import { Command } from "#app/ui/command-ui-handler";
@@ -1569,30 +1568,6 @@ export class PokemonPpUpModifier extends ConsumablePokemonMoveModifier {
   }
 }
 
-export class PokemonNatureChangeModifier extends ConsumablePokemonModifier {
-  public nature: Nature;
-
-  constructor(type: ModifierType, pokemonId: integer, nature: Nature) {
-    super(type, pokemonId);
-
-    this.nature = nature;
-  }
-
-  apply(args: any[]): boolean {
-    const pokemon = args[0] as Pokemon;
-    pokemon.natureOverride = this.nature;
-    let speciesId = pokemon.species.speciesId;
-    pokemon.scene.gameData.dexData[speciesId].natureAttr |= 1 << (this.nature + 1);
-
-    while (pokemonPrevolutions.hasOwnProperty(speciesId)) {
-      speciesId = pokemonPrevolutions[speciesId];
-      pokemon.scene.gameData.dexData[speciesId].natureAttr |= 1 << (this.nature + 1);
-    }
-
-    return true;
-  }
-}
-
 export class PokemonLevelIncrementModifier extends ConsumablePokemonModifier {
   constructor(type: ModifierType, pokemonId: integer) {
     super(type, pokemonId);
@@ -1897,34 +1872,6 @@ export class PokemonFriendshipBoosterModifier extends PokemonHeldItemModifier {
 
   getMaxHeldItemCount(pokemon: Pokemon): integer {
     return 3;
-  }
-}
-
-export class PokemonNatureWeightModifier extends PokemonHeldItemModifier {
-  constructor(type: ModifierTypes.ModifierType, pokemonId: integer, stackCount?: integer) {
-    super(type, pokemonId, stackCount);
-  }
-
-  matchType(modifier: Modifier): boolean {
-    return modifier instanceof PokemonNatureWeightModifier;
-  }
-
-  clone(): PersistentModifier {
-    return new PokemonNatureWeightModifier(this.type, this.pokemonId, this.stackCount);
-  }
-
-  apply(args: any[]): boolean {
-    const multiplier = args[1] as Utils.IntegerHolder;
-    if (multiplier.value !== 1) {
-      multiplier.value += 0.1 * this.getStackCount() * (multiplier.value > 1 ? 1 : -1);
-      return true;
-    }
-
-    return false;
-  }
-
-  getMaxHeldItemCount(pokemon: Pokemon): integer {
-    return 10;
   }
 }
 

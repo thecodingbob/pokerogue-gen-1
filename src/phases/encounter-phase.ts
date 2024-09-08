@@ -1,6 +1,5 @@
 import BattleScene from "#app/battle-scene";
 import { BattleType, BattlerIndex } from "#app/battle";
-import { applyAbAttrs, SyncEncounterNatureAbAttr } from "#app/data/ability";
 import { getCharVariantFromDialogue } from "#app/data/dialogue";
 import { TrainerSlot } from "#app/data/trainer-config";
 import { getRandomWeatherType } from "#app/data/weather";
@@ -65,9 +64,6 @@ export class EncounterPhase extends BattlePhase {
           if (this.scene.currentBattle.battleSpec === BattleSpec.FINAL_BOSS) {
             battle.enemyParty[e].ivs = new Array(6).fill(31);
           }
-          this.scene.getParty().slice(0, !battle.double ? 1 : 2).reverse().forEach(playerPokemon => {
-            applyAbAttrs(SyncEncounterNatureAbAttr, playerPokemon, null, false, battle.enemyParty[e]);
-          });
         }
       }
       const enemyPokemon = this.scene.getEnemyParty()[e];

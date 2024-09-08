@@ -42,10 +42,6 @@
     "PokemonPpUpModifierType": {
       "description": "Aumenta i PP di una mossa di {{upPoints}} per ogni 5 PP (massimo 3)."
     },
-    "PokemonNatureChangeModifierType": {
-      "name": "Menta {{natureName}}.",
-      "description": "Cambia la natura del Pokémon in {{natureName}} e sblocca la natura nel menu degli starter."
-    },
     "DoubleBattleChanceBoosterModifierType": {
       "description": "Raddoppia la possibilità di imbattersi in doppie battaglie per {{battleCount}} battaglie."
     },
@@ -255,10 +251,6 @@
     "EVIOLITE": {
       "name": "Evolcondensa",
       "description": "Misteriosa materia evolutiva. Aumenta la Difesa e la Difesa Speciale di un Pokémon che può ancora evolversi."
-    },
-    "SOUL_DEW": {
-      "name": "Cuorugiada",
-      "description": "Aumenta del 10% l'influenza della natura di un Pokémon sulle sue statistiche (cumulativo)."
     },
     "NUGGET": {
       "name": "Pepita"

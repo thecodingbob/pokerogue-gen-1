@@ -42,10 +42,6 @@
     "PokemonPpUpModifierType": {
       "description": "Erhöht die maximale Anzahl der AP der ausgewählten Attacke um {{upPoints}} für jede 5 maximale AP (maximal 3)."
     },
-    "PokemonNatureChangeModifierType": {
-      "name": "{{natureName}} Minze",
-      "description": "Ändert das Wesen zu {{natureName}}. Schaltet dieses Wesen permanent für diesen Starter frei."
-    },
     "DoubleBattleChanceBoosterModifierType": {
       "description": "Verdoppelt die Wahrscheinlichkeit, dass die nächsten {{battleCount}} Begegnungen mit wilden Pokémon ein Doppelkampf sind."
     },
@@ -255,10 +251,6 @@
     "EVIOLITE": {
       "name": "Evolith",
       "description": "Ein mysteriöser Klumpen, der die Vert. u. Spez.-Vert. von Pokémon erhöht, die sich noch entwickeln können."
-    },
-    "SOUL_DEW": {
-      "name": "Seelentau",
-      "description": "Erhöht den Einfluss des Wesens eines Pokemon auf seine Werte um 10% (additiv)."
     },
     "NUGGET": {
       "name": "Nugget"

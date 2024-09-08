@@ -42,10 +42,6 @@
     "PokemonPpUpModifierType": {
       "description": "Aumenta permanentemente os PP para o movimento de um Pokémon em {{upPoints}} para cada 5 PP máximos (máximo 3)."
     },
-    "PokemonNatureChangeModifierType": {
-      "name": "Hortelã {{natureName}}",
-      "description": "Muda a natureza do Pokémon para {{natureName}} e a desbloqueia permanentemente."
-    },
     "DoubleBattleChanceBoosterModifierType": {
       "description": "Dobra as chances de encontrar uma batalha em dupla por {{battleCount}} batalhas."
     },
@@ -255,10 +251,6 @@
     "EVIOLITE": {
       "name": "Eviolita",
       "description": "Esse misterioso caroço evolutivo aumenta os atributos de Defesa e Def. Esp. quando segurado por um Pokémon que ainda pode evoluir."
-    },
-    "SOUL_DEW": {
-      "name": "Joia da Alma",
-      "description": "Aumenta a influência da natureza de um Pokémon em seus atributos em 10% (cumulativo)."
     },
     "NUGGET": {
       "name": "Pepita"

@@ -42,10 +42,6 @@
     "PokemonPpUpModifierType": {
       "description": "永久提升一個招式的PP，每5點最大PP增加{{upPoints}} (最多3點)。"
     },
-    "PokemonNatureChangeModifierType": {
-      "name": "{{natureName}}薄荷",
-      "description": "將一隻寶可夢的性格改爲{{natureName}}併爲該寶可\n夢永久解鎖該性格。"
-    },
     "DoubleBattleChanceBoosterModifierType": {
       "description": "接下來的{{battleCount}}場戰鬥是雙打的概率翻倍。"
     },
@@ -251,10 +247,6 @@
     "EVIOLITE": {
       "name": "進化奇石",
       "description": "進化的神奇石塊。攜帶後，還能進化的寶可夢的 防禦和特防就會提高。"
-    },
-    "SOUL_DEW": {
-      "name": "心之水滴",
-      "description": "增加寶可夢性格影響10% (加算)。"
     },
     "NUGGET": {
       "name": "金珠"

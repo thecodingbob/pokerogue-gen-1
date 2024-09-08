@@ -42,10 +42,6 @@
     "PokemonPpUpModifierType": {
       "description": "ポケモンのわざのさいだいPPを さいだいPP 5ごとに {{upPoints}} ポイントずつ ふやします（さいだい3）"
     },
-    "PokemonNatureChangeModifierType": {
-      "name": "{{natureName}} Mint",
-      "description": "ポケモンのせいかくを {{natureName}}にかえて スターターのせいかくをえいきゅうにかいじょする"
-    },
     "DoubleBattleChanceBoosterModifierType": {
       "description": "バトル{{battleCount}}かいのあいだ ダブルバトルになるかくりつを2ばいにする"
     },
@@ -255,10 +251,6 @@
     "EVIOLITE": {
       "name": "しんかのきせき",
       "description": "進化の不思議な かたまり。持たせると 進化前ポケモンの 防御と 特防が あがる。"
-    },
-    "SOUL_DEW": {
-      "name": "こころのしずく",
-      "description": "ポケモンのせいかくがステータスにあたえるえいきょうを10%ふやす（合算）"
     },
     "NUGGET": {
       "name": "きんのたま"

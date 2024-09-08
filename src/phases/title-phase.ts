@@ -210,7 +210,7 @@ export class TitlePhase extends Phase {
           const starterGender = starter.species.malePercent !== null
             ? !starterProps.female ? Gender.MALE : Gender.FEMALE
             : Gender.GENDERLESS;
-          const starterPokemon = this.scene.addPlayerPokemon(starter.species, startingLevel, starter.abilityIndex, starterFormIndex, starterGender, starterProps.shiny, starterProps.variant, undefined, starter.nature);
+          const starterPokemon = this.scene.addPlayerPokemon(starter.species, startingLevel, starter.abilityIndex, starterFormIndex, starterGender, starterProps.shiny, starterProps.variant, undefined);
           starterPokemon.setVisible(false);
           party.push(starterPokemon);
           loadPokemonAssets.push(starterPokemon.loadAssets());

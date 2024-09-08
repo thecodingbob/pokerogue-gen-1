@@ -1,7 +1,6 @@
 import { BattleType } from "../battle";
 import BattleScene from "../battle-scene";
 import { Gender } from "../data/gender";
-import { Nature } from "../data/nature";
 import { PokeballType } from "../data/pokeball";
 import { getPokemonSpecies } from "../data/pokemon-species";
 import { Status } from "../data/status-effect";
@@ -31,8 +30,6 @@ export default class PokemonData {
   public hp: integer;
   public stats: integer[];
   public ivs: integer[];
-  public nature: Nature;
-  public natureOverride: Nature | -1;
   public moveset: (PokemonMove | null)[];
   public status: Status | null;
   public friendship: integer;
@@ -79,8 +76,6 @@ export default class PokemonData {
     }
     this.stats = source.stats;
     this.ivs = source.ivs;
-    this.nature = source.nature !== undefined ? source.nature : 0 as Nature;
-    this.natureOverride = source.natureOverride !== undefined ? source.natureOverride : -1;
     this.friendship = source.friendship !== undefined ? source.friendship : getPokemonSpecies(this.species).baseFriendship;
     this.metLevel = source.metLevel || 5;
     this.metBiome = source.metBiome !== undefined ? source.metBiome : -1;
@@ -145,7 +140,7 @@ export default class PokemonData {
   toPokemon(scene: BattleScene, battleType?: BattleType, partyMemberIndex: integer = 0, double: boolean = false): Pokemon {
     const species = getPokemonSpecies(this.species);
     const ret: Pokemon = this.player
-      ? scene.addPlayerPokemon(species, this.level, this.abilityIndex, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this.nature, this, (playerPokemon) => {
+      ? scene.addPlayerPokemon(species, this.level, this.abilityIndex, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this, (playerPokemon) => {
         if (this.nickname) {
           playerPokemon.nickname = this.nickname;
         }

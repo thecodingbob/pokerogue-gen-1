@@ -42,10 +42,6 @@
     "PokemonPpUpModifierType": {
       "description": "Augmente le max de PP de {{upPoints}} à une capacité d’un Pokémon pour chaque 5 PP max (max : 3)."
     },
-    "PokemonNatureChangeModifierType": {
-      "name": "Aromate {{natureName}}",
-      "description": "Donne la nature {{natureName}} à un Pokémon et la débloque pour le starter lui étant lié."
-    },
     "DoubleBattleChanceBoosterModifierType": {
       "description": "Double les chances de tomber sur un combat double pendant {{battleCount}} combats."
     },
@@ -187,7 +183,6 @@
 
     "EVIOLITE": { "name": "Évoluroc", "description": "Augmente de 50% la Défense et Déf. Spé. si le porteur peut évoluer, 25% aux fusions dont une moitié le peut encore." },
 
-    "SOUL_DEW": { "name": "Rosée Âme", "description": "Augmente de 10% l’influence de la nature d’un Pokémon sur ses statistiques. Effet cumulatif." },
 
     "NUGGET": { "name": "Pépite" },
     "BIG_NUGGET": { "name": "Maxi Pépite" },
