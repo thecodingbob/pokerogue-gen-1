@@ -746,7 +746,7 @@ export default class SummaryUiHandler extends UiHandler {
         profileContainer.add(luckText);
       }
 
-      const allAbilityInfo = []; // Creates an array to iterate through
+      const allAbilityInfo: abilityContainer[] = []; // Creates an array to iterate through
       // Only add to the array and set up displaying a passive if it's unlocked
       if (this.pokemon?.hasPassive()) {
         this.passiveContainer = {

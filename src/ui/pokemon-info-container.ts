@@ -161,16 +161,6 @@ export default class PokemonInfoContainer extends Phaser.GameObjects.Container {
     this.pokemonGenderNewText.setName("text-pkmn-new-gender");
     this.add(this.pokemonGenderNewText);
 
-    this.pokemonAbilityLabelText = addTextObject(this.scene, infoContainerLabelXPos, 29, i18next.t("pokemonInfoContainer:ability"), TextStyle.WINDOW, { fontSize: infoContainerTextSize });
-    this.pokemonAbilityLabelText.setOrigin(1, 0);
-    this.pokemonAbilityLabelText.setName("text-pkmn-ability-label");
-    this.add(this.pokemonAbilityLabelText);
-
-    this.pokemonAbilityText = addTextObject(this.scene, infoContainerTextXPos, 29, "", TextStyle.WINDOW, { fontSize: infoContainerTextSize });
-    this.pokemonAbilityText.setOrigin(0, 0);
-    this.pokemonAbilityText.setName("text-pkmn-ability");
-    this.add(this.pokemonAbilityText);
-
     this.pokemonShinyIcon = this.scene.add.image(-43.5, 48.5, "shiny_star");
     this.pokemonShinyIcon.setOrigin(0, 0);
     this.pokemonShinyIcon.setScale(0.75);

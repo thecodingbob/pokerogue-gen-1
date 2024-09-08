@@ -96,17 +96,6 @@ export class OverridesHelper extends GameManagerHelper {
   }
 
   /**
-   * Override the player (pokemon) {@linkcode Abilities | ability}
-   * @param ability the (pokemon) {@linkcode Abilities | ability} to set
-   * @returns this
-   */
-  ability(ability: Abilities): this {
-    vi.spyOn(Overrides, "ABILITY_OVERRIDE", "get").mockReturnValue(ability);
-    this.log(`Player Pokemon ability set to ${Abilities[ability]} (=${ability})!`);
-    return this;
-  }
-
-  /**
    * Override the player (pokemon) **passive** {@linkcode Abilities | ability}
    * @param passiveAbility the (pokemon) **passive** {@linkcode Abilities | ability} to set
    * @returns this
@@ -211,17 +200,6 @@ export class OverridesHelper extends GameManagerHelper {
   enemySpecies(species: Species | number): this {
     vi.spyOn(Overrides, "OPP_SPECIES_OVERRIDE", "get").mockReturnValue(species);
     this.log(`Enemy Pokemon species set to ${Species[species]} (=${species})!`);
-    return this;
-  }
-
-  /**
-   * Override the enemy (pokemon) {@linkcode Abilities | ability}
-   * @param ability the (pokemon) {@linkcode Abilities | ability} to set
-   * @returns this
-   */
-  enemyAbility(ability: Abilities): this {
-    vi.spyOn(Overrides, "OPP_ABILITY_OVERRIDE", "get").mockReturnValue(ability);
-    this.log(`Enemy Pokemon ability set to ${Abilities[ability]} (=${ability})!`);
     return this;
   }
 

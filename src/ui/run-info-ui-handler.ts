@@ -803,9 +803,6 @@ export default class RunInfoUiHandler extends UiHandler {
       break;
     case Button.CYCLE_FORM:
     case Button.CYCLE_SHINY:
-    case Button.CYCLE_ABILITY:
-      this.buttonCycleOption(button);
-      break;
     }
 
     if (success) {
@@ -848,13 +845,6 @@ export default class RunInfoUiHandler extends UiHandler {
           this.hallofFameContainer.setVisible(false);
           this.pageMode = RunInfoUiMode.MAIN;
         }
-      }
-      break;
-    case Button.CYCLE_ABILITY:
-      if (this.partyVisibility) {
-        this.showParty(false);
-      } else {
-        this.showParty(true);
       }
       break;
     }

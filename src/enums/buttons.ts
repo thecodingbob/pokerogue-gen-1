@@ -11,7 +11,6 @@ export enum Button {
 	CYCLE_SHINY,
 	CYCLE_FORM,
 	CYCLE_GENDER,
-	CYCLE_ABILITY,
 	V,
 	SPEED_UP,
 	SLOW_DOWN

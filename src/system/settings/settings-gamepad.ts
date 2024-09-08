@@ -42,7 +42,6 @@ export const settingGamepadOptions = {
   [SettingGamepad.Button_Cycle_Form]: [`KEY ${Button.CYCLE_FORM.toString()}`, pressAction],
   [SettingGamepad.Button_Cycle_Shiny]: [`KEY ${Button.CYCLE_SHINY.toString()}`, pressAction],
   [SettingGamepad.Button_Cycle_Gender]: [`KEY ${Button.CYCLE_GENDER.toString()}`, pressAction],
-  [SettingGamepad.Button_Cycle_Ability]: [`KEY ${Button.CYCLE_ABILITY.toString()}`, pressAction],
   [SettingGamepad.Button_Cycle_Variant]: [`KEY ${Button.V.toString()}`, pressAction],
   [SettingGamepad.Button_Speed_Up]: [`KEY ${Button.SPEED_UP.toString()}`, pressAction],
   [SettingGamepad.Button_Slow_Down]: [`KEY ${Button.SLOW_DOWN.toString()}`, pressAction],
@@ -91,7 +90,6 @@ export function setSettingGamepad(scene: BattleScene, setting: SettingGamepad, v
   case SettingGamepad.Button_Cycle_Shiny:
   case SettingGamepad.Button_Cycle_Form:
   case SettingGamepad.Button_Cycle_Gender:
-  case SettingGamepad.Button_Cycle_Ability:
   case SettingGamepad.Button_Cycle_Variant:
   case SettingGamepad.Button_Speed_Up:
   case SettingGamepad.Button_Slow_Down:

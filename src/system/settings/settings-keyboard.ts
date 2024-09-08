@@ -67,8 +67,6 @@ export const settingKeyboardOptions = {
   [SettingKeyboard.Alt_Button_Cycle_Shiny]: [`KEY ${Button.CYCLE_SHINY.toString()}`, pressAction],
   [SettingKeyboard.Button_Cycle_Gender]: [`KEY ${Button.CYCLE_GENDER.toString()}`, pressAction],
   [SettingKeyboard.Alt_Button_Cycle_Gender]: [`KEY ${Button.CYCLE_GENDER.toString()}`, pressAction],
-  [SettingKeyboard.Button_Cycle_Ability]: [`KEY ${Button.CYCLE_ABILITY.toString()}`, pressAction],
-  [SettingKeyboard.Alt_Button_Cycle_Ability]: [`KEY ${Button.CYCLE_ABILITY.toString()}`, pressAction],
   [SettingKeyboard.Button_Cycle_Variant]: [`KEY ${Button.V.toString()}`, pressAction],
   [SettingKeyboard.Alt_Button_Cycle_Variant]: [`KEY ${Button.V.toString()}`, pressAction],
   [SettingKeyboard.Button_Speed_Up]: [`KEY ${Button.SPEED_UP.toString()}`, pressAction],
@@ -140,7 +138,6 @@ export function setSettingKeyboard(scene: BattleScene, setting: SettingKeyboard,
   case SettingKeyboard.Button_Cycle_Shiny:
   case SettingKeyboard.Button_Cycle_Form:
   case SettingKeyboard.Button_Cycle_Gender:
-  case SettingKeyboard.Button_Cycle_Ability:
   case SettingKeyboard.Button_Cycle_Variant:
   case SettingKeyboard.Button_Speed_Up:
   case SettingKeyboard.Button_Slow_Down:
@@ -155,7 +152,6 @@ export function setSettingKeyboard(scene: BattleScene, setting: SettingKeyboard,
   case SettingKeyboard.Alt_Button_Cycle_Shiny:
   case SettingKeyboard.Alt_Button_Cycle_Form:
   case SettingKeyboard.Alt_Button_Cycle_Gender:
-  case SettingKeyboard.Alt_Button_Cycle_Ability:
   case SettingKeyboard.Alt_Button_Cycle_Variant:
   case SettingKeyboard.Alt_Button_Speed_Up:
   case SettingKeyboard.Alt_Button_Slow_Down:
