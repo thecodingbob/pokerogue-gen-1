@@ -90,7 +90,7 @@ const DEBUG_RNG = false;
 const OPP_IVS_OVERRIDE_VALIDATED : integer[] = (
   Array.isArray(Overrides.OPP_IVS_OVERRIDE) ?
     Overrides.OPP_IVS_OVERRIDE :
-    new Array(6).fill(Overrides.OPP_IVS_OVERRIDE)
+    new Array(5).fill(Overrides.OPP_IVS_OVERRIDE)
 ).map(iv => isNaN(iv) || iv === null || iv > 31 ? -1 : iv);
 
 export const startingWave = Overrides.STARTING_WAVE_OVERRIDE || 1;

@@ -406,8 +406,7 @@
   "TempBattleStatBoosterItem": {
     "x_attack": "플러스파워",
     "x_defense": "디펜드업",
-    "x_sp_atk": "스페셜업",
-    "x_sp_def": "스페셜가드",
+    "x_special": "스페셜가드",
     "x_speed": "스피드업",
     "x_accuracy": "잘-맞히기",
     "dire_hit": "크리티컬커터"
@@ -415,8 +414,7 @@
   "TempBattleStatBoosterStatName": {
     "ATK": "공격",
     "DEF": "방어",
-    "SPATK": "특수공격",
-    "SPDEF": "특수방어",
+    "SPEC": "특수방어",
     "SPD": "스피드",
     "ACC": "명중률",
     "CRIT": "급소율",

@@ -4,8 +4,7 @@ import i18next from "i18next";
 export enum TempBattleStat {
   ATK,
   DEF,
-  SPATK,
-  SPDEF,
+  SPEC,
   SPD,
   ACC,
   CRIT
@@ -24,10 +23,8 @@ export function getTempBattleStatBoosterItemName(tempBattleStat: TempBattleStat)
     return "X Attack";
   case TempBattleStat.DEF:
     return "X Defense";
-  case TempBattleStat.SPATK:
-    return "X Sp. Atk";
-  case TempBattleStat.SPDEF:
-    return "X Sp. Def";
+  case TempBattleStat.SPEC:
+    return "X Special";
   case TempBattleStat.SPD:
     return "X Speed";
   case TempBattleStat.ACC:

@@ -44,7 +44,7 @@ describe("Items - Eviolite", () => {
     // Printing dummy console messages along the way so subsequent checks don't pass because of the first
     console.log("");
 
-    partyMember.getBattleStat(Stat.SPDEF);
+    partyMember.getBattleStat(Stat.SPEC);
     expect(consoleSpy).toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:ModifierType.EVIOLITE.name"), "");
 
     console.log("");
@@ -54,7 +54,7 @@ describe("Items - Eviolite", () => {
 
     console.log("");
 
-    partyMember.getBattleStat(Stat.SPATK);
+    partyMember.getBattleStat(Stat.SPEC);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:ModifierType.EVIOLITE.name"), "");
 
     console.log("");
@@ -71,24 +71,24 @@ describe("Items - Eviolite", () => {
     const partyMember = game.scene.getParty()[0];
 
     const defStat = partyMember.getStat(Stat.DEF);
-    const spDefStat = partyMember.getStat(Stat.SPDEF);
+    const specStat = partyMember.getStat(Stat.SPEC);
 
     // Making sure modifier is not applied without holding item
     const defValue = new Utils.NumberHolder(defStat);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    const spDefValue = new Utils.NumberHolder(spDefStat);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    const specValue = new Utils.NumberHolder(specStat);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1);
-    expect(spDefValue.value / spDefStat).toBe(1);
+    expect(specValue.value / specStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
     partyMember.scene.addModifier(modifierTypes.EVIOLITE().newModifier(partyMember), true);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1.5);
-    expect(spDefValue.value / spDefStat).toBe(1.5);
+    expect(specValue.value / specStat).toBe(1.5);
   }, 20000);
 
   it("EVIOLITE held by fully evolved, unfused pokemon", async() => {
@@ -99,24 +99,24 @@ describe("Items - Eviolite", () => {
     const partyMember = game.scene.getParty()[0];
 
     const defStat = partyMember.getStat(Stat.DEF);
-    const spDefStat = partyMember.getStat(Stat.SPDEF);
+    const specStat = partyMember.getStat(Stat.SPEC);
 
     // Making sure modifier is not applied without holding item
     const defValue = new Utils.NumberHolder(defStat);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    const spDefValue = new Utils.NumberHolder(spDefStat);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    const specValue = new Utils.NumberHolder(specStat);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1);
-    expect(spDefValue.value / spDefStat).toBe(1);
+    expect(specValue.value / specStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
     partyMember.scene.addModifier(modifierTypes.EVIOLITE().newModifier(partyMember), true);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1);
-    expect(spDefValue.value / spDefStat).toBe(1);
+    expect(specValue.value / specStat).toBe(1);
   }, 20000);
 
   it("EVIOLITE held by completely unevolved, fused pokemon", async() => {
@@ -138,24 +138,24 @@ describe("Items - Eviolite", () => {
     partyMember.fusionLuck = ally.luck;
 
     const defStat = partyMember.getStat(Stat.DEF);
-    const spDefStat = partyMember.getStat(Stat.SPDEF);
+    const specStat = partyMember.getStat(Stat.SPEC);
 
     // Making sure modifier is not applied without holding item
     const defValue = new Utils.NumberHolder(defStat);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    const spDefValue = new Utils.NumberHolder(spDefStat);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    const specValue = new Utils.NumberHolder(specStat);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1);
-    expect(spDefValue.value / spDefStat).toBe(1);
+    expect(specValue.value / specStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
     partyMember.scene.addModifier(modifierTypes.EVIOLITE().newModifier(partyMember), true);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1.5);
-    expect(spDefValue.value / spDefStat).toBe(1.5);
+    expect(specValue.value / specStat).toBe(1.5);
   }, 20000);
 
   it("EVIOLITE held by partially unevolved (base), fused pokemon", async() => {
@@ -177,24 +177,24 @@ describe("Items - Eviolite", () => {
     partyMember.fusionLuck = ally.luck;
 
     const defStat = partyMember.getStat(Stat.DEF);
-    const spDefStat = partyMember.getStat(Stat.SPDEF);
+    const specStat = partyMember.getStat(Stat.SPEC);
 
     // Making sure modifier is not applied without holding item
     const defValue = new Utils.NumberHolder(defStat);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    const spDefValue = new Utils.NumberHolder(spDefStat);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    const specValue = new Utils.NumberHolder(specStat);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1);
-    expect(spDefValue.value / spDefStat).toBe(1);
+    expect(specValue.value / specStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
     partyMember.scene.addModifier(modifierTypes.EVIOLITE().newModifier(partyMember), true);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1.25);
-    expect(spDefValue.value / spDefStat).toBe(1.25);
+    expect(specValue.value / specStat).toBe(1.25);
   }, 20000);
 
   it("EVIOLITE held by partially unevolved (fusion), fused pokemon", async() => {
@@ -216,24 +216,24 @@ describe("Items - Eviolite", () => {
     partyMember.fusionLuck = ally.luck;
 
     const defStat = partyMember.getStat(Stat.DEF);
-    const spDefStat = partyMember.getStat(Stat.SPDEF);
+    const specStat = partyMember.getStat(Stat.SPEC);
 
     // Making sure modifier is not applied without holding item
     const defValue = new Utils.NumberHolder(defStat);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    const spDefValue = new Utils.NumberHolder(spDefStat);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    const specValue = new Utils.NumberHolder(specStat);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1);
-    expect(spDefValue.value / spDefStat).toBe(1);
+    expect(specValue.value / specStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
     partyMember.scene.addModifier(modifierTypes.EVIOLITE().newModifier(partyMember), true);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1.25);
-    expect(spDefValue.value / spDefStat).toBe(1.25);
+    expect(specValue.value / specStat).toBe(1.25);
   }, 20000);
 
   it("EVIOLITE held by completely evolved, fused pokemon", async() => {
@@ -255,23 +255,23 @@ describe("Items - Eviolite", () => {
     partyMember.fusionLuck = ally.luck;
 
     const defStat = partyMember.getStat(Stat.DEF);
-    const spDefStat = partyMember.getStat(Stat.SPDEF);
+    const specStat = partyMember.getStat(Stat.SPEC);
 
     // Making sure modifier is not applied without holding item
     const defValue = new Utils.NumberHolder(defStat);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    const spDefValue = new Utils.NumberHolder(spDefStat);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    const specValue = new Utils.NumberHolder(specStat);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1);
-    expect(spDefValue.value / spDefStat).toBe(1);
+    expect(specValue.value / specStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
     partyMember.scene.addModifier(modifierTypes.EVIOLITE().newModifier(partyMember), true);
     partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.DEF, defValue);
-    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPDEF, spDefValue);
+    partyMember.scene.applyModifiers(EvolutionStatBoosterModifier, true, partyMember, Stat.SPEC, specValue);
 
     expect(defValue.value / defStat).toBe(1);
-    expect(spDefValue.value / spDefStat).toBe(1);
+    expect(specValue.value / specStat).toBe(1);
   }, 20000);
 });

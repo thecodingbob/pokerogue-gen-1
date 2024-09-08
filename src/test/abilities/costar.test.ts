@@ -48,8 +48,8 @@ describe("Abilities - COSTAR", () => {
       game.move.select(Moves.SPLASH, 1);
       await game.toNextTurn();
 
-      expect(leftPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(+2);
-      expect(rightPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(0);
+      expect(leftPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(+2);
+      expect(rightPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(0);
 
       game.move.select(Moves.SPLASH);
       await game.phaseInterceptor.to(CommandPhase);
@@ -57,8 +57,8 @@ describe("Abilities - COSTAR", () => {
       await game.phaseInterceptor.to(MessagePhase);
 
       [leftPokemon, rightPokemon] = game.scene.getPlayerField();
-      expect(leftPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(+2);
-      expect(rightPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(+2);
+      expect(leftPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(+2);
+      expect(rightPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(+2);
     },
     TIMEOUT,
   );

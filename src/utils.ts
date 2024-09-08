@@ -173,7 +173,6 @@ export function getPlayTimeString(totalSeconds: integer): string {
  */
 export function getIvsFromId(id: number): number[] {
   return [
-    (id & 0x3E000000) >>> 25,
     (id & 0x01F00000) >>> 20,
     (id & 0x000F8000) >>> 15,
     (id & 0x00007C00) >>> 10,

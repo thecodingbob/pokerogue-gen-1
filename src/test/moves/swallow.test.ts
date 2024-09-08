@@ -152,14 +152,14 @@ describe("Moves - Swallow", () => {
       await game.phaseInterceptor.to(MovePhase);
 
       expect(pokemon.summonData.battleStats[BattleStat.DEF]).toBe(1);
-      expect(pokemon.summonData.battleStats[BattleStat.SPDEF]).toBe(1);
+      expect(pokemon.summonData.battleStats[BattleStat.SPEC]).toBe(1);
 
       await game.phaseInterceptor.to(TurnInitPhase);
 
       expect(pokemon.getMoveHistory().at(-1)).toMatchObject<TurnMove>({ move: Moves.SWALLOW, result: MoveResult.SUCCESS });
 
       expect(pokemon.summonData.battleStats[BattleStat.DEF]).toBe(0);
-      expect(pokemon.summonData.battleStats[BattleStat.SPDEF]).toBe(0);
+      expect(pokemon.summonData.battleStats[BattleStat.SPEC]).toBe(0);
 
       expect(pokemon.getTag(StockpilingTag)).toBeUndefined();
     });
@@ -176,12 +176,12 @@ describe("Moves - Swallow", () => {
       // for the sake of simplicity (and because other tests cover the setup), set boost amounts directly
       stockpilingTag.statChangeCounts = {
         [BattleStat.DEF]: -1,
-        [BattleStat.SPDEF]: 2,
+        [BattleStat.SPEC]: 2,
       };
 
       expect(stockpilingTag.statChangeCounts).toMatchObject({
         [BattleStat.DEF]: -1,
-        [BattleStat.SPDEF]: 2,
+        [BattleStat.SPEC]: 2,
       });
 
       game.move.select(Moves.SWALLOW);
@@ -190,7 +190,7 @@ describe("Moves - Swallow", () => {
       expect(pokemon.getMoveHistory().at(-1)).toMatchObject<TurnMove>({ move: Moves.SWALLOW, result: MoveResult.SUCCESS });
 
       expect(pokemon.summonData.battleStats[BattleStat.DEF]).toBe(1);
-      expect(pokemon.summonData.battleStats[BattleStat.SPDEF]).toBe(-2);
+      expect(pokemon.summonData.battleStats[BattleStat.SPEC]).toBe(-2);
 
       expect(pokemon.getTag(StockpilingTag)).toBeUndefined();
     });

@@ -69,8 +69,8 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
   public flyoutMenu?: BattleFlyout;
 
   private battleStatOrder: BattleStat[];
-  private battleStatOrderPlayer = [BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.ACC, BattleStat.EVA, BattleStat.SPD];
-  private battleStatOrderEnemy = [BattleStat.HP, BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.ACC, BattleStat.EVA, BattleStat.SPD];
+  private battleStatOrderPlayer = [BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.ACC, BattleStat.EVA, BattleStat.SPD];
+  private battleStatOrderEnemy = [BattleStat.HP, BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.ACC, BattleStat.EVA, BattleStat.SPD];
 
   constructor(scene: Phaser.Scene, x: number, y: number, player: boolean) {
     super(scene, x, y);

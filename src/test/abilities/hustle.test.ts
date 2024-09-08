@@ -65,7 +65,7 @@ describe("Abilities - Hustle", () => {
   it("does not affect non-physical moves", async () => {
     await game.startBattle([Species.PIKACHU]);
     const pikachu = game.scene.getPlayerPokemon()!;
-    const spatk = pikachu.stats[Stat.SPATK];
+    const special = pikachu.stats[Stat.SPEC];
 
     vi.spyOn(pikachu, "getBattleStat");
     vi.spyOn(pikachu, "getAccuracyMultiplier");
@@ -73,7 +73,7 @@ describe("Abilities - Hustle", () => {
     game.move.select(Moves.GIGA_DRAIN);
     await game.phaseInterceptor.to(DamagePhase);
 
-    expect(pikachu.getBattleStat).toHaveReturnedWith(spatk);
+    expect(pikachu.getBattleStat).toHaveReturnedWith(special);
     expect(pikachu.getAccuracyMultiplier).toHaveReturnedWith(1);
   });
 

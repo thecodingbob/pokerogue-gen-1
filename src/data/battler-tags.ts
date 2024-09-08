@@ -733,7 +733,7 @@ export class IngrainTag extends TrappedTag {
 }
 
 /**
- * Octolock traps the target pokemon and reduces its DEF and SPDEF by one stage at the
+ * Octolock traps the target pokemon and reduces its DEF and SPEC by one stage at the
  * end of each turn.
  */
 export class OctolockTag extends TrappedTag {
@@ -749,7 +749,7 @@ export class OctolockTag extends TrappedTag {
     const shouldLapse = lapseType !== BattlerTagLapseType.CUSTOM || super.lapse(pokemon, lapseType);
 
     if (shouldLapse) {
-      pokemon.scene.unshiftPhase(new StatChangePhase(pokemon.scene, pokemon.getBattlerIndex(), true, [BattleStat.DEF, BattleStat.SPDEF], -1));
+      pokemon.scene.unshiftPhase(new StatChangePhase(pokemon.scene, pokemon.getBattlerIndex(), true, [BattleStat.DEF, BattleStat.SPEC], -1));
       return true;
     }
 
@@ -1328,7 +1328,7 @@ export class HighestStatBoostTag extends AbilityBattlerTag {
   onAdd(pokemon: Pokemon): void {
     super.onAdd(pokemon);
 
-    const stats = [ Stat.ATK, Stat.DEF, Stat.SPATK, Stat.SPDEF, Stat.SPD ];
+    const stats = [ Stat.ATK, Stat.DEF, Stat.SPEC, Stat.SPEC, Stat.SPD ];
     let highestStat: Stat;
     stats.map(s => pokemon.getBattleStat(s)).reduce((highestValue: number, value: number, i: number) => {
       if (value > highestValue) {
@@ -1667,17 +1667,17 @@ export class IceFaceBlockDamageTag extends FormBlockDamageTag {
  * Battler tag enabling the Stockpile mechanic. This tag handles:
  * - Stack tracking, including max limit enforcement (which is replicated in Stockpile for redundancy).
  *
- * - Stat changes on adding a stack. Adding a stockpile stack attempts to raise the pokemon's DEF and SPDEF by +1.
+ * - Stat changes on adding a stack. Adding a stockpile stack attempts to raise the pokemon's DEF and SPEC by +1.
  *
  * - Stat changes on removal of (all) stacks.
- *   - Removing stacks decreases DEF and SPDEF, independently, by one stage for each stack that successfully changed
+ *   - Removing stacks decreases DEF and SPEC, independently, by one stage for each stack that successfully changed
  *     the stat when added.
  */
 export class StockpilingTag extends BattlerTag {
   public stockpiledCount: number = 0;
-  public statChangeCounts: { [BattleStat.DEF]: number; [BattleStat.SPDEF]: number } = {
+  public statChangeCounts: { [BattleStat.DEF]: number; [BattleStat.SPEC]: number } = {
     [BattleStat.DEF]: 0,
-    [BattleStat.SPDEF]: 0
+    [BattleStat.SPEC]: 0
   };
 
   constructor(sourceMove: Moves = Moves.NONE) {
@@ -1686,14 +1686,14 @@ export class StockpilingTag extends BattlerTag {
 
   private onStatsChanged: StatChangeCallback = (_, statsChanged, statChanges) => {
     const defChange = statChanges[statsChanged.indexOf(BattleStat.DEF)] ?? 0;
-    const spDefChange = statChanges[statsChanged.indexOf(BattleStat.SPDEF)] ?? 0;
+    const specChange = statChanges[statsChanged.indexOf(BattleStat.SPEC)] ?? 0;
 
     if (defChange) {
       this.statChangeCounts[BattleStat.DEF]++;
     }
 
-    if (spDefChange) {
-      this.statChangeCounts[BattleStat.SPDEF]++;
+    if (specChange) {
+      this.statChangeCounts[BattleStat.SPEC]++;
     }
   };
 
@@ -1702,14 +1702,14 @@ export class StockpilingTag extends BattlerTag {
     this.stockpiledCount = source.stockpiledCount || 0;
     this.statChangeCounts = {
       [ BattleStat.DEF ]: source.statChangeCounts?.[ BattleStat.DEF ] ?? 0,
-      [ BattleStat.SPDEF ]: source.statChangeCounts?.[ BattleStat.SPDEF ] ?? 0,
+      [ BattleStat.SPEC ]: source.statChangeCounts?.[ BattleStat.SPEC ] ?? 0,
     };
   }
 
   /**
    * Adds a stockpile stack to a pokemon, up to a maximum of 3 stacks. Note that onOverlap defers to this method.
    *
-   * If a stack is added, a message is displayed and the pokemon's DEF and SPDEF are increased by 1.
+   * If a stack is added, a message is displayed and the pokemon's DEF and SPEC are increased by 1.
    * For each stat, an internal counter is incremented (by 1) if the stat was successfully changed.
    */
   onAdd(pokemon: Pokemon): void {
@@ -1721,10 +1721,10 @@ export class StockpilingTag extends BattlerTag {
         stockpiledCount: this.stockpiledCount
       }));
 
-      // Attempt to increase DEF and SPDEF by one stage, keeping track of successful changes.
+      // Attempt to increase DEF and SPEC by one stage, keeping track of successful changes.
       pokemon.scene.unshiftPhase(new StatChangePhase(
         pokemon.scene, pokemon.getBattlerIndex(), true,
-        [BattleStat.SPDEF, BattleStat.DEF], 1, true, false, true, this.onStatsChanged
+        [BattleStat.SPEC, BattleStat.DEF], 1, true, false, true, this.onStatsChanged
       ));
     }
   }
@@ -1734,19 +1734,19 @@ export class StockpilingTag extends BattlerTag {
   }
 
   /**
-   * Removing the tag removes all stacks, and the pokemon's DEF and SPDEF are decreased by
+   * Removing the tag removes all stacks, and the pokemon's DEF and SPEC are decreased by
    * one stage for each stack which had successfully changed that particular stat during onAdd.
    */
   onRemove(pokemon: Pokemon): void {
     const defChange = this.statChangeCounts[BattleStat.DEF];
-    const spDefChange = this.statChangeCounts[BattleStat.SPDEF];
+    const specChange = this.statChangeCounts[BattleStat.SPEC];
 
     if (defChange) {
       pokemon.scene.unshiftPhase(new StatChangePhase(pokemon.scene, pokemon.getBattlerIndex(), true, [BattleStat.DEF], -defChange, true, false, true));
     }
 
-    if (spDefChange) {
-      pokemon.scene.unshiftPhase(new StatChangePhase(pokemon.scene, pokemon.getBattlerIndex(), true, [BattleStat.SPDEF], -spDefChange, true, false, true));
+    if (specChange) {
+      pokemon.scene.unshiftPhase(new StatChangePhase(pokemon.scene, pokemon.getBattlerIndex(), true, [BattleStat.SPEC], -specChange, true, false, true));
     }
   }
 }

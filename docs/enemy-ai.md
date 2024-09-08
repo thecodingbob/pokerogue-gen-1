@@ -102,7 +102,7 @@ More specifically, the following steps are taken to compute the move's `attackSc
 2. Compute a multiplier based on the move's category and the user's offensive stats:
    1. Compute the user's offensive stat ratio:
       
-      ![statRatioEqn](https://latex.codecogs.com/png.image?%5Cinline%20%5Cdpi%7B100%7D%5Cbg%7Bwhite%7D%5Ctext%7BstatRatio%7D=%5Cleft%5C%7B%5Cbegin%7Bmatrix%7D%5Cfrac%7B%5Ctext%7BuserSpAtk%7D%7D%7B%5Ctext%7BuserAtk%7D%7D&%5Ctext%7Bif%20move%20is%20physical%7D%5C%5C%5Cfrac%7B%5Ctext%7BuserAtk%7D%7D%7B%5Ctext%7BuserSpAtk%7D%7D&%5Ctext%7Botherwise%7D%5C%5C%5Cend%7Bmatrix%7D%5Cright.)
+      ![statRatioEqn](https://latex.codecogs.com/png.image?%5Cinline%20%5Cdpi%7B100%7D%5Cbg%7Bwhite%7D%5Ctext%7BstatRatio%7D=%5Cleft%5C%7B%5Cbegin%7Bmatrix%7D%5Cfrac%7B%5Ctext%7BuserSpecial%7D%7D%7B%5Ctext%7BuserAtk%7D%7D&%5Ctext%7Bif%20move%20is%20physical%7D%5C%5C%5Cfrac%7B%5Ctext%7BuserAtk%7D%7D%7B%5Ctext%7BuserSpecial%7D%7D&%5Ctext%7Botherwise%7D%5C%5C%5Cend%7Bmatrix%7D%5Cright.)
    2. Compute the stat-based multiplier:
 
       ![statMultEqn](https://latex.codecogs.com/png.image?%5Cinline%20%5Cdpi%7B100%7D%5Cbg%7Bwhite%7D%5Ctext%7BstatMult%7D=%5Cleft%5C%7B%5Cbegin%7Bmatrix%7D2&%5Ctext%7Bif%20statRatio%7D%5Cle%200.75%5C%5C1.5&%5Ctext%7Bif%5C;%7D0.75%5Cle%5Ctext%7BstatRatio%7D%5Cle%200.875%5C%5C1&%5Ctext%7Botherwise%7D%5C%5C%5Cend%7Bmatrix%7D%5Cright.)

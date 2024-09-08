@@ -407,8 +407,7 @@
   "TempBattleStatBoosterItem": {
     "x_attack": "力量强化",
     "x_defense": "防御强化",
-    "x_sp_atk": "特攻强化",
-    "x_sp_def": "特防强化",
+    "x_special": "特防强化",
     "x_speed": "速度强化",
     "x_accuracy": "命中强化",
     "dire_hit": "要害攻击"
@@ -416,8 +415,7 @@
   "TempBattleStatBoosterStatName": {
     "ATK": "攻击",
     "DEF": "防御",
-    "SPATK": "特攻",
-    "SPDEF": "特防",
+    "SPEC": "特防",
     "SPD": "速度",
     "ACC": "命中",
     "CRIT": "会心",

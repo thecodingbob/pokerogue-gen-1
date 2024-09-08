@@ -53,8 +53,8 @@ describe("Moves - CLANGOROUS_SOUL", () => {
       expect(leadPokemon.hp).toBe(leadPokemon.getMaxHp() - hpLost);
       expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(1);
       expect(leadPokemon.summonData.battleStats[BattleStat.DEF]).toBe(1);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(1);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPDEF]).toBe(1);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(1);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(1);
       expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(1);
     }, TIMEOUT
   );
@@ -66,11 +66,11 @@ describe("Moves - CLANGOROUS_SOUL", () => {
       const leadPokemon = game.scene.getPlayerPokemon()!;
       const hpLost = toDmgValue(leadPokemon.getMaxHp() / RATIO);
 
-      //Here - BattleStat.SPD -> 0 and BattleStat.SPDEF -> 4
+      //Here - BattleStat.SPD -> 0 and BattleStat.SPEC -> 4
       leadPokemon.summonData.battleStats[BattleStat.ATK] = 6;
       leadPokemon.summonData.battleStats[BattleStat.DEF] = 6;
-      leadPokemon.summonData.battleStats[BattleStat.SPATK] = 6;
-      leadPokemon.summonData.battleStats[BattleStat.SPDEF] = 4;
+      leadPokemon.summonData.battleStats[BattleStat.SPEC] = 6;
+      leadPokemon.summonData.battleStats[BattleStat.SPEC] = 4;
 
       game.move.select(Moves.CLANGOROUS_SOUL);
       await game.phaseInterceptor.to(TurnEndPhase);
@@ -78,8 +78,8 @@ describe("Moves - CLANGOROUS_SOUL", () => {
       expect(leadPokemon.hp).toBe(leadPokemon.getMaxHp() - hpLost);
       expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(6);
       expect(leadPokemon.summonData.battleStats[BattleStat.DEF]).toBe(6);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(6);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPDEF]).toBe(5);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(6);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(5);
       expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(1);
     }, TIMEOUT
   );
@@ -92,8 +92,8 @@ describe("Moves - CLANGOROUS_SOUL", () => {
 
       leadPokemon.summonData.battleStats[BattleStat.ATK] = 6;
       leadPokemon.summonData.battleStats[BattleStat.DEF] = 6;
-      leadPokemon.summonData.battleStats[BattleStat.SPATK] = 6;
-      leadPokemon.summonData.battleStats[BattleStat.SPDEF] = 6;
+      leadPokemon.summonData.battleStats[BattleStat.SPEC] = 6;
+      leadPokemon.summonData.battleStats[BattleStat.SPEC] = 6;
       leadPokemon.summonData.battleStats[BattleStat.SPD] = 6;
 
       game.move.select(Moves.CLANGOROUS_SOUL);
@@ -102,8 +102,8 @@ describe("Moves - CLANGOROUS_SOUL", () => {
       expect(leadPokemon.hp).toBe(leadPokemon.getMaxHp());
       expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(6);
       expect(leadPokemon.summonData.battleStats[BattleStat.DEF]).toBe(6);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(6);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPDEF]).toBe(6);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(6);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(6);
       expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(6);
     }, TIMEOUT
   );
@@ -122,8 +122,8 @@ describe("Moves - CLANGOROUS_SOUL", () => {
       expect(leadPokemon.hp).toBe(hpLost - PREDAMAGE);
       expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(0);
       expect(leadPokemon.summonData.battleStats[BattleStat.DEF]).toBe(0);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(0);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPDEF]).toBe(0);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(0);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(0);
       expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(0);
     }, TIMEOUT
   );

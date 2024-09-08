@@ -3,8 +3,7 @@ import i18next, { ParseKeys } from "i18next";
 export enum BattleStat {
   ATK,
   DEF,
-  SPATK,
-  SPDEF,
+  SPEC,
   SPD,
   ACC,
   EVA,
@@ -18,10 +17,8 @@ export function getBattleStatName(stat: BattleStat) {
     return i18next.t("pokemonInfo:Stat.ATK");
   case BattleStat.DEF:
     return i18next.t("pokemonInfo:Stat.DEF");
-  case BattleStat.SPATK:
-    return i18next.t("pokemonInfo:Stat.SPATK");
-  case BattleStat.SPDEF:
-    return i18next.t("pokemonInfo:Stat.SPDEF");
+  case BattleStat.SPEC:
+    return i18next.t("pokemonInfo:Stat.SPEC");
   case BattleStat.SPD:
     return i18next.t("pokemonInfo:Stat.SPD");
   case BattleStat.ACC:

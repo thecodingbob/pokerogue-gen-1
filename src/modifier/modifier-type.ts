@@ -594,9 +594,9 @@ function getBaseStatBoosterItemName(stat: Stat) {
     return "Protein";
   case Stat.DEF:
     return "Iron";
-  case Stat.SPATK:
+  case Stat.SPEC:
     return "Calcium";
-  case Stat.SPDEF:
+  case Stat.SPEC:
     return "Zinc";
   case Stat.SPD:
     return "Carbos";
@@ -906,7 +906,7 @@ class AttackTypeBoosterModifierTypeGenerator extends ModifierTypeGenerator {
 class SpeciesStatBoosterModifierTypeGenerator extends ModifierTypeGenerator {
   /** Object comprised of the currently available species-based stat boosting held items */
   public static items = {
-    LIGHT_BALL: { stats: [Stat.ATK, Stat.SPATK], multiplier: 2, species: [Species.PIKACHU] },
+    LIGHT_BALL: { stats: [Stat.ATK, Stat.SPEC], multiplier: 2, species: [Species.PIKACHU] },
     THICK_CLUB: { stats: [Stat.ATK], multiplier: 2, species: [Species.CUBONE, Species.MAROWAK] },
     METAL_POWDER: { stats: [Stat.DEF], multiplier: 2, species: [Species.DITTO] },
     QUICK_POWDER: { stats: [Stat.SPD], multiplier: 2, species: [Species.DITTO] },
@@ -1285,7 +1285,7 @@ export const modifierTypes = {
       const stat = pregenArgs[0] as Stat;
       return new PokemonBaseStatBoosterModifierType(getBaseStatBoosterItemName(stat), stat);
     }
-    const randStat = Utils.randSeedInt(6) as Stat;
+    const randStat = Utils.randSeedInt(5) as Stat;
     return new PokemonBaseStatBoosterModifierType(getBaseStatBoosterItemName(randStat), randStat);
   }),
 
@@ -1350,7 +1350,7 @@ export const modifierTypes = {
   SCOPE_LENS: () => new PokemonHeldItemModifierType("modifierType:ModifierType.SCOPE_LENS", "scope_lens", (type, args) => new Modifiers.CritBoosterModifier(type, (args[0] as Pokemon).id, 1)),
   LEEK: () => new PokemonHeldItemModifierType("modifierType:ModifierType.LEEK", "leek", (type, args) => new Modifiers.SpeciesCritBoosterModifier(type, (args[0] as Pokemon).id, 2, [Species.FARFETCHD])),
 
-  EVIOLITE: () => new PokemonHeldItemModifierType("modifierType:ModifierType.EVIOLITE", "eviolite", (type, args) => new Modifiers.EvolutionStatBoosterModifier(type, (args[0] as Pokemon).id, [Stat.DEF, Stat.SPDEF], 1.5)),
+  EVIOLITE: () => new PokemonHeldItemModifierType("modifierType:ModifierType.EVIOLITE", "eviolite", (type, args) => new Modifiers.EvolutionStatBoosterModifier(type, (args[0] as Pokemon).id, [Stat.DEF, Stat.SPEC], 1.5)),
 
   NUGGET: () => new MoneyRewardModifierType("modifierType:ModifierType.NUGGET", "nugget", 1, "modifierType:ModifierType.MoneyRewardModifierType.extra.small"),
   BIG_NUGGET: () => new MoneyRewardModifierType("modifierType:ModifierType.BIG_NUGGET", "big_nugget", 2.5, "modifierType:ModifierType.MoneyRewardModifierType.extra.moderate"),

@@ -15,11 +15,8 @@ export function getStatName(stat: Stat, shorten: boolean = false) {
   case Stat.DEF:
     ret = !shorten ? i18next.t("pokemonInfo:Stat.DEF") : i18next.t("pokemonInfo:Stat.DEFshortened");
     break;
-  case Stat.SPATK:
-    ret = !shorten ? i18next.t("pokemonInfo:Stat.SPATK") : i18next.t("pokemonInfo:Stat.SPATKshortened");
-    break;
-  case Stat.SPDEF:
-    ret = !shorten ? i18next.t("pokemonInfo:Stat.SPDEF") : i18next.t("pokemonInfo:Stat.SPDEFshortened");
+  case Stat.SPEC:
+    ret = !shorten ? i18next.t("pokemonInfo:Stat.SPEC") : i18next.t("pokemonInfo:Stat.SPECshortened");
     break;
   case Stat.SPD:
     ret = !shorten ? i18next.t("pokemonInfo:Stat.SPD") : i18next.t("pokemonInfo:Stat.SPDshortened");

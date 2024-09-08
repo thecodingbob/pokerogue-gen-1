@@ -406,8 +406,7 @@
   "TempBattleStatBoosterItem": {
     "x_attack": "プラスパワー",
     "x_defense": "ディフェンダー",
-    "x_sp_atk": "スペシャルアップ",
-    "x_sp_def": "スペシャルガード",
+    "x_special": "スペシャルガード",
     "x_speed": "スピーダー",
     "x_accuracy": "ヨクアタール",
     "dire_hit": "クリティカット"
@@ -415,8 +414,7 @@
   "TempBattleStatBoosterStatName": {
     "ATK": "こうげき",
     "DEF": "ぼうぎょ",
-    "SPATK": "とくこう",
-    "SPDEF": "とくぼう",
+    "SPEC": "とくぼう",
     "SPD": "すばやさ",
     "ACC": "めいちゅう",
     "CRIT": "きゅうしょりつ",

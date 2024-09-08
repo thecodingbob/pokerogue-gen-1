@@ -44,7 +44,7 @@ describe("Items - Quick Powder", () => {
     // Printing dummy console messages along the way so subsequent checks don't pass because of the first
     console.log("");
 
-    partyMember.getBattleStat(Stat.SPDEF);
+    partyMember.getBattleStat(Stat.SPEC);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.QUICK_POWDER.name"), "");
 
     console.log("");
@@ -54,7 +54,7 @@ describe("Items - Quick Powder", () => {
 
     console.log("");
 
-    partyMember.getBattleStat(Stat.SPATK);
+    partyMember.getBattleStat(Stat.SPEC);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.QUICK_POWDER.name"), "");
 
     console.log("");

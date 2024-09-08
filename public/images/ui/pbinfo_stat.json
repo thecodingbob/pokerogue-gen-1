@@ -10,28 +10,7 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "SPATK",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 19,
-						"h": 8
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 1,
-						"w": 19,
-						"h": 7
-					},
-					"frame": {
-						"x": 0,
-						"y": 0,
-						"w": 19,
-						"h": 7
-					}
-				},
-				{
-					"filename": "SPDEF",
+					"filename": "SPEC",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {

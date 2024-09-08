@@ -60,8 +60,8 @@ describe("Test for BattleStat Localization", () => {
 
     battleStatUnits.push({stat: BattleStat.ATK, key: "Stat.ATK"});
     battleStatUnits.push({stat: BattleStat.DEF, key: "Stat.DEF"});
-    battleStatUnits.push({stat: BattleStat.SPATK, key: "Stat.SPATK"});
-    battleStatUnits.push({stat: BattleStat.SPDEF, key: "Stat.SPDEF"});
+    battleStatUnits.push({stat: BattleStat.SPEC, key: "Stat.SPEC"});
+    battleStatUnits.push({stat: BattleStat.SPEC, key: "Stat.SPEC"});
     battleStatUnits.push({stat: BattleStat.SPD, key: "Stat.SPD"});
     battleStatUnits.push({stat: BattleStat.ACC, key: "Stat.ACC"});
     battleStatUnits.push({stat: BattleStat.EVA, key: "Stat.EVA"});

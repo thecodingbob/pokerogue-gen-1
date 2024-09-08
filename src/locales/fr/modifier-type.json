@@ -248,8 +248,7 @@
   "TempBattleStatBoosterItem": {
     "x_attack": "Attaque +",
     "x_defense": "Défense +",
-    "x_sp_atk": "Atq. Spé. +",
-    "x_sp_def": "Déf. Spé. +",
+    "x_special": "Spécial. +",
     "x_speed": "Vitesse +",
     "x_accuracy": "Précision +",
     "dire_hit": "Muscle +"
@@ -258,8 +257,7 @@
   "TempBattleStatBoosterStatName": {
     "ATK": "l’Attaque",
     "DEF": "la Défense",
-    "SPATK": "l’Atq. Spé.",
-    "SPDEF": "la Déf. Spé.",
+    "SPEC": "la Spécial.",
     "SPD": "la Vitesse",
     "ACC": "la précision",
     "CRIT": "le taux de critique",

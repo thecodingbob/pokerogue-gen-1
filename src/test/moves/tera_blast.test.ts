@@ -89,13 +89,13 @@ describe("Moves - Tera Blast", () => {
   });
 
   // Currently abilities are bugged and can't see when a move's category is changed
-  it.skip("uses the higher stat of the user's Atk and SpAtk for damage calculation", async () => {
+  it.skip("uses the higher stat of the user's Atk and Special for damage calculation", async () => {
     game.override.enemyAbility(Abilities.TOXIC_DEBRIS);
     await game.startBattle();
 
     const playerPokemon = game.scene.getPlayerPokemon()!;
     playerPokemon.stats[Stat.ATK] = 100;
-    playerPokemon.stats[Stat.SPATK] = 1;
+    playerPokemon.stats[Stat.SPEC] = 1;
 
     game.move.select(Moves.TERA_BLAST);
     await game.phaseInterceptor.to("TurnEndPhase");
@@ -112,7 +112,7 @@ describe("Moves - Tera Blast", () => {
     await game.setTurnOrder([BattlerIndex.PLAYER, BattlerIndex.ENEMY]);
     await game.phaseInterceptor.to("MoveEndPhase");
 
-    expect(playerPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(-1);
+    expect(playerPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(-1);
     expect(playerPokemon.summonData.battleStats[BattleStat.ATK]).toBe(-1);
   }, 20000);
 });

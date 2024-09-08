@@ -52,6 +52,6 @@ describe("Abilities - Hyper Cutter", () => {
     await game.toNextTurn();
 
     expect(enemy.summonData.battleStats[BattleStat.ATK]).toEqual(0);
-    [BattleStat.ACC, BattleStat.DEF, BattleStat.EVA, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD].forEach((stat: number) => expect(enemy.summonData.battleStats[stat]).toBeLessThan(0));
+    [BattleStat.ACC, BattleStat.DEF, BattleStat.EVA, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD].forEach((stat: number) => expect(enemy.summonData.battleStats[stat]).toBeLessThan(0));
   });
 });

@@ -163,7 +163,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       this.pokerus = !!dataSource.pokerus;
       this.fusionSpecies = dataSource.fusionSpecies instanceof PokemonSpecies ? dataSource.fusionSpecies : dataSource.fusionSpecies ? getPokemonSpecies(dataSource.fusionSpecies) : null;
       this.fusionFormIndex = dataSource.fusionFormIndex;
-      this.fusionAbilityIndex = dataSource.fusionAbilityIndex;
       this.fusionShiny = dataSource.fusionShiny;
       this.fusionVariant = dataSource.fusionVariant || 0;
       this.fusionGender = dataSource.fusionGender;
@@ -652,11 +651,11 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       if (isCritical) {
         switch (stat) {
         case Stat.ATK:
-        case Stat.SPATK:
+        case Stat.SPEC:
           statLevel.value = Math.max(statLevel.value, 0);
           break;
         case Stat.DEF:
-        case Stat.SPDEF:
+        case Stat.SPEC:
           statLevel.value = Math.min(statLevel.value, 0);
           break;
         }
@@ -692,9 +691,9 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
         ret *= 1.5;
       }
       break;
-    case Stat.SPATK:
+    case Stat.SPEC:
       break;
-    case Stat.SPDEF:
+    case Stat.SPEC:
       if (this.isOfType(Type.ROCK) && this.scene.arena.weather?.weatherType === WeatherType.SANDSTORM) {
         ret *= 1.5;
       }
@@ -725,7 +724,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
 
   calculateStats(): void {
     if (!this.stats) {
-      this.stats = [ 0, 0, 0, 0, 0, 0 ];
+      this.stats = [ 0, 0, 0, 0, 0 ];
     }
     const baseStats = this.getSpeciesForm().baseStats.slice(0);
     if (this.fusionSpecies) {
@@ -1630,8 +1629,8 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     movePool = movePool.map(m => [m[0], m[1] * (allMoves[m[0]].category === MoveCategory.STATUS ? 1 : Math.max(Math.min(allMoves[m[0]].power/maxPower, 1), 0.5))]);
 
     // Weight damaging moves against the lower stat
-    const worseCategory: MoveCategory = this.stats[Stat.ATK] > this.stats[Stat.SPATK] ? MoveCategory.SPECIAL : MoveCategory.PHYSICAL;
-    const statRatio = worseCategory === MoveCategory.PHYSICAL ? this.stats[Stat.ATK]/this.stats[Stat.SPATK] : this.stats[Stat.SPATK]/this.stats[Stat.ATK];
+    const worseCategory: MoveCategory = this.stats[Stat.ATK] > this.stats[Stat.SPEC] ? MoveCategory.SPECIAL : MoveCategory.PHYSICAL;
+    const statRatio = worseCategory === MoveCategory.PHYSICAL ? this.stats[Stat.ATK]/this.stats[Stat.SPEC] : this.stats[Stat.SPEC]/this.stats[Stat.ATK];
     movePool = movePool.map(m => [m[0], m[1] * (allMoves[m[0]].category === worseCategory ? statRatio : 1)]);
 
     let weightMultiplier = 0.9; // The higher this is the more the game weights towards higher level moves. At 0 all moves are equal weight.
@@ -1976,8 +1975,8 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
             isCritical = false;
           }
         }
-        const sourceAtk = new Utils.IntegerHolder(source.getBattleStat(isPhysical ? Stat.ATK : Stat.SPATK, this, undefined, isCritical));
-        const targetDef = new Utils.IntegerHolder(this.getBattleStat(isPhysical ? Stat.DEF : Stat.SPDEF, source, move, isCritical));
+        const sourceAtk = new Utils.IntegerHolder(source.getBattleStat(isPhysical ? Stat.ATK : Stat.SPEC, this, undefined, isCritical));
+        const targetDef = new Utils.IntegerHolder(this.getBattleStat(isPhysical ? Stat.DEF : Stat.SPEC, source, move, isCritical));
         const criticalMultiplier = new Utils.NumberHolder(isCritical ? 1.5 : 1);
         applyAbAttrs(MultCritAbAttr, source, null, false, criticalMultiplier);
         const screenMultiplier = new Utils.NumberHolder(1);

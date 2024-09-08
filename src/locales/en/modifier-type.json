@@ -247,8 +247,7 @@
   "TempBattleStatBoosterItem": {
     "x_attack": "X Attack",
     "x_defense": "X Defense",
-    "x_sp_atk": "X Sp. Atk",
-    "x_sp_def": "X Sp. Def",
+    "x_special": "X Special",
     "x_speed": "X Speed",
     "x_accuracy": "X Accuracy",
     "dire_hit": "Dire Hit"
@@ -257,8 +256,7 @@
   "TempBattleStatBoosterStatName": {
     "ATK": "Attack",
     "DEF": "Defense",
-    "SPATK": "Sp. Atk",
-    "SPDEF": "Sp. Def",
+    "SPEC": "Special",
     "SPD": "Speed",
     "ACC": "Accuracy",
     "CRIT": "Critical Hit Ratio",

@@ -52,7 +52,7 @@ describe("Moves - FILLET AWAY", () => {
 
       expect(leadPokemon.hp).toBe(leadPokemon.getMaxHp() - hpLost);
       expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(2);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(2);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(2);
       expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(2);
     }, TIMEOUT
   );
@@ -64,16 +64,16 @@ describe("Moves - FILLET AWAY", () => {
       const leadPokemon = game.scene.getPlayerPokemon()!;
       const hpLost = toDmgValue(leadPokemon.getMaxHp() / RATIO);
 
-      //Here - BattleStat.SPD -> 0 and BattleStat.SPATK -> 3
+      //Here - BattleStat.SPD -> 0 and BattleStat.SPEC -> 3
       leadPokemon.summonData.battleStats[BattleStat.ATK] = 6;
-      leadPokemon.summonData.battleStats[BattleStat.SPATK] = 3;
+      leadPokemon.summonData.battleStats[BattleStat.SPEC] = 3;
 
       game.move.select(Moves.FILLET_AWAY);
       await game.phaseInterceptor.to(TurnEndPhase);
 
       expect(leadPokemon.hp).toBe(leadPokemon.getMaxHp() - hpLost);
       expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(6);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(5);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(5);
       expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(2);
     }, TIMEOUT
   );
@@ -85,7 +85,7 @@ describe("Moves - FILLET AWAY", () => {
       const leadPokemon = game.scene.getPlayerPokemon()!;
 
       leadPokemon.summonData.battleStats[BattleStat.ATK] = 6;
-      leadPokemon.summonData.battleStats[BattleStat.SPATK] = 6;
+      leadPokemon.summonData.battleStats[BattleStat.SPEC] = 6;
       leadPokemon.summonData.battleStats[BattleStat.SPD] = 6;
 
       game.move.select(Moves.FILLET_AWAY);
@@ -93,7 +93,7 @@ describe("Moves - FILLET AWAY", () => {
 
       expect(leadPokemon.hp).toBe(leadPokemon.getMaxHp());
       expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(6);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(6);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(6);
       expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(6);
     }, TIMEOUT
   );
@@ -111,7 +111,7 @@ describe("Moves - FILLET AWAY", () => {
 
       expect(leadPokemon.hp).toBe(hpLost - PREDAMAGE);
       expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(0);
-      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(0);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(0);
       expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(0);
     }, TIMEOUT
   );

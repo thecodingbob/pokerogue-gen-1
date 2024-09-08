@@ -21,7 +21,7 @@ describe("BattlerTag - OctolockTag", () => {
       vi.spyOn(mockPokemon.scene, "unshiftPhase").mockImplementation(phase => {
         expect(phase).toBeInstanceOf(StatChangePhase);
         expect((phase as StatChangePhase)["levels"]).toEqual(-1);
-        expect((phase as StatChangePhase)["stats"]).toEqual([BattleStat.DEF, BattleStat.SPDEF]);
+        expect((phase as StatChangePhase)["stats"]).toEqual([BattleStat.DEF, BattleStat.SPEC]);
       });
 
       subject.lapse(mockPokemon, BattlerTagLapseType.TURN_END);

@@ -11,7 +11,7 @@ describe("Abilities - Moody", () => {
   let phaserGame: Phaser.Game;
   let game: GameManager;
 
-  const battleStatsArray = [BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD];
+  const battleStatsArray = [BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD];
 
   beforeAll(() => {
     phaserGame = new Phaser.Game({

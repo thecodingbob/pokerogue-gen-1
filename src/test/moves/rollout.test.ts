@@ -28,7 +28,7 @@ describe("Moves - Rollout", () => {
     game.override.battleType("single");
     game.override.starterSpecies(Species.RATTATA);
     game.override.ability(Abilities.BALL_FETCH);
-    game.override.enemySpecies(Species.BIDOOF);
+    game.override.enemySpecies(Species.PIDGEY);
     game.override.enemyAbility(Abilities.BALL_FETCH);
     game.override.startingLevel(100);
     game.override.enemyLevel(100);
@@ -46,10 +46,10 @@ describe("Moves - Rollout", () => {
     await game.startBattle();
 
     const playerPkm = game.scene.getParty()[0];
-    vi.spyOn(playerPkm, "stats", "get").mockReturnValue([500000, 1, 1, 1, 1, 1]); // HP, ATK, DEF, SPATK, SPDEF, SPD
+    vi.spyOn(playerPkm, "stats", "get").mockReturnValue([500000, 1, 1, 1, 1]); // HP, ATK, DEF, SPEC, SPD
 
     const enemyPkm = game.scene.getEnemyParty()[0];
-    vi.spyOn(enemyPkm, "stats", "get").mockReturnValue([500000, 1, 1, 1, 1, 1]); // HP, ATK, DEF, SPATK, SPDEF, SPD
+    vi.spyOn(enemyPkm, "stats", "get").mockReturnValue([500000, 1, 1, 1, 1]); // HP, ATK, DEF, SPEC, SPD
     vi.spyOn(enemyPkm, "getHeldItems").mockReturnValue([]); //no berries
 
     enemyPkm.hp = enemyPkm.getMaxHp();

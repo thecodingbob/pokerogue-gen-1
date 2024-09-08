@@ -2056,7 +2056,7 @@ export class PostSummonClearAllyStatsAbAttr extends PostSummonAbAttr {
  */
 export class DownloadAbAttr extends PostSummonAbAttr {
   private enemyDef: integer;
-  private enemySpDef: integer;
+  private enemySpec: integer;
   private enemyCountTally: integer;
   private stats: BattleStat[];
 
@@ -2070,24 +2070,24 @@ export class DownloadAbAttr extends PostSummonAbAttr {
    */
   applyPostSummon(pokemon: Pokemon, simulated: boolean, args: any[]): boolean {
     this.enemyDef = 0;
-    this.enemySpDef = 0;
+    this.enemySpec = 0;
     this.enemyCountTally = 0;
 
     for (const opponent of pokemon.getOpponents()) {
       this.enemyCountTally++;
       this.enemyDef += opponent.getBattleStat(Stat.DEF);
-      this.enemySpDef += opponent.getBattleStat(Stat.SPDEF);
+      this.enemySpec += opponent.getBattleStat(Stat.SPEC);
     }
     this.enemyDef = Math.round(this.enemyDef / this.enemyCountTally);
-    this.enemySpDef = Math.round(this.enemySpDef / this.enemyCountTally);
+    this.enemySpec = Math.round(this.enemySpec / this.enemyCountTally);
 
-    if (this.enemyDef < this.enemySpDef) {
+    if (this.enemyDef < this.enemySpec) {
       this.stats = [BattleStat.ATK];
     } else {
-      this.stats = [BattleStat.SPATK];
+      this.stats = [BattleStat.SPEC];
     }
 
-    if (this.enemyDef > 0 && this.enemySpDef > 0) { // only activate if there's actually an enemy to download from
+    if (this.enemyDef > 0 && this.enemySpec > 0) { // only activate if there's actually an enemy to download from
       if (!simulated) {
         pokemon.scene.unshiftPhase(new StatChangePhase(pokemon.scene, pokemon.getBattlerIndex(), false, this.stats, 1));
       }
@@ -2925,8 +2925,7 @@ function getAnticipationCondition(): AbAttrCondition {
               +(opponent.ivs[Stat.ATK] & 1) * 2
               +(opponent.ivs[Stat.DEF] & 1) * 4
               +(opponent.ivs[Stat.SPD] & 1) * 8
-              +(opponent.ivs[Stat.SPATK] & 1) * 16
-              +(opponent.ivs[Stat.SPDEF] & 1) * 32) * 15/63);
+              +(opponent.ivs[Stat.SPEC] & 1) * 16) * 15/63);
 
           const type = [
             Type.FIGHTING, Type.FLYING, Type.POISON, Type.GROUND,
@@ -3353,7 +3352,7 @@ export class MoodyAbAttr extends PostTurnAbAttr {
    * If the pokemon already has all BattleStats lowered to stage -6, it will only increase one BattleStat by 2 stages
    */
   applyPostTurn(pokemon: Pokemon, simulated: boolean, args: any[]): boolean {
-    const selectableStats = [BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD];
+    const selectableStats = [BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD];
     const increaseStatArray = selectableStats.filter(s => pokemon.summonData.battleStats[s] < 6);
     let decreaseStatArray = selectableStats.filter(s => pokemon.summonData.battleStats[s] > -6);
 
@@ -4706,7 +4705,7 @@ export function initAbilities() {
       .attr(PreSwitchOutResetStatusAbAttr),
     new Ability(Abilities.LIGHTNING_ROD, 3)
       .attr(RedirectTypeMoveAbAttr, Type.ELECTRIC)
-      .attr(TypeImmunityStatChangeAbAttr, Type.ELECTRIC, BattleStat.SPATK, 1)
+      .attr(TypeImmunityStatChangeAbAttr, Type.ELECTRIC, BattleStat.SPEC, 1)
       .ignorable(),
     new Ability(Abilities.SERENE_GRACE, 3)
       .attr(MoveEffectChanceMultiplierAbAttr, 2)
@@ -4785,10 +4784,10 @@ export function initAbilities() {
     new Ability(Abilities.CUTE_CHARM, 3)
       .attr(PostDefendContactApplyTagChanceAbAttr, 30, BattlerTagType.INFATUATED),
     new Ability(Abilities.PLUS, 3)
-      .conditionalAttr(p => p.scene.currentBattle.double && [Abilities.PLUS, Abilities.MINUS].some(a => p.getAlly().hasAbility(a)), BattleStatMultiplierAbAttr, BattleStat.SPATK, 1.5)
+      .conditionalAttr(p => p.scene.currentBattle.double && [Abilities.PLUS, Abilities.MINUS].some(a => p.getAlly().hasAbility(a)), BattleStatMultiplierAbAttr, BattleStat.SPEC, 1.5)
       .ignorable(),
     new Ability(Abilities.MINUS, 3)
-      .conditionalAttr(p => p.scene.currentBattle.double && [Abilities.PLUS, Abilities.MINUS].some(a => p.getAlly().hasAbility(a)), BattleStatMultiplierAbAttr, BattleStat.SPATK, 1.5)
+      .conditionalAttr(p => p.scene.currentBattle.double && [Abilities.PLUS, Abilities.MINUS].some(a => p.getAlly().hasAbility(a)), BattleStatMultiplierAbAttr, BattleStat.SPEC, 1.5)
       .ignorable(),
     new Ability(Abilities.FORECAST, 3)
       .attr(UncopiableAbilityAbAttr)
@@ -4900,7 +4899,7 @@ export function initAbilities() {
       .condition(getWeatherCondition(WeatherType.RAIN, WeatherType.HEAVY_RAIN)),
     new Ability(Abilities.SOLAR_POWER, 4)
       .attr(PostWeatherLapseDamageAbAttr, 2, WeatherType.SUNNY, WeatherType.HARSH_SUN)
-      .attr(BattleStatMultiplierAbAttr, BattleStat.SPATK, 1.5)
+      .attr(BattleStatMultiplierAbAttr, BattleStat.SPEC, 1.5)
       .condition(getWeatherCondition(WeatherType.SUNNY, WeatherType.HARSH_SUN)),
     new Ability(Abilities.QUICK_FEET, 4)
       .conditionalAttr(pokemon => pokemon.status ? pokemon.status.effect === StatusEffect.PARALYSIS : false, BattleStatMultiplierAbAttr, BattleStat.SPD, 2)
@@ -4959,7 +4958,7 @@ export function initAbilities() {
       .attr(IntimidateImmunityAbAttr),
     new Ability(Abilities.STORM_DRAIN, 4)
       .attr(RedirectTypeMoveAbAttr, Type.WATER)
-      .attr(TypeImmunityStatChangeAbAttr, Type.WATER, BattleStat.SPATK, 1)
+      .attr(TypeImmunityStatChangeAbAttr, Type.WATER, BattleStat.SPEC, 1)
       .ignorable(),
     new Ability(Abilities.ICE_BODY, 4)
       .attr(BlockWeatherDamageAttr, WeatherType.HAIL)
@@ -4984,7 +4983,7 @@ export function initAbilities() {
       .attr(NoFusionAbilityAbAttr),
     new Ability(Abilities.FLOWER_GIFT, 4)
       .conditionalAttr(getWeatherCondition(WeatherType.SUNNY || WeatherType.HARSH_SUN), BattleStatMultiplierAbAttr, BattleStat.ATK, 1.5)
-      .conditionalAttr(getWeatherCondition(WeatherType.SUNNY || WeatherType.HARSH_SUN), BattleStatMultiplierAbAttr, BattleStat.SPDEF, 1.5)
+      .conditionalAttr(getWeatherCondition(WeatherType.SUNNY || WeatherType.HARSH_SUN), BattleStatMultiplierAbAttr, BattleStat.SPEC, 1.5)
       .attr(UncopiableAbilityAbAttr)
       .attr(NoFusionAbilityAbAttr)
       .ignorable()
@@ -5007,7 +5006,7 @@ export function initAbilities() {
       .attr(PostStatChangeStatChangeAbAttr, (target, statsChanged, levels) => levels < 0, [BattleStat.ATK], 2),
     new Ability(Abilities.DEFEATIST, 5)
       .attr(BattleStatMultiplierAbAttr, BattleStat.ATK, 0.5)
-      .attr(BattleStatMultiplierAbAttr, BattleStat.SPATK, 0.5)
+      .attr(BattleStatMultiplierAbAttr, BattleStat.SPEC, 0.5)
       .condition((pokemon) => pokemon.getHpRatio() <= 0.5),
     new Ability(Abilities.CURSED_BODY, 5)
       .attr(PostDefendMoveDisableAbAttr, 30)
@@ -5143,7 +5142,7 @@ export function initAbilities() {
       .attr(MoveImmunityAbAttr, (pokemon, attacker, move) => pokemon !== attacker && move.hasFlag(MoveFlags.BALLBOMB_MOVE))
       .ignorable(),
     new Ability(Abilities.COMPETITIVE, 6)
-      .attr(PostStatChangeStatChangeAbAttr, (target, statsChanged, levels) => levels < 0, [BattleStat.SPATK], 2),
+      .attr(PostStatChangeStatChangeAbAttr, (target, statsChanged, levels) => levels < 0, [BattleStat.SPEC], 2),
     new Ability(Abilities.STRONG_JAW, 6)
       .attr(MovePowerBoostAbAttr, (user, target, move) => move.hasFlag(MoveFlags.BITING_MOVE), 1.5),
     new Ability(Abilities.REFRIGERATE, 6)
@@ -5238,7 +5237,7 @@ export function initAbilities() {
     new Ability(Abilities.STEELWORKER, 7)
       .attr(MoveTypePowerBoostAbAttr, Type.STEEL),
     new Ability(Abilities.BERSERK, 7)
-      .attr(PostDefendHpGatedStatChangeAbAttr, (target, user, move) => move.category !== MoveCategory.STATUS, 0.5, [BattleStat.SPATK], 1)
+      .attr(PostDefendHpGatedStatChangeAbAttr, (target, user, move) => move.category !== MoveCategory.STATUS, 0.5, [BattleStat.SPEC], 1)
       .condition(getSheerForceHitDisableAbCondition()),
     new Ability(Abilities.SLUSH_RUSH, 7)
       .attr(BattleStatMultiplierAbAttr, BattleStat.SPD, 2)
@@ -5321,7 +5320,7 @@ export function initAbilities() {
       .attr(FieldPriorityMoveImmunityAbAttr)
       .ignorable(),
     new Ability(Abilities.SOUL_HEART, 7)
-      .attr(PostKnockOutStatChangeAbAttr, BattleStat.SPATK, 1),
+      .attr(PostKnockOutStatChangeAbAttr, BattleStat.SPEC, 1),
     new Ability(Abilities.TANGLING_HAIR, 7)
       .attr(PostDefendStatChangeAbAttr, (target, user, move) => move.hasFlag(MoveFlags.MAKES_CONTACT), BattleStat.SPD, -1, false),
     new Ability(Abilities.RECEIVER, 7)
@@ -5479,7 +5478,7 @@ export function initAbilities() {
     new Ability(Abilities.CHILLING_NEIGH, 8)
       .attr(PostVictoryStatChangeAbAttr, BattleStat.ATK, 1),
     new Ability(Abilities.GRIM_NEIGH, 8)
-      .attr(PostVictoryStatChangeAbAttr, BattleStat.SPATK, 1),
+      .attr(PostVictoryStatChangeAbAttr, BattleStat.SPEC, 1),
     new Ability(Abilities.AS_ONE_GLASTRIER, 8)
       .attr(PostSummonMessageAbAttr, (pokemon: Pokemon) => i18next.t("abilityTriggers:postSummonAsOneGlastrier", { pokemonNameWithAffix: getPokemonNameWithAffix(pokemon) }))
       .attr(PreventBerryUseAbAttr)
@@ -5490,7 +5489,7 @@ export function initAbilities() {
     new Ability(Abilities.AS_ONE_SPECTRIER, 8)
       .attr(PostSummonMessageAbAttr, (pokemon: Pokemon) => i18next.t("abilityTriggers:postSummonAsOneSpectrier", { pokemonNameWithAffix: getPokemonNameWithAffix(pokemon) }))
       .attr(PreventBerryUseAbAttr)
-      .attr(PostVictoryStatChangeAbAttr, BattleStat.SPATK, 1)
+      .attr(PostVictoryStatChangeAbAttr, BattleStat.SPEC, 1)
       .attr(UncopiableAbilityAbAttr)
       .attr(UnswappableAbilityAbAttr)
       .attr(UnsuppressableAbilityAbAttr),
@@ -5504,8 +5503,8 @@ export function initAbilities() {
       .attr(StatusEffectImmunityAbAttr, StatusEffect.BURN)
       .ignorable(),
     new Ability(Abilities.ANGER_SHELL, 9)
-      .attr(PostDefendHpGatedStatChangeAbAttr, (target, user, move) => move.category !== MoveCategory.STATUS, 0.5, [ BattleStat.ATK, BattleStat.SPATK, BattleStat.SPD ], 1)
-      .attr(PostDefendHpGatedStatChangeAbAttr, (target, user, move) => move.category !== MoveCategory.STATUS, 0.5, [ BattleStat.DEF, BattleStat.SPDEF ], -1)
+      .attr(PostDefendHpGatedStatChangeAbAttr, (target, user, move) => move.category !== MoveCategory.STATUS, 0.5, [ BattleStat.ATK, BattleStat.SPEC, BattleStat.SPD ], 1)
+      .attr(PostDefendHpGatedStatChangeAbAttr, (target, user, move) => move.category !== MoveCategory.STATUS, 0.5, [ BattleStat.DEF, BattleStat.SPEC ], -1)
       .condition(getSheerForceHitDisableAbCondition()),
     new Ability(Abilities.PURIFYING_SALT, 9)
       .attr(StatusEffectImmunityAbAttr)
@@ -5560,8 +5559,8 @@ export function initAbilities() {
       .ignorable()
       .partial(),
     new Ability(Abilities.VESSEL_OF_RUIN, 9)
-      .attr(FieldMultiplyBattleStatAbAttr, Stat.SPATK, 0.75)
-      .attr(PostSummonMessageAbAttr, (user) => i18next.t("abilityTriggers:postSummonVesselOfRuin", { pokemonNameWithAffix: getPokemonNameWithAffix(user), statName: getStatName(Stat.SPATK) }))
+      .attr(FieldMultiplyBattleStatAbAttr, Stat.SPEC, 0.75)
+      .attr(PostSummonMessageAbAttr, (user) => i18next.t("abilityTriggers:postSummonVesselOfRuin", { pokemonNameWithAffix: getPokemonNameWithAffix(user), statName: getStatName(Stat.SPEC) }))
       .ignorable(),
     new Ability(Abilities.SWORD_OF_RUIN, 9)
       .attr(FieldMultiplyBattleStatAbAttr, Stat.DEF, 0.75)
@@ -5572,8 +5571,8 @@ export function initAbilities() {
       .attr(PostSummonMessageAbAttr, (user) => i18next.t("abilityTriggers:postSummonTabletsOfRuin", { pokemonNameWithAffix: getPokemonNameWithAffix(user), statName: getStatName(Stat.ATK) }))
       .ignorable(),
     new Ability(Abilities.BEADS_OF_RUIN, 9)
-      .attr(FieldMultiplyBattleStatAbAttr, Stat.SPDEF, 0.75)
-      .attr(PostSummonMessageAbAttr, (user) => i18next.t("abilityTriggers:postSummonBeadsOfRuin", { pokemonNameWithAffix: getPokemonNameWithAffix(user), statName: getStatName(Stat.SPDEF) }))
+      .attr(FieldMultiplyBattleStatAbAttr, Stat.SPEC, 0.75)
+      .attr(PostSummonMessageAbAttr, (user) => i18next.t("abilityTriggers:postSummonBeadsOfRuin", { pokemonNameWithAffix: getPokemonNameWithAffix(user), statName: getStatName(Stat.SPEC) }))
       .ignorable(),
     new Ability(Abilities.ORICHALCUM_PULSE, 9)
       .attr(PostSummonWeatherChangeAbAttr, WeatherType.SUNNY)
@@ -5582,7 +5581,7 @@ export function initAbilities() {
     new Ability(Abilities.HADRON_ENGINE, 9)
       .attr(PostSummonTerrainChangeAbAttr, TerrainType.ELECTRIC)
       .attr(PostBiomeChangeTerrainChangeAbAttr, TerrainType.ELECTRIC)
-      .conditionalAttr(getTerrainCondition(TerrainType.ELECTRIC), BattleStatMultiplierAbAttr, BattleStat.SPATK, 4 / 3),
+      .conditionalAttr(getTerrainCondition(TerrainType.ELECTRIC), BattleStatMultiplierAbAttr, BattleStat.SPEC, 4 / 3),
     new Ability(Abilities.OPPORTUNIST, 9)
       .attr(StatChangeCopyAbAttr),
     new Ability(Abilities.CUD_CHEW, 9)
@@ -5628,7 +5627,7 @@ export function initAbilities() {
       .attr(NoTransformAbilityAbAttr)
       .partial(),
     new Ability(Abilities.EMBODY_ASPECT_WELLSPRING, 9)
-      .attr(PostBattleInitStatChangeAbAttr, BattleStat.SPDEF, 1, true)
+      .attr(PostBattleInitStatChangeAbAttr, BattleStat.SPEC, 1, true)
       .attr(UncopiableAbilityAbAttr)
       .attr(UnswappableAbilityAbAttr)
       .attr(NoTransformAbilityAbAttr)

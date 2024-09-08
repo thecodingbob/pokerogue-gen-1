@@ -818,8 +818,8 @@ export class AttackMove extends Move {
       if (this.category === MoveCategory.PHYSICAL) {
         const atk = new Utils.IntegerHolder(user.getBattleStat(Stat.ATK, target));
         applyMoveAttrs(VariableAtkAttr, user, target, move, atk);
-        if (atk.value > user.getBattleStat(Stat.SPATK, target)) {
-          const statRatio = user.getBattleStat(Stat.SPATK, target) / atk.value;
+        if (atk.value > user.getBattleStat(Stat.SPEC, target)) {
+          const statRatio = user.getBattleStat(Stat.SPEC, target) / atk.value;
           if (statRatio <= 0.75) {
             attackScore *= 2;
           } else if (statRatio <= 0.875) {
@@ -827,10 +827,10 @@ export class AttackMove extends Move {
           }
         }
       } else {
-        const spAtk = new Utils.IntegerHolder(user.getBattleStat(Stat.SPATK, target));
-        applyMoveAttrs(VariableAtkAttr, user, target, move, spAtk);
-        if (spAtk.value > user.getBattleStat(Stat.ATK, target)) {
-          const statRatio = user.getBattleStat(Stat.ATK, target) / spAtk.value;
+        const spec = new Utils.IntegerHolder(user.getBattleStat(Stat.SPEC, target));
+        applyMoveAttrs(VariableAtkAttr, user, target, move, spec);
+        if (spec.value > user.getBattleStat(Stat.ATK, target)) {
+          const statRatio = user.getBattleStat(Stat.ATK, target) / spec.value;
           if (statRatio <= 0.75) {
             attackScore *= 2;
           } else if (statRatio <= 0.875) {
@@ -2495,22 +2495,22 @@ export class ElectroShotChargeAttr extends ChargeAttr {
     return new Promise(resolve => {
       const weatherType = user.scene.arena.weather?.weatherType;
       if (!user.scene.arena.weather?.isEffectSuppressed(user.scene) && (weatherType === WeatherType.RAIN || weatherType === WeatherType.HEAVY_RAIN)) {
-        // Apply the SPATK increase every call when used in the rain
-        const statChangeAttr = new StatChangeAttr(BattleStat.SPATK, 1, true);
+        // Apply the SPEC increase every call when used in the rain
+        const statChangeAttr = new StatChangeAttr(BattleStat.SPEC, 1, true);
         statChangeAttr.apply(user, target, move, args);
-        // After the SPATK is raised, execute the move resolution e.g. deal damage
+        // After the SPEC is raised, execute the move resolution e.g. deal damage
         resolve(false);
       } else {
         if (!this.statIncreaseApplied) {
-          // Apply the SPATK increase only if it hasn't been applied before e.g. on the first turn charge up animation
-          const statChangeAttr = new StatChangeAttr(BattleStat.SPATK, 1, true);
+          // Apply the SPEC increase only if it hasn't been applied before e.g. on the first turn charge up animation
+          const statChangeAttr = new StatChangeAttr(BattleStat.SPEC, 1, true);
           statChangeAttr.apply(user, target, move, args);
-          // Set the flag to true so that on the following turn it doesn't raise SPATK a second time
+          // Set the flag to true so that on the following turn it doesn't raise SPEC a second time
           this.statIncreaseApplied = true;
         }
         super.apply(user, target, move, args).then(result => {
           if (!result) {
-            // On the second turn, reset the statIncreaseApplied flag without applying the SPATK increase
+            // On the second turn, reset the statIncreaseApplied flag without applying the SPEC increase
             this.statIncreaseApplied = false;
           }
           resolve(result);
@@ -2608,12 +2608,12 @@ export class StatChangeAttr extends MoveEffectAttr {
           noEffect = !user.getMoveset().find(m => m instanceof AttackMove && m.category === MoveCategory.PHYSICAL);
         }
         break;
-      case BattleStat.SPATK:
+      case BattleStat.SPEC:
         if (this.selfTarget) {
           noEffect = !user.getMoveset().find(m => m instanceof AttackMove && m.category === MoveCategory.SPECIAL);
         }
         break;
-      case BattleStat.SPDEF:
+      case BattleStat.SPEC:
         if (!this.selfTarget) {
           noEffect = !user.getMoveset().find(m => m instanceof AttackMove && m.category === MoveCategory.SPECIAL);
         }
@@ -2658,7 +2658,7 @@ export class AcupressureStatChangeAttr extends MoveEffectAttr {
   }
 
   apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean | Promise<boolean> {
-    let randStats = [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD, BattleStat.ACC, BattleStat.EVA ];
+    let randStats = [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD, BattleStat.ACC, BattleStat.EVA ];
     randStats = randStats.filter(s => target.summonData.battleStats[s] < 6);
     if (randStats.length > 0) {
       const boostStat = [randStats[Utils.randInt(randStats.length)]];
@@ -2671,7 +2671,7 @@ export class AcupressureStatChangeAttr extends MoveEffectAttr {
 
 export class GrowthStatChangeAttr extends StatChangeAttr {
   constructor() {
-    super([ BattleStat.ATK, BattleStat.SPATK ], 1, true);
+    super([ BattleStat.ATK, BattleStat.SPEC ], 1, true);
   }
 
   getLevels(user: Pokemon): number {
@@ -3740,7 +3740,7 @@ export class PhotonGeyserCategoryAttr extends VariableMoveCategoryAttr {
   apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
     const category = (args[0] as Utils.NumberHolder);
 
-    if (user.getBattleStat(Stat.ATK, target, move) > user.getBattleStat(Stat.SPATK, target, move)) {
+    if (user.getBattleStat(Stat.ATK, target, move) > user.getBattleStat(Stat.SPEC, target, move)) {
       category.value = MoveCategory.PHYSICAL;
       return true;
     }
@@ -3753,7 +3753,7 @@ export class TeraBlastCategoryAttr extends VariableMoveCategoryAttr {
   apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
     const category = (args[0] as Utils.NumberHolder);
 
-    if (user.isTerastallized() && user.getBattleStat(Stat.ATK, target, move) > user.getBattleStat(Stat.SPATK, target, move)) {
+    if (user.isTerastallized() && user.getBattleStat(Stat.ATK, target, move) > user.getBattleStat(Stat.SPEC, target, move)) {
       category.value = MoveCategory.PHYSICAL;
       return true;
     }
@@ -3818,7 +3818,7 @@ export class ShellSideArmCategoryAttr extends VariableMoveCategoryAttr {
   apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
     const category = (args[0] as Utils.IntegerHolder);
     const atkRatio = user.getBattleStat(Stat.ATK, target, move) / target.getBattleStat(Stat.DEF, user, move);
-    const specialRatio = user.getBattleStat(Stat.SPATK, target, move) / target.getBattleStat(Stat.SPDEF, user, move);
+    const specialRatio = user.getBattleStat(Stat.SPEC, target, move) / target.getBattleStat(Stat.SPEC, user, move);
 
     // Shell Side Arm is much more complicated than it looks, this is a partial implementation to try to achieve something similar to the games
     if (atkRatio > specialRatio) {
@@ -3933,8 +3933,7 @@ export class HiddenPowerTypeAttr extends VariableMoveTypeAttr {
       +(user.ivs[Stat.ATK] & 1) * 2
       +(user.ivs[Stat.DEF] & 1) * 4
       +(user.ivs[Stat.SPD] & 1) * 8
-      +(user.ivs[Stat.SPATK] & 1) * 16
-      +(user.ivs[Stat.SPDEF] & 1) * 32) * 15/63);
+      +(user.ivs[Stat.SPEC] & 1) * 16) * 15/63);
 
     moveType.value = [
       Type.FIGHTING, Type.FLYING, Type.POISON, Type.GROUND,
@@ -6113,7 +6112,7 @@ export function initMoves() {
       .attr(DisableMoveAttr)
       .condition(failOnMaxCondition),
     new AttackMove(Moves.ACID, Type.POISON, MoveCategory.SPECIAL, 40, 100, 30, 10, 0, 1)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.EMBER, Type.FIRE, MoveCategory.SPECIAL, 40, 100, 25, 10, 0, 1)
       .attr(StatusEffectAttr, StatusEffect.BURN),
@@ -6230,7 +6229,7 @@ export function initMoves() {
     new AttackMove(Moves.CONFUSION, Type.PSYCHIC, MoveCategory.SPECIAL, 50, 100, 25, 10, 0, 1)
       .attr(ConfuseAttr),
     new AttackMove(Moves.PSYCHIC, Type.PSYCHIC, MoveCategory.SPECIAL, 90, 100, 10, 10, 0, 1)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1),
+      .attr(StatChangeAttr, BattleStat.SPEC, -1),
     new StatusMove(Moves.HYPNOSIS, Type.PSYCHIC, 60, 20, -1, 0, 1)
       .attr(StatusEffectAttr, StatusEffect.SLEEP),
     new SelfStatusMove(Moves.MEDITATE, Type.PSYCHIC, -1, 40, -1, 0, 1)
@@ -6326,7 +6325,7 @@ export function initMoves() {
     new AttackMove(Moves.CONSTRICT, Type.NORMAL, MoveCategory.PHYSICAL, 10, 100, 35, 10, 0, 1)
       .attr(StatChangeAttr, BattleStat.SPD, -1),
     new SelfStatusMove(Moves.AMNESIA, Type.PSYCHIC, -1, 20, -1, 0, 1)
-      .attr(StatChangeAttr, BattleStat.SPDEF, 2, true),
+      .attr(StatChangeAttr, BattleStat.SPEC, 2, true),
     new StatusMove(Moves.KINESIS, Type.PSYCHIC, 80, 15, -1, 0, 1)
       .attr(StatChangeAttr, BattleStat.ACC, -1),
     new SelfStatusMove(Moves.SOFT_BOILED, Type.NORMAL, -1, 5, -1, 0, 1)
@@ -6671,9 +6670,9 @@ export function initMoves() {
       .attr(CopyStatsAttr),
     new AttackMove(Moves.EXTREME_SPEED, Type.NORMAL, MoveCategory.PHYSICAL, 80, 100, 5, -1, 2, 2),
     new AttackMove(Moves.ANCIENT_POWER, Type.ROCK, MoveCategory.SPECIAL, 60, 100, 5, 10, 0, 2)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD ], 1, true),
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD ], 1, true),
     new AttackMove(Moves.SHADOW_BALL, Type.GHOST, MoveCategory.SPECIAL, 80, 100, 15, 20, 0, 2)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1)
       .ballBombMove(),
     new AttackMove(Moves.FUTURE_SIGHT, Type.PSYCHIC, MoveCategory.SPECIAL, 120, 100, 10, -1, 0, 2)
       .partial()
@@ -6718,13 +6717,13 @@ export function initMoves() {
     new StatusMove(Moves.TORMENT, Type.DARK, 100, 15, -1, 0, 3)
       .unimplemented(),
     new StatusMove(Moves.FLATTER, Type.DARK, 100, 15, -1, 0, 3)
-      .attr(StatChangeAttr, BattleStat.SPATK, 1)
+      .attr(StatChangeAttr, BattleStat.SPEC, 1)
       .attr(ConfuseAttr),
     new StatusMove(Moves.WILL_O_WISP, Type.FIRE, 85, 15, -1, 0, 3)
       .attr(StatusEffectAttr, StatusEffect.BURN),
     new StatusMove(Moves.MEMENTO, Type.DARK, 100, 10, -1, 0, 3)
       .attr(SacrificialAttrOnHit)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK ], -2),
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC ], -2),
     new AttackMove(Moves.FACADE, Type.NORMAL, MoveCategory.PHYSICAL, 70, 100, 20, -1, 0, 3)
       .attr(MovePowerMultiplierAttr, (user, target, move) => user.status
         && (user.status.effect === StatusEffect.BURN || user.status.effect === StatusEffect.POISON || user.status.effect === StatusEffect.TOXIC || user.status.effect === StatusEffect.PARALYSIS) ? 2 : 1)
@@ -6743,7 +6742,7 @@ export function initMoves() {
       .attr(NaturePowerAttr)
       .ignoresVirtual(),
     new SelfStatusMove(Moves.CHARGE, Type.ELECTRIC, -1, 20, -1, 0, 3)
-      .attr(StatChangeAttr, BattleStat.SPDEF, 1, true)
+      .attr(StatChangeAttr, BattleStat.SPEC, 1, true)
       .attr(AddBattlerTagAttr, BattlerTagType.CHARGED, true, false),
     new StatusMove(Moves.TAUNT, Type.DARK, 100, 20, -1, 0, 3)
       .unimplemented(),
@@ -6802,11 +6801,11 @@ export function initMoves() {
     new SelfStatusMove(Moves.CAMOUFLAGE, Type.NORMAL, -1, 20, -1, 0, 3)
       .attr(CopyBiomeTypeAttr),
     new SelfStatusMove(Moves.TAIL_GLOW, Type.BUG, -1, 20, -1, 0, 3)
-      .attr(StatChangeAttr, BattleStat.SPATK, 3, true),
+      .attr(StatChangeAttr, BattleStat.SPEC, 3, true),
     new AttackMove(Moves.LUSTER_PURGE, Type.PSYCHIC, MoveCategory.SPECIAL, 95, 100, 5, 50, 0, 3)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1),
+      .attr(StatChangeAttr, BattleStat.SPEC, -1),
     new AttackMove(Moves.MIST_BALL, Type.PSYCHIC, MoveCategory.SPECIAL, 95, 100, 5, 50, 0, 3)
-      .attr(StatChangeAttr, BattleStat.SPATK, -1)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1)
       .ballBombMove(),
     new StatusMove(Moves.FEATHER_DANCE, Type.FLYING, 100, 15, -1, 0, 3)
       .attr(StatChangeAttr, BattleStat.ATK, -2)
@@ -6854,14 +6853,14 @@ export function initMoves() {
       .attr(PartyStatusCureAttr, i18next.t("moveTriggers:soothingAromaWaftedThroughArea"), Abilities.SAP_SIPPER)
       .target(MoveTarget.PARTY),
     new StatusMove(Moves.FAKE_TEARS, Type.DARK, 100, 20, -1, 0, 3)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -2),
+      .attr(StatChangeAttr, BattleStat.SPEC, -2),
     new AttackMove(Moves.AIR_CUTTER, Type.FLYING, MoveCategory.SPECIAL, 60, 95, 25, -1, 0, 3)
       .attr(HighCritAttr)
       .slicingMove()
       .windMove()
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.OVERHEAT, Type.FIRE, MoveCategory.SPECIAL, 130, 90, 5, -1, 0, 3)
-      .attr(StatChangeAttr, BattleStat.SPATK, -2, true)
+      .attr(StatChangeAttr, BattleStat.SPEC, -2, true)
       .attr(HealStatusEffectAttr, true, StatusEffect.FREEZE),
     new StatusMove(Moves.ODOR_SLEUTH, Type.NORMAL, -1, 40, -1, 0, 3)
       .attr(ExposedMoveAttr, BattlerTagType.IGNORE_GHOST),
@@ -6869,10 +6868,10 @@ export function initMoves() {
       .attr(StatChangeAttr, BattleStat.SPD, -1)
       .makesContact(false),
     new AttackMove(Moves.SILVER_WIND, Type.BUG, MoveCategory.SPECIAL, 60, 100, 5, 10, 0, 3)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD ], 1, true)
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD ], 1, true)
       .windMove(),
     new StatusMove(Moves.METAL_SOUND, Type.STEEL, 85, 40, -1, 0, 3)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -2)
+      .attr(StatChangeAttr, BattleStat.SPEC, -2)
       .soundBased(),
     new StatusMove(Moves.GRASS_WHISTLE, Type.GRASS, 55, 15, -1, 0, 3)
       .attr(StatusEffectAttr, StatusEffect.SLEEP)
@@ -6880,7 +6879,7 @@ export function initMoves() {
     new StatusMove(Moves.TICKLE, Type.NORMAL, 100, 20, -1, 0, 3)
       .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF ], -1),
     new SelfStatusMove(Moves.COSMIC_POWER, Type.PSYCHIC, -1, 20, -1, 0, 3)
-      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPDEF ], 1, true),
+      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPEC ], 1, true),
     new AttackMove(Moves.WATER_SPOUT, Type.WATER, MoveCategory.SPECIAL, 150, 100, 5, -1, 0, 3)
       .attr(HpPowerAttr)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
@@ -6946,7 +6945,7 @@ export function initMoves() {
       .attr(AddArenaTagAttr, ArenaTagType.WATER_SPORT, 5)
       .target(MoveTarget.BOTH_SIDES),
     new SelfStatusMove(Moves.CALM_MIND, Type.PSYCHIC, -1, 20, -1, 0, 3)
-      .attr(StatChangeAttr, [ BattleStat.SPATK, BattleStat.SPDEF ], 1, true),
+      .attr(StatChangeAttr, [ BattleStat.SPEC, BattleStat.SPEC ], 1, true),
     new AttackMove(Moves.LEAF_BLADE, Type.GRASS, MoveCategory.PHYSICAL, 90, 100, 15, -1, 0, 3)
       .attr(HighCritAttr)
       .slicingMove(),
@@ -6965,7 +6964,7 @@ export function initMoves() {
       .partial()
       .attr(DelayedAttackAttr, ArenaTagType.DOOM_DESIRE, ChargeAnim.DOOM_DESIRE_CHARGING, i18next.t("moveTriggers:choseDoomDesireAsDestiny", {pokemonName: "{USER}"})),
     new AttackMove(Moves.PSYCHO_BOOST, Type.PSYCHIC, MoveCategory.SPECIAL, 140, 90, 5, -1, 0, 3)
-      .attr(StatChangeAttr, BattleStat.SPATK, -2, true),
+      .attr(StatChangeAttr, BattleStat.SPEC, -2, true),
     new SelfStatusMove(Moves.ROOST, Type.FLYING, -1, 5, -1, 0, 4)
       .attr(HealAttr, 0.5)
       .attr(AddBattlerTagAttr, BattlerTagType.ROOSTED, true, false)
@@ -7014,7 +7013,7 @@ export function initMoves() {
     new AttackMove(Moves.U_TURN, Type.BUG, MoveCategory.PHYSICAL, 70, 100, 20, -1, 0, 4)
       .attr(ForceSwitchOutAttr, true, false),
     new AttackMove(Moves.CLOSE_COMBAT, Type.FIGHTING, MoveCategory.PHYSICAL, 120, 100, 5, -1, 0, 4)
-      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPDEF ], -1, true),
+      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPEC ], -1, true),
     new AttackMove(Moves.PAYBACK, Type.DARK, MoveCategory.PHYSICAL, 50, 100, 10, -1, 0, 4)
       .attr(MovePowerMultiplierAttr, (user, target, move) => target.getLastXMoves(1).find(m => m.turn === target.scene.currentBattle.turn) || user.scene.currentBattle.turnCommands[target.getBattlerIndex()]?.command === Command.BALL ? 2 : 1),
     new AttackMove(Moves.ASSURANCE, Type.DARK, MoveCategory.PHYSICAL, 60, 100, 10, -1, 0, 4)
@@ -7106,7 +7105,7 @@ export function initMoves() {
     new AttackMove(Moves.X_SCISSOR, Type.BUG, MoveCategory.PHYSICAL, 80, 100, 15, -1, 0, 4)
       .slicingMove(),
     new AttackMove(Moves.BUG_BUZZ, Type.BUG, MoveCategory.SPECIAL, 90, 100, 10, 10, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1)
       .soundBased(),
     new AttackMove(Moves.DRAGON_PULSE, Type.DRAGON, MoveCategory.SPECIAL, 85, 100, 10, -1, 0, 4)
       .pulseMove(),
@@ -7121,22 +7120,22 @@ export function initMoves() {
       .triageMove(),
     new AttackMove(Moves.VACUUM_WAVE, Type.FIGHTING, MoveCategory.SPECIAL, 40, 100, 30, -1, 1, 4),
     new AttackMove(Moves.FOCUS_BLAST, Type.FIGHTING, MoveCategory.SPECIAL, 120, 70, 5, 10, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1)
       .ballBombMove(),
     new AttackMove(Moves.ENERGY_BALL, Type.GRASS, MoveCategory.SPECIAL, 90, 100, 10, 10, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1)
       .ballBombMove(),
     new AttackMove(Moves.BRAVE_BIRD, Type.FLYING, MoveCategory.PHYSICAL, 120, 100, 15, -1, 0, 4)
       .attr(RecoilAttr, false, 0.33)
       .recklessMove(),
     new AttackMove(Moves.EARTH_POWER, Type.GROUND, MoveCategory.SPECIAL, 90, 100, 10, 10, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1),
+      .attr(StatChangeAttr, BattleStat.SPEC, -1),
     new StatusMove(Moves.SWITCHEROO, Type.DARK, 100, 10, -1, 0, 4)
       .unimplemented(),
     new AttackMove(Moves.GIGA_IMPACT, Type.NORMAL, MoveCategory.PHYSICAL, 150, 90, 5, -1, 0, 4)
       .attr(RechargeAttr),
     new SelfStatusMove(Moves.NASTY_PLOT, Type.DARK, -1, 20, -1, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPATK, 2, true),
+      .attr(StatChangeAttr, BattleStat.SPEC, 2, true),
     new AttackMove(Moves.BULLET_PUNCH, Type.STEEL, MoveCategory.PHYSICAL, 40, 100, 30, -1, 1, 4)
       .punchingMove(),
     new AttackMove(Moves.AVALANCHE, Type.ICE, MoveCategory.PHYSICAL, 60, 100, 10, -1, -4, 4)
@@ -7170,7 +7169,7 @@ export function initMoves() {
     new AttackMove(Moves.MIRROR_SHOT, Type.STEEL, MoveCategory.SPECIAL, 65, 85, 10, 30, 0, 4)
       .attr(StatChangeAttr, BattleStat.ACC, -1),
     new AttackMove(Moves.FLASH_CANNON, Type.STEEL, MoveCategory.SPECIAL, 80, 100, 10, 10, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1),
+      .attr(StatChangeAttr, BattleStat.SPEC, -1),
     new AttackMove(Moves.ROCK_CLIMB, Type.NORMAL, MoveCategory.PHYSICAL, 90, 85, 20, 20, 0, 4)
       .attr(ConfuseAttr),
     new StatusMove(Moves.DEFOG, Type.FLYING, -1, 15, -1, 0, 4)
@@ -7184,7 +7183,7 @@ export function initMoves() {
       .ignoresProtect()
       .target(MoveTarget.BOTH_SIDES),
     new AttackMove(Moves.DRACO_METEOR, Type.DRAGON, MoveCategory.SPECIAL, 130, 90, 5, -1, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPATK, -2, true),
+      .attr(StatChangeAttr, BattleStat.SPEC, -2, true),
     new AttackMove(Moves.DISCHARGE, Type.ELECTRIC, MoveCategory.SPECIAL, 80, 100, 15, 30, 0, 4)
       .attr(StatusEffectAttr, StatusEffect.PARALYSIS)
       .target(MoveTarget.ALL_NEAR_OTHERS),
@@ -7192,7 +7191,7 @@ export function initMoves() {
       .attr(StatusEffectAttr, StatusEffect.BURN)
       .target(MoveTarget.ALL_NEAR_OTHERS),
     new AttackMove(Moves.LEAF_STORM, Type.GRASS, MoveCategory.SPECIAL, 130, 90, 5, -1, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPATK, -2, true),
+      .attr(StatChangeAttr, BattleStat.SPEC, -2, true),
     new AttackMove(Moves.POWER_WHIP, Type.GRASS, MoveCategory.PHYSICAL, 120, 85, 10, -1, 0, 4),
     new AttackMove(Moves.ROCK_WRECKER, Type.ROCK, MoveCategory.PHYSICAL, 150, 90, 5, -1, 0, 4)
       .attr(RechargeAttr)
@@ -7214,7 +7213,7 @@ export function initMoves() {
       .attr(HighCritAttr)
       .makesContact(false),
     new StatusMove(Moves.CAPTIVATE, Type.NORMAL, 100, 20, -1, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPATK, -2)
+      .attr(StatChangeAttr, BattleStat.SPEC, -2)
       .condition((user, target, move) => target.isOppositeGender(user))
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new StatusMove(Moves.STEALTH_ROCK, Type.ROCK, -1, 20, -1, 0, 4)
@@ -7231,7 +7230,7 @@ export function initMoves() {
     new AttackMove(Moves.BUG_BITE, Type.BUG, MoveCategory.PHYSICAL, 60, 100, 20, -1, 0, 4)
       .attr(StealEatBerryAttr),
     new AttackMove(Moves.CHARGE_BEAM, Type.ELECTRIC, MoveCategory.SPECIAL, 50, 90, 10, 70, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPATK, 1, true),
+      .attr(StatChangeAttr, BattleStat.SPEC, 1, true),
     new AttackMove(Moves.WOOD_HAMMER, Type.GRASS, MoveCategory.PHYSICAL, 120, 100, 15, -1, 0, 4)
       .attr(RecoilAttr, false, 0.33)
       .recklessMove(),
@@ -7240,7 +7239,7 @@ export function initMoves() {
       .attr(HighCritAttr)
       .makesContact(false),
     new SelfStatusMove(Moves.DEFEND_ORDER, Type.BUG, -1, 10, -1, 0, 4)
-      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPDEF ], 1, true),
+      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPEC ], 1, true),
     new SelfStatusMove(Moves.HEAL_ORDER, Type.BUG, -1, 10, -1, 0, 4)
       .attr(HealAttr, 0.5)
       .triageMove(),
@@ -7266,9 +7265,9 @@ export function initMoves() {
       .attr(StatusEffectAttr, StatusEffect.SLEEP)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.SEED_FLARE, Type.GRASS, MoveCategory.SPECIAL, 120, 85, 5, 40, 0, 4)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -2),
+      .attr(StatChangeAttr, BattleStat.SPEC, -2),
     new AttackMove(Moves.OMINOUS_WIND, Type.GHOST, MoveCategory.SPECIAL, 60, 100, 5, 10, 0, 4)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD ], 1, true)
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD ], 1, true)
       .windMove(),
     new AttackMove(Moves.SHADOW_FORCE, Type.GHOST, MoveCategory.PHYSICAL, 120, 100, 5, -1, 0, 4)
       .attr(ChargeAttr, ChargeAnim.SHADOW_FORCE_CHARGING, i18next.t("moveTriggers:vanishedInstantly", {pokemonName: "{USER}"}), BattlerTagType.HIDDEN)
@@ -7318,7 +7317,7 @@ export function initMoves() {
       .attr(StatusEffectAttr, StatusEffect.POISON)
       .target(MoveTarget.ALL_NEAR_OTHERS),
     new SelfStatusMove(Moves.QUIVER_DANCE, Type.BUG, -1, 20, -1, 0, 5)
-      .attr(StatChangeAttr, [ BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD ], 1, true)
+      .attr(StatChangeAttr, [ BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD ], 1, true)
       .danceMove(),
     new AttackMove(Moves.HEAVY_SLAM, Type.STEEL, MoveCategory.PHYSICAL, -1, 100, 10, -1, 0, 5)
       .attr(MinimizeAccuracyAttr)
@@ -7341,7 +7340,7 @@ export function initMoves() {
     new AttackMove(Moves.LOW_SWEEP, Type.FIGHTING, MoveCategory.PHYSICAL, 65, 100, 20, 100, 0, 5)
       .attr(StatChangeAttr, BattleStat.SPD, -1),
     new AttackMove(Moves.ACID_SPRAY, Type.POISON, MoveCategory.SPECIAL, 40, 100, 20, 100, 0, 5)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -2)
+      .attr(StatChangeAttr, BattleStat.SPEC, -2)
       .ballBombMove(),
     new AttackMove(Moves.FOUL_PLAY, Type.DARK, MoveCategory.PHYSICAL, 95, 100, 15, -1, 0, 5)
       .attr(TargetAtkUserAtkAttr),
@@ -7371,8 +7370,8 @@ export function initMoves() {
       .attr(HealStatusEffectAttr, true, StatusEffect.FREEZE)
       .attr(StatusEffectAttr, StatusEffect.BURN),
     new SelfStatusMove(Moves.SHELL_SMASH, Type.NORMAL, -1, 15, -1, 0, 5)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK, BattleStat.SPD ], 2, true)
-      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPDEF ], -1, true),
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC, BattleStat.SPD ], 2, true)
+      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPEC ], -1, true),
     new StatusMove(Moves.HEAL_PULSE, Type.PSYCHIC, -1, 10, -1, 0, 5)
       .attr(HealAttr, 0.5, false, false)
       .pulseMove()
@@ -7418,7 +7417,7 @@ export function initMoves() {
     new AttackMove(Moves.VOLT_SWITCH, Type.ELECTRIC, MoveCategory.SPECIAL, 70, 100, 20, -1, 0, 5)
       .attr(ForceSwitchOutAttr, true, false),
     new AttackMove(Moves.STRUGGLE_BUG, Type.BUG, MoveCategory.SPECIAL, 50, 100, 20, 100, 0, 5)
-      .attr(StatChangeAttr, BattleStat.SPATK, -1)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.BULLDOZE, Type.GROUND, MoveCategory.PHYSICAL, 60, 100, 20, 100, 0, 5)
       .attr(StatChangeAttr, BattleStat.SPD, -1)
@@ -7430,7 +7429,7 @@ export function initMoves() {
       .attr(ForceSwitchOutAttr)
       .hidesTarget(),
     new SelfStatusMove(Moves.WORK_UP, Type.NORMAL, -1, 30, -1, 0, 5)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK ], 1, true),
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC ], 1, true),
     new AttackMove(Moves.ELECTROWEB, Type.ELECTRIC, MoveCategory.SPECIAL, 55, 95, 15, 100, 0, 5)
       .attr(StatChangeAttr, BattleStat.SPD, -1)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
@@ -7499,7 +7498,7 @@ export function initMoves() {
     new AttackMove(Moves.BLUE_FLARE, Type.FIRE, MoveCategory.SPECIAL, 130, 85, 5, 20, 0, 5)
       .attr(StatusEffectAttr, StatusEffect.BURN),
     new AttackMove(Moves.FIERY_DANCE, Type.FIRE, MoveCategory.SPECIAL, 80, 100, 10, 50, 0, 5)
-      .attr(StatChangeAttr, BattleStat.SPATK, 1, true)
+      .attr(StatChangeAttr, BattleStat.SPEC, 1, true)
       .danceMove(),
     new AttackMove(Moves.FREEZE_SHOCK, Type.ICE, MoveCategory.PHYSICAL, 140, 90, 5, 30, 0, 5)
       .attr(ChargeAttr, ChargeAnim.FREEZE_SHOCK_CHARGING, i18next.t("moveTriggers:becameCloakedInFreezingLight", {pokemonName: "{USER}"}))
@@ -7510,14 +7509,14 @@ export function initMoves() {
       .attr(StatusEffectAttr, StatusEffect.BURN)
       .ignoresVirtual(),
     new AttackMove(Moves.SNARL, Type.DARK, MoveCategory.SPECIAL, 55, 95, 15, 100, 0, 5)
-      .attr(StatChangeAttr, BattleStat.SPATK, -1)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1)
       .soundBased()
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.ICICLE_CRASH, Type.ICE, MoveCategory.PHYSICAL, 85, 90, 10, 30, 0, 5)
       .attr(FlinchAttr)
       .makesContact(false),
     new AttackMove(Moves.V_CREATE, Type.FIRE, MoveCategory.PHYSICAL, 180, 95, 5, -1, 0, 5)
-      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPDEF, BattleStat.SPD ], -1, true),
+      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPEC, BattleStat.SPD ], -1, true),
     new AttackMove(Moves.FUSION_FLARE, Type.FIRE, MoveCategory.SPECIAL, 100, 100, 5, -1, 0, 5)
       .attr(HealStatusEffectAttr, true, StatusEffect.FREEZE)
       .attr(LastMoveDoublePowerAttr, Moves.FUSION_BOLT),
@@ -7541,7 +7540,7 @@ export function initMoves() {
         // If any fielded pokémon is grass-type and grounded.
         return [...user.scene.getEnemyParty(), ...user.scene.getParty()].some((poke) => poke.isOfType(Type.GRASS) && poke.isGrounded());
       })
-      .attr(StatChangeAttr, [BattleStat.ATK, BattleStat.SPATK], 1, false, (user, target, move) => target.isOfType(Type.GRASS) && target.isGrounded()),
+      .attr(StatChangeAttr, [BattleStat.ATK, BattleStat.SPEC], 1, false, (user, target, move) => target.isOfType(Type.GRASS) && target.isGrounded()),
     new StatusMove(Moves.STICKY_WEB, Type.BUG, -1, 20, -1, 0, 6)
       .attr(AddArenaTrapTagAttr, ArenaTagType.STICKY_WEB)
       .target(MoveTarget.ENEMY_SIDE),
@@ -7555,7 +7554,7 @@ export function initMoves() {
       .attr(AddTypeAttr, Type.GHOST)
       .partial(),
     new StatusMove(Moves.NOBLE_ROAR, Type.NORMAL, 100, 30, -1, 0, 6)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK ], -1)
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC ], -1)
       .soundBased(),
     new StatusMove(Moves.ION_DELUGE, Type.ELECTRIC, -1, 25, -1, 1, 6)
       .target(MoveTarget.BOTH_SIDES)
@@ -7579,7 +7578,7 @@ export function initMoves() {
       .soundBased()
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new StatusMove(Moves.PARTING_SHOT, Type.DARK, 100, 20, -1, 0, 6)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK ], -1, false, null, true, true, MoveEffectTrigger.PRE_APPLY)
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC ], -1, false, null, true, true, MoveEffectTrigger.PRE_APPLY)
       .attr(ForceSwitchOutAttr, true, false)
       .soundBased(),
     new StatusMove(Moves.TOPSY_TURVY, Type.DARK, -1, 20, -1, 0, 6)
@@ -7607,7 +7606,7 @@ export function initMoves() {
     new AttackMove(Moves.FAIRY_WIND, Type.FAIRY, MoveCategory.SPECIAL, 40, 100, 30, -1, 0, 6)
       .windMove(),
     new AttackMove(Moves.MOONBLAST, Type.FAIRY, MoveCategory.SPECIAL, 95, 100, 15, 30, 0, 6)
-      .attr(StatChangeAttr, BattleStat.SPATK, -1),
+      .attr(StatChangeAttr, BattleStat.SPEC, -1),
     new AttackMove(Moves.BOOMBURST, Type.NORMAL, MoveCategory.SPECIAL, 140, 100, 10, -1, 0, 6)
       .soundBased()
       .target(MoveTarget.ALL_NEAR_OTHERS),
@@ -7619,7 +7618,7 @@ export function initMoves() {
     new StatusMove(Moves.PLAY_NICE, Type.NORMAL, -1, 20, -1, 0, 6)
       .attr(StatChangeAttr, BattleStat.ATK, -1),
     new StatusMove(Moves.CONFIDE, Type.NORMAL, -1, 20, -1, 0, 6)
-      .attr(StatChangeAttr, BattleStat.SPATK, -1)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1)
       .soundBased(),
     new AttackMove(Moves.DIAMOND_STORM, Type.ROCK, MoveCategory.PHYSICAL, 100, 95, 5, 50, 0, 6)
       .attr(StatChangeAttr, BattleStat.DEF, 2, true)
@@ -7634,26 +7633,26 @@ export function initMoves() {
     new AttackMove(Moves.WATER_SHURIKEN, Type.WATER, MoveCategory.SPECIAL, 15, 100, 20, -1, 1, 6)
       .attr(MultiHitAttr),
     new AttackMove(Moves.MYSTICAL_FIRE, Type.FIRE, MoveCategory.SPECIAL, 75, 100, 10, 100, 0, 6)
-      .attr(StatChangeAttr, BattleStat.SPATK, -1),
+      .attr(StatChangeAttr, BattleStat.SPEC, -1),
     new SelfStatusMove(Moves.SPIKY_SHIELD, Type.GRASS, -1, 10, -1, 4, 6)
       .attr(ProtectAttr, BattlerTagType.SPIKY_SHIELD),
     new StatusMove(Moves.AROMATIC_MIST, Type.FAIRY, -1, 20, -1, 0, 6)
-      .attr(StatChangeAttr, BattleStat.SPDEF, 1)
+      .attr(StatChangeAttr, BattleStat.SPEC, 1)
       .target(MoveTarget.NEAR_ALLY),
     new StatusMove(Moves.EERIE_IMPULSE, Type.ELECTRIC, 100, 15, -1, 0, 6)
-      .attr(StatChangeAttr, BattleStat.SPATK, -2),
+      .attr(StatChangeAttr, BattleStat.SPEC, -2),
     new StatusMove(Moves.VENOM_DRENCH, Type.POISON, 100, 20, -1, 0, 6)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK, BattleStat.SPD ], -1, false, (user, target, move) => target.status?.effect === StatusEffect.POISON || target.status?.effect === StatusEffect.TOXIC)
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC, BattleStat.SPD ], -1, false, (user, target, move) => target.status?.effect === StatusEffect.POISON || target.status?.effect === StatusEffect.TOXIC)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new StatusMove(Moves.POWDER, Type.BUG, 100, 20, -1, 1, 6)
       .powderMove()
       .unimplemented(),
     new SelfStatusMove(Moves.GEOMANCY, Type.FAIRY, -1, 10, -1, 0, 6)
       .attr(ChargeAttr, ChargeAnim.GEOMANCY_CHARGING, i18next.t("moveTriggers:isChargingPower", {pokemonName: "{USER}"}))
-      .attr(StatChangeAttr, [ BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD ], 2, true)
+      .attr(StatChangeAttr, [ BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD ], 2, true)
       .ignoresVirtual(),
     new StatusMove(Moves.MAGNETIC_FLUX, Type.ELECTRIC, -1, 20, -1, 0, 6)
-      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPDEF ], 1, false, (user, target, move) => !![ Abilities.PLUS, Abilities.MINUS].find(a => target.hasAbility(a, false)))
+      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPEC ], 1, false, (user, target, move) => !![ Abilities.PLUS, Abilities.MINUS].find(a => target.hasAbility(a, false)))
       .target(MoveTarget.USER_AND_ALLIES)
       .condition((user, target, move) => !![ user, user.getAlly() ].filter(p => p?.isActive()).find(p => !![ Abilities.PLUS, Abilities.MINUS].find(a => p.hasAbility(a, false)))),
     new StatusMove(Moves.HAPPY_HOUR, Type.NORMAL, -1, 30, -1, 0, 6) // No animation
@@ -7708,7 +7707,7 @@ export function initMoves() {
       .makesContact(false)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.DRAGON_ASCENT, Type.FLYING, MoveCategory.PHYSICAL, 120, 100, 5, -1, 0, 6)
-      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPDEF ], -1, true),
+      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPEC ], -1, true),
     new AttackMove(Moves.HYPERSPACE_FURY, Type.DARK, MoveCategory.PHYSICAL, 100, -1, 5, -1, 0, 6)
       .attr(StatChangeAttr, BattleStat.DEF, -1, true)
       .makesContact(false)
@@ -7868,7 +7867,7 @@ export function initMoves() {
     new SelfStatusMove(Moves.LASER_FOCUS, Type.NORMAL, -1, 30, -1, 0, 7)
       .attr(AddBattlerTagAttr, BattlerTagType.ALWAYS_CRIT, true, false),
     new StatusMove(Moves.GEAR_UP, Type.STEEL, -1, 20, -1, 0, 7)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK ], 1, false, (user, target, move) => !![ Abilities.PLUS, Abilities.MINUS].find(a => target.hasAbility(a, false)))
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC ], 1, false, (user, target, move) => !![ Abilities.PLUS, Abilities.MINUS].find(a => target.hasAbility(a, false)))
       .target(MoveTarget.USER_AND_ALLIES)
       .condition((user, target, move) => !![ user, user.getAlly() ].filter(p => p?.isActive()).find(p => !![ Abilities.PLUS, Abilities.MINUS].find(a => p.hasAbility(a, false)))),
     new AttackMove(Moves.THROAT_CHOP, Type.DARK, MoveCategory.PHYSICAL, 80, 100, 15, 100, 0, 7)
@@ -7954,7 +7953,7 @@ export function initMoves() {
       .partial()
       .ignoresVirtual(),
     new SelfStatusMove(Moves.EXTREME_EVOBOOST, Type.NORMAL, -1, 1, -1, 0, 7)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD ], 2, true)
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD ], 2, true)
       .ignoresVirtual(),
     new AttackMove(Moves.GENESIS_SUPERNOVA, Type.PSYCHIC, MoveCategory.SPECIAL, 185, -1, 1, 100, 0, 7)
       .attr(TerrainChangeAttr, TerrainType.PSYCHIC)
@@ -7966,7 +7965,7 @@ export function initMoves() {
       // Fails if the user was not hit by a physical attack during the turn
       .condition((user, target, move) => user.getTag(ShellTrapTag)?.activated === true),
     new AttackMove(Moves.FLEUR_CANNON, Type.FAIRY, MoveCategory.SPECIAL, 130, 90, 5, -1, 0, 7)
-      .attr(StatChangeAttr, BattleStat.SPATK, -2, true),
+      .attr(StatChangeAttr, BattleStat.SPEC, -2, true),
     new AttackMove(Moves.PSYCHIC_FANGS, Type.PSYCHIC, MoveCategory.PHYSICAL, 85, 100, 10, -1, 0, 7)
       .bitingMove()
       .attr(RemoveScreensAttr),
@@ -7989,7 +7988,7 @@ export function initMoves() {
       .ignoresAbilities()
       .partial(),
     new StatusMove(Moves.TEARFUL_LOOK, Type.NORMAL, -1, 20, -1, 0, 7)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK ], -1),
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC ], -1),
     new AttackMove(Moves.ZING_ZAP, Type.ELECTRIC, MoveCategory.PHYSICAL, 80, 100, 10, 30, 0, 7)
       .attr(FlinchAttr),
     new AttackMove(Moves.NATURES_MADNESS, Type.FAIRY, MoveCategory.SPECIAL, -1, 90, 10, -1, 0, 7)
@@ -8030,7 +8029,7 @@ export function initMoves() {
       .makesContact(false)
       .ignoresVirtual(),
     new AttackMove(Moves.CLANGOROUS_SOULBLAZE, Type.DRAGON, MoveCategory.SPECIAL, 185, -1, 1, 100, 0, 7)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD ], 1, true)
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD ], 1, true)
       .soundBased()
       .target(MoveTarget.ALL_NEAR_ENEMIES)
       .partial()
@@ -8104,7 +8103,7 @@ export function initMoves() {
       })
       .partial(),
     new SelfStatusMove(Moves.NO_RETREAT, Type.FIGHTING, -1, 5, -1, 0, 8)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD ], 1, true)
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD ], 1, true)
       .attr(AddBattlerTagAttr, BattlerTagType.TRAPPED, true, false, 1)
       .condition((user, target, move) => user.getTag(TrappedTag)?.sourceMove !== Moves.NO_RETREAT), // fails if the user is currently trapped by No Retreat
     new StatusMove(Moves.TAR_SHOT, Type.ROCK, 100, 15, -1, 0, 8)
@@ -8203,13 +8202,13 @@ export function initMoves() {
       .ignoresVirtual(),
     /* End Unused */
     new SelfStatusMove(Moves.CLANGOROUS_SOUL, Type.DRAGON, 100, 5, -1, 0, 8)
-      .attr(CutHpStatBoostAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.SPD ], 1, 3)
+      .attr(CutHpStatBoostAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPEC, BattleStat.SPEC, BattleStat.SPD ], 1, 3)
       .soundBased()
       .danceMove(),
     new AttackMove(Moves.BODY_PRESS, Type.FIGHTING, MoveCategory.PHYSICAL, 80, 100, 10, -1, 0, 8)
       .attr(DefAtkAttr),
     new StatusMove(Moves.DECORATE, Type.FAIRY, -1, 15, -1, 0, 8)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK ], 2)
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC ], 2)
       .ignoresProtect(),
     new AttackMove(Moves.DRUM_BEATING, Type.GRASS, MoveCategory.PHYSICAL, 80, 100, 10, 100, 0, 8)
       .attr(StatChangeAttr, BattleStat.SPD, -1)
@@ -8235,13 +8234,13 @@ export function initMoves() {
       .soundBased()
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.APPLE_ACID, Type.GRASS, MoveCategory.SPECIAL, 80, 100, 10, 100, 0, 8)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -1),
+      .attr(StatChangeAttr, BattleStat.SPEC, -1),
     new AttackMove(Moves.GRAV_APPLE, Type.GRASS, MoveCategory.PHYSICAL, 80, 100, 10, 100, 0, 8)
       .attr(StatChangeAttr, BattleStat.DEF, -1)
       .attr(MovePowerMultiplierAttr, (user, target, move) => user.scene.arena.getTag(ArenaTagType.GRAVITY) ? 1.5 : 1)
       .makesContact(false),
     new AttackMove(Moves.SPIRIT_BREAK, Type.FAIRY, MoveCategory.PHYSICAL, 75, 100, 15, 100, 0, 8)
-      .attr(StatChangeAttr, BattleStat.SPATK, -1),
+      .attr(StatChangeAttr, BattleStat.SPEC, -1),
     new AttackMove(Moves.STRANGE_STEAM, Type.FAIRY, MoveCategory.SPECIAL, 90, 95, 10, 20, 0, 8)
       .attr(ConfuseAttr),
     new StatusMove(Moves.LIFE_DEW, Type.WATER, -1, 10, -1, 0, 8)
@@ -8272,7 +8271,7 @@ export function initMoves() {
       .partial(),
     new AttackMove(Moves.METEOR_BEAM, Type.ROCK, MoveCategory.SPECIAL, 120, 90, 10, 100, 0, 8)
       .attr(ChargeAttr, ChargeAnim.METEOR_BEAM_CHARGING, i18next.t("moveTriggers:isOverflowingWithSpacePower", {pokemonName: "{USER}"}), null, true)
-      .attr(StatChangeAttr, BattleStat.SPATK, 1, true)
+      .attr(StatChangeAttr, BattleStat.SPEC, 1, true)
       .ignoresVirtual(),
     new AttackMove(Moves.SHELL_SIDE_ARM, Type.POISON, MoveCategory.SPECIAL, 90, 100, 10, 20, 0, 8)
       .attr(ShellSideArmCategoryAttr)
@@ -8293,7 +8292,7 @@ export function initMoves() {
       .attr(MovePowerMultiplierAttr, (user, target, move) => user.scene.arena.getTerrainType() !== TerrainType.NONE && user.isGrounded() ? 2 : 1)
       .pulseMove(),
     new AttackMove(Moves.SKITTER_SMACK, Type.BUG, MoveCategory.PHYSICAL, 70, 90, 10, 100, 0, 8)
-      .attr(StatChangeAttr, BattleStat.SPATK, -1),
+      .attr(StatChangeAttr, BattleStat.SPEC, -1),
     new AttackMove(Moves.BURNING_JEALOUSY, Type.FIRE, MoveCategory.SPECIAL, 70, 100, 5, 100, 0, 8)
       .target(MoveTarget.ALL_NEAR_ENEMIES)
       .partial(),
@@ -8365,7 +8364,7 @@ export function initMoves() {
       .windMove()
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.MYSTICAL_POWER, Type.PSYCHIC, MoveCategory.SPECIAL, 70, 90, 10, 100, 0, 8)
-      .attr(StatChangeAttr, BattleStat.SPATK, 1, true),
+      .attr(StatChangeAttr, BattleStat.SPEC, 1, true),
     new AttackMove(Moves.RAGING_FURY, Type.FIRE, MoveCategory.PHYSICAL, 120, 100, 10, -1, 0, 8)
       .makesContact(false)
       .attr(FrenzyAttr)
@@ -8384,7 +8383,7 @@ export function initMoves() {
       .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPD ], 1, true)
       .danceMove(),
     new AttackMove(Moves.HEADLONG_RUSH, Type.GROUND, MoveCategory.PHYSICAL, 120, 100, 5, -1, 0, 8)
-      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPDEF ], -1, true)
+      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPEC ], -1, true)
       .punchingMove(),
     new AttackMove(Moves.BARB_BARRAGE, Type.POISON, MoveCategory.PHYSICAL, 60, 100, 10, 50, 0, 8)
       .makesContact(false)
@@ -8430,7 +8429,7 @@ export function initMoves() {
       .target(MoveTarget.USER_AND_ALLIES)
       .triageMove(),
     new SelfStatusMove(Moves.TAKE_HEART, Type.PSYCHIC, -1, 10, -1, 0, 8)
-      .attr(StatChangeAttr, [ BattleStat.SPATK, BattleStat.SPDEF ], 1, true)
+      .attr(StatChangeAttr, [ BattleStat.SPEC, BattleStat.SPEC ], 1, true)
       .attr(HealStatusEffectAttr, true, StatusEffect.PARALYSIS, StatusEffect.POISON, StatusEffect.TOXIC, StatusEffect.BURN, StatusEffect.SLEEP),
     /* Unused
     new AttackMove(Moves.G_MAX_WILDFIRE, Type.FIRE, MoveCategory.PHYSICAL, 10, -1, 10, -1, 0, 8)
@@ -8537,7 +8536,7 @@ export function initMoves() {
       .attr(TeraBlastCategoryAttr)
       .attr(TeraBlastTypeAttr)
       .attr(TeraBlastPowerAttr)
-      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPATK ], -1, true, (user, target, move) => user.isTerastallized() && user.isOfType(Type.STELLAR))
+      .attr(StatChangeAttr, [ BattleStat.ATK, BattleStat.SPEC ], -1, true, (user, target, move) => user.isTerastallized() && user.isOfType(Type.STELLAR))
       .partial(),
     new SelfStatusMove(Moves.SILK_TRAP, Type.BUG, -1, 10, -1, 4, 9)
       .attr(ProtectAttr, BattlerTagType.SILK_TRAP),
@@ -8550,7 +8549,7 @@ export function initMoves() {
       .attr(MovePowerMultiplierAttr, (user, target, move) => 1 + Math.min(user.isPlayer() ? user.scene.currentBattle.playerFaints : user.scene.currentBattle.enemyFaints, 100))
       .makesContact(false),
     new AttackMove(Moves.LUMINA_CRASH, Type.PSYCHIC, MoveCategory.SPECIAL, 80, 100, 10, 100, 0, 9)
-      .attr(StatChangeAttr, BattleStat.SPDEF, -2),
+      .attr(StatChangeAttr, BattleStat.SPEC, -2),
     new AttackMove(Moves.ORDER_UP, Type.DRAGON, MoveCategory.PHYSICAL, 80, 100, 10, 100, 0, 9)
       .makesContact(false)
       .partial(),
@@ -8600,14 +8599,14 @@ export function initMoves() {
       .attr(RemoveArenaTrapAttr)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new SelfStatusMove(Moves.FILLET_AWAY, Type.NORMAL, -1, 10, -1, 0, 9)
-      .attr(CutHpStatBoostAttr, [ BattleStat.ATK, BattleStat.SPATK, BattleStat.SPD ], 2, 2),
+      .attr(CutHpStatBoostAttr, [ BattleStat.ATK, BattleStat.SPEC, BattleStat.SPD ], 2, 2),
     new AttackMove(Moves.KOWTOW_CLEAVE, Type.DARK, MoveCategory.PHYSICAL, 85, -1, 10, -1, 0, 9)
       .slicingMove(),
     new AttackMove(Moves.FLOWER_TRICK, Type.GRASS, MoveCategory.PHYSICAL, 70, -1, 10, 100, 0, 9)
       .attr(CritOnlyAttr)
       .makesContact(false),
     new AttackMove(Moves.TORCH_SONG, Type.FIRE, MoveCategory.SPECIAL, 80, 100, 10, 100, 0, 9)
-      .attr(StatChangeAttr, BattleStat.SPATK, 1, true)
+      .attr(StatChangeAttr, BattleStat.SPEC, 1, true)
       .soundBased(),
     new AttackMove(Moves.AQUA_STEP, Type.WATER, MoveCategory.PHYSICAL, 80, 100, 10, 100, 0, 9)
       .attr(StatChangeAttr, BattleStat.SPD, 1, true)
@@ -8616,7 +8615,7 @@ export function initMoves() {
       .attr(RemoveScreensAttr),
     new AttackMove(Moves.MAKE_IT_RAIN, Type.STEEL, MoveCategory.SPECIAL, 120, 100, 5, -1, 0, 9)
       .attr(MoneyAttr)
-      .attr(StatChangeAttr, BattleStat.SPATK, -1, true, null, true, false, MoveEffectTrigger.HIT, true)
+      .attr(StatChangeAttr, BattleStat.SPEC, -1, true, null, true, false, MoveEffectTrigger.HIT, true)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.PSYBLADE, Type.PSYCHIC, MoveCategory.PHYSICAL, 80, 100, 15, -1, 0, 9)
       .attr(MovePowerMultiplierAttr, (user, target, move) => user.scene.arena.getTerrainType() === TerrainType.ELECTRIC && user.isGrounded() ? 1.5 : 1)
@@ -8657,7 +8656,7 @@ export function initMoves() {
       .attr(HitCountPowerAttr)
       .punchingMove(),
     new AttackMove(Moves.ARMOR_CANNON, Type.FIRE, MoveCategory.SPECIAL, 120, 100, 5, -1, 0, 9)
-      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPDEF ], -1, true),
+      .attr(StatChangeAttr, [ BattleStat.DEF, BattleStat.SPEC ], -1, true),
     new AttackMove(Moves.BITTER_BLADE, Type.FIRE, MoveCategory.PHYSICAL, 90, 100, 10, -1, 0, 9)
       .attr(HitHealAttr)
       .slicingMove()

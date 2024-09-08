@@ -493,27 +493,6 @@
 					}
 				},
 				{
-					"filename": "mint_spatk",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 2,
-						"y": 5,
-						"w": 28,
-						"h": 21
-					},
-					"frame": {
-						"x": 246,
-						"y": 0,
-						"w": 28,
-						"h": 21
-					}
-				},
-				{
 					"filename": "mint_spd",
 					"rotated": false,
 					"trimmed": true,
@@ -535,7 +514,7 @@
 					}
 				},
 				{
-					"filename": "mint_spdef",
+					"filename": "mint_spec",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -6142,27 +6121,6 @@
 					}
 				},
 				{
-					"filename": "x_sp_atk",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 5,
-						"y": 5,
-						"w": 22,
-						"h": 22
-					},
-					"frame": {
-						"x": 243,
-						"y": 385,
-						"w": 22,
-						"h": 22
-					}
-				},
-				{
 					"filename": "miracle_seed",
 					"rotated": false,
 					"trimmed": true,
@@ -6184,7 +6142,7 @@
 					}
 				},
 				{
-					"filename": "x_sp_def",
+					"filename": "x_spec",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {

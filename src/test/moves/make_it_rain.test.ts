@@ -46,7 +46,7 @@ describe("Moves - Make It Rain", () => {
 
     await game.phaseInterceptor.to(MoveEndPhase);
 
-    expect(playerPokemon[0].summonData.battleStats[BattleStat.SPATK]).toBe(-1);
+    expect(playerPokemon[0].summonData.battleStats[BattleStat.SPEC]).toBe(-1);
   }, TIMEOUT);
 
   it("should apply effects even if the target faints", async () => {
@@ -63,7 +63,7 @@ describe("Moves - Make It Rain", () => {
     await game.phaseInterceptor.to(StatChangePhase);
 
     expect(enemyPokemon.isFainted()).toBe(true);
-    expect(playerPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(-1);
+    expect(playerPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(-1);
   }, TIMEOUT);
 
   it("should reduce Sp. Atk. once after KOing two enemies", async () => {
@@ -80,7 +80,7 @@ describe("Moves - Make It Rain", () => {
     await game.phaseInterceptor.to(StatChangePhase);
 
     enemyPokemon.forEach(p => expect(p.isFainted()).toBe(true));
-    expect(playerPokemon[0].summonData.battleStats[BattleStat.SPATK]).toBe(-1);
+    expect(playerPokemon[0].summonData.battleStats[BattleStat.SPEC]).toBe(-1);
   }, TIMEOUT);
 
   it("should reduce Sp. Atk if it only hits the second target", async () => {
@@ -96,6 +96,6 @@ describe("Moves - Make It Rain", () => {
 
     await game.phaseInterceptor.to(MoveEndPhase);
 
-    expect(playerPokemon[0].summonData.battleStats[BattleStat.SPATK]).toBe(-1);
+    expect(playerPokemon[0].summonData.battleStats[BattleStat.SPEC]).toBe(-1);
   }, TIMEOUT);
 });

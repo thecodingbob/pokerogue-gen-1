@@ -590,7 +590,7 @@ describe("Abilities - Parental Bond", () => {
 
       await game.phaseInterceptor.to(BerryPhase, false);
 
-      expect(enemyPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(1);
+      expect(enemyPokemon.summonData.battleStats[BattleStat.SPEC]).toBe(1);
     }, TIMEOUT
   );
 

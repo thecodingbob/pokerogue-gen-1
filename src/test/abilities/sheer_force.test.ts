@@ -43,7 +43,7 @@ describe("Abilities - Sheer Force", () => {
     ]);
 
 
-    game.scene.getEnemyParty()[0].stats[Stat.SPDEF] = 10000;
+    game.scene.getEnemyParty()[0].stats[Stat.SPEC] = 10000;
     expect(game.scene.getParty()[0].formIndex).toBe(0);
 
     game.move.select(moveToUse);

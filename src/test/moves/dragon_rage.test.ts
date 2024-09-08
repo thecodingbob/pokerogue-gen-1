@@ -81,7 +81,7 @@ describe("Moves - Dragon Rage", () => {
 
   it("ignores stat changes", async () => {
     game.override.disableCrits();
-    partyPokemon.summonData.battleStats[BattleStat.SPATK] = 2;
+    partyPokemon.summonData.battleStats[BattleStat.SPEC] = 2;
 
     game.move.select(Moves.DRAGON_RAGE);
     await game.phaseInterceptor.to(TurnEndPhase);

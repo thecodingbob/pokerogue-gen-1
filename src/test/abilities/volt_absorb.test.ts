@@ -45,7 +45,7 @@ describe("Abilities - Volt Absorb", () => {
 
     await game.phaseInterceptor.to(TurnEndPhase);
 
-    expect(game.scene.getParty()[0].summonData.battleStats[BattleStat.SPDEF]).toBe(1);
+    expect(game.scene.getParty()[0].summonData.battleStats[BattleStat.SPEC]).toBe(1);
     expect(game.scene.getParty()[0].getTag(BattlerTagType.CHARGED)).toBeDefined();
     expect(game.phaseInterceptor.log).not.toContain("ShowAbilityPhase");
   });

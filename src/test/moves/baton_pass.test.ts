@@ -45,7 +45,7 @@ describe("Moves - Baton Pass", () => {
     // round 1 - buff
     game.move.select(Moves.NASTY_PLOT);
     await game.toNextTurn();
-    expect(game.scene.getPlayerPokemon()!.summonData.battleStats[BattleStat.SPATK]).toEqual(2);
+    expect(game.scene.getPlayerPokemon()!.summonData.battleStats[BattleStat.SPEC]).toEqual(2);
 
     // round 2 - baton pass
     game.move.select(Moves.BATON_PASS);
@@ -55,7 +55,7 @@ describe("Moves - Baton Pass", () => {
     // assert
     const playerPkm = game.scene.getPlayerPokemon()!;
     expect(playerPkm.species.speciesId).toEqual(Species.SHUCKLE);
-    expect(playerPkm.summonData.battleStats[BattleStat.SPATK]).toEqual(2);
+    expect(playerPkm.summonData.battleStats[BattleStat.SPEC]).toEqual(2);
   }, 20000);
 
   it("passes stat stage buffs when AI uses it", async () => {
@@ -80,7 +80,7 @@ describe("Moves - Baton Pass", () => {
 
     // assert
     // check buffs are still there
-    expect(game.scene.getEnemyPokemon()!.summonData.battleStats[BattleStat.SPATK]).toEqual(2);
+    expect(game.scene.getEnemyPokemon()!.summonData.battleStats[BattleStat.SPEC]).toEqual(2);
     // confirm that a switch actually happened. can't use species because I
     // can't find a way to override trainer parties with more than 1 pokemon species
     expect(game.scene.getEnemyPokemon()!.hp).not.toEqual(100);

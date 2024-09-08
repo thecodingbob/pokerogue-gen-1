@@ -43,14 +43,14 @@ describe("Moves - Growth", () => {
       Species.MIGHTYENA,
     ]);
     let battleStatsPokemon = game.scene.getParty()[0].summonData.battleStats;
-    expect(battleStatsPokemon[Stat.SPATK]).toBe(0);
+    expect(battleStatsPokemon[Stat.SPEC]).toBe(0);
 
     const battleStatsOpponent = game.scene.currentBattle.enemyParty[0].summonData.battleStats;
-    expect(battleStatsOpponent[BattleStat.SPATK]).toBe(0);
+    expect(battleStatsOpponent[BattleStat.SPEC]).toBe(0);
 
     game.move.select(moveToUse);
     await game.phaseInterceptor.runFrom(EnemyCommandPhase).to(TurnInitPhase);
     battleStatsPokemon = game.scene.getParty()[0].summonData.battleStats;
-    expect(battleStatsPokemon[BattleStat.SPATK]).toBe(1);
+    expect(battleStatsPokemon[BattleStat.SPEC]).toBe(1);
   }, 20000);
 });

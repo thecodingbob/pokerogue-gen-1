@@ -40,7 +40,7 @@ describe("Moves - Octolock", () => {
       game.override.ability(Abilities.BALL_FETCH);
     });
 
-    it("Reduces DEf and SPDEF by 1 each turn", { timeout: 10000 }, async () => {
+    it("Reduces DEf and SPEC by 1 each turn", { timeout: 10000 }, async () => {
       await game.startBattle([Species.GRAPPLOCT]);
 
       const enemyPokemon = game.scene.getEnemyField();
@@ -50,7 +50,7 @@ describe("Moves - Octolock", () => {
       await game.phaseInterceptor.to(TurnInitPhase);
 
       expect(enemyPokemon[0].summonData.battleStats[BattleStat.DEF]).toBe(-1);
-      expect(enemyPokemon[0].summonData.battleStats[BattleStat.SPDEF]).toBe(-1);
+      expect(enemyPokemon[0].summonData.battleStats[BattleStat.SPEC]).toBe(-1);
 
       // take a second turn to make sure stat changes occur again
       await game.phaseInterceptor.to(CommandPhase);
@@ -58,7 +58,7 @@ describe("Moves - Octolock", () => {
 
       await game.phaseInterceptor.to(TurnInitPhase);
       expect(enemyPokemon[0].summonData.battleStats[BattleStat.DEF]).toBe(-2);
-      expect(enemyPokemon[0].summonData.battleStats[BattleStat.SPDEF]).toBe(-2);
+      expect(enemyPokemon[0].summonData.battleStats[BattleStat.SPEC]).toBe(-2);
     });
 
     it("Traps the target pokemon", { timeout: 10000 }, async () => {

@@ -13,11 +13,11 @@ describe("battle-stat", () => {
 
       expect(getBattleStatName(BattleStat.ATK)).toBe("pokemonInfo:Stat.ATK");
       expect(getBattleStatName(BattleStat.DEF)).toBe("pokemonInfo:Stat.DEF");
-      expect(getBattleStatName(BattleStat.SPATK)).toBe(
-        "pokemonInfo:Stat.SPATK"
+      expect(getBattleStatName(BattleStat.SPEC)).toBe(
+        "pokemonInfo:Stat.SPEC"
       );
-      expect(getBattleStatName(BattleStat.SPDEF)).toBe(
-        "pokemonInfo:Stat.SPDEF"
+      expect(getBattleStatName(BattleStat.SPEC)).toBe(
+        "pokemonInfo:Stat.SPEC"
       );
       expect(getBattleStatName(BattleStat.SPD)).toBe("pokemonInfo:Stat.SPD");
       expect(getBattleStatName(BattleStat.ACC)).toBe("pokemonInfo:Stat.ACC");

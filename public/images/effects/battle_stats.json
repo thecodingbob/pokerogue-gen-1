@@ -115,27 +115,6 @@
 					}
 				},
 				{
-					"filename": "spatk",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 32,
-						"h": 32
-					},
-					"frame": {
-						"x": 0,
-						"y": 160,
-						"w": 32,
-						"h": 32
-					}
-				},
-				{
 					"filename": "spd",
 					"rotated": false,
 					"trimmed": false,
@@ -157,7 +136,7 @@
 					}
 				},
 				{
-					"filename": "spdef",
+					"filename": "spec",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {

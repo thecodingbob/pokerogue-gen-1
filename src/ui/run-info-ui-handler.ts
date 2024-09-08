@@ -542,8 +542,7 @@ export default class RunInfoUiHandler extends UiHandler {
       const hp = i18next.t("pokemonInfo:Stat.HPshortened")+": "+pStats[0];
       const atk = i18next.t("pokemonInfo:Stat.ATKshortened")+": "+pStats[1];
       const def = i18next.t("pokemonInfo:Stat.DEFshortened")+": "+pStats[2];
-      const spatk = i18next.t("pokemonInfo:Stat.SPATKshortened")+": "+pStats[3];
-      const spdef = i18next.t("pokemonInfo:Stat.SPDEFshortened")+": "+pStats[4];
+      const spec = i18next.t("pokemonInfo:Stat.SPECshortened")+": "+pStats[4];
       const speedLabel = (currentLanguage==="es"||currentLanguage==="pt_BR") ? i18next.t("runHistory:SPDshortened") : i18next.t("pokemonInfo:Stat.SPDshortened");
       const speed = speedLabel+": "+pStats[5];
       // Column 1: HP Atk Def
@@ -551,9 +550,8 @@ export default class RunInfoUiHandler extends UiHandler {
       pokeStatText1.appendText(atk);
       pokeStatText1.appendText(def);
       pokeStatTextContainer.add(pokeStatText1);
-      // Column 2: SpAtk SpDef Speed
-      const pokeStatText2 = addBBCodeTextObject(this.scene, 25, 0, spatk, TextStyle.SUMMARY, {fontSize: textContainerFontSize, lineSpacing: lineSpacing});
-      pokeStatText2.appendText(spdef);
+      // Column 2: Special Spec Speed
+      const pokeStatText2 = addBBCodeTextObject(this.scene, 25, 0, spec, TextStyle.SUMMARY, {fontSize: textContainerFontSize, lineSpacing: lineSpacing});
       pokeStatText2.appendText(speed);
       pokeStatTextContainer.add(pokeStatText2);
 

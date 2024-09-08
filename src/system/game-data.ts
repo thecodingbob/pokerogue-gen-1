@@ -1455,7 +1455,7 @@ export class GameData {
 
     for (const species of allSpecies) {
       data[species.speciesId] = {
-        seenAttr: 0n, caughtAttr: 0n, seenCount: 0, caughtCount: 0, hatchedCount: 0, ivs: [ 0, 0, 0, 0, 0, 0 ]
+        seenAttr: 0n, caughtAttr: 0n, seenCount: 0, caughtCount: 0, hatchedCount: 0, ivs: [ 0, 0, 0, 0, 0 ]
       };
     }
 
@@ -1660,7 +1660,7 @@ export class GameData {
           dexIvs[i] = ivs[i];
         }
       }
-      if (dexIvs.filter(iv => iv === 31).length === 6) {
+      if (dexIvs.filter(iv => iv === 31).length === 5) {
         this.scene.validateAchv(achvs.PERFECT_IVS);
       }
     } while (pokemonPrevolutions.hasOwnProperty(speciesId) && (speciesId = pokemonPrevolutions[speciesId]));
