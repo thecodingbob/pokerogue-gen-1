@@ -154,10 +154,6 @@
     "name": "金色传说！",
     "description": "从蛋中孵化出一只闪光宝可梦"
   },
-  "HIDDEN_ABILITY": {
-    "name": "隐藏实力",
-    "description": "捕捉一只拥有隐藏特性的宝可梦"
-  },
   "PERFECT_IVS": {
     "name": "合格证",
     "description": "获得一只拥有完美个体值的宝可梦"

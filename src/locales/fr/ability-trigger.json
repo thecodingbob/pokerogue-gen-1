@@ -22,7 +22,6 @@
   "pokemonTypeChange": "{{pokemonNameWithAffix}} prend\nle type {{moveType}} !",
   "postAttackStealHeldItem": "{{pokemonNameWithAffix}} vole\nl’objet {{stolenItemType}} de {{defenderName}} !",
   "postDefendStealHeldItem": "{{pokemonNameWithAffix}} vole\nl’objet {{stolenItemType}} de {{attackerName}} !",
-  "copyFaintedAllyAbility": "{{pokemonNameWithAffix}} reçoit\nle talent {{abilityName}} !",
   "intimidateImmunity": "{{abilityName}} de {{pokemonNameWithAffix}}\nl’empêche d’être intimidé !",
   "postSummonAllyHeal": "{{pokemonNameWithAffix}} boit le thé\npréparé par {{pokemonName}} !",
   "postSummonClearAllyStats": "Les stats de {{pokemonNameWithAffix}}\nsont revenues à la normale !",

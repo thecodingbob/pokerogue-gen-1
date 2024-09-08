@@ -45,8 +45,6 @@
   "transformedIntoType": "{{pokemonName}} prend\nle type {{typeName}} !",
   "copiedMove": "{{pokemonName}} copie\nla capacité {{moveName}} !",
   "sketchedMove": "{{pokemonName}} utilise Gribouille\npour copier {{moveName}} !",
-  "acquiredAbility": "Le talent de {{pokemonName}}\ndevient {{abilityName}} !",
-  "copiedTargetAbility": "{{pokemonName}} copie le talent\n{{abilityName}} de {{targetName}} !",
   "transformedIntoTarget": "{{pokemonName}} prend\nl’apparence de {{targetName}} !",
   "tryingToTakeFoeDown": "{{pokemonName}} veut entrainer\nson assaillant dans sa chute !",
   "addType": "{{pokemonName}} gagne\nle type {{typeName}}.",

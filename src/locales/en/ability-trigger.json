@@ -22,7 +22,6 @@
   "pokemonTypeChange": "{{pokemonNameWithAffix}} transformed into the {{moveType}} type!",
   "postAttackStealHeldItem": "{{pokemonNameWithAffix}} stole\n{{defenderName}}'s {{stolenItemType}}!",
   "postDefendStealHeldItem": "{{pokemonNameWithAffix}} stole\n{{attackerName}}'s {{stolenItemType}}!",
-  "copyFaintedAllyAbility": "{{pokemonNameWithAffix}}'s {{abilityName}} was taken over!",
   "intimidateImmunity": "{{pokemonNameWithAffix}}'s {{abilityName}} prevented it from being Intimidated!",
   "postSummonAllyHeal": "{{pokemonNameWithAffix}} drank down all the\nmatcha that {{pokemonName}} made!",
   "postSummonClearAllyStats": "{{pokemonNameWithAffix}}'s stat changes\nwere removed!",

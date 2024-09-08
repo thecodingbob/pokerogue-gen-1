@@ -45,8 +45,6 @@
   "transformedIntoType": "{{pokemonName}} transformed\ninto the {{typeName}} type!",
   "copiedMove": "{{pokemonName}} copied\n{{moveName}}!",
   "sketchedMove": "{{pokemonName}} sketched\n{{moveName}}!",
-  "acquiredAbility": "The {{pokemonName}} acquired\n{{abilityName}}!",
-  "copiedTargetAbility": "{{pokemonName}} copied the {{targetName}}'s\n{{abilityName}}!",
   "transformedIntoTarget": "{{pokemonName}} transformed\ninto {{targetName}}!",
   "tryingToTakeFoeDown": "{{pokemonName}} is hoping to take its attacker down with it!",
   "addType": "{{typeName}} was added to\n{{pokemonName}}!",

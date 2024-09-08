@@ -148,10 +148,6 @@
     "name": "色違いタマゴ",
     "description": "色違いポケモンを　タマゴから　生まれる"
   },
-  "HIDDEN_ABILITY": {
-    "name": "底力",
-    "description": "隠れ特性がある　ポケモンを　捕まえる"
-  },
   "PERFECT_IVS": {
     "name": "個体値の賞状",
     "description": "一つの　ポケモンの　個体値を　すべて　最大に　する"

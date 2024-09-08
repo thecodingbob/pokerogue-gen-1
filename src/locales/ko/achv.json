@@ -148,10 +148,6 @@
     "name": "빛나는 알",
     "description": "알에서 색이 다른 포켓몬이 부화"
   },
-  "HIDDEN_ABILITY": {
-    "name": "숨은 잠재력",
-    "description": "숨겨진 특성을 지닌 포켓몬을 포획"
-  },
   "PERFECT_IVS": {
     "name": "진짜배기 증명서",
     "description": "최고의 개체값을 지닌 포켓몬 획득"

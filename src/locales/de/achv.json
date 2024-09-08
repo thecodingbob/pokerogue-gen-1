@@ -157,10 +157,6 @@
     "name": "Schillerndes Ei",
     "description": "Lass ein schillerndes Pokémon aus einem Ei schlüpfen."
   },
-  "HIDDEN_ABILITY": {
-    "name": "Geheimes Talent",
-    "description": "Fang ein Pokémon mit versteckter Fähigkeit."
-  },
   "PERFECT_IVS": {
     "name": "Zertifikat der Echtheit",
     "description": "Erhalte ein Pokémon mit perfekten IS-Werten."

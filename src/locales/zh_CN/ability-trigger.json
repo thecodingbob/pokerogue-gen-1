@@ -22,7 +22,6 @@
   "pokemonTypeChange": "{{pokemonNameWithAffix}}\n变成了{{moveType}}属性！",
   "postAttackStealHeldItem": "{{pokemonNameWithAffix}}从{{defenderName}}那里\n夺取了{{stolenItemType}}！",
   "postDefendStealHeldItem": "{{pokemonNameWithAffix}}从{{attackerName}}那里\n夺取了{{stolenItemType}}！",
-  "copyFaintedAllyAbility": "继承了{{pokemonNameWithAffix}}的\n{{abilityName}}！",
   "intimidateImmunity": "{{pokemonNameWithAffix}}因{{abilityName}}没有受到威吓！",
   "postSummonAllyHeal": "{{pokemonNameWithAffix}}喝光了\n{{pokemonName}}泡的茶！",
   "postSummonClearAllyStats": "{{pokemonNameWithAffix}}的\n能力变化消失了！",

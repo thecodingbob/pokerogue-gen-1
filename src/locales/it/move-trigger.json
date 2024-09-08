@@ -45,8 +45,6 @@
   "transformedIntoType": "{{pokemonName}} è diventato\ndi tipo {{typeName}}!",
   "copiedMove": "{{pokemonName}} copia\n{{moveName}}!",
   "sketchedMove": "{{pokemonName}} disegna uno schizzo\ndella mossa {{moveName}}!",
-  "acquiredAbility": "L’abilità di {{pokemonName}}\nè ora {{abilityName}}!",
-  "copiedTargetAbility": "{{pokemonName}} copia l’abilità {{abilityName}}\ndi {{targetName}}!",
   "transformedIntoTarget": "{{pokemonName}} assume le sembianze\ndi {{targetName}}!",
   "tryingToTakeFoeDown": "{{pokemonName}} tenta di far subire a chi lo manda KO la sua stessa sorte!",
   "addType": "Adesso {{pokemonName}} è anche\ndi tipo {{typeName}}!",

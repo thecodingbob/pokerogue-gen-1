@@ -148,10 +148,6 @@
     "name": "Uovo Cromatico",
     "description": "Schiudi l'uovo di un Pokémon shiny"
   },
-  "HIDDEN_ABILITY": {
-    "name": "Potenziale Nascosto",
-    "description": "Cattura un Pokémon con abilità nascosta"
-  },
   "PERFECT_IVS": {
     "name": "Certificato di Autenticità",
     "description": "Ottieni un Pokémon con IV perfetti"

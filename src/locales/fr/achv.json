@@ -161,10 +161,6 @@
     "name": "Œuf chromatique",
     "description": "Obtenir un Pokémon chromatique dans un Œuf."
   },
-  "HIDDEN_ABILITY": {
-    "name": "Potentiel enfoui",
-    "description": "Capturer un Pokémon possédant un talent caché."
-  },
   "PERFECT_IVS": {
     "name": "Certificat d’authenticité",
     "description": "Avoir des IV parfaits sur un Pokémon."

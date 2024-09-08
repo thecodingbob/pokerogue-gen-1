@@ -152,10 +152,6 @@
     "name": "Ovo Shiny",
     "description": "Choque um Pokémon Shiny"
   },
-  "HIDDEN_ABILITY": {
-    "name": "Potencial Oculto",
-    "description": "Capture um Pokémon com uma Habilidade Oculta"
-  },
   "PERFECT_IVS": {
     "name": "Perfeição Certificada",
     "description": "Obtenha IVs perfeitos em um Pokémon"

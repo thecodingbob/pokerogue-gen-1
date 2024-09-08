@@ -23,7 +23,6 @@
   "pokemonTypeChange": "{{pokemonNameWithAffix}}は\n{{moveType}}タイプに　なった！",
   "postAttackStealHeldItem": "{{pokemonNameWithAffix}}は　{{defenderName}}から\n{{stolenItemType}}を　うばいとった！",
   "postDefendStealHeldItem": "{{pokemonNameWithAffix}}は　{{attackerName}}から\n{{stolenItemType}}を　うばいとった！",
-  "copyFaintedAllyAbility": "{{pokemonNameWithAffix}}の\n{{abilityName}}を　引き継いだ！",
   "intimidateImmunity": "{{pokemonNameWithAffix}}は\n{{abilityName}}の　効果で　能力が　下がらない！",
   "postSummonAllyHeal": "{{pokemonNameWithAffix}}が　たてた　お茶を\n{{pokemonName}}は　飲みほした！",
   "postSummonClearAllyStats": "{{pokemonNameWithAffix}}の\n能力変化が　元に戻った！",

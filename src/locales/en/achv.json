@@ -166,10 +166,6 @@
     "name": "Shiny Egg",
     "description": "Hatch a shiny Pokémon from an egg"
   },
-  "HIDDEN_ABILITY": {
-    "name": "Hidden Potential",
-    "description": "Catch a Pokémon with a hidden ability"
-  },
   "PERFECT_IVS": {
     "name": "Certificate of Authenticity",
     "description": "Get perfect IVs on a Pokémon"

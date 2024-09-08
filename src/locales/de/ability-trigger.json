@@ -22,7 +22,6 @@
   "pokemonTypeChange": "{{pokemonNameWithAffix}} nimmt den Typ {{moveType}} an!",
   "postAttackStealHeldItem": "{{pokemonNameWithAffix}} stiehlt {{stolenItemType}} von {{defenderName}}!",
   "postDefendStealHeldItem": "{{pokemonNameWithAffix}} stiehlt {{stolenItemType}} von {{attackerName}}!",
-  "copyFaintedAllyAbility": "Die Fähigkeit {{abilityName}} von {{pokemonNameWithAffix}} wurde übernommen!",
   "intimidateImmunity": "{{abilityName}} von {{pokemonNameWithAffix}} verhindert den Effekt von Bedroher!",
   "postSummonAllyHeal": "{{pokemonNameWithAffix}} trinkt den von {{pokemonName}} zubereiteten Tee!",
   "postSummonClearAllyStats": "Die Statusveränderungen von {{pokemonNameWithAffix}} wurden aufgehoben!",

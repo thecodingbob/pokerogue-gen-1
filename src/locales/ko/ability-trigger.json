@@ -22,7 +22,6 @@
   "pokemonTypeChange": "{{pokemonNameWithAffix}}[[는]]\n{{moveType}}타입이 됐다!",
   "postAttackStealHeldItem": "{{pokemonNameWithAffix}}[[는]] {{defenderName}}[[로]]부터\n{{stolenItemType}}[[를]] 빼앗았다!",
   "postDefendStealHeldItem": "{{pokemonNameWithAffix}}[[는]] {{attackerName}}[[로]]부터\n{{stolenItemType}}[[를]] 빼앗았다!",
-  "copyFaintedAllyAbility": "{{pokemonNameWithAffix}}의\n{{abilityName}}[[를]] 이어받았다!",
   "intimidateImmunity": "{{pokemonNameWithAffix}}[[는]]\n{{abilityName}}의 효과로 능력이 떨어지지 않는다!",
   "postSummonAllyHeal": "{{pokemonNameWithAffix}}[[가]] 내온 차를\n{{pokemonName}}[[가]] 모두 비웠다!",
   "postSummonClearAllyStats": "{{pokemonNameWithAffix}}의\n능력 변화가 원래대로 되돌아왔다!",

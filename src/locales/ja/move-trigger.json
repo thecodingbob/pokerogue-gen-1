@@ -44,8 +44,6 @@
   "transformedIntoType": "{{pokemonName}}は\n{{typeName}}タイプに　なった！",
   "copiedMove": "{{pokemonName}}は\n{{moveName}}を　コピーした！",
   "sketchedMove": "{{pokemonName}}は\n{{moveName}}を　スケッチした！",
-  "acquiredAbility": "{{pokemonName}}の　とくせいが\n{{abilityName}}に　なった！",
-  "copiedTargetAbility": "{{pokemonName}}は\n{{targetName}}の　{{abilityName}}を　コピーした！",
   "transformedIntoTarget": "{{pokemonName}}は\n{{targetName}}に　へんしんした！",
   "tryingToTakeFoeDown": "{{pokemonName}}は　あいてを\nみちづれに　しようとしている！",
   "addType": "{{pokemonName}}に\n{{typeName}}タイプが　ついかされた！",

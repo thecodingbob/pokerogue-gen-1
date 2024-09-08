@@ -159,10 +159,6 @@
     "name": "Huevo Shiny",
     "description": "Hacer eclosionar un Pokémon Shiny de un huevo."
   },
-  "HIDDEN_ABILITY": {
-    "name": "Potencial Oculto",
-    "description": "Captura un Pokémon con una habilidad oculta."
-  },
   "PERFECT_IVS": {
     "name": "Certificado de Autenticidad",
     "description": "Consigue IVs perfectos en un Pokémon."

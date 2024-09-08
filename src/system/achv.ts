@@ -229,8 +229,6 @@ export function getAchievementDescription(localizationKey: string): string {
     return i18next.t("achv:HATCH_LEGENDARY.description", { context: genderStr });
   case "HATCH_SHINY":
     return i18next.t("achv:HATCH_SHINY.description", { context: genderStr });
-  case "HIDDEN_ABILITY":
-    return i18next.t("achv:HIDDEN_ABILITY.description", { context: genderStr });
   case "PERFECT_IVS":
     return i18next.t("achv:PERFECT_IVS.description", { context: genderStr });
   case "CLASSIC_VICTORY":
