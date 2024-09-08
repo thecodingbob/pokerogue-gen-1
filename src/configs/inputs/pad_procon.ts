@@ -57,7 +57,6 @@ const pad_procon = {
     [SettingGamepad.Button_Cycle_Form]:  Button.CYCLE_FORM,
     [SettingGamepad.Button_Cycle_Shiny]: Button.CYCLE_SHINY,
     [SettingGamepad.Button_Cycle_Gender]: Button.CYCLE_GENDER,
-    [SettingGamepad.Button_Cycle_Ability]: Button.CYCLE_ABILITY,
     [SettingGamepad.Button_Speed_Up]: Button.SPEED_UP,
     [SettingGamepad.Button_Slow_Down]: Button.SLOW_DOWN
   },
@@ -74,7 +73,6 @@ const pad_procon = {
     LB: SettingGamepad.Button_Cycle_Form,
     RB: SettingGamepad.Button_Cycle_Shiny,
     LT: SettingGamepad.Button_Cycle_Gender,
-    RT: SettingGamepad.Button_Cycle_Ability,
     LS: SettingGamepad.Button_Speed_Up,
     RS: SettingGamepad.Button_Slow_Down
   },

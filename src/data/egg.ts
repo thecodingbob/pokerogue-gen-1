@@ -16,8 +16,6 @@ export const EGG_SEED = 1073741824;
 const DEFAULT_SHINY_RATE = 128;
 const GACHA_SHINY_UP_SHINY_RATE = 64;
 const SAME_SPECIES_EGG_SHINY_RATE = 24;
-const SAME_SPECIES_EGG_HA_RATE = 8;
-const GACHA_EGG_HA_RATE = 192;
 
 // 1/x for legendary eggs, 1/x*2 for epic eggs, 1/x*4 for rare eggs, and 1/x*8 for common eggs
 const DEFAULT_RARE_EGGMOVE_RATE = 6;
@@ -57,10 +55,6 @@ export interface IEggOptions {
   variantTier?: VariantTier;
   /** Defines which egg move will be unlocked. 3 = rare egg move. */
   eggMoveIndex?: number;
-  /** Defines if the egg will hatch with the hidden ability of this species.
-   *  If no hidden ability exist, a random one will get choosen.
-   */
-  overrideHiddenAbility?: boolean
 }
 
 export class Egg {
@@ -79,8 +73,6 @@ export class Egg {
   private _isShiny: boolean;
   private _variantTier: VariantTier;
   private _eggMoveIndex: number;
-
-  private _overrideHiddenAbility: boolean;
 
   ////
   // #endregion
@@ -129,10 +121,6 @@ export class Egg {
     return this._eggMoveIndex;
   }
 
-  get overrideHiddenAbility(): boolean {
-    return this._overrideHiddenAbility;
-  }
-
   ////
   // #endregion
   ////
@@ -159,8 +147,6 @@ export class Egg {
     this._isShiny = eggOptions?.isShiny ?? (Overrides.EGG_SHINY_OVERRIDE || this.rollShiny());
     this._variantTier = eggOptions?.variantTier ?? (Overrides.EGG_VARIANT_OVERRIDE ?? this.rollVariant());
     this._species = eggOptions?.species ?? this.rollSpecies(eggOptions!.scene!)!; // TODO: Are those bangs correct?
-
-    this._overrideHiddenAbility = eggOptions?.overrideHiddenAbility ?? false;
 
     // Override egg tier and hatchwaves if species was given
     if (eggOptions?.species) {
@@ -199,17 +185,8 @@ export class Egg {
 
     const pokemonSpecies = getPokemonSpecies(this._species);
 
-    // Sets the hidden ability if a hidden ability exists and
-    // the override is set or the egg hits the chance
-    let abilityIndex: number | undefined = undefined;
-    const sameSpeciesEggHACheck = (this._sourceType === EggSourceType.SAME_SPECIES_EGG && !Utils.randSeedInt(SAME_SPECIES_EGG_HA_RATE));
-    const gachaEggHACheck = (!(this._sourceType === EggSourceType.SAME_SPECIES_EGG) && !Utils.randSeedInt(GACHA_EGG_HA_RATE));
-    if (pokemonSpecies.abilityHidden && (this._overrideHiddenAbility || sameSpeciesEggHACheck || gachaEggHACheck)) {
-      abilityIndex = 2;
-    }
-
     // This function has way to many optional parameters
-    const ret: PlayerPokemon = scene.addPlayerPokemon(pokemonSpecies, 1, abilityIndex, undefined, undefined, false);
+    const ret: PlayerPokemon = scene.addPlayerPokemon(pokemonSpecies, 1, undefined, undefined, false);
     ret.shiny = this._isShiny;
     ret.variant = this._variantTier;
 

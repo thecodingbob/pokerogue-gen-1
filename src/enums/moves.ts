@@ -543,8 +543,6 @@ export enum Moves {
   HELPING_HAND,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Trick_(move) | Source} */
   TRICK,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Role_Play_(move) | Source} */
-  ROLE_PLAY,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Wish_(move) | Source} */
   WISH,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Assist_(move) | Source} */
@@ -569,8 +567,6 @@ export enum Moves {
   ENDEAVOR,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Eruption_(move) | Source} */
   ERUPTION,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Skill_Swap_(move) | Source} */
-  SKILL_SWAP,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Imprison_(move) | Source} */
   IMPRISON,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Refresh_(move) | Source} */
@@ -759,8 +755,6 @@ export enum Moves {
   WRING_OUT,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Power_Trick_(move) | Source} */
   POWER_TRICK,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Gastro_Acid_(move) | Source} */
-  GASTRO_ACID,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Lucky_Chant_(move) | Source} */
   LUCKY_CHANT,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Me_First_(move) | Source} */
@@ -775,8 +769,6 @@ export enum Moves {
   PUNISHMENT,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Last_Resort_(move) | Source} */
   LAST_RESORT,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Worry_Seed_(move) | Source} */
-  WORRY_SEED,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Sucker_Punch_(move) | Source} */
   SUCKER_PUNCH,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Toxic_Spikes_(move) | Source} */
@@ -985,10 +977,6 @@ export enum Moves {
   ACID_SPRAY,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Foul_Play_(move) | Source} */
   FOUL_PLAY,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Simple_Beam_(move) | Source} */
-  SIMPLE_BEAM,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Entrainment_(move) | Source} */
-  ENTRAINMENT,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/After_You_(move) | Source} */
   AFTER_YOU,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Round_(move) | Source} */
@@ -1766,8 +1754,6 @@ export enum Moves {
   TRIPLE_DIVE,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Mortal_Spin_(move) | Source} */
   MORTAL_SPIN,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Doodle_(move) | Source} */
-  DOODLE,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Fillet_Away_(move) | Source} */
   FILLET_AWAY,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Kowtow_Cleave_(move) | Source} */

@@ -1083,10 +1083,6 @@
     "name": "Trick",
     "effect": "O usuário pega o alvo de surpresa e faz uma troca de itens com o alvo."
   },
-  "rolePlay": {
-    "name": "Role Play",
-    "effect": "O usuário imita o alvo completamente, copiando a Habilidade natural do alvo."
-  },
   "wish": {
     "name": "Wish",
     "effect": "Um turno após esse movimento ter sido usado, os PS do usuário ou de seu substituinte são restaurados pela metade dos PS máximos do usuário."
@@ -1134,10 +1130,6 @@
   "eruption": {
     "name": "Eruption",
     "effect": "O usuário ataca o Pokémon adversário com uma fúria explosiva. Quanto menor for os PS do usuário, menor será o poder do movimento."
-  },
-  "skillSwap": {
-    "name": "Skill Swap",
-    "effect": "O usuário utiliza seu poder psíquico para trocar de Habilidade com o alvo."
   },
   "imprison": {
     "name": "Imprison",
@@ -1515,10 +1507,6 @@
     "name": "Power Trick",
     "effect": "O usuário usufrui de seu poder psíquico para trocar os atributos de seu Ataque com sua Defesa."
   },
-  "gastroAcid": {
-    "name": "Gastro Acid",
-    "effect": "O usuário arremessa os ácidos de seu estômago no alvo. O fluido elimina o efeito da habilidade do alvo."
-  },
   "luckyChant": {
     "name": "Lucky Chant",
     "effect": "O usuário recita um encantamento em direção ao céu, prevenindo que os Pokémon oponentes acertem golpes críticos."
@@ -1546,10 +1534,6 @@
   "lastResort": {
     "name": "Last Resort",
     "effect": "Este movimento somente pode ser usado depois de o usuário ter usado todos os outros movimentos que ele conhece em batalha."
-  },
-  "worrySeed": {
-    "name": "Worry Seed",
-    "effect": "Uma semente que causa preocupação é plantada no alvo. Isso previne o sono, fazendo a Habilidade do alvo se tornar Insônia."
   },
   "suckerPunch": {
     "name": "Sucker Punch",
@@ -1966,14 +1950,6 @@
   "foulPlay": {
     "name": "Foul Play",
     "effect": "O usuário vira o poder do alvo contra ele. Quanto maior for o atributo de Ataque do alvo, maior será o poder do movimento."
-  },
-  "simpleBeam": {
-    "name": "Simple Beam",
-    "effect": "Essa misteriosa onda psíquica produzida pelo usuário muda a Habilidade do alvo para “Simples”."
-  },
-  "entrainment": {
-    "name": "Entrainment",
-    "effect": "O usuário dança em um ritmo estranho que contagia o alvo que o imita, fazendo a Habilidade do alvo tornar-se a mesma que a do usuário."
   },
   "afterYou": {
     "name": "After You",
@@ -3594,10 +3570,6 @@
   "mortalSpin": {
     "name": "Mortal Spin",
     "effect": "O usuário realiza um ataque giratório que também pode eliminar os efeitos de movimentos como Bind, Wrap e Leech Seed. Isso também envenena os Pokémon oponentes."
-  },
-  "doodle": {
-    "name": "Doodle",
-    "effect": "O usuário captura a essência do alvo em um esboço. Isso muda as Habilidades do usuário e de seus Pokémon aliados para a do alvo."
   },
   "filletAway": {
     "name": "Fillet Away",

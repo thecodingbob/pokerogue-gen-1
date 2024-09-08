@@ -1083,10 +1083,6 @@
     "name": "Trickbetrug",
     "effect": "Der Anwender überrumpelt das Ziel und tauscht mit ihm die getragenen Items."
   },
-  "rolePlay": {
-    "name": "Rollenspiel",
-    "effect": "Parodiert das Ziel und kopiert seine Fähigkeit."
-  },
   "wish": {
     "name": "Wunschtraum",
     "effect": "Ein Wunsch füllt in der nächsten Runde 50 % der KP des Anwenders bei diesem oder einem eingewechselten Pokémon auf."
@@ -1134,10 +1130,6 @@
   "eruption": {
     "name": "Eruption",
     "effect": "Explosiver Angriff. Je höher die KP des Anwenders sind, desto mehr Schaden wird angerichtet."
-  },
-  "skillSwap": {
-    "name": "Fähigkeitstausch",
-    "effect": "Anwender tauscht Fähigkeit mit dem Ziel."
   },
   "imprison": {
     "name": "Begrenzer",
@@ -1515,10 +1507,6 @@
     "name": "Krafttrick",
     "effect": "Anwender setzt Psycho-Kräfte ein, um eigenen Angriffs- mit Verteidigungs-Wert auszutauschen."
   },
-  "gastroAcid": {
-    "name": "Magensäfte",
-    "effect": "Anwender greift das Ziel mit eigenen Magensäften an. Entfernt Effekte von dessen Fähigkeit."
-  },
   "luckyChant": {
     "name": "Beschwörung",
     "effect": "Anwender singt eine Beschwörungsformel, die Volltreffer gegen ihn verhindert."
@@ -1546,10 +1534,6 @@
   "lastResort": {
     "name": "Zuflucht",
     "effect": "Diese Attacke kann nur eingesetzt werden, nachdem alle verfügbaren Attacken ausgeführt worden sind."
-  },
-  "worrySeed": {
-    "name": "Sorgensamen",
-    "effect": "Ziel wird bepflanzt. Wandelt Fähigkeit in Insomnia um. Verhindert so Schlaf."
   },
   "suckerPunch": {
     "name": "Tiefschlag",
@@ -1966,14 +1950,6 @@
   "foulPlay": {
     "name": "Schmarotzer",
     "effect": "Anwender macht sich die Kraft des Zieles zunutze. Je höher dessen Angriff, desto mehr Schaden richtet die Attacke an."
-  },
-  "simpleBeam": {
-    "name": "Wankelstrahl",
-    "effect": "Bestrahlt das Ziel mit mysteriösen Energiewellen. Bei einem Treffer wird dessen Fähigkeit zu Wankelmut."
-  },
-  "entrainment": {
-    "name": "Zwango",
-    "effect": "Anwender tanzt zu einem seltsamem Rhythmus und zwingt das Ziel mitzumachen. Dieses nimmt dabei die Fähigkeit des Anwenders an."
   },
   "afterYou": {
     "name": "Galanterie",
@@ -3594,10 +3570,6 @@
   "mortalSpin": {
     "name": "Letalwirbler",
     "effect": "Der Anwender greift mit einer wirbelnden Attacke an, die Gegner auch vergiftet. Befreit den Anwender unter anderem von Wickel, Klammergriff und Egelsamen."
-  },
-  "doodle": {
-    "name": "Abpausen",
-    "effect": "Der Anwender kopiert die wahre Essenz des Zieles. Dadurch erhalten alle Pokémon auf der Mitstreiterseite die Fähigkeit des Zieles."
   },
   "filletAway": {
     "name": "Abspaltung",

@@ -9,8 +9,7 @@ import { Constructor } from "#app/utils";
 import * as Utils from "../utils";
 import { WeatherType } from "./weather";
 import { ArenaTagSide, ArenaTrapTag, WeakenMoveTypeTag } from "./arena-tag";
-import { UnswappableAbilityAbAttr, UncopiableAbilityAbAttr, UnsuppressableAbilityAbAttr, BlockRecoilDamageAttr, BlockOneHitKOAbAttr, IgnoreContactAbAttr, MaxMultiHitAbAttr, applyAbAttrs, BlockNonDirectDamageAbAttr, MoveAbilityBypassAbAttr, ReverseDrainAbAttr, FieldPreventExplosiveMovesAbAttr, ForceSwitchOutImmunityAbAttr, BlockItemTheftAbAttr, applyPostAttackAbAttrs, ConfusionOnStatusEffectAbAttr, HealFromBerryUseAbAttr, IgnoreProtectOnContactAbAttr, IgnoreMoveEffectsAbAttr, applyPreDefendAbAttrs, MoveEffectChanceMultiplierAbAttr, WonderSkinAbAttr, applyPreAttackAbAttrs, MoveTypeChangeAbAttr, UserFieldMoveTypePowerBoostAbAttr, FieldMoveTypePowerBoostAbAttr, AllyMoveCategoryPowerBoostAbAttr, VariableMovePowerAbAttr } from "./ability";
-import { allAbilities } from "./ability";
+import { BlockRecoilDamageAttr, BlockOneHitKOAbAttr, IgnoreContactAbAttr, MaxMultiHitAbAttr, applyAbAttrs, BlockNonDirectDamageAbAttr, MoveAbilityBypassAbAttr, ReverseDrainAbAttr, FieldPreventExplosiveMovesAbAttr, ForceSwitchOutImmunityAbAttr, BlockItemTheftAbAttr, applyPostAttackAbAttrs, ConfusionOnStatusEffectAbAttr, HealFromBerryUseAbAttr, IgnoreProtectOnContactAbAttr, IgnoreMoveEffectsAbAttr, applyPreDefendAbAttrs, MoveEffectChanceMultiplierAbAttr, WonderSkinAbAttr, applyPreAttackAbAttrs, MoveTypeChangeAbAttr, UserFieldMoveTypePowerBoostAbAttr, FieldMoveTypePowerBoostAbAttr, AllyMoveCategoryPowerBoostAbAttr, VariableMovePowerAbAttr } from "./ability";
 import { PokemonHeldItemModifier, BerryModifier, PreserveBerryModifier, PokemonMoveAccuracyBoosterModifier, AttackTypeBoosterModifier, PokemonMultiHitModifier } from "../modifier/modifier";
 import { BattlerIndex, BattleType } from "../battle";
 import { Stat } from "./pokemon-stat";
@@ -35,7 +34,6 @@ import { PokemonHealPhase } from "#app/phases/pokemon-heal-phase";
 import { StatChangePhase } from "#app/phases/stat-change-phase";
 import { SwitchPhase } from "#app/phases/switch-phase";
 import { SwitchSummonPhase } from "#app/phases/switch-summon-phase";
-import { SpeciesFormChangeRevertWeatherFormTrigger } from "./pokemon-forms";
 import { NumberHolder } from "#app/utils";
 import { GameMode } from "#app/game-mode";
 import { applyChallenges, ChallengeType } from "./challenge";
@@ -5584,179 +5582,6 @@ export class SketchAttr extends MoveEffectAttr {
   }
 }
 
-export class AbilityChangeAttr extends MoveEffectAttr {
-  public ability: Abilities;
-
-  constructor(ability: Abilities, selfTarget?: boolean) {
-    super(selfTarget, MoveEffectTrigger.HIT);
-
-    this.ability = ability;
-  }
-
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (!super.apply(user, target, move, args)) {
-      return false;
-    }
-
-    const moveTarget = this.selfTarget ? user : target;
-
-    moveTarget.summonData.ability = this.ability;
-    user.scene.triggerPokemonFormChange(moveTarget, SpeciesFormChangeRevertWeatherFormTrigger);
-
-    user.scene.queueMessage(i18next.t("moveTriggers:acquiredAbility", {pokemonName: getPokemonNameWithAffix((this.selfTarget ? user : target)), abilityName: allAbilities[this.ability].name}));
-
-    return true;
-  }
-
-  getCondition(): MoveConditionFunc {
-    return (user, target, move) => !(this.selfTarget ? user : target).getAbility().hasAttr(UnsuppressableAbilityAbAttr) && (this.selfTarget ? user : target).getAbility().id !== this.ability;
-  }
-}
-
-export class AbilityCopyAttr extends MoveEffectAttr {
-  public copyToPartner: boolean;
-
-  constructor(copyToPartner: boolean = false) {
-    super(false, MoveEffectTrigger.HIT);
-
-    this.copyToPartner = copyToPartner;
-  }
-
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (!super.apply(user, target, move, args)) {
-      return false;
-    }
-
-    user.summonData.ability = target.getAbility().id;
-
-    user.scene.queueMessage(i18next.t("moveTriggers:copiedTargetAbility", {pokemonName: getPokemonNameWithAffix(user), targetName: getPokemonNameWithAffix(target), abilityName: allAbilities[target.getAbility().id].name}));
-
-    if (this.copyToPartner && user.scene.currentBattle?.double && user.getAlly().hp) {
-      user.getAlly().summonData.ability = target.getAbility().id;
-      user.getAlly().scene.queueMessage(i18next.t("moveTriggers:copiedTargetAbility", {pokemonName: getPokemonNameWithAffix(user.getAlly()), targetName: getPokemonNameWithAffix(target), abilityName: allAbilities[target.getAbility().id].name}));
-    }
-
-    return true;
-  }
-
-  getCondition(): MoveConditionFunc {
-    return (user, target, move) => {
-      let ret = !target.getAbility().hasAttr(UncopiableAbilityAbAttr) && !user.getAbility().hasAttr(UnsuppressableAbilityAbAttr);
-      if (this.copyToPartner && user.scene.currentBattle?.double) {
-        ret = ret && (!user.getAlly().hp || !user.getAlly().getAbility().hasAttr(UnsuppressableAbilityAbAttr));
-      } else {
-        ret = ret && user.getAbility().id !== target.getAbility().id;
-      }
-      return ret;
-    };
-  }
-}
-
-export class AbilityGiveAttr extends MoveEffectAttr {
-  public copyToPartner: boolean;
-
-  constructor() {
-    super(false, MoveEffectTrigger.HIT);
-  }
-
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (!super.apply(user, target, move, args)) {
-      return false;
-    }
-
-    target.summonData.ability = user.getAbility().id;
-
-    user.scene.queueMessage(i18next.t("moveTriggers:acquiredAbility", {pokemonName: getPokemonNameWithAffix(target), abilityName: allAbilities[user.getAbility().id].name}));
-
-    return true;
-  }
-
-  getCondition(): MoveConditionFunc {
-    return (user, target, move) => !user.getAbility().hasAttr(UncopiableAbilityAbAttr) && !target.getAbility().hasAttr(UnsuppressableAbilityAbAttr) && user.getAbility().id !== target.getAbility().id;
-  }
-}
-
-export class SwitchAbilitiesAttr extends MoveEffectAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (!super.apply(user, target, move, args)) {
-      return false;
-    }
-
-    const tempAbilityId = user.getAbility().id;
-    user.summonData.ability = target.getAbility().id;
-    target.summonData.ability = tempAbilityId;
-
-    user.scene.queueMessage(i18next.t("moveTriggers:swappedAbilitiesWithTarget", {pokemonName: getPokemonNameWithAffix(user)}));
-    // Swaps Forecast from Castform
-    user.scene.arena.triggerWeatherBasedFormChangesToNormal();
-    // Swaps Forecast to Castform (edge case)
-    user.scene.arena.triggerWeatherBasedFormChanges();
-
-    return true;
-  }
-
-  getCondition(): MoveConditionFunc {
-    return (user, target, move) => !user.getAbility().hasAttr(UnswappableAbilityAbAttr) && !target.getAbility().hasAttr(UnswappableAbilityAbAttr);
-  }
-}
-
-/**
- * Attribute used for moves that suppress abilities like {@linkcode Moves.GASTRO_ACID}.
- * A suppressed ability cannot be activated.
- *
- * @extends MoveEffectAttr
- * @see {@linkcode apply}
- * @see {@linkcode getCondition}
- */
-export class SuppressAbilitiesAttr extends MoveEffectAttr {
-  /** Sets ability suppression for the target pokemon and displays a message. */
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (!super.apply(user, target, move, args)) {
-      return false;
-    }
-
-    target.summonData.abilitySuppressed = true;
-    target.scene.arena.triggerWeatherBasedFormChangesToNormal();
-
-    target.scene.queueMessage(i18next.t("moveTriggers:suppressAbilities", {pokemonName: getPokemonNameWithAffix(target)}));
-
-    return true;
-  }
-
-  /** Causes the effect to fail when the target's ability is unsupressable or already suppressed. */
-  getCondition(): MoveConditionFunc {
-    return (user, target, move) => !target.getAbility().hasAttr(UnsuppressableAbilityAbAttr) && !target.summonData.abilitySuppressed;
-  }
-}
-
-/**
- * Applies the effects of {@linkcode SuppressAbilitiesAttr} if the target has already moved this turn.
- * @extends MoveEffectAttr
- * @see {@linkcode Moves.CORE_ENFORCER} (the move which uses this effect)
- */
-export class SuppressAbilitiesIfActedAttr extends MoveEffectAttr {
-  /**
-   * If the target has already acted this turn, apply a {@linkcode SuppressAbilitiesAttr} effect unless the
-   * abillity cannot be suppressed. This is a secondary effect and has no bearing on the success or failure of the move.
-   *
-   * @returns True if the move occurred, otherwise false. Note that true will be returned even if the target has not
-   * yet moved or if the suppression failed to apply.
-   */
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (!super.apply(user, target, move, args)) {
-      return false;
-    }
-
-    if (target.turnData.acted) {
-      const suppressAttr = new SuppressAbilitiesAttr();
-      if (suppressAttr.getCondition()(user, target, move)) {
-        suppressAttr.apply(user, target, move, args);
-      }
-    }
-
-    return true;
-  }
-}
 
 export class TransformAttr extends MoveEffectAttr {
   apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): Promise<boolean> {
@@ -5767,7 +5592,6 @@ export class TransformAttr extends MoveEffectAttr {
 
       user.summonData.speciesForm = target.getSpeciesForm();
       user.summonData.fusionSpeciesForm = target.getFusionSpeciesForm();
-      user.summonData.ability = target.getAbility().id;
       user.summonData.gender = target.getGender();
       user.summonData.fusionGender = target.getFusionGender();
       user.summonData.stats = [ user.stats[Stat.HP] ].concat(target.stats.slice(1));
@@ -6928,8 +6752,6 @@ export function initMoves() {
       .target(MoveTarget.NEAR_ALLY),
     new StatusMove(Moves.TRICK, Type.PSYCHIC, 100, 10, -1, 0, 3)
       .unimplemented(),
-    new StatusMove(Moves.ROLE_PLAY, Type.PSYCHIC, -1, 10, -1, 0, 3)
-      .attr(AbilityCopyAttr),
     new SelfStatusMove(Moves.WISH, Type.NORMAL, -1, 10, -1, 0, 3)
       .triageMove()
       .attr(AddArenaTagAttr, ArenaTagType.WISH, 2, true),
@@ -6960,8 +6782,6 @@ export function initMoves() {
     new AttackMove(Moves.ERUPTION, Type.FIRE, MoveCategory.SPECIAL, 150, 100, 5, -1, 0, 3)
       .attr(HpPowerAttr)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
-    new StatusMove(Moves.SKILL_SWAP, Type.PSYCHIC, -1, 10, -1, 0, 3)
-      .attr(SwitchAbilitiesAttr),
     new SelfStatusMove(Moves.IMPRISON, Type.PSYCHIC, -1, 10, -1, 0, 3)
       .unimplemented(),
     new SelfStatusMove(Moves.REFRESH, Type.NORMAL, -1, 20, -1, 0, 3)
@@ -7225,8 +7045,6 @@ export function initMoves() {
       .makesContact(),
     new SelfStatusMove(Moves.POWER_TRICK, Type.PSYCHIC, -1, 10, -1, 0, 4)
       .unimplemented(),
-    new StatusMove(Moves.GASTRO_ACID, Type.POISON, 100, 10, -1, 0, 4)
-      .attr(SuppressAbilitiesAttr),
     new StatusMove(Moves.LUCKY_CHANT, Type.NORMAL, -1, 30, -1, 0, 4)
       .attr(AddArenaTagAttr, ArenaTagType.NO_CRIT, 5, true, true)
       .target(MoveTarget.USER_SIDE),
@@ -7246,8 +7064,6 @@ export function initMoves() {
       .attr(PunishmentPowerAttr),
     new AttackMove(Moves.LAST_RESORT, Type.NORMAL, MoveCategory.PHYSICAL, 140, 100, 5, -1, 0, 4)
       .attr(LastResortAttr),
-    new StatusMove(Moves.WORRY_SEED, Type.GRASS, 100, 10, -1, 0, 4)
-      .attr(AbilityChangeAttr, Abilities.INSOMNIA),
     new AttackMove(Moves.SUCKER_PUNCH, Type.DARK, MoveCategory.PHYSICAL, 70, 100, 5, -1, 1, 4)
       .condition((user, target, move) => user.scene.currentBattle.turnCommands[target.getBattlerIndex()]?.command === Command.FIGHT && !target.turnData.acted && allMoves[user.scene.currentBattle.turnCommands[target.getBattlerIndex()]?.move?.move!].category !== MoveCategory.STATUS), // TODO: is this bang correct?
     new StatusMove(Moves.TOXIC_SPIKES, Type.POISON, -1, 20, -1, 0, 4)
@@ -7529,10 +7345,6 @@ export function initMoves() {
       .ballBombMove(),
     new AttackMove(Moves.FOUL_PLAY, Type.DARK, MoveCategory.PHYSICAL, 95, 100, 15, -1, 0, 5)
       .attr(TargetAtkUserAtkAttr),
-    new StatusMove(Moves.SIMPLE_BEAM, Type.NORMAL, 100, 15, -1, 0, 5)
-      .attr(AbilityChangeAttr, Abilities.SIMPLE),
-    new StatusMove(Moves.ENTRAINMENT, Type.NORMAL, 100, 15, -1, 0, 5)
-      .attr(AbilityGiveAttr),
     new StatusMove(Moves.AFTER_YOU, Type.NORMAL, -1, 15, -1, 0, 5)
       .ignoresProtect()
       .unimplemented(),
@@ -8098,8 +7910,7 @@ export function initMoves() {
       .danceMove()
       .attr(MatchUserTypeAttr),
     new AttackMove(Moves.CORE_ENFORCER, Type.DRAGON, MoveCategory.SPECIAL, 100, 100, 10, -1, 0, 7)
-      .target(MoveTarget.ALL_NEAR_ENEMIES)
-      .attr(SuppressAbilitiesIfActedAttr),
+      .target(MoveTarget.ALL_NEAR_ENEMIES),
     new AttackMove(Moves.TROP_KICK, Type.GRASS, MoveCategory.PHYSICAL, 70, 100, 15, 100, 0, 7)
       .attr(StatChangeAttr, BattleStat.ATK, -1),
     new StatusMove(Moves.INSTRUCT, Type.PSYCHIC, -1, 15, -1, 0, 7)
@@ -8788,8 +8599,6 @@ export function initMoves() {
       .attr(StatusEffectAttr, StatusEffect.POISON)
       .attr(RemoveArenaTrapAttr)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
-    new StatusMove(Moves.DOODLE, Type.NORMAL, 100, 10, -1, 0, 9)
-      .attr(AbilityCopyAttr, true),
     new SelfStatusMove(Moves.FILLET_AWAY, Type.NORMAL, -1, 10, -1, 0, 9)
       .attr(CutHpStatBoostAttr, [ BattleStat.ATK, BattleStat.SPATK, BattleStat.SPD ], 2, 2),
     new AttackMove(Moves.KOWTOW_CLEAVE, Type.DARK, MoveCategory.PHYSICAL, 85, -1, 10, -1, 0, 9)

@@ -17,7 +17,7 @@ export class ShowAbilityPhase extends PokemonPhase {
     const pokemon = this.getPokemon();
 
     if (pokemon) {
-      this.scene.abilityBar.showAbility(pokemon, this.passive);
+      this.scene.abilityBar.showAbility(pokemon);
 
       if (pokemon?.battleData) {
         pokemon.battleData.abilityRevealed = true;

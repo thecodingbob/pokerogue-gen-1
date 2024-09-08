@@ -36,8 +36,8 @@ export default class AbilityBar extends Phaser.GameObjects.Container {
     this.shown = false;
   }
 
-  showAbility(pokemon: Pokemon, passive: boolean = false): void {
-    this.abilityBarText.setText(`${i18next.t("fightUiHandler:abilityFlyInText", { pokemonName: getPokemonNameWithAffix(pokemon), passive: passive ? i18next.t("fightUiHandler:passive") : "", abilityName: !passive ?  pokemon.getAbility().name : pokemon.getPassiveAbility().name })}`);
+  showAbility(pokemon: Pokemon): void {
+    this.abilityBarText.setText(`${i18next.t("fightUiHandler:abilityFlyInText", { pokemonName: getPokemonNameWithAffix(pokemon), abilityName: pokemon.getPassiveAbility().name })}`);
 
     if (this.shown) {
       return;

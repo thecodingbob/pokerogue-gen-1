@@ -1083,10 +1083,6 @@
     "name": "Tour de Magie",
     "effect": "Le lanceur prend la cible au dépourvu et l’oblige à échanger son objet contre le sien."
   },
-  "rolePlay": {
-    "name": "Imitation",
-    "effect": "Imite la cible et copie son talent."
-  },
   "wish": {
     "name": "Vœu",
     "effect": "Un vœu qui permet au lanceur ou au Pokémon entrant sur le terrain au tour suivant de récupérer la moitié des PV max du lanceur."
@@ -1134,10 +1130,6 @@
   "eruption": {
     "name": "Éruption",
     "effect": "Le lanceur laisse exploser sa colère. Plus ses PV sont bas, moins l’attaque est puissante."
-  },
-  "skillSwap": {
-    "name": "Échange",
-    "effect": "Le lanceur utilise ses pouvoirs psychiques pour échanger son talent avec la cible."
   },
   "imprison": {
     "name": "Possessif",
@@ -1515,10 +1507,6 @@
     "name": "Astuce Force",
     "effect": "Le lanceur utilise ses pouvoirs psychiques pour échanger sa Défense et son Attaque."
   },
-  "gastroAcid": {
-    "name": "Suc Digestif",
-    "effect": "Le lanceur répand ses sucs digestifs sur la cible. Le fluide neutralise le talent de celle-ci."
-  },
   "luckyChant": {
     "name": "Air Veinard",
     "effect": "Le lanceur envoie une incantation vers le ciel et protège l’équipe des coups critiques pendant cinq tours."
@@ -1546,10 +1534,6 @@
   "lastResort": {
     "name": "Dernier Recours",
     "effect": "Cette capacité ne peut être utilisée qu’après que le lanceur a utilisé toutes les autres."
-  },
-  "worrySeed": {
-    "name": "Soucigraine",
-    "effect": "Plante sur la cible une graine qui la rend soucieuse et remplace son talent par Insomnia, l’empêchant ainsi de dormir."
   },
   "suckerPunch": {
     "name": "Coup Bas",
@@ -1966,14 +1950,6 @@
   "foulPlay": {
     "name": "Tricherie",
     "effect": "Le lanceur utilise la force de la cible. Plus l’Attaque de celle-ci est élevée, plus le lanceur inflige de dégâts."
-  },
-  "simpleBeam": {
-    "name": "Rayon Simple",
-    "effect": "Le lanceur envoie des ondes mystérieuses à la cible, dont le talent est remplacé par le talent Simple."
-  },
-  "entrainment": {
-    "name": "Ten-Danse",
-    "effect": "Le lanceur danse sur un rythme étrange. Il force sa cible à l’imiter, ce qui lui fait adopter son talent."
   },
   "afterYou": {
     "name": "Après Vous",
@@ -3594,10 +3570,6 @@
   "mortalSpin": {
     "name": "Toupie Éclat",
     "effect": "Le lanceur attaque en tournant sur lui-même et empoisonne la cible. Il se libère également des effets de capacités comme Étreinte, Ligotage ou Vampigraine."
-  },
-  "doodle": {
-    "name": "Décalquage",
-    "effect": "Le lanceur capture l’essence de la cible et la décalque. Le talent du lanceur et de ses alliés devient alors identique à celui de la cible."
   },
   "filletAway": {
     "name": "Décharnement",

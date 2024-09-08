@@ -14,7 +14,6 @@ export default class EggData {
   public isShiny: boolean;
   public species: Species;
   public eggMoveIndex: number;
-  public overrideHiddenAbility: boolean;
 
   constructor(source: Egg | any) {
     const sourceEgg = source instanceof Egg ? source as Egg : null;
@@ -33,7 +32,6 @@ export default class EggData {
     this.isShiny = sourceEgg ? sourceEgg.isShiny : source.isShiny;
     this.species = sourceEgg ? sourceEgg.species : source.species;
     this.eggMoveIndex = sourceEgg ? sourceEgg.eggMoveIndex : source.eggMoveIndex;
-    this.overrideHiddenAbility = sourceEgg ? sourceEgg.overrideHiddenAbility : source.overrideHiddenAbility;
   }
 
   toEgg(): Egg {
@@ -43,7 +41,7 @@ export default class EggData {
     } else {
       return new Egg({id: this.id, tier: this.tier, sourceType: this.sourceType, hatchWaves: this.hatchWaves,
         timestamp: this.timestamp, variantTier: this.variantTier, isShiny: this.isShiny, species: this.species,
-        eggMoveIndex: this.eggMoveIndex, overrideHiddenAbility: this.overrideHiddenAbility });
+        eggMoveIndex: this.eggMoveIndex });
     }
   }
 }

@@ -9,7 +9,6 @@ export class StarterContainer extends Phaser.GameObjects.Container {
   public shinyIcons: Phaser.GameObjects.Image[] = [];
   public label: Phaser.GameObjects.Text;
   public starterPassiveBgs: Phaser.GameObjects.Image;
-  public hiddenAbilityIcon: Phaser.GameObjects.Image;
   public favoriteIcon: Phaser.GameObjects.Image;
   public classicWinIcon: Phaser.GameObjects.Image;
   public candyUpgradeIcon: Phaser.GameObjects.Image;
@@ -65,7 +64,6 @@ export class StarterContainer extends Phaser.GameObjects.Container {
     abilityIcon.setScale(0.5);
     abilityIcon.setVisible(false);
     this.add(abilityIcon);
-    this.hiddenAbilityIcon = abilityIcon;
 
     // favorite icon
     const favoriteIcon = this.scene.add.image(0, 7, "favorite");

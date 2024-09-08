@@ -376,21 +376,7 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
       // Check if Player owns all genders and forms of the Pokemon
       const missingDexAttrs = ((dexEntry.caughtAttr & opponentPokemonDexAttr) < opponentPokemonDexAttr);
 
-      const ownedAbilityAttrs = pokemon.scene.gameData.starterData[pokemon.species.getRootSpeciesId()].abilityAttr;
-
-      let playerOwnsThisAbility = false;
-      // Check if the player owns ability for the root form
-      if ((ownedAbilityAttrs & 1) > 0 && pokemon.hasSameAbilityInRootForm(0)) {
-        playerOwnsThisAbility = true;
-      }
-      if ((ownedAbilityAttrs & 2) > 0 && pokemon.hasSameAbilityInRootForm(1)) {
-        playerOwnsThisAbility = true;
-      }
-      if ((ownedAbilityAttrs & 4) > 0 && pokemon.hasSameAbilityInRootForm(2)) {
-        playerOwnsThisAbility = true;
-      }
-
-      if (missingDexAttrs || !playerOwnsThisAbility) {
+      if (missingDexAttrs) {
         this.ownedIcon.setTint(0x808080);
       }
 

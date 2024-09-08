@@ -313,7 +313,7 @@ export class Arena {
    */
   triggerWeatherBasedFormChangesToNormal(): void {
     this.scene.getField(true).forEach( p => {
-      if (p.hasAbility(Abilities.FORECAST, false, true)) {
+      if (p.hasAbility(Abilities.FORECAST, false)) {
         new ShowAbilityPhase(this.scene, p.getBattlerIndex());
         return this.scene.triggerPokemonFormChange(p, SpeciesFormChangeRevertWeatherFormTrigger);
       }

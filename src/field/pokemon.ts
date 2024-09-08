@@ -10,7 +10,7 @@ import * as Utils from "../utils";
 import { Type, TypeDamageMultiplier, getTypeDamageMultiplier, getTypeRgb } from "../data/type";
 import { getLevelTotalExp } from "../data/exp";
 import { Stat } from "../data/pokemon-stat";
-import { DamageMoneyRewardModifier, EnemyDamageBoosterModifier, EnemyDamageReducerModifier, EnemyEndureChanceModifier, EnemyFusionChanceModifier, HiddenAbilityRateBoosterModifier, PokemonBaseStatModifier, PokemonFriendshipBoosterModifier, PokemonHeldItemModifier, ShinyRateBoosterModifier, SurviveDamageModifier, TempBattleStatBoosterModifier, StatBoosterModifier, CritBoosterModifier, TerastallizeModifier } from "../modifier/modifier";
+import { DamageMoneyRewardModifier, EnemyDamageBoosterModifier, EnemyDamageReducerModifier, EnemyEndureChanceModifier, EnemyFusionChanceModifier, PokemonBaseStatModifier, PokemonFriendshipBoosterModifier, PokemonHeldItemModifier, ShinyRateBoosterModifier, SurviveDamageModifier, TempBattleStatBoosterModifier, StatBoosterModifier, CritBoosterModifier, TerastallizeModifier } from "../modifier/modifier";
 import { PokeballType } from "../data/pokeball";
 import { Gender } from "../data/gender";
 import { initMoveAnim, loadMoveAnimAssets } from "../data/battle-anims";
@@ -71,7 +71,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
   public nickname: string;
   public species: PokemonSpecies;
   public formIndex: integer;
-  public abilityIndex: integer;
   public passive: boolean;
   public shiny: boolean;
   public variant: Variant;
@@ -117,39 +116,18 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
 
   private shinySparkle: Phaser.GameObjects.Sprite;
 
-  constructor(scene: BattleScene, x: number, y: number, species: PokemonSpecies, level: integer, abilityIndex?: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], dataSource?: Pokemon | PokemonData) {
+  constructor(scene: BattleScene, x: number, y: number, species: PokemonSpecies, level: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], dataSource?: Pokemon | PokemonData) {
     super(scene, x, y);
 
     if (!species.isObtainable() && this.isPlayer()) {
       throw `Cannot create a player Pokemon for species '${species.getName(formIndex)}'`;
     }
 
-    const hiddenAbilityChance = new Utils.IntegerHolder(256);
-    if (!this.hasTrainer()) {
-      this.scene.applyModifiers(HiddenAbilityRateBoosterModifier, true, hiddenAbilityChance);
-    }
-
-    const hasHiddenAbility = !Utils.randSeedInt(hiddenAbilityChance.value);
-    const randAbilityIndex = Utils.randSeedInt(2);
-
     this.species = species;
     this.pokeball = dataSource?.pokeball || PokeballType.POKEBALL;
     this.level = level;
     this.wildFlee = false;
 
-    // Determine the ability index
-    if (abilityIndex !== undefined) {
-      this.abilityIndex = abilityIndex; // Use the provided ability index if it is defined
-    } else {
-      // If abilityIndex is not provided, determine it based on species and hidden ability
-      if (species.abilityHidden && hasHiddenAbility) {
-        // If the species has a hidden ability and the hidden ability is present
-        this.abilityIndex = 2;
-      } else {
-        // If there is no hidden ability or species does not have a hidden ability
-        this.abilityIndex = species.ability2 !== species.ability1 ? randAbilityIndex : 0; // Use random ability index if species has a second ability, otherwise use 0
-      }
-    }
     if (formIndex !== undefined) {
       this.formIndex = formIndex;
     }
@@ -768,7 +746,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       let value = Math.floor(((2 * baseStat + this.ivs[s]) * this.level) * 0.01);
       if (isHp) {
         value = value + this.level + 10;
-        if (this.hasAbility(Abilities.WONDER_GUARD, false, true)) {
+        if (this.hasAbility(Abilities.WONDER_GUARD, false)) {
           value = 1;
         }
         if (this.hp > value || this.hp === undefined) {
@@ -965,34 +943,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
   }
 
   /**
-   * Gets the non-passive ability of the pokemon. This accounts for fusions and ability changing effects.
-   * This should rarely be called, most of the time {@link hasAbility} or {@link hasAbilityWithAttr} are better used as
-   * those check both the passive and non-passive abilities and account for ability suppression.
-   * @see {@link hasAbility} {@link hasAbilityWithAttr} Intended ways to check abilities in most cases
-   * @param {boolean} ignoreOverride If true, ignore ability changing effects
-   * @returns {Ability} The non-passive ability of the pokemon
-   */
-  getAbility(ignoreOverride?: boolean): Ability {
-    if (!ignoreOverride && this.summonData?.ability) {
-      return allAbilities[this.summonData.ability];
-    }
-    if (Overrides.ABILITY_OVERRIDE && this.isPlayer()) {
-      return allAbilities[Overrides.ABILITY_OVERRIDE];
-    }
-    if (Overrides.OPP_ABILITY_OVERRIDE && !this.isPlayer()) {
-      return allAbilities[Overrides.OPP_ABILITY_OVERRIDE];
-    }
-    if (this.isFusion()) {
-      return allAbilities[this.getFusionSpeciesForm(ignoreOverride).getAbility(this.fusionAbilityIndex)];
-    }
-    let abilityId = this.getSpeciesForm(ignoreOverride).getAbility(this.abilityIndex);
-    if (abilityId === Abilities.NONE) {
-      abilityId = this.species.ability1;
-    }
-    return allAbilities[abilityId];
-  }
-
-  /**
    * Gets the passive ability of the pokemon. This should rarely be called, most of the time
    * {@link hasAbility} or {@link hasAbilityWithAttr} are better used as those check both the passive and
    * non-passive abilities and account for ability suppression.
@@ -1031,10 +981,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     const abilityAttrs: AbAttr[] = [];
 
     if (!canApply || this.canApplyAbility()) {
-      abilityAttrs.push(...this.getAbility(ignoreOverride).getAttrs(attrType));
-    }
-
-    if (!canApply || this.canApplyAbility(true)) {
       abilityAttrs.push(...this.getPassiveAbility().getAttrs(attrType));
     }
 
@@ -1072,14 +1018,13 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
    * Checks whether an ability of a pokemon can be currently applied. This should rarely be
    * directly called, as {@link hasAbility} and {@link hasAbilityWithAttr} already call this.
    * @see {@link hasAbility} {@link hasAbilityWithAttr} Intended ways to check abilities in most cases
-   * @param {boolean} passive If true, check if passive can be applied instead of non-passive
    * @returns {Ability} The passive ability of the pokemon
    */
-  canApplyAbility(passive: boolean = false): boolean {
-    if (passive && !this.hasPassive()) {
+  canApplyAbility(): boolean {
+    if (!this.hasPassive()) {
       return false;
     }
-    const ability = (!passive ? this.getAbility() : this.getPassiveAbility());
+    const ability = this.getPassiveAbility();
     if (this.isFusion() && ability.hasAttr(NoFusionAbilityAbAttr)) {
       return false;
     }
@@ -1092,13 +1037,10 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     if (this.isOnField() && !ability.hasAttr(SuppressFieldAbilitiesAbAttr)) {
       const suppressed = new Utils.BooleanHolder(false);
       this.scene.getField(true).filter(p => p !== this).map(p => {
-        if (p.getAbility().hasAttr(SuppressFieldAbilitiesAbAttr) && p.canApplyAbility()) {
-          p.getAbility().getAttrs(SuppressFieldAbilitiesAbAttr).map(a => a.apply(this, false, false, suppressed, [ability]));
-        }
         console.log(p);
         console.log(p.getPassiveAbility());
-        if (p.getPassiveAbility().hasAttr(SuppressFieldAbilitiesAbAttr) && p.canApplyAbility(true)) {
-          p.getPassiveAbility().getAttrs(SuppressFieldAbilitiesAbAttr).map(a => a.apply(this, true, false, suppressed, [ability]));
+        if (p.getPassiveAbility().hasAttr(SuppressFieldAbilitiesAbAttr) && p.canApplyAbility()) {
+          p.getPassiveAbility().getAttrs(SuppressFieldAbilitiesAbAttr).map(a => a.apply(this, false, suppressed, [ability]));
         }
       });
       if (suppressed.value) {
@@ -1109,19 +1051,14 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
   }
 
   /**
-   * Checks whether a pokemon has the specified ability and it's in effect. Accounts for all the various
-   * effects which can affect whether an ability will be present or in effect, and both passive and
-   * non-passive. This is the primary way to check whether a pokemon has a particular ability.
+   * Checks whether a pokemon has the specified passive ability and it's in effect. Accounts for all the various
+   * effects which can affect whether an ability will be present or in effect. This is the primary way to check whether a pokemon has a particular ability.
    * @param {Abilities} ability The ability to check for
    * @param {boolean} canApply If false, it doesn't check whether the ability is currently active
-   * @param {boolean} ignoreOverride If true, it ignores ability changing effects
    * @returns {boolean} Whether the ability is present and active
    */
-  hasAbility(ability: Abilities, canApply: boolean = true, ignoreOverride?: boolean): boolean {
-    if ((!canApply || this.canApplyAbility()) && this.getAbility(ignoreOverride).id === ability) {
-      return true;
-    }
-    if (this.hasPassive() && (!canApply || this.canApplyAbility(true)) && this.getPassiveAbility().id === ability) {
+  hasAbility(ability: Abilities, canApply: boolean = true): boolean {
+    if (this.hasPassive() && (!canApply || this.canApplyAbility()) && this.getPassiveAbility().id === ability) {
       return true;
     }
     return false;
@@ -1134,14 +1071,10 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
    * whether a pokemon has a particular ability.
    * @param {AbAttr} attrType The ability attribute to check for
    * @param {boolean} canApply If false, it doesn't check whether the ability is currently active
-   * @param {boolean} ignoreOverride If true, it ignores ability changing effects
    * @returns {boolean} Whether an ability with that attribute is present and active
    */
-  hasAbilityWithAttr(attrType: Constructor<AbAttr>, canApply: boolean = true, ignoreOverride?: boolean): boolean {
-    if ((!canApply || this.canApplyAbility()) && this.getAbility(ignoreOverride).hasAttr(attrType)) {
-      return true;
-    }
-    if (this.hasPassive() && (!canApply || this.canApplyAbility(true)) && this.getPassiveAbility().hasAttr(attrType)) {
+  hasAbilityWithAttr(attrType: Constructor<AbAttr>, canApply: boolean = true): boolean {
+    if (this.hasPassive() && (!canApply || this.canApplyAbility()) && this.getPassiveAbility().hasAttr(attrType)) {
       return true;
     }
     return false;
@@ -1547,14 +1480,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
   }
 
   generateFusionSpecies(forStarter?: boolean): void {
-    const hiddenAbilityChance = new Utils.IntegerHolder(256);
-    if (!this.hasTrainer()) {
-      this.scene.applyModifiers(HiddenAbilityRateBoosterModifier, true, hiddenAbilityChance);
-    }
-
-    const hasHiddenAbility = !Utils.randSeedInt(hiddenAbilityChance.value);
-    const randAbilityIndex = Utils.randSeedInt(2);
-
     const filter = !forStarter ? this.species.getCompatibleFusionSpeciesFilter()
       : species => {
         return pokemonEvolutions.hasOwnProperty(species.speciesId)
@@ -1567,7 +1492,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       };
 
     this.fusionSpecies = this.scene.randomSpecies(this.scene.currentBattle?.waveIndex || 0, this.level, false, filter, true);
-    this.fusionAbilityIndex = (this.fusionSpecies.abilityHidden && hasHiddenAbility ? this.fusionSpecies.ability2 ? 2 : 1 : this.fusionSpecies.ability2 ? randAbilityIndex : 0);
     this.fusionShiny = this.shiny;
     this.fusionVariant = this.variant;
 
@@ -2518,10 +2442,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     return new Promise(resolve => {
       this.formIndex = Math.max(this.species.forms.findIndex(f => f.formKey === formChange.formKey), 0);
       this.generateName();
-      const abilityCount = this.getSpeciesForm().getAbilityCount();
-      if (this.abilityIndex >= abilityCount) {// Shouldn't happen
-        this.abilityIndex = abilityCount - 1;
-      }
       this.scene.gameData.setPokemonSeen(this, false);
       this.setScale(this.getSpriteScale());
       this.loadAssets().then(() => {
@@ -3271,16 +3191,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     return this.battleInfo;
   }
 
-  /**
-   * Checks whether or not the Pokemon's root form has the same ability
-   * @param abilityIndex the given ability index we are checking
-   * @returns true if the abilities are the same
-   */
-  hasSameAbilityInRootForm(abilityIndex: number): boolean {
-    const currentAbilityIndex = this.abilityIndex;
-    const rootForm = getPokemonSpecies(this.species.getRootSpeciesId());
-    return rootForm.getAbility(abilityIndex) === rootForm.getAbility(currentAbilityIndex);
-  }
 }
 
 export default interface Pokemon {
@@ -3290,8 +3200,8 @@ export default interface Pokemon {
 export class PlayerPokemon extends Pokemon {
   public compatibleTms: Moves[];
 
-  constructor(scene: BattleScene, species: PokemonSpecies, level: integer, abilityIndex?: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], dataSource?: Pokemon | PokemonData) {
-    super(scene, 106, 148, species, level, abilityIndex, formIndex, gender, shiny, variant, ivs, dataSource);
+  constructor(scene: BattleScene, species: PokemonSpecies, level: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], dataSource?: Pokemon | PokemonData) {
+    super(scene, 106, 148, species, level, formIndex, gender, shiny, variant, ivs, dataSource);
 
     if (Overrides.STATUS_OVERRIDE) {
       this.status = new Status(Overrides.STATUS_OVERRIDE);
@@ -3478,12 +3388,12 @@ export class PlayerPokemon extends Pokemon {
         const originalFusionFormIndex = this.fusionFormIndex;
         this.fusionSpecies = evolutionSpecies;
         this.fusionFormIndex = evolution.evoFormKey !== null ? Math.max(evolutionSpecies.forms.findIndex(f => f.formKey === evolution.evoFormKey), 0) : this.fusionFormIndex;
-        ret = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
+        ret = this.scene.addPlayerPokemon(this.species, this.level, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
         this.fusionSpecies = originalFusionSpecies;
         this.fusionFormIndex = originalFusionFormIndex;
       } else {
         const formIndex = evolution.evoFormKey !== null && !isFusion ? Math.max(evolutionSpecies.forms.findIndex(f => f.formKey === evolution.evoFormKey), 0) : this.formIndex;
-        ret = this.scene.addPlayerPokemon(!isFusion ? evolutionSpecies : this.species, this.level, this.abilityIndex, formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
+        ret = this.scene.addPlayerPokemon(!isFusion ? evolutionSpecies : this.species, this.level, formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
       }
       ret.loadAssets().then(() => resolve(ret));
     });
@@ -3510,32 +3420,6 @@ export class PlayerPokemon extends Pokemon {
         }
       }
       this.generateName();
-      if (!isFusion) {
-        const abilityCount = this.getSpeciesForm().getAbilityCount();
-        const preEvoAbilityCount = preEvolution.getAbilityCount();
-        if ([0, 1, 2].includes(this.abilityIndex)) {
-          // Handles cases where a Pokemon with 3 abilities evolves into a Pokemon with 2 abilities (ie: Eevee -> any Eeveelution)
-          if (this.abilityIndex === 2 && preEvoAbilityCount === 3 && abilityCount === 2) {
-            this.abilityIndex = 1;
-          }
-        } else { // Prevent pokemon with an illegal ability value from breaking things
-          console.warn("this.abilityIndex is somehow an illegal value, please report this");
-          console.warn(this.abilityIndex);
-          this.abilityIndex = 0;
-        }
-      } else { // Do the same as above, but for fusions
-        const abilityCount = this.getFusionSpeciesForm().getAbilityCount();
-        const preEvoAbilityCount = preEvolution.getAbilityCount();
-        if ([0, 1, 2].includes(this.fusionAbilityIndex)) {
-          if (this.fusionAbilityIndex === 2 && preEvoAbilityCount === 3 && abilityCount === 2) {
-            this.fusionAbilityIndex = 1;
-          }
-        } else {
-          console.warn("this.fusionAbilityIndex is somehow an illegal value, please report this");
-          console.warn(this.fusionAbilityIndex);
-          this.fusionAbilityIndex = 0;
-        }
-      }
       this.compatibleTms.splice(0, this.compatibleTms.length);
       this.generateCompatibleTms();
       const updateAndResolve = () => {
@@ -3557,7 +3441,7 @@ export class PlayerPokemon extends Pokemon {
   getPossibleForm(formChange: SpeciesFormChange): Promise<Pokemon> {
     return new Promise(resolve => {
       const formIndex = Math.max(this.species.forms.findIndex(f => f.formKey === formChange.formKey), 0);
-      const ret = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
+      const ret = this.scene.addPlayerPokemon(this.species, this.level, formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
       ret.loadAssets().then(() => resolve(ret));
     });
   }
@@ -3566,10 +3450,6 @@ export class PlayerPokemon extends Pokemon {
     return new Promise(resolve => {
       this.formIndex = Math.max(this.species.forms.findIndex(f => f.formKey === formChange.formKey), 0);
       this.generateName();
-      const abilityCount = this.getSpeciesForm().getAbilityCount();
-      if (this.abilityIndex >= abilityCount) { // Shouldn't happen
-        this.abilityIndex = abilityCount - 1;
-      }
       this.compatibleTms.splice(0, this.compatibleTms.length);
       this.generateCompatibleTms();
       const updateAndResolve = () => {
@@ -3601,7 +3481,6 @@ export class PlayerPokemon extends Pokemon {
     return new Promise(resolve => {
       this.fusionSpecies = pokemon.species;
       this.fusionFormIndex = pokemon.formIndex;
-      this.fusionAbilityIndex = pokemon.abilityIndex;
       this.fusionShiny = pokemon.shiny;
       this.fusionVariant = pokemon.variant;
       this.fusionGender = pokemon.gender;
@@ -3683,7 +3562,7 @@ export class EnemyPokemon extends Pokemon {
   public readonly isPopulatedFromDataSource: boolean;
 
   constructor(scene: BattleScene, species: PokemonSpecies, level: integer, trainerSlot: TrainerSlot, boss: boolean, dataSource?: PokemonData) {
-    super(scene, 236, 84, species, level, dataSource?.abilityIndex, dataSource?.formIndex,
+    super(scene, 236, 84, species, level, dataSource?.formIndex,
       dataSource?.gender, dataSource ? dataSource.shiny : false, dataSource ? dataSource.variant : undefined, undefined, dataSource);
 
     this.trainerSlot = trainerSlot;
@@ -4157,7 +4036,7 @@ export class EnemyPokemon extends Pokemon {
       this.metLevel = this.level;
       this.metBiome = this.scene.arena.biomeType;
       this.metSpecies = this.species.speciesId;
-      const newPokemon = this.scene.addPlayerPokemon(this.species, this.level, this.abilityIndex, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
+      const newPokemon = this.scene.addPlayerPokemon(this.species, this.level, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this);
       party.push(newPokemon);
       ret = newPokemon;
       this.scene.triggerPokemonFormChange(newPokemon, SpeciesFormChangeActiveTrigger, true);

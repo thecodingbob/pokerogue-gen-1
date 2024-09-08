@@ -9,7 +9,6 @@ import SaveSlotSelectUiHandler from "#app/ui/save-slot-select-ui-handler";
 import OptionSelectUiHandler from "#app/ui/settings/option-select-ui-handler";
 import StarterSelectUiHandler from "#app/ui/starter-select-ui-handler";
 import { Mode } from "#app/ui/ui";
-import { Abilities } from "#enums/abilities";
 import { Button } from "#enums/buttons";
 import { Species } from "#enums/species";
 import GameManager from "#test/utils/gameManager";
@@ -159,10 +158,9 @@ describe("UI - Starter select", () => {
     expect(game.scene.getParty()[0].species.speciesId).toBe(Species.BULBASAUR);
     expect(game.scene.getParty()[0].shiny).toBe(true);
     expect(game.scene.getParty()[0].variant).toBe(2);
-    expect(game.scene.getParty()[0].getAbility().id).toBe(Abilities.OVERGROW);
   }, 20000);
 
-  it("Bulbasaur - shiny - variant 2 female lonely chlorophyl", async() => {
+  it("Bulbasaur - shiny - variant 2 female lonely", async() => {
     await game.importData("src/test/utils/saves/everything.prsv");
     const caughtCount = Object.keys(game.scene.gameData.dexData).filter((key) => {
       const species = game.scene.gameData.dexData[key];
@@ -224,7 +222,6 @@ describe("UI - Starter select", () => {
     expect(game.scene.getParty()[0].species.speciesId).toBe(Species.BULBASAUR);
     expect(game.scene.getParty()[0].shiny).toBe(true);
     expect(game.scene.getParty()[0].variant).toBe(2);
-    expect(game.scene.getParty()[0].getAbility().id).toBe(Abilities.CHLOROPHYLL);
   }, 20000);
 
   it("Bulbasaur - shiny - variant 2 female lonely chlorophyl", async() => {

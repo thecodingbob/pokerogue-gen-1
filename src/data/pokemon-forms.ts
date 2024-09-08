@@ -445,9 +445,6 @@ export function getSpeciesFormChangeMessage(pokemon: Pokemon, formChange: Specie
   if (isRevert) {
     return i18next.t("battlePokemonForm:revertChange", { pokemonName: getPokemonNameWithAffix(pokemon) });
   }
-  if (pokemon.getAbility().id === Abilities.DISGUISE) {
-    return i18next.t("battlePokemonForm:disguiseChange");
-  }
   return i18next.t("battlePokemonForm:formChange", { preName });
 }
 

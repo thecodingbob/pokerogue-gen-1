@@ -184,12 +184,6 @@ export class AttemptCapturePhase extends PokemonPhase {
   catch() {
     const pokemon = this.getPokemon() as EnemyPokemon;
 
-    const speciesForm = !pokemon.fusionSpecies ? pokemon.getSpeciesForm() : pokemon.getFusionSpeciesForm();
-
-    if (speciesForm.abilityHidden && (pokemon.fusionSpecies ? pokemon.fusionAbilityIndex : pokemon.abilityIndex) === speciesForm.getAbilityCount() - 1) {
-      this.scene.validateAchv(achvs.HIDDEN_ABILITY);
-    }
-
     if (pokemon.species.subLegendary) {
       this.scene.validateAchv(achvs.CATCH_SUB_LEGENDARY);
     }
@@ -243,7 +237,7 @@ export class AttemptCapturePhase extends PokemonPhase {
             this.scene.ui.showText(i18next.t("battle:partyFull", { pokemonName: pokemon.getNameToRender() }), null, () => {
               this.scene.pokemonInfoContainer.makeRoomForConfirmUi(1, true);
               this.scene.ui.setMode(Mode.CONFIRM, () => {
-                const newPokemon = this.scene.addPlayerPokemon(pokemon.species, pokemon.level, pokemon.abilityIndex, pokemon.formIndex, pokemon.gender, pokemon.shiny, pokemon.variant, pokemon.ivs, pokemon);
+                const newPokemon = this.scene.addPlayerPokemon(pokemon.species, pokemon.level, pokemon.formIndex, pokemon.gender, pokemon.shiny, pokemon.variant, pokemon.ivs, pokemon);
                 this.scene.ui.setMode(Mode.SUMMARY, newPokemon, 0, SummaryUiMode.DEFAULT, () => {
                   this.scene.ui.setMode(Mode.MESSAGE).then(() => {
                     promptRelease();

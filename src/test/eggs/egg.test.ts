@@ -168,16 +168,6 @@ describe("Egg Generation Tests", () => {
 
     expect(result).toBe(expectedEggMoveIndex);
   });
-  it("should return a hatched pokemon with a hidden ability", () => {
-    const scene = game.scene;
-
-    const playerPokemon = new Egg({ scene, overrideHiddenAbility: true, species: Species.BULBASAUR }).generatePlayerPokemon(scene);
-    const expectedAbilityIndex = playerPokemon.species.ability2 ? 2 : 1;
-
-    const result = playerPokemon.abilityIndex;
-
-    expect(result).toBe(expectedAbilityIndex);
-  });
   it("should add the egg to the game data", () => {
     const scene = game.scene;
     const expectedEggCount = 1;
@@ -211,7 +201,6 @@ describe("Egg Generation Tests", () => {
       id: 2077000788,
       timestamp: 1718908955085,
       isShiny: false,
-      overrideHiddenAbility: false,
       sourceType: 0,
       species: 0,
       tier: 0,

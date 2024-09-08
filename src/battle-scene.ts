@@ -829,8 +829,8 @@ export default class BattleScene extends SceneBase {
     return (findInParty(this.getParty()) || findInParty(this.getEnemyParty())) ?? null;
   }
 
-  addPlayerPokemon(species: PokemonSpecies, level: integer, abilityIndex?: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], dataSource?: Pokemon | PokemonData, postProcess?: (playerPokemon: PlayerPokemon) => void): PlayerPokemon {
-    const pokemon = new PlayerPokemon(this, species, level, abilityIndex, formIndex, gender, shiny, variant, ivs, dataSource);
+  addPlayerPokemon(species: PokemonSpecies, level: integer, formIndex?: integer, gender?: Gender, shiny?: boolean, variant?: Variant, ivs?: integer[], dataSource?: Pokemon | PokemonData, postProcess?: (playerPokemon: PlayerPokemon) => void): PlayerPokemon {
+    const pokemon = new PlayerPokemon(this, species, level, formIndex, gender, shiny, variant, ivs, dataSource);
     if (postProcess) {
       postProcess(pokemon);
     }

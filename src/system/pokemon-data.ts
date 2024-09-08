@@ -18,7 +18,6 @@ export default class PokemonData {
   public species: Species;
   public nickname: string;
   public formIndex: integer;
-  public abilityIndex: integer;
   public passive: boolean;
   public shiny: boolean;
   public variant: Variant;
@@ -42,7 +41,6 @@ export default class PokemonData {
 
   public fusionSpecies: Species;
   public fusionFormIndex: integer;
-  public fusionAbilityIndex: integer;
   public fusionShiny: boolean;
   public fusionVariant: Variant;
   public fusionGender: Gender;
@@ -60,7 +58,6 @@ export default class PokemonData {
     this.species = sourcePokemon ? sourcePokemon.species.speciesId : source.species;
     this.nickname = sourcePokemon ? sourcePokemon.nickname : source.nickname;
     this.formIndex = Math.max(Math.min(source.formIndex, getPokemonSpecies(this.species).forms.length - 1), 0);
-    this.abilityIndex = source.abilityIndex;
     this.passive = source.passive;
     this.shiny = source.shiny;
     this.variant = source.variant;
@@ -88,7 +85,6 @@ export default class PokemonData {
 
     this.fusionSpecies = sourcePokemon ? sourcePokemon.fusionSpecies?.speciesId : source.fusionSpecies;
     this.fusionFormIndex = source.fusionFormIndex;
-    this.fusionAbilityIndex = source.fusionAbilityIndex;
     this.fusionShiny = source.fusionShiny;
     this.fusionVariant = source.fusionVariant;
     this.fusionGender = source.fusionGender;
@@ -140,7 +136,7 @@ export default class PokemonData {
   toPokemon(scene: BattleScene, battleType?: BattleType, partyMemberIndex: integer = 0, double: boolean = false): Pokemon {
     const species = getPokemonSpecies(this.species);
     const ret: Pokemon = this.player
-      ? scene.addPlayerPokemon(species, this.level, this.abilityIndex, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this, (playerPokemon) => {
+      ? scene.addPlayerPokemon(species, this.level, this.formIndex, this.gender, this.shiny, this.variant, this.ivs, this, (playerPokemon) => {
         if (this.nickname) {
           playerPokemon.nickname = this.nickname;
         }

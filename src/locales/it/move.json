@@ -1083,10 +1083,6 @@
     "name": "Raggiro",
     "effect": "Chi la usa coglie il bersaglio in contropiede e l'obbliga a cambiare il suo strumento con il proprio."
   },
-  "rolePlay": {
-    "name": "Giocodiruolo",
-    "effect": "Chi la usa mima in tutto il bersaglio, copiandone l'abilità."
-  },
   "wish": {
     "name": "Desiderio",
     "effect": "Permette di recuperare metà dei PS massimi al turno successivo."
@@ -1134,10 +1130,6 @@
   "eruption": {
     "name": "Eruzione",
     "effect": "Attacco impetuoso ed esplosivo la cui potenza è proporzionale ai PS di chi lo usa."
-  },
-  "skillSwap": {
-    "name": "Baratto",
-    "effect": "Chi la usa sfrutta le sue facoltà mentali per scambiare l'abilità con il bersaglio."
   },
   "imprison": {
     "name": "Esclusiva",
@@ -1515,10 +1507,6 @@
     "name": "Ingannoforza",
     "effect": "Mossa psichica che permette a chi la usa di scambiare i valori delle sue statistiche di Attacco e Difesa."
   },
-  "gastroAcid": {
-    "name": "Gastroacido",
-    "effect": "Chi la usa lancia acidi gastrici sul nemico. Il fluido annulla l'abilità del nemico."
-  },
   "luckyChant": {
     "name": "Fortuncanto",
     "effect": "Chi la usa rivolge un incantesimo al cielo, impedendo al nemico di sferrare brutti colpi alla squadra."
@@ -1546,10 +1534,6 @@
   "lastResort": {
     "name": "Ultimascelta",
     "effect": "Per usare questa mossa, bisogna prima avvalersi in lotta di tutte le altre mosse conosciute."
-  },
-  "worrySeed": {
-    "name": "Affannoseme",
-    "effect": "Un seme che causa ansia viene piantato sul bersaglio. Ne muta l'abilità in Insonnia e ne previene o rimuove il sonno."
   },
   "suckerPunch": {
     "name": "Sbigoattacco",
@@ -1966,14 +1950,6 @@
   "foulPlay": {
     "name": "Ripicca",
     "effect": "Chi la usa sfrutta la forza del bersaglio. Il danno inflitto è proporzionale all'Attacco dell'avversario."
-  },
-  "simpleBeam": {
-    "name": "Ondisinvolta",
-    "effect": "Chi la usa emette un misterioso raggio psichico che trasforma l'abilità del Pokémon colpito in Disinvoltura."
-  },
-  "entrainment": {
-    "name": "Saltamicizia",
-    "effect": "Chi la usa saltella con un buffo ritmo, invitando il bersaglio a imitarlo e rendendo la sua abilità identica alla propria."
   },
   "afterYou": {
     "name": "Cortesia",
@@ -3594,10 +3570,6 @@
   "mortalSpin": {
     "name": "Glitturbine",
     "effect": "Attacco rotante che elimina gli effetti di mosse come Legatutto, Avvolgibotta e Parassiseme. Aumenta anche la Velocità di chi la usa."
-  },
-  "doodle": {
-    "name": "Ricalco",
-    "effect": "Il Pokémon cattura l'essenza del bersaglio con un ricalco, copiandone l'abilità e applicandola a se stesso e ai suoi alleati."
   },
   "filletAway": {
     "name": "Alleggerimento",

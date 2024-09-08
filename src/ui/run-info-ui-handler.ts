@@ -525,17 +525,13 @@ export default class RunInfoUiHandler extends UiHandler {
       //These languages are exempted because they are already short enough.
       const exemptedLanguages = ["ko", "zh_CN", "zh_TW"];
       let passiveLabel = i18next.t("starterSelectUiHandler:passive") ?? "-";
-      let abilityLabel = i18next.t("starterSelectUiHandler:ability") ?? "-";
       if (!exemptedLanguages.includes(currentLanguage)) {
         passiveLabel = passiveLabel.charAt(0);
-        abilityLabel = abilityLabel.charAt(0);
       }
       const pPassiveInfo = pokemon.passive ? passiveLabel+": "+pokemon.getPassiveAbility().name : "";
-      const pAbilityInfo = abilityLabel + ": " + pokemon.getAbility().name;
       // Japanese is set to a greater line spacing of 35px in addBBCodeTextObject() if lineSpacing < 12.
       const lineSpacing = (i18next.resolvedLanguage === "ja") ? 12 : 3;
       const pokeInfoText = addBBCodeTextObject(this.scene, 0, 0, pName, TextStyle.SUMMARY, {fontSize: textContainerFontSize, lineSpacing: lineSpacing});
-      pokeInfoText.appendText(pAbilityInfo);
       pokeInfoText.appendText(pPassiveInfo);
       pokeInfoTextContainer.add(pokeInfoText);
 

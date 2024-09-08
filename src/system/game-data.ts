@@ -169,12 +169,6 @@ export interface DexAttrProps {
   formIndex: integer;
 }
 
-export const AbilityAttr = {
-  ABILITY_1: 1,
-  ABILITY_2: 2,
-  ABILITY_HIDDEN: 4
-};
-
 export type RunHistoryData = Record<number, RunEntry>;
 
 export interface RunEntry {
@@ -195,7 +189,6 @@ export interface StarterMoveData {
 }
 
 export interface StarterAttributes {
-  ability?: integer;
   variant?: integer;
   form?: integer;
   female?: boolean;
@@ -243,7 +236,6 @@ export interface StarterDataEntry {
   eggMoves: integer;
   candyCount: integer;
   friendship: integer;
-  abilityAttr: integer;
   passiveAttr: integer;
   valueReduction: integer;
   classicWinCount: integer;
@@ -272,7 +264,6 @@ const systemShortKeys = {
   eggMoves: "$em",
   candyCount: "$x",
   friendship: "$f",
-  abilityAttr: "$a",
   passiveAttr: "$pa",
   valueReduction: "$vr",
   classicWinCount: "$wc"
@@ -481,19 +472,11 @@ export class GameData {
             }
           }
 
-          this.migrateStarterAbilities(systemData, this.starterData);
+          this.migrateStarterDexAttrs(systemData, this.starterData);
         } else {
           if ([ "1.0.0", "1.0.1" ].includes(systemData.gameVersion)) {
-            this.migrateStarterAbilities(systemData);
+            this.migrateStarterDexAttrs(systemData);
           }
-          //this.fixVariantData(systemData);
-          this.fixStarterData(systemData);
-          // Migrate ability starter data if empty for caught species
-          Object.keys(systemData.starterData).forEach(sd => {
-            if (systemData.dexData[sd].caughtAttr && !systemData.starterData[sd].abilityAttr) {
-              systemData.starterData[sd].abilityAttr = 1;
-            }
-          });
           this.starterData = systemData.starterData;
         }
 
@@ -672,7 +655,7 @@ export class GameData {
         return ret;
       }
 
-      return k.endsWith("Attr") && ![ "abilityAttr", "passiveAttr" ].includes(k) ? BigInt(v) : v;
+      return k.endsWith("Attr") && ![ "passiveAttr" ].includes(k) ? BigInt(v) : v;
     }) as SystemSaveData;
   }
 
@@ -1503,7 +1486,6 @@ export class GameData {
         eggMoves: 0,
         candyCount: 0,
         friendship: 0,
-        abilityAttr: defaultStarterSpecies.includes(speciesId) ? AbilityAttr.ABILITY_1 : 0,
         passiveAttr: 0,
         valueReduction: 0,
         classicWinCount: 0
@@ -1547,12 +1529,6 @@ export class GameData {
       const dexAttr = pokemon.getDexAttr();
       pokemon.formIndex = formIndex;
       dexEntry.caughtAttr |= dexAttr;
-      if (speciesStarters.hasOwnProperty(species.speciesId)) {
-        this.starterData[species.speciesId].abilityAttr |= pokemon.abilityIndex !== 1 || pokemon.species.ability2
-          ? 1 << pokemon.abilityIndex
-          : AbilityAttr.ABILITY_HIDDEN;
-      }
-
       const hasPrevolution = pokemonPrevolutions.hasOwnProperty(species.speciesId);
       const newCatch = !caughtAttr;
       const hasNewAttr = (caughtAttr & dexAttr) !== dexAttr;
@@ -1742,11 +1718,6 @@ export class GameData {
     };
   }
 
-  getStarterSpeciesDefaultAbilityIndex(species: PokemonSpecies): integer {
-    const abilityAttr = this.starterData[species.speciesId].abilityAttr;
-    return abilityAttr & AbilityAttr.ABILITY_1 ? 0 : !species.ability2 || abilityAttr & AbilityAttr.ABILITY_2 ? 1 : 2;
-  }
-
   getDexAttrLuck(dexAttr: bigint): integer {
     return dexAttr & DexAttr.SHINY ? dexAttr & DexAttr.VARIANT_3 ? 3 : dexAttr & DexAttr.VARIANT_2 ? 2 : 1 : 0;
   }
@@ -1798,15 +1769,11 @@ export class GameData {
     }
   }
 
-  migrateStarterAbilities(systemData: SystemSaveData, initialStarterData?: StarterData): void {
+  migrateStarterDexAttrs(systemData: SystemSaveData, initialStarterData?: StarterData): void {
     const starterIds = Object.keys(this.starterData).map(s => parseInt(s) as Species);
-    const starterData = initialStarterData || systemData.starterData;
     const dexData = systemData.dexData;
     for (const s of starterIds) {
       const dexAttr = dexData[s].caughtAttr;
-      starterData[s].abilityAttr = (dexAttr & DexAttr.DEFAULT_VARIANT ? AbilityAttr.ABILITY_1 : 0)
-        | (dexAttr & DexAttr.VARIANT_2 ? AbilityAttr.ABILITY_2 : 0)
-        | (dexAttr & DexAttr.VARIANT_3 ? AbilityAttr.ABILITY_HIDDEN : 0);
       if (dexAttr) {
         if (!(dexAttr & DexAttr.DEFAULT_VARIANT)) {
           dexData[s].caughtAttr ^= DexAttr.DEFAULT_VARIANT;
@@ -1823,13 +1790,10 @@ export class GameData {
 
   fixVariantData(systemData: SystemSaveData): void {
     const starterIds = Object.keys(this.starterData).map(s => parseInt(s) as Species);
-    const starterData = systemData.starterData;
     const dexData = systemData.dexData;
     if (starterIds.find(id => (dexData[id].caughtAttr & DexAttr.VARIANT_2 || dexData[id].caughtAttr & DexAttr.VARIANT_3) && !variantData[id])) {
       for (const s of starterIds) {
-        const species = getPokemonSpecies(s);
         if (variantData[s]) {
-          const tempCaughtAttr = dexData[s].caughtAttr;
           let seenVariant2 = false;
           let seenVariant3 = false;
           const checkEvoSpecies = (es: Species) => {
@@ -1848,28 +1812,15 @@ export class GameData {
           if (dexData[s].caughtAttr & DexAttr.VARIANT_3 && !seenVariant3) {
             dexData[s].caughtAttr ^= DexAttr.VARIANT_3;
           }
-          starterData[s].abilityAttr = (tempCaughtAttr & DexAttr.DEFAULT_VARIANT ? AbilityAttr.ABILITY_1 : 0)
-            | (tempCaughtAttr & DexAttr.VARIANT_2 && species.ability2 ? AbilityAttr.ABILITY_2 : 0)
-            | (tempCaughtAttr & DexAttr.VARIANT_3 && species.abilityHidden ? AbilityAttr.ABILITY_HIDDEN : 0);
         } else {
-          const tempCaughtAttr = dexData[s].caughtAttr;
           if (dexData[s].caughtAttr & DexAttr.VARIANT_2) {
             dexData[s].caughtAttr ^= DexAttr.VARIANT_2;
           }
           if (dexData[s].caughtAttr & DexAttr.VARIANT_3) {
             dexData[s].caughtAttr ^= DexAttr.VARIANT_3;
           }
-          starterData[s].abilityAttr = (tempCaughtAttr & DexAttr.DEFAULT_VARIANT ? AbilityAttr.ABILITY_1 : 0)
-            | (tempCaughtAttr & DexAttr.VARIANT_2 && species.ability2 ? AbilityAttr.ABILITY_2 : 0)
-            | (tempCaughtAttr & DexAttr.VARIANT_3 && species.abilityHidden ? AbilityAttr.ABILITY_HIDDEN : 0);
         }
       }
-    }
-  }
-
-  fixStarterData(systemData: SystemSaveData): void {
-    for (const starterId of defaultStarterSpecies) {
-      systemData.starterData[starterId].abilityAttr |= AbilityAttr.ABILITY_1;
     }
   }
 

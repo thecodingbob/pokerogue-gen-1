@@ -1083,10 +1083,6 @@
     "name": "Truco",
     "effect": "Engaña al objetivo desprevenido e intercambia objetos."
   },
-  "rolePlay": {
-    "name": "Imitación",
-    "effect": "Imita al objetivo por completo y copia su habilidad."
-  },
   "wish": {
     "name": "Deseo",
     "effect": "Restaura en el siguiente turno la mitad de los PS máximos del usuario o se los pasa al Pokémon que lo sustituye."
@@ -1134,10 +1130,6 @@
   "eruption": {
     "name": "Estallido",
     "effect": "Furia explosiva. Cuanto menor sea el número de PS del usuario, menos potencia tendrá el movimiento."
-  },
-  "skillSwap": {
-    "name": "Intercambio",
-    "effect": "Usa el poder psíquico para intercambiar habilidades con el objetivo."
   },
   "imprison": {
     "name": "Sellar",
@@ -1515,10 +1507,6 @@
     "name": "Truco Fuerza",
     "effect": "El usuario emplea su poder mental para intercambiar su Ataque y su Defensa."
   },
-  "gastroAcid": {
-    "name": "Bilis",
-    "effect": "El usuario arroja sus jugos biliares al objetivo, lo que anula el efecto de la habilidad en uso."
-  },
   "luckyChant": {
     "name": "Conjuro",
     "effect": "Lanza al cielo un conjuro que protege a todo su equipo de golpes críticos."
@@ -1546,10 +1534,6 @@
   "lastResort": {
     "name": "Última Baza",
     "effect": "Este movimiento solo puede utilizarse tras haber usado al menos una vez todos los demás conocidos por el Pokémon."
-  },
-  "worrySeed": {
-    "name": "Abatidoras",
-    "effect": "Planta una semilla en el objetivo que le causa pesar. Sustituye la habilidad del objetivo por Insomnio y le impide dormirse."
   },
   "suckerPunch": {
     "name": "Golpe Bajo",
@@ -1966,14 +1950,6 @@
   "foulPlay": {
     "name": "Juego Sucio",
     "effect": "El usuario emplea la fuerza del objetivo para atacarlo. Cuanto mayor es el Ataque del objetivo, más daño provoca."
-  },
-  "simpleBeam": {
-    "name": "Onda Simple",
-    "effect": "Lanza una onda psíquica que hace que la habilidad del objetivo pase a ser Simple."
-  },
-  "entrainment": {
-    "name": "Danza Amiga",
-    "effect": "Una extraña danza que induce al objetivo a imitarla y cambia su habilidad por la misma que la del usuario."
   },
   "afterYou": {
     "name": "Cede Paso",
@@ -3594,10 +3570,6 @@
   "mortalSpin": {
     "name": "Giro Mortífero",
     "effect": "Ataque giratorio que envenena al objetivo y anula los efectos de movimientos como Atadura, Constricción y Drenadoras."
-  },
-  "doodle": {
-    "name": "Decalcomanía",
-    "effect": "Calca la esencia misma del objetivo para atribuir su habilidad a sí mismo y a sus aliados."
   },
   "filletAway": {
     "name": "Deslome",

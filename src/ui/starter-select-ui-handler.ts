@@ -14,7 +14,7 @@ import { LevelMoves, pokemonFormLevelMoves, pokemonSpeciesLevelMoves } from "../
 import PokemonSpecies, { allSpecies, getPokemonSpeciesForm, getStarterValueFriendshipCap, speciesStarters, starterPassiveAbilities, getPokerusStarters } from "../data/pokemon-species";
 import { Type } from "../data/type";
 import { GameModes } from "../game-mode";
-import { AbilityAttr, DexAttr, DexAttrProps, DexEntry, StarterMoveset, StarterAttributes, StarterPreferences, StarterPrefs } from "../system/game-data";
+import { DexAttr, DexAttrProps, DexEntry, StarterMoveset, StarterAttributes, StarterPreferences, StarterPrefs } from "../system/game-data";
 import { Tutorial, handleTutorial } from "../tutorial";
 import * as Utils from "../utils";
 import { OptionSelectItem } from "./abstact-option-select-ui-handler";
@@ -49,7 +49,6 @@ export type StarterSelectCallback = (starters: Starter[]) => void;
 export interface Starter {
   species: PokemonSpecies;
   dexAttr: bigint;
-  abilityIndex: integer,
   passive: boolean;
   moveset?: StarterMoveset;
   pokerus: boolean;
@@ -235,8 +234,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
   private pokemonLuckText: Phaser.GameObjects.Text;
   private pokemonGenderText: Phaser.GameObjects.Text;
   private pokemonUncaughtText: Phaser.GameObjects.Text;
-  private pokemonAbilityLabelText: Phaser.GameObjects.Text;
-  private pokemonAbilityText: Phaser.GameObjects.Text;
   private pokemonPassiveLabelText: Phaser.GameObjects.Text;
   private pokemonPassiveText: Phaser.GameObjects.Text;
   private pokemonMovesContainer: Phaser.GameObjects.Container;
@@ -262,14 +259,12 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
   private filterInstructionsContainer: Phaser.GameObjects.Container;
   private shinyIconElement: Phaser.GameObjects.Sprite;
   private formIconElement: Phaser.GameObjects.Sprite;
-  private abilityIconElement: Phaser.GameObjects.Sprite;
   private genderIconElement: Phaser.GameObjects.Sprite;
   private variantIconElement: Phaser.GameObjects.Sprite;
   private goFilterIconElement: Phaser.GameObjects.Sprite;
   private shinyLabel: Phaser.GameObjects.Text;
   private formLabel: Phaser.GameObjects.Text;
   private genderLabel: Phaser.GameObjects.Text;
-  private abilityLabel: Phaser.GameObjects.Text;
   private variantLabel: Phaser.GameObjects.Text;
   private goFilterLabel: Phaser.GameObjects.Text;
 
@@ -285,7 +280,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
   private starterIconsCursorIndex: number;
   private filterMode: boolean;
   private dexAttrCursor: bigint = 0n;
-  private abilityCursor: number = -1;
   private filterBarCursor: integer = 0;
   private starterMoveset: StarterMoveset | null;
   private scrollCursor: number;
@@ -296,14 +290,12 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
   public starterSpecies: PokemonSpecies[] = [];
   private pokerusSpecies: PokemonSpecies[] = [];
   private starterAttr: bigint[] = [];
-  private starterAbilityIndexes: integer[] = [];
   private starterMovesets: StarterMoveset[] = [];
   private speciesStarterDexEntry: DexEntry | null;
   private speciesStarterMoves: Moves[];
   private canCycleShiny: boolean;
   private canCycleForm: boolean;
   private canCycleGender: boolean;
-  private canCycleAbility: boolean;
   private canCycleVariant: boolean;
   private value: integer = 0;
   private canAddParty: boolean;
@@ -318,7 +310,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
   private startCursorObj: Phaser.GameObjects.NineSlice;
   // private starterValueLabels: Phaser.GameObjects.Text[];
   // private shinyIcons: Phaser.GameObjects.Image[][];
-  // private hiddenAbilityIcons: Phaser.GameObjects.Image[];
   // private classicWinIcons: Phaser.GameObjects.Image[];
   // private candyUpgradeIcon: Phaser.GameObjects.Image[];
   // private candyUpgradeOverlayIcon: Phaser.GameObjects.Image[];
@@ -467,11 +458,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
       new DropDownLabel(i18next.t("filterBar:hasWon"), undefined, DropDownState.ON),
       new DropDownLabel(i18next.t("filterBar:hasNotWon"), undefined, DropDownState.EXCLUDE),
     ];
-    const hiddenAbilityLabels = [
-      new DropDownLabel(i18next.t("filterBar:hiddenAbility"), undefined, DropDownState.OFF),
-      new DropDownLabel(i18next.t("filterBar:hasHiddenAbility"), undefined, DropDownState.ON),
-      new DropDownLabel(i18next.t("filterBar:noHiddenAbility"), undefined, DropDownState.EXCLUDE),
-    ];
     const eggLabels = [
       new DropDownLabel(i18next.t("filterBar:egg"), undefined, DropDownState.OFF),
       new DropDownLabel(i18next.t("filterBar:eggPurchasable"), undefined, DropDownState.ON),
@@ -483,7 +469,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
     const miscOptions = [
       new DropDownOption(this.scene, "FAVORITE", favoriteLabels),
       new DropDownOption(this.scene, "WIN", winLabels),
-      new DropDownOption(this.scene, "HIDDEN_ABILITY", hiddenAbilityLabels),
       new DropDownOption(this.scene, "EGG", eggLabels),
       new DropDownOption(this.scene, "POKERUS", pokerusLabels),
     ];
@@ -544,15 +529,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
 
     // The font size should be set per language
     const starterInfoTextSize = textSettings?.starterInfoTextSize || 56;
-
-    this.pokemonAbilityLabelText = addTextObject(this.scene, 6, 127 + starterInfoYOffset, i18next.t("starterSelectUiHandler:ability"), TextStyle.SUMMARY_ALT, { fontSize: starterInfoTextSize });
-    this.pokemonAbilityLabelText.setOrigin(0, 0);
-    this.pokemonAbilityLabelText.setVisible(false);
-    this.starterSelectContainer.add(this.pokemonAbilityLabelText);
-
-    this.pokemonAbilityText = addTextObject(this.scene, starterInfoXPos, 127 + starterInfoYOffset, "", TextStyle.SUMMARY_ALT, { fontSize: starterInfoTextSize });
-    this.pokemonAbilityText.setOrigin(0, 0);
-    this.starterSelectContainer.add(this.pokemonAbilityText);
 
     this.pokemonPassiveLabelText = addTextObject(this.scene, 6, 136 + starterInfoYOffset, i18next.t("starterSelectUiHandler:passive"), TextStyle.SUMMARY_ALT, { fontSize: starterInfoTextSize });
     this.pokemonPassiveLabelText.setOrigin(0, 0);
@@ -809,13 +785,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
     this.genderLabel = addTextObject(this.scene, this.instructionRowX + this.instructionRowTextOffset, this.instructionRowY, i18next.t("starterSelectUiHandler:cycleGender"), TextStyle.PARTY, { fontSize: instructionTextSize });
     this.genderLabel.setName("text-gender-label");
 
-    this.abilityIconElement = new Phaser.GameObjects.Sprite(this.scene, this.instructionRowX, this.instructionRowY, "keyboard", "E.png");
-    this.abilityIconElement.setName("sprite-ability-icon-element");
-    this.abilityIconElement.setScale(0.675);
-    this.abilityIconElement.setOrigin(0.0, 0.0);
-    this.abilityLabel = addTextObject(this.scene, this.instructionRowX + this.instructionRowTextOffset, this.instructionRowY, i18next.t("starterSelectUiHandler:cycleAbility"), TextStyle.PARTY, { fontSize: instructionTextSize });
-    this.abilityLabel.setName("text-ability-label");
-
     this.variantIconElement = new Phaser.GameObjects.Sprite(this.scene, this.instructionRowX, this.instructionRowY, "keyboard", "V.png");
     this.variantIconElement.setName("sprite-variant-icon-element");
     this.variantIconElement.setScale(0.675);
@@ -920,7 +889,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
 
   /**
    * Get the starter attributes for the given PokemonSpecies, after sanitizing them.
-   * If somehow a preference is set for a form, variant, gender or ability
+   * If somehow a preference is set for a form, variant or gender
    * that wasn't actually unlocked or is invalid it will be cleared here
    *
    * @param species The species to get Starter Preferences for
@@ -929,7 +898,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
   initStarterPrefs(species: PokemonSpecies): StarterAttributes {
     const starterAttributes = this.starterPreferences[species.speciesId];
     const dexEntry = this.scene.gameData.dexData[species.speciesId];
-    const starterData = this.scene.gameData.starterData[species.speciesId];
 
     // no preferences or Pokemon wasn't caught, return empty attribute
     if (!starterAttributes || !dexEntry.caughtAttr) {
@@ -966,25 +934,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
       if (!(starterAttributes.female ? caughtAttr & DexAttr.FEMALE : caughtAttr & DexAttr.MALE)) {
         // requested gender wasn't unlocked, purging setting
         delete starterAttributes.female;
-      }
-    }
-
-    if (starterAttributes.ability !== undefined) {
-      const speciesHasSingleAbility = species.ability2 === species.ability1;
-      const abilityAttr = starterData.abilityAttr;
-      const hasAbility1 = abilityAttr & AbilityAttr.ABILITY_1;
-      const hasAbility2 = abilityAttr & AbilityAttr.ABILITY_2;
-      const hasHiddenAbility = abilityAttr & AbilityAttr.ABILITY_HIDDEN;
-      // Due to a past bug it is possible that some Pokemon with a single ability have the ability2 flag
-      // In this case, we only count ability2 as valid if ability1 was not unlocked, otherwise we ignore it
-      const unlockedAbilities = [
-        hasAbility1,
-        speciesHasSingleAbility ? hasAbility2 && !hasAbility1 : hasAbility2,
-        hasHiddenAbility
-      ];
-      if (!unlockedAbilities[starterAttributes.ability]) {
-        // requested ability wasn't unlocked, purging setting
-        delete starterAttributes.ability;
       }
     }
 
@@ -1403,7 +1352,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
                     const cursorObj = this.starterCursorObjs[this.starterSpecies.length];
                     cursorObj.setVisible(true);
                     cursorObj.setPosition(this.cursorObj.x, this.cursorObj.y);
-                    this.addToParty(this.lastSpecies, this.dexAttrCursor, this.abilityCursor, this.starterMoveset?.slice(0) as StarterMoveset);
+                    this.addToParty(this.lastSpecies, this.dexAttrCursor, this.starterMoveset?.slice(0) as StarterMoveset);
                     ui.playSelect();
                   } else {
                     ui.playError(); // this should be redundant as there is now a trigger for when a pokemon can't be added to party
@@ -1791,35 +1740,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
             success = true;
           }
           break;
-        case Button.CYCLE_ABILITY:
-          if (this.canCycleAbility) {
-            const abilityCount = this.lastSpecies.getAbilityCount();
-            const abilityAttr = this.scene.gameData.starterData[this.lastSpecies.speciesId].abilityAttr;
-            const hasAbility1 = abilityAttr & AbilityAttr.ABILITY_1;
-            let newAbilityIndex = this.abilityCursor;
-            do {
-              newAbilityIndex = (newAbilityIndex + 1) % abilityCount;
-              if (newAbilityIndex === 0) {
-                if (hasAbility1) {
-                  break;
-                }
-              } else if (newAbilityIndex === 1) {
-                // If ability 1 and 2 are the same and ability 1 is unlocked, skip over ability 2
-                if (this.lastSpecies.ability1 === this.lastSpecies.ability2 && hasAbility1) {
-                  newAbilityIndex = (newAbilityIndex + 1) % abilityCount;
-                }
-                break;
-              } else {
-                if (abilityAttr & AbilityAttr.ABILITY_HIDDEN) {
-                  break;
-                }
-              }
-            } while (newAbilityIndex !== this.abilityCursor);
-            starterAttributes.ability = newAbilityIndex; // store the selected ability
-            this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, undefined, newAbilityIndex, undefined);
-            success = true;
-          }
-          break;
         case Button.V:
           if (this.canCycleVariant) {
             let newVariant = props.variant;
@@ -2006,7 +1926,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
     return [isDupe, removeIndex];
   }
 
-  addToParty(species: PokemonSpecies, dexAttr: bigint, abilityIndex: integer, moveset: StarterMoveset) {
+  addToParty(species: PokemonSpecies, dexAttr: bigint, moveset: StarterMoveset) {
     const props = this.scene.gameData.getSpeciesDexAttrProps(species, dexAttr);
     this.starterIcons[this.starterSpecies.length].setTexture(species.getIconAtlasKey(props.formIndex, props.shiny, props.variant));
     this.starterIcons[this.starterSpecies.length].setFrame(species.getIconId(props.female, props.formIndex, props.shiny, props.variant));
@@ -2014,7 +1934,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
 
     this.starterSpecies.push(species);
     this.starterAttr.push(dexAttr);
-    this.starterAbilityIndexes.push(abilityIndex);
     this.starterMovesets.push(moveset);
     if (this.speciesLoaded.get(species.speciesId)) {
       getPokemonSpeciesForm(species.speciesId, props.formIndex).cry(this.scene);
@@ -2088,9 +2007,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
         break;
       case SettingKeyboard.Button_Cycle_Gender:
         iconPath = "G.png";
-        break;
-      case SettingKeyboard.Button_Cycle_Ability:
-        iconPath = "E.png";
         break;
       case SettingKeyboard.Button_Cycle_Variant:
         iconPath = "V.png";
@@ -2167,9 +2083,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
       }
       if (this.canCycleGender) {
         this.updateButtonIcon(SettingKeyboard.Button_Cycle_Gender, gamepadType, this.genderIconElement, this.genderLabel);
-      }
-      if (this.canCycleAbility) {
-        this.updateButtonIcon(SettingKeyboard.Button_Cycle_Ability, gamepadType, this.abilityIconElement, this.abilityLabel);
       }
       if (this.canCycleVariant) {
         this.updateButtonIcon(SettingKeyboard.Button_Cycle_Variant, gamepadType, this.variantIconElement, this.variantLabel);
@@ -2346,18 +2259,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
         }
       });
 
-      // HA Filter
-      const hasHA = starterData.abilityAttr & AbilityAttr.ABILITY_HIDDEN;
-      const fitsHA = this.filterBar.getVals(DropDownColumn.MISC).some(misc => {
-        if (misc.val === "HIDDEN_ABILITY" && misc.state === DropDownState.ON) {
-          return hasHA;
-        } else if (misc.val === "HIDDEN_ABILITY" && misc.state === DropDownState.EXCLUDE) {
-          return !hasHA;
-        } else if (misc.val === "HIDDEN_ABILITY" && misc.state === DropDownState.OFF) {
-          return true;
-        }
-      });
-
       // Egg Purchasable Filter
       const isEggPurchasable = this.isSameSpeciesEggAvailable(container.species.speciesId);
       const fitsEgg = this.filterBar.getVals(DropDownColumn.MISC).some(misc => {
@@ -2381,7 +2282,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
         }
       });
 
-      if (fitsGen && fitsType && fitsCaught && fitsPassive && fitsCostReduction && fitsFavorite && fitsWin && fitsHA && fitsEgg && fitsPokerus) {
+      if (fitsGen && fitsType && fitsCaught && fitsPassive && fitsCostReduction && fitsFavorite && fitsWin && fitsEgg && fitsPokerus) {
         this.filteredStarterContainers.push(container);
       }
     });
@@ -2472,7 +2373,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
         }
 
         container.starterPassiveBgs.setVisible(!!this.scene.gameData.starterData[speciesId].passiveAttr);
-        container.hiddenAbilityIcon.setVisible(!!this.scene.gameData.dexData[speciesId].caughtAttr && !!(this.scene.gameData.starterData[speciesId].abilityAttr & 4));
         container.classicWinIcon.setVisible(this.scene.gameData.starterData[speciesId].classicWinCount > 0);
         container.favoriteIcon.setVisible(this.starterPreferences[speciesId]?.favorite ?? false);
 
@@ -2565,14 +2465,8 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
   setSpecies(species: PokemonSpecies | null) {
     this.speciesStarterDexEntry = species ? this.scene.gameData.dexData[species.speciesId] : null;
     this.dexAttrCursor = species ? this.getCurrentDexProps(species.speciesId) : 0n;
-    this.abilityCursor = species ? this.scene.gameData.getStarterSpeciesDefaultAbilityIndex(species) : 0;
 
     const starterAttributes : StarterAttributes | null = species ? {...this.starterPreferences[species.speciesId]} : null;
-
-    if (starterAttributes?.ability && !isNaN(starterAttributes.ability)) {
-      // load default ability from stater save data, if set
-      this.abilityCursor = starterAttributes.ability;
-    }
 
     if (this.statsMode) {
       if (this.speciesStarterDexEntry?.caughtAttr) {
@@ -2630,7 +2524,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
         this.pokemonGrowthRateText.setShadowColor(getGrowthRateColor(species.growthRate, true));
         this.pokemonGrowthRateLabelText.setVisible(true);
         this.pokemonUncaughtText.setVisible(false);
-        this.pokemonAbilityLabelText.setVisible(true);
         this.pokemonPassiveLabelText.setVisible(true);
         this.pokemonCaughtCountText.setText(`${this.speciesStarterDexEntry.caughtCount}`);
         this.pokemonHatchedIcon.setFrame(getEggTierForSpecies(species));
@@ -2709,10 +2602,9 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
 
         if (starterIndex > -1) {
           props = this.scene.gameData.getSpeciesDexAttrProps(species, this.starterAttr[starterIndex]);
-          this.setSpeciesDetails(species, props.shiny, props.formIndex, props.female, props.variant, this.starterAbilityIndexes[starterIndex]);
+          this.setSpeciesDetails(species, props.shiny, props.formIndex, props.female, props.variant);
         } else {
           const defaultDexAttr = this.getCurrentDexProps(species.speciesId);
-          const defaultAbilityIndex = starterAttributes?.ability ?? this.scene.gameData.getStarterSpeciesDefaultAbilityIndex(species);
           props = this.scene.gameData.getSpeciesDexAttrProps(species, defaultDexAttr);
           if (starterAttributes?.variant && !isNaN(starterAttributes.variant)) {
             if (props.shiny) {
@@ -2722,7 +2614,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
           props.formIndex = starterAttributes?.form ?? props.formIndex;
           props.female = starterAttributes?.female ?? props.female;
 
-          this.setSpeciesDetails(species, props.shiny, props.formIndex, props.female, props.variant, defaultAbilityIndex);
+          this.setSpeciesDetails(species, props.shiny, props.formIndex, props.female, props.variant);
         }
 
         const speciesForm = getPokemonSpeciesForm(species.speciesId, props.formIndex);
@@ -2741,7 +2633,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
         this.pokemonLuckText.setVisible(false);
         this.pokemonShinyIcon.setVisible(false);
         this.pokemonUncaughtText.setVisible(true);
-        this.pokemonAbilityLabelText.setVisible(false);
         this.pokemonPassiveLabelText.setVisible(false);
         this.pokemonCaughtHatchedContainer.setVisible(false);
         this.pokemonCandyIcon.setVisible(false);
@@ -2751,10 +2642,9 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
         this.pokemonFormText.setVisible(false);
 
         const defaultDexAttr = this.scene.gameData.getSpeciesDefaultDexAttr(species, true, true);
-        const defaultAbilityIndex = this.scene.gameData.getStarterSpeciesDefaultAbilityIndex(species);
         const props = this.scene.gameData.getSpeciesDexAttrProps(species, defaultDexAttr);
 
-        this.setSpeciesDetails(species, props.shiny, props.formIndex, props.female, props.variant, defaultAbilityIndex, true);
+        this.setSpeciesDetails(species, props.shiny, props.formIndex, props.female, props.variant, true);
         this.pokemonSprite.setTint(0x808080);
       }
     } else {
@@ -2768,7 +2658,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
       this.pokemonLuckText.setVisible(false);
       this.pokemonShinyIcon.setVisible(false);
       this.pokemonUncaughtText.setVisible(!!species);
-      this.pokemonAbilityLabelText.setVisible(false);
       this.pokemonPassiveLabelText.setVisible(false);
       this.pokemonCaughtHatchedContainer.setVisible(false);
       this.pokemonCandyIcon.setVisible(false);
@@ -2784,11 +2673,9 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
 
 
 
-  setSpeciesDetails(species: PokemonSpecies, shiny?: boolean, formIndex?: integer, female?: boolean, variant?: Variant, abilityIndex?: integer, forSeen: boolean = false): void {
+  setSpeciesDetails(species: PokemonSpecies, shiny?: boolean, formIndex?: integer, female?: boolean, variant?: Variant, forSeen: boolean = false): void {
     const oldProps = species ? this.scene.gameData.getSpeciesDexAttrProps(species, this.dexAttrCursor) : null;
-    const oldAbilityIndex = this.abilityCursor > -1 ? this.abilityCursor : this.scene.gameData.getStarterSpeciesDefaultAbilityIndex(species);
     this.dexAttrCursor = 0n;
-    this.abilityCursor = -1;
 
     if (species?.forms?.find(f => f.formKey === "female")) {
       if (female !== undefined) {
@@ -2803,7 +2690,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
       this.dexAttrCursor |= (female !== undefined ? !female : !(female = oldProps?.female)) ? DexAttr.MALE : DexAttr.FEMALE;
       this.dexAttrCursor |= (variant !== undefined ? !variant : !(variant = oldProps?.variant)) ? DexAttr.DEFAULT_VARIANT : variant === 1 ? DexAttr.VARIANT_2 : DexAttr.VARIANT_3;
       this.dexAttrCursor |= this.scene.gameData.getFormAttr(formIndex !== undefined ? formIndex : (formIndex = oldProps!.formIndex)); // TODO: is this bang correct?
-      this.abilityCursor = abilityIndex !== undefined ? abilityIndex : (abilityIndex = oldAbilityIndex);
       const [isInParty, partyIndex]: [boolean, number] = this.isInParty(species); // we use this to firstly check if the pokemon is in the party, and if so, to get the party index in order to update the icon image
       if (isInParty) {
         this.updatePartyIcon(species, partyIndex);
@@ -2822,14 +2708,10 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
 
     if (species) {
       const dexEntry = this.scene.gameData.dexData[species.speciesId];
-      const abilityAttr = this.scene.gameData.starterData[species.speciesId].abilityAttr;
-
       const caughtAttr = this.scene.gameData.dexData[species.speciesId]?.caughtAttr || BigInt(0);
 
       if (!dexEntry.caughtAttr) {
         const props = this.scene.gameData.getSpeciesDexAttrProps(species, this.getCurrentDexProps(species.speciesId));
-        const defaultAbilityIndex = this.scene.gameData.getStarterSpeciesDefaultAbilityIndex(species);
-
         if (shiny === undefined || shiny !== props.shiny) {
           shiny = props.shiny;
         }
@@ -2842,9 +2724,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
         if (variant === undefined || variant !== props.variant) {
           variant = props.variant;
         }
-        if (abilityIndex === undefined || abilityIndex !== defaultAbilityIndex) {
-          abilityIndex = defaultAbilityIndex;
-        }
       }
 
       this.shinyOverlay.setVisible(shiny ?? false); // TODO: is false the correct default?
@@ -2856,7 +2735,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
 
         if (starterIndex > -1) {
           this.starterAttr[starterIndex] = this.dexAttrCursor;
-          this.starterAbilityIndexes[starterIndex] = this.abilityCursor;
         }
 
         const assetLoadCancelled = new Utils.BooleanHolder(false);
@@ -2898,21 +2776,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
         const isFemaleCaught = !!(caughtAttr & DexAttr.FEMALE);
         this.canCycleGender = isMaleCaught && isFemaleCaught;
 
-        const hasAbility1 = abilityAttr & AbilityAttr.ABILITY_1;
-        let hasAbility2 = abilityAttr & AbilityAttr.ABILITY_2;
-        const hasHiddenAbility = abilityAttr & AbilityAttr.ABILITY_HIDDEN;
-
-        /*
-         * Check for Pokemon with a single ability (at some point it was possible to catch them with their ability 2 attribute)
-         * This prevents cycling between ability 1 and 2 if they are both unlocked and the same
-         * but we still need to account for the possibility ability 1 was never unlocked and fallback on ability 2 in this case
-         */
-        if (hasAbility1 && hasAbility2 && species.ability1 === species.ability2) {
-          hasAbility2 = 0;
-        }
-
-        this.canCycleAbility = [ hasAbility1, hasAbility2, hasHiddenAbility ].filter(a => a).length > 1;
-
         this.canCycleForm = species.forms.filter(f => f.isStarterSelectable || !pokemonFormChanges[species.speciesId]?.find(fc => fc.formKey))
           .map((_, f) => dexEntry.caughtAttr & this.scene.gameData.getFormAttr(f)).filter(f => f).length > 1;
       }
@@ -2927,13 +2790,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
       }
 
       if (dexEntry.caughtAttr) {
-        const ability = this.lastSpecies.getAbility(abilityIndex!); // TODO: is this bang correct?
-        this.pokemonAbilityText.setText(allAbilities[ability].name);
-
-        const isHidden = abilityIndex === (this.lastSpecies.ability2 ? 2 : 1);
-        this.pokemonAbilityText.setColor(this.getTextColor(!isHidden ? TextStyle.SUMMARY_ALT : TextStyle.SUMMARY_GOLD));
-        this.pokemonAbilityText.setShadowColor(this.getTextColor(!isHidden ? TextStyle.SUMMARY_ALT : TextStyle.SUMMARY_GOLD, true));
-
         const passiveAttr = this.scene.gameData.starterData[species.speciesId].passiveAttr;
         this.pokemonPassiveText.setText(passiveAttr & PassiveAttr.UNLOCKED ? passiveAttr & PassiveAttr.ENABLED ? allAbilities[starterPassiveAbilities[this.lastSpecies.speciesId]].name : i18next.t("starterSelectUiHandler:disabled") : i18next.t("starterSelectUiHandler:locked"));
         this.pokemonPassiveText.setColor(this.getTextColor(passiveAttr === (PassiveAttr.UNLOCKED | PassiveAttr.ENABLED) ? TextStyle.SUMMARY_ALT : TextStyle.SUMMARY_GRAY));
@@ -2982,8 +2838,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
 
         this.setTypeIcons(speciesForm.type1, speciesForm.type2!); // TODO: is this bang correct?
       } else {
-        this.pokemonAbilityText.setText("");
-        this.pokemonPassiveText.setText("");
         // @ts-ignore
         this.setTypeIcons(null, null); // TODO: resolve ts-ignore.. huh!?
       }
@@ -2992,7 +2846,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
       this.pokemonNumberText.setColor(this.getTextColor(TextStyle.SUMMARY));
       this.pokemonNumberText.setShadowColor(this.getTextColor(TextStyle.SUMMARY, true));
       this.pokemonGenderText.setText("");
-      this.pokemonAbilityText.setText("");
       this.pokemonPassiveText.setText("");
       // @ts-ignore
       this.setTypeIcons(null, null); // TODO: resolve ts-ignore.. huh!?
@@ -3046,7 +2899,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
   popStarter(index: number): void {
     this.starterSpecies.splice(index, 1);
     this.starterAttr.splice(index, 1);
-    this.starterAbilityIndexes.splice(index, 1);
     this.starterMovesets.splice(index, 1);
 
     for (let s = 0; s < this.starterSpecies.length; s++) {
@@ -3249,7 +3101,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
               return {
                 species: starterSpecies,
                 dexAttr: thisObj.starterAttr[i],
-                abilityIndex: thisObj.starterAbilityIndexes[i],
                 passive: !(thisObj.scene.gameData.starterData[starterSpecies.speciesId].passiveAttr ^ (PassiveAttr.ENABLED | PassiveAttr.UNLOCKED)),
                 moveset: thisObj.starterMovesets[i],
                 pokerus: thisObj.pokerusSpecies.includes(starterSpecies),
@@ -3375,8 +3226,6 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
     this.formLabel.setVisible(false);
     this.genderIconElement.setVisible(false);
     this.genderLabel.setVisible(false);
-    this.abilityIconElement.setVisible(false);
-    this.abilityLabel.setVisible(false);
     this.variantIconElement.setVisible(false);
     this.variantLabel.setVisible(false);
     this.goFilterIconElement.setVisible(false);

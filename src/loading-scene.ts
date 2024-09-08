@@ -134,7 +134,6 @@ export class LoadingScene extends SceneBase {
     this.loadImage("summary_profile", "ui");
     this.loadImage("summary_profile_prompt_z", "ui");      // The pixel Z button prompt
     this.loadImage("summary_profile_prompt_a", "ui");     // The pixel A button prompt
-    this.loadImage("summary_profile_ability", "ui");      // Pixel text 'ABILITY'
     this.loadImage("summary_profile_passive", "ui");      // Pixel text 'PASSIVE'
     this.loadImage("summary_status", "ui");
     this.loadImage("summary_stats", "ui");
