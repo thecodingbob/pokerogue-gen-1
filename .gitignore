@@ -43,4 +43,4 @@ coverage
 /.vs
 
 # Python helpers
-helper*.py
+helpers/*
