@@ -1095,7 +1095,7 @@ export class MoveEffectChanceMultiplierAbAttr extends AbAttr {
   apply(pokemon: Pokemon, simulated: boolean, cancelled: Utils.BooleanHolder, args: any[]): boolean {
     // Disable showAbility during getTargetBenefitScore
     this.showAbility = args[4];
-    if ((args[0] as Utils.NumberHolder).value <= 0 || (args[1] as Move).id === Moves.ORDER_UP) {
+    if ((args[0] as Utils.NumberHolder).value <= 0) {
       return false;
     }
 
@@ -1290,19 +1290,11 @@ export class AddSecondStrikeAbAttr extends PreAttackAbAttr {
       SacrificialAttrOnHit
     ];
 
-    /** Parental Bond cannot apply to these specific moves */
-    const exceptMoves: Moves[] = [
-      Moves.FLING,
-      Moves.UPROAR,
-      Moves.ROLLOUT,
-      Moves.ICE_BALL,
-      Moves.ENDEAVOR
-    ];
+
 
     /** Also check if this move is an Attack move and if it's only targeting one Pokemon */
     return numTargets === 1
       && !exceptAttrs.some(attr => move.hasAttr(attr))
-      && !exceptMoves.some(id => move.id === id)
       && move.category !== MoveCategory.STATUS;
   }
 
@@ -2919,24 +2911,6 @@ function getAnticipationCondition(): AbAttrCondition {
         if (move.getMove().hasAttr(OneHitKOAttr)) {
           return true;
         }
-        // edge case for hidden power, type is computed
-        if (move.getMove().id === Moves.HIDDEN_POWER) {
-          const iv_val = Math.floor(((opponent.ivs[Stat.HP] & 1)
-              +(opponent.ivs[Stat.ATK] & 1) * 2
-              +(opponent.ivs[Stat.DEF] & 1) * 4
-              +(opponent.ivs[Stat.SPD] & 1) * 8
-              +(opponent.ivs[Stat.SPEC] & 1) * 16) * 15/63);
-
-          const type = [
-            Type.FIGHTING, Type.FLYING, Type.POISON, Type.GROUND,
-            Type.ROCK, Type.BUG, Type.GHOST, Type.STEEL,
-            Type.FIRE, Type.WATER, Type.GRASS, Type.ELECTRIC,
-            Type.PSYCHIC, Type.ICE, Type.DRAGON, Type.DARK][iv_val];
-
-          if (pokemon.getAttackTypeEffectiveness(type, opponent) >= 2) {
-            return true;
-          }
-        }
       }
     }
     return false;
@@ -2971,7 +2945,7 @@ export class ForewarnAbAttr extends PostSummonAbAttr {
           movePower = 1;
         } else if (move?.getMove().hasAttr(OneHitKOAttr)) {
           movePower = 150;
-        } else if (move?.getMove().id === Moves.COUNTER || move?.getMove().id === Moves.MIRROR_COAT || move?.getMove().id === Moves.METAL_BURST) {
+        } else if (move?.getMove().id === Moves.COUNTER) {
           movePower = 120;
         } else if (move?.getMove().power === -1) {
           movePower = 80;
@@ -4904,10 +4878,6 @@ export function initAbilities() {
     new Ability(Abilities.QUICK_FEET, 4)
       .conditionalAttr(pokemon => pokemon.status ? pokemon.status.effect === StatusEffect.PARALYSIS : false, BattleStatMultiplierAbAttr, BattleStat.SPD, 2)
       .conditionalAttr(pokemon => !!pokemon.status || pokemon.hasAbility(Abilities.COMATOSE), BattleStatMultiplierAbAttr, BattleStat.SPD, 1.5),
-    new Ability(Abilities.NORMALIZE, 4)
-      .attr(MoveTypeChangeAbAttr, Type.NORMAL, 1.2, (user, target, move) => {
-        return ![Moves.HIDDEN_POWER, Moves.WEATHER_BALL, Moves.NATURAL_GIFT, Moves.JUDGMENT, Moves.TECHNO_BLAST].includes(move.id);
-      }),
     new Ability(Abilities.SNIPER, 4)
       .attr(MultCritAbAttr, 1.5),
     new Ability(Abilities.MAGIC_GUARD, 4)

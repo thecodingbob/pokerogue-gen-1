@@ -16,9 +16,9 @@ import { Gender } from "../data/gender";
 import { initMoveAnim, loadMoveAnimAssets } from "../data/battle-anims";
 import { Status, StatusEffect, getRandomStatus } from "../data/status-effect";
 import { pokemonEvolutions, pokemonPrevolutions, SpeciesFormEvolution, SpeciesEvolutionCondition, FusionSpeciesFormEvolution } from "../data/pokemon-evolutions";
-import { reverseCompatibleTms, tmSpecies, tmPoolTiers } from "../data/tms";
+import { tmSpecies, tmPoolTiers } from "../data/tms";
 import { BattleStat } from "../data/battle-stat";
-import { BattlerTag, BattlerTagLapseType, EncoreTag, GroundedTag, HighestStatBoostTag, TypeImmuneTag, getBattlerTag, SemiInvulnerableTag, TypeBoostTag, ExposedTag } from "../data/battler-tags";
+import { BattlerTag, BattlerTagLapseType, GroundedTag, HighestStatBoostTag, TypeImmuneTag, getBattlerTag, SemiInvulnerableTag, TypeBoostTag, ExposedTag } from "../data/battler-tags";
 import { WeatherType } from "../data/weather";
 import { TempBattleStat } from "../data/temp-battle-stat";
 import { ArenaTagSide, NoCritTag, WeakenMoveScreenTag } from "../data/arena-tag";
@@ -41,7 +41,6 @@ import { speciesEggMoves } from "../data/egg-moves";
 import { ModifierTier } from "../modifier/modifier-tier";
 import { applyChallenges, ChallengeType } from "#app/data/challenge.js";
 import { Abilities } from "#enums/abilities";
-import { ArenaTagType } from "#enums/arena-tag-type";
 import { BattleSpec } from "#enums/battle-spec";
 import { BattlerTagType } from "#enums/battler-tag-type";
 import { BerryType } from "#enums/berry-type";
@@ -699,12 +698,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       }
       break;
     case Stat.SPD:
-      // Check both the player and enemy to see if Tailwind should be multiplying the speed of the Pokemon
-      if    ((this.isPlayer() && this.scene.arena.getTagOnSide(ArenaTagType.TAILWIND, ArenaTagSide.PLAYER))
-          ||  (!this.isPlayer() && this.scene.arena.getTagOnSide(ArenaTagType.TAILWIND, ArenaTagSide.ENEMY))) {
-        ret *= 2;
-      }
-
       if (this.getTag(BattlerTagType.SLOW_START)) {
         ret >>= 1;
       }
@@ -1198,7 +1191,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
 
     // Handle flying v ground type immunity without removing flying type so effective types are still effective
     // Related to https://github.com/pagefaultgames/pokerogue/issues/524
-    if (moveType === Type.GROUND && (this.isGrounded() || arena.hasTag(ArenaTagType.GRAVITY))) {
+    if (moveType === Type.GROUND && (this.isGrounded())) {
       const flyingIndex = types.indexOf(Type.FLYING);
       if (flyingIndex > -1) {
         types.splice(flyingIndex, 1);
@@ -1921,15 +1914,8 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
         if (isTypeImmune) {
           // Moves with no effect that were not cancelled queue a "no effect" message before failing
           source.stopMultiHit(this);
-          result = (move.id === Moves.SHEER_COLD)
-            ? HitResult.IMMUNE
-            : HitResult.NO_EFFECT;
-
-          if (result === HitResult.IMMUNE) {
-            this.scene.queueMessage(i18next.t("battle:hitResultImmune", { pokemonName: this.name }));
-          } else {
-            this.scene.queueMessage(i18next.t("battle:hitResultNoEffect", { pokemonName: getPokemonNameWithAffix(this) }));
-          }
+          result = HitResult.NO_EFFECT;
+          this.scene.queueMessage(i18next.t("battle:hitResultNoEffect", { pokemonName: getPokemonNameWithAffix(this) }));
 
           return result;
         }
@@ -3266,9 +3252,6 @@ export class PlayerPokemon extends Pokemon {
           break;
         }
       }
-      if (reverseCompatibleTms.indexOf(moveId) > -1) {
-        compatible = !compatible;
-      }
       if (compatible) {
         this.compatibleTms.push(moveId);
       }
@@ -3671,14 +3654,6 @@ export class EnemyPokemon extends Pokemon {
       if (movePool.length === 1) {
         return { move: movePool[0]!.moveId, targets: this.getNextTargets(movePool[0]!.moveId) }; // TODO: are the bangs correct?
       }
-      // If a move is forced because of Encore, use it.
-      const encoreTag = this.getTag(EncoreTag) as EncoreTag;
-      if (encoreTag) {
-        const encoreMove = movePool.find(m => m?.moveId === encoreTag.moveId);
-        if (encoreMove) {
-          return { move: encoreMove.moveId, targets: this.getNextTargets(encoreMove.moveId) };
-        }
-      }
       switch (this.aiType) {
       case AiType.RANDOM: // No enemy should spawn with this AI type in-game
         const moveId = movePool[this.scene.randBattleSeedInt(movePool.length)]!.moveId; // TODO: is the bang correct?
@@ -3719,9 +3694,7 @@ export class EnemyPokemon extends Pokemon {
              * If this move is unimplemented, or the move is known to fail when used, set its
              * target score to -20
              */
-            if ((move.name.endsWith(" (N)") || !move.applyConditions(this, target, move)) && ![Moves.SUCKER_PUNCH, Moves.UPPER_HAND, Moves.THUNDERCLAP].includes(move.id)) {
-              targetScore = -20;
-            } else if (move instanceof AttackMove) {
+            if (move instanceof AttackMove) {
               /**
                * Attack moves are given extra multipliers to their base benefit score based on
                * the move's type effectiveness against the target and whether the move is a STAB move.
