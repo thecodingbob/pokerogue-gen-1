@@ -1477,7 +1477,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
                 handler: () => {
                   starterData.passiveAttr |= PassiveAttr.ENABLED;
                   ui.setMode(Mode.STARTER_SELECT);
-                  this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, undefined, undefined, undefined);
+                  this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, undefined, undefined);
                   return true;
                 }
               });
@@ -1487,7 +1487,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
                 handler: () => {
                   starterData.passiveAttr ^= PassiveAttr.ENABLED;
                   ui.setMode(Mode.STARTER_SELECT);
-                  this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, undefined, undefined, undefined);
+                  this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, undefined, undefined);
                   return true;
                 }
               });
@@ -1568,7 +1568,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
                       }
                     });
                     ui.setMode(Mode.STARTER_SELECT);
-                    this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, undefined, undefined, undefined);
+                    this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, undefined, undefined);
 
                     // if starterContainer exists, update the passive background
                     if (starterContainer) {
@@ -1704,7 +1704,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
           if (this.canCycleShiny) {
             const newVariant = starterAttributes.variant ? starterAttributes.variant as Variant : props.variant;
             starterAttributes.shiny = starterAttributes.shiny ? !starterAttributes.shiny : true;
-            this.setSpeciesDetails(this.lastSpecies, !props.shiny, undefined, undefined, props.shiny ? 0 : newVariant, undefined, undefined);
+            this.setSpeciesDetails(this.lastSpecies, !props.shiny, undefined, undefined, props.shiny ? 0 : newVariant, undefined);
             if (starterAttributes.shiny) {
               this.scene.playSound("se/sparkle");
               // Set the variant label to the shiny tint
@@ -1729,14 +1729,14 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
               }
             } while (newFormIndex !== props.formIndex);
             starterAttributes.form = newFormIndex; // store the selected form
-            this.setSpeciesDetails(this.lastSpecies, undefined, newFormIndex, undefined, undefined, undefined, undefined);
+            this.setSpeciesDetails(this.lastSpecies, undefined, newFormIndex, undefined, undefined, undefined);
             success = true;
           }
           break;
         case Button.CYCLE_GENDER:
           if (this.canCycleGender) {
             starterAttributes.female = !props.female;
-            this.setSpeciesDetails(this.lastSpecies, undefined, undefined, !props.female, undefined, undefined, undefined);
+            this.setSpeciesDetails(this.lastSpecies, undefined, undefined, !props.female, undefined, undefined);
             success = true;
           }
           break;
@@ -1760,7 +1760,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
               }
             } while (newVariant !== props.variant);
             starterAttributes.variant = newVariant; // store the selected variant
-            this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, newVariant as Variant, undefined, undefined);
+            this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, newVariant as Variant, undefined);
             // Cycle tint based on current sprite tint
             const tint = getVariantTint(newVariant as Variant);
             this.pokemonShinyIcon.setFrame(getVariantIcon(newVariant as Variant));
@@ -1979,7 +1979,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
     } else {
       this.scene.gameData.starterData[speciesId].moveset = this.starterMoveset?.slice(0) as StarterMoveset;
     }
-    this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, undefined, undefined, false);
+    this.setSpeciesDetails(this.lastSpecies, undefined, undefined, undefined, undefined, false);
 
     // switch moves of starter if exists
     if (this.starterMovesets.length) {
@@ -2666,7 +2666,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
       this.pokemonCandyCountText.setVisible(false);
       this.pokemonFormText.setVisible(false);
 
-      this.setSpeciesDetails(species!, false, 0, false, 0, 0); // TODO: is this bang correct?
+      this.setSpeciesDetails(species!, false, 0, false, 0); // TODO: is this bang correct?
       this.pokemonSprite.clearTint();
     }
   }
@@ -2817,6 +2817,7 @@ export default class StarterSelectUiHandler extends MessageUiHandler {
             : speciesMoveData[formIndex!] // TODO: is this bang correct?
           : null;
         const availableStarterMoves = this.speciesStarterMoves.concat(speciesEggMoves.hasOwnProperty(species.speciesId) ? speciesEggMoves[species.speciesId].filter((_, em: integer) => this.scene.gameData.starterData[species.speciesId].eggMoves & (1 << em)) : []);
+        console.log("HEY!");
         this.starterMoveset = (moveData || (this.speciesStarterMoves.slice(0, 4) as StarterMoveset)).filter(m => availableStarterMoves.find(sm => sm === m)) as StarterMoveset;
         // Consolidate move data if it contains an incompatible move
         if (this.starterMoveset.length < 4 && this.starterMoveset.length < availableStarterMoves.length) {

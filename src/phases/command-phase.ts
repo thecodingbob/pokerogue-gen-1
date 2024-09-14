@@ -1,10 +1,9 @@
 import BattleScene from "#app/battle-scene.js";
 import { TurnCommand, BattleType } from "#app/battle.js";
 import { applyCheckTrappedAbAttrs, CheckTrappedAbAttr } from "#app/data/ability.js";
-import { TrappedTag, EncoreTag } from "#app/data/battler-tags.js";
+import { TrappedTag } from "#app/data/battler-tags.js";
 import { MoveTargetSet, getMoveTargets } from "#app/data/move.js";
 import { speciesStarters } from "#app/data/pokemon-species.js";
-import { Type } from "#app/data/type.js";
 import { Abilities } from "#app/enums/abilities.js";
 import { BattlerTagType } from "#app/enums/battler-tag-type.js";
 import { Biome } from "#app/enums/biome.js";
@@ -199,31 +198,6 @@ export class CommandPhase extends FieldPhase {
           if (!isSwitch && this.fieldIndex) {
               this.scene.currentBattle.turnCommands[this.fieldIndex - 1]!.skip = true;
           }
-        } else if (trapTag) {
-          if (trapTag.sourceMove === Moves.INGRAIN && trapTag.sourceId && this.scene.getPokemonById(trapTag.sourceId)?.isOfType(Type.GHOST)) {
-            success = true;
-            this.scene.currentBattle.turnCommands[this.fieldIndex] = isSwitch
-              ? { command: Command.POKEMON, cursor: cursor, args: args }
-              : { command: Command.RUN };
-            break;
-          }
-          if (!isSwitch) {
-            this.scene.ui.setMode(Mode.COMMAND, this.fieldIndex);
-            this.scene.ui.setMode(Mode.MESSAGE);
-          }
-          this.scene.ui.showText(
-            i18next.t("battle:noEscapePokemon", {
-              pokemonName:  trapTag.sourceId && this.scene.getPokemonById(trapTag.sourceId) ? getPokemonNameWithAffix(this.scene.getPokemonById(trapTag.sourceId)!) : "",
-              moveName: trapTag.getMoveName(),
-              escapeVerb: isSwitch ? i18next.t("battle:escapeVerbSwitch") : i18next.t("battle:escapeVerbFlee")
-            }),
-            null,
-            () => {
-              this.scene.ui.showText("", 0);
-              if (!isSwitch) {
-                this.scene.ui.setMode(Mode.COMMAND, this.fieldIndex);
-              }
-            }, null, true);
         } else if (trapped.value && trappedAbMessages.length > 0) {
           if (!isSwitch) {
             this.scene.ui.setMode(Mode.MESSAGE);
@@ -255,23 +229,7 @@ export class CommandPhase extends FieldPhase {
   }
 
   checkFightOverride(): boolean {
-    const pokemon = this.getPokemon();
-
-    const encoreTag = pokemon.getTag(EncoreTag) as EncoreTag;
-
-    if (!encoreTag) {
-      return false;
-    }
-
-    const moveIndex = pokemon.getMoveset().findIndex(m => m?.moveId === encoreTag.moveId);
-
-    if (moveIndex === -1 || !pokemon.getMoveset()[moveIndex]!.isUsable(pokemon)) { // TODO: is this bang correct?
-      return false;
-    }
-
-    this.handleCommand(Command.FIGHT, moveIndex, false);
-
-    return true;
+    return false;
   }
 
   getFieldIndex(): integer {

@@ -1,5 +1,4 @@
 import { BattlerIndex } from "#app/battle.js";
-import { TrickRoomTag } from "#app/data/arena-tag.js";
 import { Stat } from "#app/enums/stat.js";
 import Pokemon from "#app/field/pokemon.js";
 import { BattlePhase } from "./battle-phase";
@@ -28,7 +27,6 @@ export abstract class FieldPhase extends BattlePhase {
     });
 
     const speedReversed = new Utils.BooleanHolder(false);
-    this.scene.arena.applyTags(TrickRoomTag, speedReversed);
 
     if (speedReversed.value) {
       orderedTargets = orderedTargets.reverse();

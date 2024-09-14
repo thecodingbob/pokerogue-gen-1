@@ -2,13 +2,11 @@ import BattleScene from "#app/battle-scene.js";
 import { BattlerIndex } from "#app/battle.js";
 import { applyAbAttrs, RedirectMoveAbAttr, BlockRedirectAbAttr, IncreasePpAbAttr, applyPreAttackAbAttrs, PokemonTypeChangeAbAttr, applyPostMoveUsedAbAttrs, PostMoveUsedAbAttr } from "#app/data/ability.js";
 import { CommonAnim } from "#app/data/battle-anims.js";
-import { CenterOfAttentionTag, BattlerTagLapseType } from "#app/data/battler-tags.js";
+import { BattlerTagLapseType } from "#app/data/battler-tags.js";
 import { MoveFlags, BypassRedirectAttr, allMoves, CopyMoveAttr, applyMoveAttrs, BypassSleepAttr, HealStatusEffectAttr, ChargeAttr, PreMoveMessageAttr } from "#app/data/move.js";
 import { SpeciesFormChangePreMoveTrigger } from "#app/data/pokemon-forms.js";
 import { getStatusEffectActivationText, getStatusEffectHealText } from "#app/data/status-effect.js";
-import { Type } from "#app/data/type.js";
 import { getTerrainBlockMessage } from "#app/data/weather.js";
-import { Abilities } from "#app/enums/abilities.js";
 import { BattlerTagType } from "#app/enums/battler-tag-type.js";
 import { Moves } from "#app/enums/moves.js";
 import { StatusEffect } from "#app/enums/status-effect.js";
@@ -91,12 +89,6 @@ export class MovePhase extends BattlePhase {
     if (moveTarget) {
       const oldTarget = moveTarget.value;
       this.scene.getField(true).filter(p => p !== this.pokemon).forEach(p => applyAbAttrs(RedirectMoveAbAttr, p, null, false, this.move.moveId, moveTarget));
-      this.pokemon.getOpponents().forEach(p => {
-        const redirectTag = p.getTag(CenterOfAttentionTag) as CenterOfAttentionTag;
-        if (redirectTag && (!redirectTag.powder || (!this.pokemon.isOfType(Type.GRASS) && !this.pokemon.hasAbility(Abilities.OVERCOAT)))) {
-          moveTarget.value = p.getBattlerIndex();
-        }
-      });
       //Check if this move is immune to being redirected, and restore its target to the intended target if it is.
       if ((this.pokemon.hasAbilityWithAttr(BlockRedirectAbAttr) || this.move.getMove().hasAttr(BypassRedirectAttr))) {
         //If an ability prevented this move from being redirected, display its ability pop up.
