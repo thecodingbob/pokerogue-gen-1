@@ -68,17 +68,6 @@ describe("Moves - Dragon Rage", () => {
     expect(damageDealt).toBe(dragonRageDamage);
   });
 
-  it("ignores resistances", async () => {
-    game.override.disableCrits();
-    vi.spyOn(enemyPokemon, "getTypes").mockReturnValue([Type.STEEL]);
-
-    game.move.select(Moves.DRAGON_RAGE);
-    await game.phaseInterceptor.to(TurnEndPhase);
-    const damageDealt = enemyPokemon.getMaxHp() - enemyPokemon.hp;
-
-    expect(damageDealt).toBe(dragonRageDamage);
-  });
-
   it("ignores stat changes", async () => {
     game.override.disableCrits();
     partyPokemon.summonData.battleStats[BattleStat.SPEC] = 2;

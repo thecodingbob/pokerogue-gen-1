@@ -83,8 +83,6 @@ export enum Abilities {
   MAGMA_ARMOR,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Water_Veil_(ability) | Source} */
   WATER_VEIL,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Magnet_Pull_(ability) | Source} */
-  MAGNET_PULL,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Soundproof_(ability) | Source} */
   SOUNDPROOF,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Rain_Dish_(ability) | Source} */
@@ -307,10 +305,6 @@ export enum Abilities {
   MUMMY,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Moxie_(ability) | Source} */
   MOXIE,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Justified_(ability) | Source} */
-  JUSTIFIED,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Rattled_(ability) | Source} */
-  RATTLED,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Magic_Bounce_(ability) | Source} */
   MAGIC_BOUNCE,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Sap_Sipper_(ability) | Source} */
@@ -363,20 +357,12 @@ export enum Abilities {
   SYMBIOSIS,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Tough_Claws_(ability) | Source} */
   TOUGH_CLAWS,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Pixilate_(ability) | Source} */
-  PIXILATE,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Gooey_(ability) | Source} */
   GOOEY,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Aerilate_(ability) | Source} */
   AERILATE,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Parental_Bond_(ability) | Source} */
   PARENTAL_BOND,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Dark_Aura_(ability) | Source} */
-  DARK_AURA,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Fairy_Aura_(ability) | Source} */
-  FAIRY_AURA,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Aura_Break_(ability) | Source} */
-  AURA_BREAK,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Primordial_Sea_(ability) | Source} */
   PRIMORDIAL_SEA,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Desolate_Land_(ability) | Source} */
@@ -399,8 +385,6 @@ export enum Abilities {
   STAKEOUT,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Water_Bubble_(ability) | Source} */
   WATER_BUBBLE,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Steelworker_(ability) | Source} */
-  STEELWORKER,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Berserk_(ability) | Source} */
   BERSERK,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Slush_Rush_(ability) | Source} */
@@ -503,8 +487,6 @@ export enum Abilities {
   MIMICRY,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Screen_Cleaner_(ability) | Source} */
   SCREEN_CLEANER,
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Steely_Spirit_(ability) | Source} */
-  STEELY_SPIRIT,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Perish_Body_(ability) | Source} */
   PERISH_BODY,
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Wandering_Spirit_(ability) | Source} */

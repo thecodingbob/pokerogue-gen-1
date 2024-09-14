@@ -55,7 +55,7 @@ export class Weather {
   isTypeDamageImmune(type: Type): boolean {
     switch (this.weatherType) {
     case WeatherType.SANDSTORM:
-      return type === Type.GROUND || type === Type.ROCK || type === Type.STEEL;
+      return type === Type.GROUND || type === Type.ROCK;
     case WeatherType.HAIL:
       return type === Type.ICE;
     }

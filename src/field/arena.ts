@@ -211,7 +211,7 @@ export class Arena {
     case Biome.MEADOW:
     case Biome.FAIRY_CAVE:
     case Biome.ISLAND:
-      return Type.FAIRY;
+      return Type.GRASS;
     case Biome.POWER_PLANT:
       return Type.ELECTRIC;
     case Biome.VOLCANO:
@@ -224,7 +224,7 @@ export class Arena {
       return Type.FIGHTING;
     case Biome.FACTORY:
     case Biome.LABORATORY:
-      return Type.STEEL;
+      return Type.ELECTRIC;
     case Biome.RUINS:
     case Biome.SPACE:
       return Type.PSYCHIC;
@@ -232,7 +232,7 @@ export class Arena {
     case Biome.END:
       return Type.DRAGON;
     case Biome.ABYSS:
-      return Type.DARK;
+      return Type.POISON;
     default:
       return Type.UNKNOWN;
     }

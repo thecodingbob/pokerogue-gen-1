@@ -296,7 +296,7 @@ export default class Move implements Localizable {
 
   /**
    * Checks if the move is immune to certain types.
-   * Currently looks at cases of Grass types with powder moves and Dark types with moves affected by Prankster.
+   * Currently looks at cases of Grass types with powder moves.
    * @param {Pokemon} user the source of this move
    * @param {Pokemon} target the target of this move
    * @param {Type} type the type of the move's target
@@ -306,18 +306,8 @@ export default class Move implements Localizable {
     if (this.moveTarget === MoveTarget.USER) {
       return false;
     }
-
-    switch (type) {
-    case Type.GRASS:
-      if (this.hasFlag(MoveFlags.POWDER_MOVE)) {
-        return true;
-      }
-      break;
-    case Type.DARK:
-      if (user.hasAbility(Abilities.PRANKSTER) && this.category === MoveCategory.STATUS && (user.isPlayer() !== target.isPlayer())) {
-        return true;
-      }
-      break;
+    if (type === Type.GRASS && this.hasFlag(MoveFlags.POWDER_MOVE)) {
+      return true;
     }
     return false;
   }
@@ -3680,46 +3670,6 @@ export class PhotonGeyserCategoryAttr extends VariableMoveCategoryAttr {
   }
 }
 
-export class TeraBlastCategoryAttr extends VariableMoveCategoryAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const category = (args[0] as Utils.NumberHolder);
-
-    if (user.isTerastallized() && user.getBattleStat(Stat.ATK, target, move) > user.getBattleStat(Stat.SPEC, target, move)) {
-      category.value = MoveCategory.PHYSICAL;
-      return true;
-    }
-
-    return false;
-  }
-}
-
-/**
- * Increases the power of Tera Blast if the user is Terastallized into Stellar type
- * @extends VariablePowerAttr
- */
-export class TeraBlastPowerAttr extends VariablePowerAttr {
-  /**
-   * Sets Tera Blast's power to 100 if the user is terastallized with
-   * the Stellar tera type.
-   * @param user {@linkcode Pokemon} the Pokemon using this move
-   * @param target n/a
-   * @param move {@linkcode Move} the Move with this attribute (i.e. Tera Blast)
-   * @param args
-   *   - [0] {@linkcode Utils.NumberHolder} the applied move's power, factoring in
-   *       previously applied power modifiers.
-   * @returns
-   */
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const power = args[0] as Utils.NumberHolder;
-    if (user.isTerastallized() && user.getTeraType() === Type.STELLAR) {
-      power.value = 100;
-      return true;
-    }
-
-    return false;
-  }
-}
-
 /**
  * Change the move category to status when used on the ally
  * @extends VariableMoveCategoryAttr
@@ -3770,139 +3720,6 @@ export class VariableMoveTypeAttr extends MoveAttr {
   }
 }
 
-export class WeatherBallTypeAttr extends VariableMoveTypeAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const moveType = args[0];
-    if (!(moveType instanceof Utils.NumberHolder)) {
-      return false;
-    }
-
-    if (!user.scene.arena.weather?.isEffectSuppressed(user.scene)) {
-      switch (user.scene.arena.weather?.weatherType) {
-      case WeatherType.SUNNY:
-      case WeatherType.HARSH_SUN:
-        moveType.value = Type.FIRE;
-        break;
-      case WeatherType.RAIN:
-      case WeatherType.HEAVY_RAIN:
-        moveType.value = Type.WATER;
-        break;
-      case WeatherType.SANDSTORM:
-        moveType.value = Type.ROCK;
-        break;
-      case WeatherType.HAIL:
-      case WeatherType.SNOW:
-        moveType.value = Type.ICE;
-        break;
-      default:
-        return false;
-      }
-      return true;
-    }
-
-    return false;
-  }
-}
-
-/**
- * Changes the move's type to match the current terrain.
- * Has no effect if the user is not grounded.
- * @extends VariableMoveTypeAttr
- * @see {@linkcode apply}
- */
-export class TerrainPulseTypeAttr extends VariableMoveTypeAttr {
-  /**
-   * @param user {@linkcode Pokemon} using this move
-   * @param target N/A
-   * @param move N/A
-   * @param args [0] {@linkcode Utils.NumberHolder} The move's type to be modified
-   * @returns true if the function succeeds
-   */
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const moveType = args[0];
-    if (!(moveType instanceof Utils.NumberHolder)) {
-      return false;
-    }
-
-    if (!user.isGrounded()) {
-      return false;
-    }
-
-    const currentTerrain = user.scene.arena.getTerrainType();
-    switch (currentTerrain) {
-    case TerrainType.MISTY:
-      moveType.value = Type.FAIRY;
-      break;
-    case TerrainType.ELECTRIC:
-      moveType.value = Type.ELECTRIC;
-      break;
-    case TerrainType.GRASSY:
-      moveType.value = Type.GRASS;
-      break;
-    case TerrainType.PSYCHIC:
-      moveType.value = Type.PSYCHIC;
-      break;
-    default:
-      return false;
-    }
-    return true;
-  }
-}
-
-/**
- * Changes type based on the user's IVs
- * @extends VariableMoveTypeAttr
- */
-export class HiddenPowerTypeAttr extends VariableMoveTypeAttr {
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const moveType = args[0];
-    if (!(moveType instanceof Utils.NumberHolder)) {
-      return false;
-    }
-
-    const iv_val = Math.floor(((user.ivs[Stat.HP] & 1)
-      +(user.ivs[Stat.ATK] & 1) * 2
-      +(user.ivs[Stat.DEF] & 1) * 4
-      +(user.ivs[Stat.SPD] & 1) * 8
-      +(user.ivs[Stat.SPEC] & 1) * 16) * 15/63);
-
-    moveType.value = [
-      Type.FIGHTING, Type.FLYING, Type.POISON, Type.GROUND,
-      Type.ROCK, Type.BUG, Type.GHOST, Type.STEEL,
-      Type.FIRE, Type.WATER, Type.GRASS, Type.ELECTRIC,
-      Type.PSYCHIC, Type.ICE, Type.DRAGON, Type.DARK][iv_val];
-
-    return true;
-  }
-}
-
-/**
- * Changes the type of Tera Blast to match the user's tera type
- * @extends VariableMoveTypeAttr
- */
-export class TeraBlastTypeAttr extends VariableMoveTypeAttr {
-  /**
-   * @param user {@linkcode Pokemon} the user of the move
-   * @param target {@linkcode Pokemon} N/A
-   * @param move {@linkcode Move} the move with this attribute
-   * @param args `[0]` the move's type to be modified
-   * @returns `true` if the move's type was modified; `false` otherwise
-   */
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const moveType = args[0];
-    if (!(moveType instanceof Utils.NumberHolder)) {
-      return false;
-    }
-
-    if (user.isTerastallized()) {
-      moveType.value = user.getTeraType(); // changes move type to tera type
-      return true;
-    }
-
-    return false;
-  }
-}
-
 export class MatchUserTypeAttr extends VariableMoveTypeAttr {
   apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
     const moveType = args[0];
@@ -3911,11 +3728,7 @@ export class MatchUserTypeAttr extends VariableMoveTypeAttr {
     }
     const userTypes = user.getTypes(true);
 
-    if (userTypes.includes(Type.STELLAR)) { // will not change to stellar type
-      const nonTeraTypes = user.getTypes();
-      moveType.value = nonTeraTypes[0];
-      return true;
-    } else if (userTypes.length > 0) {
+    if (userTypes.length > 0) {
       moveType.value = userTypes[0];
       return true;
     } else {
@@ -5513,9 +5326,6 @@ export class ResistLastMoveTypeAttr extends MoveEffectAttr {
     }
 
     const moveData = allMoves[targetMove.move];
-    if (moveData.type === Type.STELLAR || moveData.type === Type.UNKNOWN) {
-      return false;
-    }
     const userTypes = user.getTypes();
     const validTypes = this.getTypeResistances(user.scene.gameMode, moveData.type).filter(t => !userTypes.includes(t)); // valid types are ones that are not already the user's types
     if (!validTypes.length) {
@@ -5770,7 +5580,7 @@ export function initMoves() {
     new StatusMove(Moves.LEER, Type.NORMAL, 100, 30, -1, 0, 1)
       .attr(StatChangeAttr, BattleStat.DEF, -1)
       .target(MoveTarget.ALL_NEAR_ENEMIES),
-    new AttackMove(Moves.BITE, Type.DARK, MoveCategory.PHYSICAL, 60, 100, 25, 30, 0, 1)
+    new AttackMove(Moves.BITE, Type.NORMAL, MoveCategory.PHYSICAL, 60, 100, 25, 30, 0, 1)
       .attr(FlinchAttr)
       .bitingMove(),
     new StatusMove(Moves.GROWL, Type.NORMAL, 100, 40, -1, 0, 1)

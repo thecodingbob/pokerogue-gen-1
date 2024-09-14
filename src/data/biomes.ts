@@ -1848,12 +1848,12 @@ export function initBiomes() {
       [ Biome.TALL_GRASS, BiomePoolTier.BOSS, TimeOfDay.DAY ]
     ]
     ],
-    [ Species.CLEFAIRY, Type.FAIRY, -1, [
+    [ Species.CLEFAIRY, Type.NORMAL, -1, [
       [ Biome.FAIRY_CAVE, BiomePoolTier.UNCOMMON ],
       [ Biome.SPACE, BiomePoolTier.COMMON ]
     ]
     ],
-    [ Species.CLEFABLE, Type.FAIRY, -1, [
+    [ Species.CLEFABLE, Type.NORMAL, -1, [
       [ Biome.SPACE, BiomePoolTier.BOSS ]
     ]
     ],
@@ -1866,12 +1866,12 @@ export function initBiomes() {
       [ Biome.VOLCANO, BiomePoolTier.BOSS ]
     ]
     ],
-    [ Species.JIGGLYPUFF, Type.NORMAL, Type.FAIRY, [
+    [ Species.JIGGLYPUFF, Type.NORMAL, -1, [
       [ Biome.MEADOW, BiomePoolTier.UNCOMMON ],
       [ Biome.FAIRY_CAVE, BiomePoolTier.COMMON ]
     ]
     ],
-    [ Species.WIGGLYTUFF, Type.NORMAL, Type.FAIRY, [
+    [ Species.WIGGLYTUFF, Type.NORMAL, -1, [
       [ Biome.MEADOW, BiomePoolTier.UNCOMMON ],
       [ Biome.FAIRY_CAVE, BiomePoolTier.COMMON ],
       [ Biome.FAIRY_CAVE, BiomePoolTier.BOSS ]
@@ -2082,14 +2082,14 @@ export function initBiomes() {
       [ Biome.LAKE, BiomePoolTier.BOSS ]
     ]
     ],
-    [ Species.MAGNEMITE, Type.ELECTRIC, Type.STEEL, [
+    [ Species.MAGNEMITE, Type.ELECTRIC, -1, [
       [ Biome.POWER_PLANT, BiomePoolTier.COMMON ],
       [ Biome.FACTORY, BiomePoolTier.COMMON ],
       [ Biome.CONSTRUCTION_SITE, BiomePoolTier.COMMON ],
       [ Biome.LABORATORY, BiomePoolTier.COMMON ]
     ]
     ],
-    [ Species.MAGNETON, Type.ELECTRIC, Type.STEEL, [
+    [ Species.MAGNETON, Type.ELECTRIC, -1, [
       [ Biome.POWER_PLANT, BiomePoolTier.COMMON ],
       [ Biome.FACTORY, BiomePoolTier.COMMON ],
       [ Biome.CONSTRUCTION_SITE, BiomePoolTier.COMMON ],
@@ -2303,7 +2303,7 @@ export function initBiomes() {
       [ Biome.SEA, BiomePoolTier.UNCOMMON, [ TimeOfDay.DAWN, TimeOfDay.DAY ] ]
     ]
     ],
-    [ Species.MR_MIME, Type.PSYCHIC, Type.FAIRY, [
+    [ Species.MR_MIME, Type.PSYCHIC, -1, [
       [ Biome.RUINS, BiomePoolTier.RARE ],
       [ Biome.RUINS, BiomePoolTier.BOSS_RARE ]
     ]

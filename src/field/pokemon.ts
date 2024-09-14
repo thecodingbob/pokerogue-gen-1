@@ -2635,7 +2635,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
       // Check if the Pokemon is immune to Poison/Toxic or if the source pokemon is canceling the immunity
       const poisonImmunity = types.map(defType => {
         // Check if the Pokemon is not immune to Poison/Toxic
-        if (defType !== Type.POISON && defType !== Type.STEEL) {
+        if (defType !== Type.POISON) {
           return false;
         }
 
@@ -2651,7 +2651,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
         return true;
       });
 
-      if (this.isOfType(Type.POISON) || this.isOfType(Type.STEEL)) {
+      if (this.isOfType(Type.POISON)) {
         if (poisonImmunity.includes(true)) {
           return false;
         }

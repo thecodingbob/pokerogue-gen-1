@@ -261,7 +261,6 @@ export function getAchievementDescription(localizationKey: string): string {
   case "MONO_ROCK":
   case "MONO_BUG":
   case "MONO_GHOST":
-  case "MONO_STEEL":
   case "MONO_FIRE":
   case "MONO_WATER":
   case "MONO_GRASS":
@@ -269,8 +268,6 @@ export function getAchievementDescription(localizationKey: string): string {
   case "MONO_PSYCHIC":
   case "MONO_ICE":
   case "MONO_DRAGON":
-  case "MONO_DARK":
-  case "MONO_FAIRY":
     return i18next.t("achv:MonoType.description", { context: genderStr, "type": i18next.t(`pokemonInfo:Type.${localizationKey.slice(5)}`) });
   case "FRESH_START":
     return i18next.t("achv:FRESH_START.description", { context: genderStr });
@@ -341,7 +338,6 @@ export const achvs = {
   MONO_ROCK: new ChallengeAchv("MONO_ROCK", "", "MONO_ROCK.description", "hard_stone", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 6 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_BUG: new ChallengeAchv("MONO_BUG", "", "MONO_BUG.description", "silver_powder", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 7 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_GHOST: new ChallengeAchv("MONO_GHOST", "", "MONO_GHOST.description", "spell_tag", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 8 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_STEEL: new ChallengeAchv("MONO_STEEL", "", "MONO_STEEL.description", "metal_coat", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 9 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_FIRE: new ChallengeAchv("MONO_FIRE", "", "MONO_FIRE.description", "charcoal", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 10 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_WATER: new ChallengeAchv("MONO_WATER", "", "MONO_WATER.description", "mystic_water", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 11 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_GRASS: new ChallengeAchv("MONO_GRASS", "", "MONO_GRASS.description", "miracle_seed", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 12 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
@@ -349,8 +345,6 @@ export const achvs = {
   MONO_PSYCHIC: new ChallengeAchv("MONO_PSYCHIC", "", "MONO_PSYCHIC.description", "twisted_spoon", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 14 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_ICE: new ChallengeAchv("MONO_ICE", "", "MONO_ICE.description", "never_melt_ice", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 15 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_DRAGON: new ChallengeAchv("MONO_DRAGON", "", "MONO_DRAGON.description", "dragon_fang", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 16 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_DARK: new ChallengeAchv("MONO_DARK", "", "MONO_DARK.description", "black_glasses", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 17 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_FAIRY: new ChallengeAchv("MONO_FAIRY", "", "MONO_FAIRY.description", "fairy_feather", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 18 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   FRESH_START: new ChallengeAchv("FRESH_START", "", "FRESH_START.description", "reviver_seed", 100, (c, scene) => c instanceof FreshStartChallenge && c.value > 0 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   INVERSE_BATTLE: new ChallengeAchv("INVERSE_BATTLE", "", "INVERSE_BATTLE.description", "inverse", 100, c => c instanceof InverseBattleChallenge && c.value > 0),
 };

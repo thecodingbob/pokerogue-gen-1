@@ -8,17 +8,13 @@ export enum Type {
   ROCK,
   BUG,
   GHOST,
-  STEEL,
   FIRE,
   WATER,
   GRASS,
   ELECTRIC,
   PSYCHIC,
   ICE,
-  DRAGON,
-  DARK,
-  FAIRY,
-  STELLAR
+  DRAGON
 }
 
 export type TypeDamageMultiplier = 0 | 0.125 | 0.25 | 0.5 | 1 | 2 | 4 | 8;
@@ -42,11 +38,9 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     switch (attackType) {
     case Type.FLYING:
     case Type.PSYCHIC:
-    case Type.FAIRY:
       return 2;
     case Type.ROCK:
     case Type.BUG:
-    case Type.DARK:
       return 0.5;
     default:
       return 1;
@@ -75,7 +69,6 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     case Type.POISON:
     case Type.BUG:
     case Type.GRASS:
-    case Type.FAIRY:
       return 0.5;
     default:
       return 1;
@@ -98,7 +91,6 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     switch (attackType) {
     case Type.FIGHTING:
     case Type.GROUND:
-    case Type.STEEL:
     case Type.WATER:
     case Type.GRASS:
       return 2;
@@ -126,35 +118,12 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
   case Type.GHOST:
     switch (attackType) {
     case Type.GHOST:
-    case Type.DARK:
       return 2;
     case Type.POISON:
     case Type.BUG:
       return 0.5;
     case Type.NORMAL:
     case Type.FIGHTING:
-      return 0;
-    default:
-      return 1;
-    }
-  case Type.STEEL:
-    switch (attackType) {
-    case Type.FIGHTING:
-    case Type.GROUND:
-    case Type.FIRE:
-      return 2;
-    case Type.NORMAL:
-    case Type.FLYING:
-    case Type.ROCK:
-    case Type.BUG:
-    case Type.STEEL:
-    case Type.GRASS:
-    case Type.PSYCHIC:
-    case Type.ICE:
-    case Type.DRAGON:
-    case Type.FAIRY:
-      return 0.5;
-    case Type.POISON:
       return 0;
     default:
       return 1;
@@ -166,11 +135,9 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     case Type.WATER:
       return 2;
     case Type.BUG:
-    case Type.STEEL:
     case Type.FIRE:
     case Type.GRASS:
     case Type.ICE:
-    case Type.FAIRY:
       return 0.5;
     default:
       return 1;
@@ -180,7 +147,6 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     case Type.GRASS:
     case Type.ELECTRIC:
       return 2;
-    case Type.STEEL:
     case Type.FIRE:
     case Type.WATER:
     case Type.ICE:
@@ -209,7 +175,6 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     case Type.GROUND:
       return 2;
     case Type.FLYING:
-    case Type.STEEL:
     case Type.ELECTRIC:
       return 0.5;
     default:
@@ -219,7 +184,6 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     switch (attackType) {
     case Type.BUG:
     case Type.GHOST:
-    case Type.DARK:
       return 2;
     case Type.FIGHTING:
     case Type.PSYCHIC:
@@ -231,7 +195,6 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     switch (attackType) {
     case Type.FIGHTING:
     case Type.ROCK:
-    case Type.STEEL:
     case Type.FIRE:
       return 2;
     case Type.ICE:
@@ -243,7 +206,6 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     switch (attackType) {
     case Type.ICE:
     case Type.DRAGON:
-    case Type.FAIRY:
       return 2;
     case Type.FIRE:
     case Type.WATER:
@@ -253,39 +215,7 @@ export function getTypeDamageMultiplier(attackType: Type, defType: Type): TypeDa
     default:
       return 1;
     }
-  case Type.DARK:
-    switch (attackType) {
-    case Type.FIGHTING:
-    case Type.BUG:
-    case Type.FAIRY:
-      return 2;
-    case Type.GHOST:
-    case Type.DARK:
-      return 0.5;
-    case Type.PSYCHIC:
-      return 0;
-    default:
-      return 1;
-    }
-  case Type.FAIRY:
-    switch (attackType) {
-    case Type.POISON:
-    case Type.STEEL:
-      return 2;
-    case Type.FIGHTING:
-    case Type.BUG:
-    case Type.DARK:
-      return 0.5;
-    case Type.DRAGON:
-      return 0;
-    default:
-      return 1;
-    }
-  case Type.STELLAR:
-    return 1;
   }
-
-  return 1;
 }
 
 /**
@@ -352,8 +282,6 @@ export function getTypeRgb(type: Type): [ integer, integer, integer ] {
     return [ 168, 184, 32 ];
   case Type.GHOST:
     return [ 112, 88, 152 ];
-  case Type.STEEL:
-    return [ 184, 184, 208 ];
   case Type.FIRE:
     return [ 240, 128, 48 ];
   case Type.WATER:
@@ -368,12 +296,6 @@ export function getTypeRgb(type: Type): [ integer, integer, integer ] {
     return [ 152, 216, 216 ];
   case Type.DRAGON:
     return [ 112, 56, 248 ];
-  case Type.DARK:
-    return [ 112, 88, 72 ];
-  case Type.FAIRY:
-    return [ 232, 136, 200 ];
-  case Type.STELLAR:
-    return [ 255, 255, 255 ];
   default:
     return [ 0, 0, 0 ];
   }

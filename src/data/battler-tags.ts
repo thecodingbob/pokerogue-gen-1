@@ -1420,8 +1420,6 @@ export function getBattlerTag(tagType: BattlerTagType, turnCount: number, source
     return new StockpilingTag(sourceMove);
   case BattlerTagType.IGNORE_GHOST:
     return new ExposedTag(tagType, sourceMove, Type.GHOST, [Type.NORMAL, Type.FIGHTING]);
-  case BattlerTagType.IGNORE_DARK:
-    return new ExposedTag(tagType, sourceMove, Type.DARK, [Type.PSYCHIC]);
   case BattlerTagType.GULP_MISSILE_ARROKUDA:
   case BattlerTagType.NONE:
   default:

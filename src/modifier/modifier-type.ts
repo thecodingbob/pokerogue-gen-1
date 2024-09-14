@@ -485,8 +485,6 @@ function getAttackTypeBoosterItemName(type: Type) {
     return "Silver Powder";
   case Type.GHOST:
     return "Spell Tag";
-  case Type.STEEL:
-    return "Metal Coat";
   case Type.FIRE:
     return "Charcoal";
   case Type.WATER:
@@ -501,10 +499,6 @@ function getAttackTypeBoosterItemName(type: Type) {
     return "Never-Melt Ice";
   case Type.DRAGON:
     return "Dragon Fang";
-  case Type.DARK:
-    return "Black Glasses";
-  case Type.FAIRY:
-    return "Fairy Feather";
   }
 }
 
