@@ -1,7 +1,7 @@
 import { Arena } from "../field/arena";
 import { Type } from "./type";
 import * as Utils from "../utils";
-import { MoveCategory, allMoves } from "./move";
+import { MoveDamageType, allMoves } from "./move";
 import { getPokemonNameWithAffix } from "../messages";
 import Pokemon from "../field/pokemon";
 import { BattlerIndex } from "../battle";
@@ -94,7 +94,7 @@ export class MistTag extends ArenaTag {
  * @extends ArenaTag
  */
 export class WeakenMoveScreenTag extends ArenaTag {
-  protected weakenedCategories: MoveCategory[];
+  protected weakenedDamageTypes: MoveDamageType[];
 
   /**
    * Creates a new instance of the WeakenMoveScreenTag class.
@@ -104,12 +104,12 @@ export class WeakenMoveScreenTag extends ArenaTag {
    * @param sourceMove - The move that created the tag.
    * @param sourceId - The ID of the source of the tag.
    * @param side - The side (player or enemy) the tag affects.
-   * @param weakenedCategories - The categories of moves that are weakened by this tag.
+   * @param weakenedDamageTypes - The damage types of moves that are weakened by this tag.
    */
-  constructor(tagType: ArenaTagType, turnCount: integer, sourceMove: Moves, sourceId: integer, side: ArenaTagSide, weakenedCategories: MoveCategory[]) {
+  constructor(tagType: ArenaTagType, turnCount: integer, sourceMove: Moves, sourceId: integer, side: ArenaTagSide, weakenedDamageTypes: MoveDamageType[]) {
     super(tagType, turnCount, sourceMove, sourceId, side);
 
-    this.weakenedCategories = weakenedCategories;
+    this.weakenedDamageTypes = weakenedDamageTypes;
   }
 
   /**
@@ -124,7 +124,7 @@ export class WeakenMoveScreenTag extends ArenaTag {
    * @returns True if the move was weakened, otherwise false.
    */
   apply(arena: Arena, args: any[]): boolean {
-    if (this.weakenedCategories.includes((args[0] as MoveCategory))) {
+    if (this.weakenedDamageTypes.includes((args[0] as MoveDamageType))) {
       (args[2] as Utils.NumberHolder).value = (args[1] as boolean) ? 2732/4096 : 0.5;
       return true;
     }
@@ -138,7 +138,7 @@ export class WeakenMoveScreenTag extends ArenaTag {
  */
 class ReflectTag extends WeakenMoveScreenTag {
   constructor(turnCount: integer, sourceId: integer, side: ArenaTagSide) {
-    super(ArenaTagType.REFLECT, turnCount, Moves.REFLECT, sourceId, side, [MoveCategory.PHYSICAL]);
+    super(ArenaTagType.REFLECT, turnCount, Moves.REFLECT, sourceId, side, [MoveDamageType.PHYSICAL]);
   }
 
   onAdd(arena: Arena, quiet: boolean = false): void {
@@ -154,7 +154,7 @@ class ReflectTag extends WeakenMoveScreenTag {
  */
 class LightScreenTag extends WeakenMoveScreenTag {
   constructor(turnCount: integer, sourceId: integer, side: ArenaTagSide) {
-    super(ArenaTagType.LIGHT_SCREEN, turnCount, Moves.LIGHT_SCREEN, sourceId, side, [MoveCategory.SPECIAL]);
+    super(ArenaTagType.LIGHT_SCREEN, turnCount, Moves.LIGHT_SCREEN, sourceId, side, [MoveDamageType.SPECIAL]);
   }
 
   onAdd(arena: Arena, quiet: boolean = false): void {

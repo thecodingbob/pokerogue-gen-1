@@ -3,7 +3,7 @@ import BattleScene, { AnySound } from "../battle-scene";
 import { Variant, VariantSet, variantColorCache } from "#app/data/variant";
 import { variantData } from "#app/data/variant";
 import BattleInfo, { PlayerBattleInfo, EnemyBattleInfo } from "../ui/battle-info";
-import Move, { HighCritAttr, HitsTagAttr, applyMoveAttrs, FixedDamageAttr, VariableAtkAttr, allMoves, MoveCategory, TypelessAttr, CritOnlyAttr, getMoveTargets, OneHitKOAttr, VariableMoveTypeAttr, VariableDefAttr, AttackMove, ModifiedDamageAttr, VariableMoveTypeMultiplierAttr, IgnoreOpponentStatChangesAttr, SacrificialAttr, VariableMoveCategoryAttr, CounterDamageAttr, StatChangeAttr, RechargeAttr, ChargeAttr, IgnoreWeatherTypeDebuffAttr, BypassBurnDamageReductionAttr, SacrificialAttrOnHit, OneHitKOAccuracyAttr, RespectAttackTypeImmunityAttr } from "../data/move";
+import Move, { HighCritAttr, HitsTagAttr, applyMoveAttrs, FixedDamageAttr, VariableAtkAttr, allMoves, MoveCategory, TypelessAttr, CritOnlyAttr, getMoveTargets, OneHitKOAttr, VariableMoveTypeAttr, VariableDefAttr, AttackMove, ModifiedDamageAttr, VariableMoveTypeMultiplierAttr, IgnoreOpponentStatChangesAttr, SacrificialAttr, VariableMoveCategoryAttr, CounterDamageAttr, StatChangeAttr, RechargeAttr, ChargeAttr, IgnoreWeatherTypeDebuffAttr, BypassBurnDamageReductionAttr, SacrificialAttrOnHit, OneHitKOAccuracyAttr, RespectAttackTypeImmunityAttr, MoveDamageType } from "../data/move";
 import { default as PokemonSpecies, PokemonSpeciesForm, SpeciesFormKey, getFusedSpeciesName, getPokemonSpecies, getPokemonSpeciesForm, getStarterValueFriendshipCap, speciesStarters, starterPassiveAbilities } from "../data/pokemon-species";
 import { Constructor } from "#app/utils";
 import * as Utils from "../utils";
@@ -1183,9 +1183,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
    * @returns a multiplier for the type effectiveness
    */
   getAttackTypeEffectiveness(moveType: Type, source?: Pokemon, ignoreStrongWinds: boolean = false, simulated: boolean = true): TypeDamageMultiplier {
-    if (moveType === Type.STELLAR) {
-      return this.isTerastallized() ? 2 : 1;
-    }
     const types = this.getTypes(true, true);
     const arena = this.scene.arena;
 
@@ -1622,9 +1619,9 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     movePool = movePool.map(m => [m[0], m[1] * (allMoves[m[0]].category === MoveCategory.STATUS ? 1 : Math.max(Math.min(allMoves[m[0]].power/maxPower, 1), 0.5))]);
 
     // Weight damaging moves against the lower stat
-    const worseCategory: MoveCategory = this.stats[Stat.ATK] > this.stats[Stat.SPEC] ? MoveCategory.SPECIAL : MoveCategory.PHYSICAL;
-    const statRatio = worseCategory === MoveCategory.PHYSICAL ? this.stats[Stat.ATK]/this.stats[Stat.SPEC] : this.stats[Stat.SPEC]/this.stats[Stat.ATK];
-    movePool = movePool.map(m => [m[0], m[1] * (allMoves[m[0]].category === worseCategory ? statRatio : 1)]);
+    const worseCategory: MoveDamageType = this.stats[Stat.ATK] > this.stats[Stat.SPEC] ? MoveDamageType.SPECIAL : MoveDamageType.PHYSICAL;
+    const statRatio = worseCategory === MoveDamageType.PHYSICAL ? this.stats[Stat.ATK]/this.stats[Stat.SPEC] : this.stats[Stat.SPEC]/this.stats[Stat.ATK];
+    movePool = movePool.map(m => [m[0], m[1] * (allMoves[m[0]].getDamageType() === worseCategory ? statRatio : 1)]);
 
     let weightMultiplier = 0.9; // The higher this is the more the game weights towards higher level moves. At 0 all moves are equal weight.
     if (this.hasTrainer()) {
@@ -1884,9 +1881,8 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     const typeMultiplier = this.getMoveEffectiveness(source, move, false, false, cancelled);
 
     switch (moveCategory) {
-    case MoveCategory.PHYSICAL:
-    case MoveCategory.SPECIAL:
-      const isPhysical = moveCategory === MoveCategory.PHYSICAL;
+    case MoveCategory.ATTACK:
+      const isPhysical = move.getDamageType() === MoveDamageType.PHYSICAL;
       const sourceTeraType = source.getTeraType();
 
       const power = move.calculateBattlePower(source, this);
@@ -1967,7 +1963,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
         applyAbAttrs(MultCritAbAttr, source, null, false, criticalMultiplier);
         const screenMultiplier = new Utils.NumberHolder(1);
         if (!isCritical) {
-          this.scene.arena.applyTagsForSide(WeakenMoveScreenTag, defendingSide, move.category, this.scene.currentBattle.double, screenMultiplier);
+          this.scene.arena.applyTagsForSide(WeakenMoveScreenTag, defendingSide, move.getDamageType(), this.scene.currentBattle.double, screenMultiplier);
         }
         const sourceTypes = source.getTypes();
         const matchesSourceType = sourceTypes[0] === moveType || (sourceTypes.length > 1 && sourceTypes[1] === moveType);

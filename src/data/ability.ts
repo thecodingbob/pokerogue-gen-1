@@ -8,7 +8,7 @@ import { Weather, WeatherType } from "./weather";
 import { BattlerTag, GroundedTag } from "./battler-tags";
 import { StatusEffect, getNonVolatileStatusEffects, getStatusEffectDescriptor, getStatusEffectHealText } from "./status-effect";
 import { Gender } from "./gender";
-import Move, { AttackMove, MoveCategory, MoveFlags, MoveTarget, FlinchAttr, OneHitKOAttr, HitHealAttr, allMoves, StatusMove, SelfStatusMove, VariablePowerAttr, applyMoveAttrs, IncrementMovePriorityAttr, VariableMoveTypeAttr, RandomMovesetMoveAttr, RandomMoveAttr, CopyMoveAttr, MoveAttr, MultiHitAttr, ChargeAttr, SacrificialAttr, SacrificialAttrOnHit, NeutralDamageAgainstFlyingTypeMultiplierAttr } from "./move";
+import Move, { AttackMove, MoveCategory, MoveFlags, MoveTarget, FlinchAttr, OneHitKOAttr, HitHealAttr, allMoves, StatusMove, SelfStatusMove, VariablePowerAttr, applyMoveAttrs, IncrementMovePriorityAttr, VariableMoveTypeAttr, RandomMovesetMoveAttr, RandomMoveAttr, CopyMoveAttr, MoveAttr, MultiHitAttr, ChargeAttr, SacrificialAttr, SacrificialAttrOnHit, NeutralDamageAgainstFlyingTypeMultiplierAttr, MoveDamageType } from "./move";
 import { ArenaTagSide, ArenaTrapTag } from "./arena-tag";
 import { Stat, getStatName } from "./pokemon-stat";
 import { BerryModifier, PokemonHeldItemModifier } from "../modifier/modifier";
@@ -1446,13 +1446,13 @@ export class UserFieldMoveTypePowerBoostAbAttr extends PreAttackFieldMoveTypePow
  * Boosts the power of moves in specified categories.
  * @extends FieldMovePowerBoostAbAttr
  */
-export class AllyMoveCategoryPowerBoostAbAttr extends FieldMovePowerBoostAbAttr {
+export class AllyMoveDamageTypePowerBoostAbAttr extends FieldMovePowerBoostAbAttr {
   /**
-   * @param boostedCategories - The categories of moves that will receive the power boost.
+   * @param boostedCategories - The damage type of moves that will receive the power boost.
    * @param powerMultiplier - The multiplier to apply to the move's power.
    */
-  constructor(boostedCategories: MoveCategory[], powerMultiplier: number) {
-    super((pokemon, defender, move) => boostedCategories.includes(move.category), powerMultiplier);
+  constructor(boostedCategories: MoveDamageType[], powerMultiplier: number) {
+    super((pokemon, defender, move) => boostedCategories.includes(move.getDamageType()), powerMultiplier);
   }
 }
 
@@ -4275,9 +4275,8 @@ export class BypassSpeedChanceAbAttr extends AbAttr {
         pokemon.scene.currentBattle.turnCommands[pokemon.getBattlerIndex()];
       const isCommandFight = turnCommand?.command === Command.FIGHT;
       const move = turnCommand?.move?.move ?allMoves[turnCommand.move.move] : null;
-      const isDamageMove = move?.category === MoveCategory.PHYSICAL || move?.category === MoveCategory.SPECIAL;
 
-      if (isCommandFight && isDamageMove) {
+      if (isCommandFight && move?.category === MoveCategory.ATTACK) {
         bypassSpeed.value = true;
         return true;
       }
@@ -4700,7 +4699,7 @@ export function initAbilities() {
       .attr(PostSummonAddBattlerTagAbAttr, BattlerTagType.TRUANT, 1, false),
     new Ability(Abilities.HUSTLE, 3)
       .attr(BattleStatMultiplierAbAttr, BattleStat.ATK, 1.5)
-      .attr(BattleStatMultiplierAbAttr, BattleStat.ACC, 0.8, (user, target, move) => move.category === MoveCategory.PHYSICAL),
+      .attr(BattleStatMultiplierAbAttr, BattleStat.ACC, 0.8, (user, target, move) => move.getDamageType() === MoveDamageType.PHYSICAL),
     new Ability(Abilities.CUTE_CHARM, 3)
       .attr(PostDefendContactApplyTagChanceAbAttr, 30, BattlerTagType.INFATUATED),
     new Ability(Abilities.PLUS, 3)
@@ -4933,8 +4932,8 @@ export function initAbilities() {
       .ignorable()
       .unimplemented(),
     new Ability(Abilities.WEAK_ARMOR, 5)
-      .attr(PostDefendStatChangeAbAttr, (target, user, move) => move.category === MoveCategory.PHYSICAL, BattleStat.DEF, -1)
-      .attr(PostDefendStatChangeAbAttr, (target, user, move) => move.category === MoveCategory.PHYSICAL, BattleStat.SPD, 2),
+      .attr(PostDefendStatChangeAbAttr, (target, user, move) => move.getDamageType() === MoveDamageType.PHYSICAL, BattleStat.DEF, -1)
+      .attr(PostDefendStatChangeAbAttr, (target, user, move) => move.getDamageType() === MoveDamageType.PHYSICAL, BattleStat.SPD, 2),
     new Ability(Abilities.HEAVY_METAL, 5)
       .attr(WeightMultiplierAbAttr, 2)
       .ignorable(),
@@ -4945,9 +4944,9 @@ export function initAbilities() {
       .attr(ReceivedMoveDamageMultiplierAbAttr, (target, user, move) => target.isFullHp(), 0.5)
       .ignorable(),
     new Ability(Abilities.TOXIC_BOOST, 5)
-      .attr(MovePowerBoostAbAttr, (user, target, move) => move.category === MoveCategory.PHYSICAL && (user?.status?.effect === StatusEffect.POISON || user?.status?.effect === StatusEffect.TOXIC), 1.5),
+      .attr(MovePowerBoostAbAttr, (user, target, move) => move.getDamageType() === MoveDamageType.PHYSICAL && (user?.status?.effect === StatusEffect.POISON || user?.status?.effect === StatusEffect.TOXIC), 1.5),
     new Ability(Abilities.FLARE_BOOST, 5)
-      .attr(MovePowerBoostAbAttr, (user, target, move) => move.category === MoveCategory.SPECIAL && user?.status?.effect === StatusEffect.BURN, 1.5),
+      .attr(MovePowerBoostAbAttr, (user, target, move) => move.getDamageType() === MoveDamageType.SPECIAL && user?.status?.effect === StatusEffect.BURN, 1.5),
     new Ability(Abilities.HARVEST, 5)
       .attr(
         PostTurnLootAbAttr,
@@ -5043,7 +5042,7 @@ export function initAbilities() {
       .attr(PokemonTypeChangeAbAttr),
     //.condition((p) => !p.summonData?.abilitiesApplied.includes(Abilities.PROTEAN)), //Gen 9 Implementation
     new Ability(Abilities.FUR_COAT, 6)
-      .attr(ReceivedMoveDamageMultiplierAbAttr, (target, user, move) => move.category === MoveCategory.PHYSICAL, 0.5)
+      .attr(ReceivedMoveDamageMultiplierAbAttr, (target, user, move) => move.getDamageType() === MoveDamageType.PHYSICAL, 0.5)
       .ignorable(),
     new Ability(Abilities.MAGICIAN, 6)
       .attr(PostAttackStealHeldItemAbAttr),
@@ -5206,7 +5205,7 @@ export function initAbilities() {
     new Ability(Abilities.DANCER, 7)
       .attr(PostDancingMoveAbAttr),
     new Ability(Abilities.BATTERY, 7)
-      .attr(AllyMoveCategoryPowerBoostAbAttr, [MoveCategory.SPECIAL], 1.3),
+      .attr(AllyMoveDamageTypePowerBoostAbAttr, [MoveDamageType.SPECIAL], 1.3),
     new Ability(Abilities.FLUFFY, 7)
       .attr(ReceivedMoveDamageMultiplierAbAttr, (target, user, move) => move.hasFlag(MoveFlags.MAKES_CONTACT), 0.5)
       .attr(ReceivedMoveDamageMultiplierAbAttr, (target, user, move) => move.type === Type.FIRE, 2)
@@ -5295,7 +5294,7 @@ export function initAbilities() {
     new Ability(Abilities.SAND_SPIT, 8)
       .attr(PostDefendWeatherChangeAbAttr, WeatherType.SANDSTORM, (target, user, move) => move.category !== MoveCategory.STATUS),
     new Ability(Abilities.ICE_SCALES, 8)
-      .attr(ReceivedMoveDamageMultiplierAbAttr, (target, user, move) => move.category === MoveCategory.SPECIAL, 0.5)
+      .attr(ReceivedMoveDamageMultiplierAbAttr, (target, user, move) => move.getDamageType() === MoveDamageType.SPECIAL, 0.5)
       .ignorable(),
     new Ability(Abilities.RIPEN, 8)
       .attr(DoubleBerryEffectAbAttr),
@@ -5311,13 +5310,13 @@ export function initAbilities() {
       .conditionalAttr(getWeatherCondition(WeatherType.HAIL, WeatherType.SNOW), PostSummonAddBattlerTagAbAttr, BattlerTagType.ICE_FACE, 0)
       // When weather changes to HAIL or SNOW while pokemon is fielded, add BattlerTagType.ICE_FACE
       .attr(PostWeatherChangeAddBattlerTagAttr, BattlerTagType.ICE_FACE, 0, WeatherType.HAIL, WeatherType.SNOW)
-      .attr(FormBlockDamageAbAttr, (target, user, move) => move.category === MoveCategory.PHYSICAL && !!target.getTag(BattlerTagType.ICE_FACE), 0, BattlerTagType.ICE_FACE,
+      .attr(FormBlockDamageAbAttr, (target, user, move) => move.getDamageType() === MoveDamageType.PHYSICAL && !!target.getTag(BattlerTagType.ICE_FACE), 0, BattlerTagType.ICE_FACE,
         (pokemon, abilityName) => i18next.t("abilityTriggers:iceFaceAvoidedDamage", { pokemonNameWithAffix: getPokemonNameWithAffix(pokemon), abilityName: abilityName }))
       .attr(PostBattleInitFormChangeAbAttr, () => 0)
       .bypassFaint()
       .ignorable(),
     new Ability(Abilities.POWER_SPOT, 8)
-      .attr(AllyMoveCategoryPowerBoostAbAttr, [MoveCategory.SPECIAL, MoveCategory.PHYSICAL], 1.3),
+      .attr(AllyMoveDamageTypePowerBoostAbAttr, [MoveCategory.ATTACK], 1.3),
     new Ability(Abilities.MIMICRY, 8)
       .unimplemented(),
     new Ability(Abilities.PERISH_BODY, 8)
