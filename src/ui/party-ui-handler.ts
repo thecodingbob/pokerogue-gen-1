@@ -34,62 +34,62 @@ export enum PartyUiMode {
    * Indicates that the party UI is open because of a user-opted switch.  This
    * type of switch can be cancelled.
    */
-  SWITCH,
+  SWITCH = "SWITCH",
   /**
    * Indicates that the party UI is open because of a faint or other forced
    * switch (eg, move effect). This type of switch cannot be cancelled.
    */
-  FAINT_SWITCH,
+  FAINT_SWITCH = "FAINT_SWITCH",
   /**
    * Indicates that the party UI is open because of a start-of-encounter optional
    * switch. This type of switch can be cancelled.
    */
-  POST_BATTLE_SWITCH,
+  POST_BATTLE_SWITCH = "POST_BATTLE_SWITCH",
   /**
    * Indicates that the party UI is open because of the move Revival Blessing.
    * This selection cannot be cancelled.
    */
-  REVIVAL_BLESSING,
+  REVIVAL_BLESSING = "REVIVAL_BLESSING",
   /**
    * Indicates that the party UI is open to select a mon to apply a modifier to.
    * This type of selection can be cancelled.
    */
-  MODIFIER,
+  MODIFIER = "MODIFIER",
   /**
    * Indicates that the party UI is open to select a mon to apply a move
    * modifier to (such as an Ether or PP Up).  This type of selection can be cancelled.
    */
-  MOVE_MODIFIER,
+  MOVE_MODIFIER = "MOVE_MODIFIER",
   /**
    * Indicates that the party UI is open to select a mon to teach a TM.  This
    * type of selection can be cancelled.
    */
-  TM_MODIFIER,
+  TM_MODIFIER = "TM_MODIFIER",
   /**
    * Indicates that the party UI is open to select a mon to remember a move.
    * This type of selection can be cancelled.
    */
-  REMEMBER_MOVE_MODIFIER,
+  REMEMBER_MOVE_MODIFIER = "REMEMBER_MOVE_MODIFIER",
   /**
    * Indicates that the party UI is open to transfer items between mons.  This
    * type of selection can be cancelled.
    */
-  MODIFIER_TRANSFER,
+  MODIFIER_TRANSFER = "MODIFIER_TRANSFER",
   /**
    * Indicates that the party UI is open because of a DNA Splicer.  This
    * type of selection can be cancelled.
    */
-  SPLICE,
+  SPLICE = "SPLICE",
   /**
    * Indicates that the party UI is open to release a party member.  This
    * type of selection can be cancelled.
    */
-  RELEASE,
+  RELEASE = "RELEASE",
   /**
    * Indicates that the party UI is open to check the team.  This
    * type of selection can be cancelled.
    */
-  CHECK
+  CHECK = "CHECK",
 }
 
 export enum PartyOption {

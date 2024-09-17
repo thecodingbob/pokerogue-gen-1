@@ -10,8 +10,8 @@ import { addWindow } from "./ui-theme";
 import { PlayerGender } from "#enums/player-gender";
 
 enum Page {
-  ACHIEVEMENTS,
-  VOUCHERS
+  ACHIEVEMENTS = "ACHIEVEMENTS",
+  VOUCHERS = "VOUCHERS"
 }
 
 interface LanguageSetting {

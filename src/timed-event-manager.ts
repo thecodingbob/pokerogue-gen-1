@@ -3,8 +3,8 @@ import { TextStyle, addTextObject } from "#app/ui/text";
 import i18next from "i18next";
 
 export enum EventType {
-  SHINY,
-  GENERIC
+  SHINY = "SHINY",
+  GENERIC = "GENERIC"
 }
 
 interface EventBanner {

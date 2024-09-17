@@ -5,7 +5,7 @@
  * - Skip - no level up frame nor message
 */
 export enum ExpNotification {
-    DEFAULT,
-    ONLY_LEVEL_UP,
-    SKIP
+    DEFAULT = "DEFAULT",
+    ONLY_LEVEL_UP = "ONLY_LEVEL_UP",
+    SKIP = "SKIP",
 }

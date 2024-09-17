@@ -37,43 +37,43 @@ import { GameMode } from "#app/game-mode";
 import { applyChallenges, ChallengeType } from "./challenge";
 
 export enum MoveCategory {
-  ATTACK,
-  STATUS
+  ATTACK = "ATTACK",
+  STATUS = "STATUS"
 }
 
 export enum MoveDamageType {
-  PHYSICAL,
-  SPECIAL
+  PHYSICAL = "PHYSICAL",
+  SPECIAL = "SPECIAL"
 }
 
 export enum MoveTarget {
   /** {@link https://bulbapedia.bulbagarden.net/wiki/Category:Moves_that_target_the_user Moves that target the User} */
-  USER,
-  OTHER,
-  ALL_OTHERS,
-  NEAR_OTHER,
+  USER = "USER",
+  OTHER = "OTHER",
+  ALL_OTHERS = "ALL_OTHERS",
+  NEAR_OTHER = "NEAR_OTHER",
   /** {@link https://bulbapedia.bulbagarden.net/wiki/Category:Moves_that_target_all_adjacent_Pok%C3%A9mon Moves that target all adjacent Pokemon} */
-  ALL_NEAR_OTHERS,
-  NEAR_ENEMY,
+  ALL_NEAR_OTHERS = "ALL_NEAR_OTHERS",
+  NEAR_ENEMY = "NEAR_ENEMY",
   /** {@link https://bulbapedia.bulbagarden.net/wiki/Category:Moves_that_target_all_adjacent_foes Moves that target all adjacent foes} */
-  ALL_NEAR_ENEMIES,
-  RANDOM_NEAR_ENEMY,
-  ALL_ENEMIES,
+  ALL_NEAR_ENEMIES = "ALL_NEAR_ENEMIES",
+  RANDOM_NEAR_ENEMY = "RANDOM_NEAR_ENEMY",
+  ALL_ENEMIES = "ALL_ENEMIES",
   /** {@link https://bulbapedia.bulbagarden.net/wiki/Category:Counterattacks Counterattacks} */
-  ATTACKER,
+  ATTACKER = "ATTACKER",
   /** {@link https://bulbapedia.bulbagarden.net/wiki/Category:Moves_that_target_one_adjacent_ally Moves that target one adjacent ally} */
-  NEAR_ALLY,
-  ALLY,
-  USER_OR_NEAR_ALLY,
-  USER_AND_ALLIES,
+  NEAR_ALLY = "NEAR_ALLY",
+  ALLY = "ALLY",
+  USER_OR_NEAR_ALLY = "USER_OR_NEAR_ALLY",
+  USER_AND_ALLIES = "USER_AND_ALLIES",
   /** {@link https://bulbapedia.bulbagarden.net/wiki/Category:Moves_that_target_all_Pok%C3%A9mon Moves that target all Pokemon} */
-  ALL,
-  USER_SIDE,
+  ALL = "ALL",
+  USER_SIDE = "USER_SIDE",
   /** {@link https://bulbapedia.bulbagarden.net/wiki/Category:Entry_hazard-creating_moves Entry hazard-creating moves} */
-  ENEMY_SIDE,
-  BOTH_SIDES,
-  PARTY,
-  CURSE
+  ENEMY_SIDE = "ENEMY_SIDE",
+  BOTH_SIDES = "BOTH_SIDES",
+  PARTY = "PARTY",
+  CURSE = "CURSE",
 }
 
 export enum MoveFlags {
@@ -752,11 +752,6 @@ export default class Move implements Localizable {
 
     applyPreAttackAbAttrs(MoveTypeChangeAbAttr, source, target, this, true, null, typeChangeMovePowerMultiplier);
 
-    const sourceTeraType = source.getTeraType();
-    if (sourceTeraType !== Type.UNKNOWN && sourceTeraType === this.type && power.value < 60 && this.priority <= 0 && !this.hasAttr(MultiHitAttr) && !source.scene.findModifier(m => m instanceof PokemonMultiHitModifier && m.pokemonId === source.id)) {
-      power.value = 60;
-    }
-
     applyPreAttackAbAttrs(VariableMovePowerAbAttr, source, target, this, simulated, power);
 
     if (source.getAlly()) {
@@ -936,11 +931,11 @@ export abstract class MoveAttr {
 }
 
 export enum MoveEffectTrigger {
-  PRE_APPLY,
-  POST_APPLY,
-  HIT,
+  PRE_APPLY = "PRE_APPLY",
+  POST_APPLY = "POST_APPLY",
+  HIT = "HIT",
   /** Triggers one time after all target effects have applied */
-  POST_TARGET,
+  POST_TARGET = "POST_TARGET",
 }
 
 /** Base class defining all Move Effect Attributes
@@ -1442,11 +1437,11 @@ export class HalfSacrificialAttr extends MoveEffectAttr {
 }
 
 export enum MultiHitType {
-  _2,
-  _2_TO_5,
-  _3,
-  _10,
-  BEAT_UP,
+  _2 = "_2",
+  _2_TO_5 = "_2_TO_5",
+  _3 = "_3",
+  _10 = "_10",
+  BEAT_UP = "BEAT_UP",
 }
 
 /**
@@ -4706,10 +4701,6 @@ export class RemoveTypeAttr extends MoveEffectAttr {
       return false;
     }
 
-    if (user.isTerastallized() && user.getTeraType() === this.removedType) { // active tera types cannot be removed
-      return false;
-    }
-
     const userTypes = user.getTypes(true);
     const modifiedTypes = userTypes.filter(type => type !== this.removedType);
     user.summonData.types = modifiedTypes;
@@ -4787,7 +4778,7 @@ export class ChangeTypeAttr extends MoveEffectAttr {
   }
 
   getCondition(): MoveConditionFunc {
-    return (user, target, move) => !target.isTerastallized() && !target.hasAbility(Abilities.MULTITYPE) && !target.hasAbility(Abilities.RKS_SYSTEM) && !(target.getTypes().length === 1 && target.getTypes()[0] === this.type);
+    return (user, target, move) => !target.hasAbility(Abilities.MULTITYPE) && !target.hasAbility(Abilities.RKS_SYSTEM) && !(target.getTypes().length === 1 && target.getTypes()[0] === this.type);
   }
 }
 
@@ -4814,7 +4805,7 @@ export class AddTypeAttr extends MoveEffectAttr {
   }
 
   getCondition(): MoveConditionFunc {
-    return (user, target, move) => !target.isTerastallized()&& !target.getTypes().includes(this.type);
+    return (user, target, move) => !target.getTypes().includes(this.type);
   }
 }
 

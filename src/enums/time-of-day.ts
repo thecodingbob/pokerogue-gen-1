@@ -1,8 +1,8 @@
 
 export enum TimeOfDay {
-  ALL = -1,
-  DAWN,
-  DAY,
-  DUSK,
-  NIGHT
+  ALL = "ALL",
+  DAWN = "DAWN",
+  DAY = "DAY",
+  DUSK = "DUSK",
+  NIGHT = "NIGHT",
 }

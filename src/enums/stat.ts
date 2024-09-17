@@ -1,7 +1,7 @@
 export enum Stat {
-  HP = 0,
-  ATK,
-  DEF,
-  SPEC,
-  SPD,
+  HP = "HP",
+  ATK = "ATK",
+  DEF = "DEF",
+  SPEC = "SPEC",
+  SPD = "SPD",
 }

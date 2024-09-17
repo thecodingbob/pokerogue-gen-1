@@ -23,9 +23,9 @@ import { Species } from "#enums/species";
 import { TrainerType } from "#enums/trainer-type";
 
 export enum TrainerVariant {
-    DEFAULT,
-    FEMALE,
-    DOUBLE
+    DEFAULT = "DEFAULT",
+    FEMALE = "FEMALE",
+    DOUBLE = "DOUBLE"
 }
 
 export default class Trainer extends Phaser.GameObjects.Container {

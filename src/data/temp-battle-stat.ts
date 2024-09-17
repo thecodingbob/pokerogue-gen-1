@@ -2,19 +2,19 @@ import { BattleStat, getBattleStatName } from "./battle-stat";
 import i18next from "i18next";
 
 export enum TempBattleStat {
-  ATK,
-  DEF,
-  SPEC,
-  SPD,
-  ACC,
-  CRIT
+  ATK = "ATK",
+  DEF = "DEF",
+  SPEC = "SPEC",
+  SPD = "SPD",
+  ACC = "ACC",
+  CRIT = "CRIT",
 }
 
 export function getTempBattleStatName(tempBattleStat: TempBattleStat) {
   if (tempBattleStat === TempBattleStat.CRIT) {
     return i18next.t("modifierType:TempBattleStatBoosterStatName.CRIT");
   }
-  return getBattleStatName(tempBattleStat as integer as BattleStat);
+  return getBattleStatName(tempBattleStat as string as BattleStat);
 }
 
 export function getTempBattleStatBoosterItemName(tempBattleStat: TempBattleStat) {

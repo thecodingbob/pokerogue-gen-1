@@ -14,8 +14,8 @@ import { addWindow } from "./ui-theme";
 const sessionSlotCount = 5;
 
 export enum SaveSlotUiMode {
-  LOAD,
-  SAVE
+  LOAD = "LOAD",
+  SAVE = "SAVE"
 }
 
 export type SaveSlotSelectCallback = (cursor: integer) => void;

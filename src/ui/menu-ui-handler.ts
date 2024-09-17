@@ -15,16 +15,16 @@ import AwaitableUiHandler from "./awaitable-ui-handler";
 import { SelectModifierPhase } from "#app/phases/select-modifier-phase";
 
 enum MenuOptions {
-  GAME_SETTINGS,
-  ACHIEVEMENTS,
-  STATS,
-  RUN_HISTORY,
-  EGG_LIST,
-  EGG_GACHA,
-  MANAGE_DATA,
-  COMMUNITY,
-  SAVE_AND_QUIT,
-  LOG_OUT,
+  GAME_SETTINGS = "GAME_SETTINGS",
+  ACHIEVEMENTS = "ACHIEVEMENTS",
+  STATS = "STATS",
+  RUN_HISTORY = "RUN_HISTORY",
+  EGG_LIST = "EGG_LIST",
+  EGG_GACHA = "EGG_GACHA",
+  MANAGE_DATA = "MANAGE_DATA",
+  COMMUNITY = "COMMUNITY",
+  SAVE_AND_QUIT = "SAVE_AND_QUIT",
+  LOG_OUT = "LOG_OUT",
 }
 
 let wikiUrl = "https://wiki.pokerogue.net/start";

@@ -1176,7 +1176,6 @@ export class PokemonTypeChangeAbAttr extends PreAttackAbAttr {
 
   applyPreAttack(pokemon: Pokemon, simulated: boolean, defender: Pokemon, move: Move, args: any[]): boolean {
     if (
-      !pokemon.isTerastallized() &&
       move.id !== Moves.STRUGGLE &&
       /**
        * Skip moves that call other moves because these moves generate a following move that will trigger this ability attribute
@@ -5346,8 +5345,7 @@ export function initAbilities() {
       .attr(UncopiableAbilityAbAttr)
       .attr(UnswappableAbilityAbAttr)
       .attr(NoTransformAbilityAbAttr)
-      .attr(NoFusionAbilityAbAttr)
-      .condition((pokemon) => !pokemon.isTerastallized()),
+      .attr(NoFusionAbilityAbAttr),
     new Ability(Abilities.QUICK_DRAW, 8)
       .attr(BypassSpeedChanceAbAttr, 30),
     new Ability(Abilities.UNSEEN_FIST, 8)

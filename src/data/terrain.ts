@@ -8,11 +8,11 @@ import { BattlerIndex } from "#app/battle.js";
 import i18next from "i18next";
 
 export enum TerrainType {
-  NONE,
-  MISTY,
-  ELECTRIC,
-  GRASSY,
-  PSYCHIC
+  NONE = "NONE",
+  MISTY = "MISTY",
+  ELECTRIC = "ELECTRIC",
+  GRASSY = "GRASSY",
+  PSYCHIC = "PSYCHIC",
 }
 
 export class Terrain {

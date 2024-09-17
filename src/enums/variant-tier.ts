@@ -1,5 +1,5 @@
 export enum VariantTier {
-    STANDARD,
-    RARE,
-    EPIC
+    STANDARD = "STANDARD",
+    RARE = "RARE",
+    EPIC = "EPIC",
 }

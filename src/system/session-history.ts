@@ -3,9 +3,9 @@ import PokemonData from "./pokemon-data";
 import PersistentModifierData from "./modifier-data";
 
 export enum SessionHistoryResult {
-  ACTIVE,
-  WIN,
-  LOSS
+  ACTIVE = "ACTIVE",
+  WIN = "WIN",
+  LOSS = "LOSS",
 }
 
 export interface SessionHistory {

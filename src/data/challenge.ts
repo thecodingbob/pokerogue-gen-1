@@ -3,13 +3,11 @@ import i18next from "i18next";
 import { defaultStarterSpecies, DexAttrProps, GameData } from "#app/system/game-data.js";
 import PokemonSpecies, { getPokemonSpecies, getPokemonSpeciesForm, speciesStarters } from "./pokemon-species";
 import Pokemon, { PokemonMove } from "#app/field/pokemon.js";
-import { BattleType, FixedBattleConfig } from "#app/battle.js";
-import Trainer, { TrainerVariant } from "#app/field/trainer.js";
+import { FixedBattleConfig } from "#app/battle.js";
 import { GameMode } from "#app/game-mode.js";
 import { Type } from "./type";
 import { Challenges } from "#enums/challenges";
 import { Species } from "#enums/species";
-import { TrainerType } from "#enums/trainer-type";
 import { Moves } from "#app/enums/moves.js";
 import { TypeColor, TypeShadow } from "#app/enums/color.js";
 import { Gender } from "./gender";
@@ -28,74 +26,74 @@ export enum ChallengeType {
    * Challenges which modify what starters you can choose
    * @see {@link Challenge.applyStarterChoice}
   */
-  STARTER_CHOICE,
+  STARTER_CHOICE = "STARTER_CHOICE",
   /**
    * Challenges which modify how many starter points you have
    * @see {@link Challenge.applyStarterPoints}
   */
-  STARTER_POINTS,
+  STARTER_POINTS = "STARTER_POINTS",
   /**
    * Challenges which modify how many starter points you have
    * @see {@link Challenge.applyStarterPointCost}
   */
-  STARTER_COST,
+  STARTER_COST = "STARTER_COST",
   /**
    * Challenges which modify your starters in some way
    * @see {@link Challenge.applyStarterModify}
   */
-  STARTER_MODIFY,
+  STARTER_MODIFY = "STARTER_MODIFY",
   /**
    * Challenges which limit which pokemon you can have in battle.
    * @see {@link Challenge.applyPokemonInBattle}
   */
-  POKEMON_IN_BATTLE,
+  POKEMON_IN_BATTLE = "POKEMON_IN_BATTLE",
   /**
    * Adds or modifies the fixed battles in a run
    * @see {@link Challenge.applyFixedBattle}
   */
-  FIXED_BATTLES,
+  FIXED_BATTLES = "FIXED_BATTLES",
   /**
    * Modifies the effectiveness of Type matchups in battle
    * @see {@linkcode Challenge.applyTypeEffectiveness}
   */
-  TYPE_EFFECTIVENESS,
+  TYPE_EFFECTIVENESS = "TYPE_EFFECTIVENESS",
   /**
    * Modifies what level the AI pokemon are. UNIMPLEMENTED.
    */
-  AI_LEVEL,
+  AI_LEVEL = "AI_LEVEL",
   /**
    * Modifies how many move slots the AI has. UNIMPLEMENTED.
    */
-  AI_MOVE_SLOTS,
+  AI_MOVE_SLOTS = "AI_MOVE_SLOTS",
   /**
    * Modifies if a pokemon has its passive. UNIMPLEMENTED.
    */
-  PASSIVE_ACCESS,
+  PASSIVE_ACCESS = "PASSIVE_ACCESS",
   /**
    * Modifies the game mode settings in some way. UNIMPLEMENTED.
    */
-  GAME_MODE_MODIFY,
+  GAME_MODE_MODIFY = "GAME_MODE_MODIFY",
   /**
    * Modifies what level AI pokemon can access a move. UNIMPLEMENTED.
    */
-  MOVE_ACCESS,
+  MOVE_ACCESS = "MOVE_ACCESS",
   /**
    * Modifies what weight AI pokemon have when generating movesets. UNIMPLEMENTED.
    */
-  MOVE_WEIGHT,
+  MOVE_WEIGHT = "MOVE_WEIGHT",
 }
 
 /**
  * Used for challenge types that modify movesets, these denote the various sources of moves for pokemon.
  */
 export enum MoveSourceType {
-  LEVEL_UP, // Currently unimplemented for move access
-  RELEARNER, // Relearner moves currently unimplemented
-  COMMON_TM,
-  GREAT_TM,
-  ULTRA_TM,
-  COMMON_EGG,
-  RARE_EGG
+  LEVEL_UP = "LEVEL_UP", // Currently unimplemented for move access
+  RELEARNER = "RELEARNER", // Relearner moves currently unimplemented
+  COMMON_TM = "COMMON_TM",
+  GREAT_TM = "GREAT_TM",
+  ULTRA_TM = "ULTRA_TM",
+  COMMON_EGG = "COMMON_EGG",
+  RARE_EGG = "RARE_EGG",
 }
 
 /**
@@ -408,118 +406,6 @@ export abstract class Challenge {
 
 type ChallengeCondition = (data: GameData) => boolean;
 
-/**
- * Implements a mono generation challenge.
- */
-export class SingleGenerationChallenge extends Challenge {
-  constructor() {
-    super(Challenges.SINGLE_GENERATION, 9);
-  }
-
-  applyStarterChoice(pokemon: PokemonSpecies, valid: Utils.BooleanHolder, dexAttr: DexAttrProps, soft: boolean = false): boolean {
-    const generations = [pokemon.generation];
-    if (soft) {
-      const speciesToCheck = [pokemon.speciesId];
-      while (speciesToCheck.length) {
-        const checking = speciesToCheck.pop();
-        if (checking && pokemonEvolutions.hasOwnProperty(checking)) {
-          pokemonEvolutions[checking].forEach(e => {
-            speciesToCheck.push(e.speciesId);
-            generations.push(getPokemonSpecies(e.speciesId).generation);
-          });
-        }
-      }
-    }
-
-    if (!generations.includes(this.value)) {
-      valid.value = false;
-      return true;
-    }
-    return false;
-  }
-
-  applyPokemonInBattle(pokemon: Pokemon, valid: Utils.BooleanHolder): boolean {
-    const baseGeneration = getPokemonSpecies(pokemon.species.speciesId).generation;
-    const fusionGeneration = pokemon.isFusion()? getPokemonSpecies(pokemon.fusionSpecies!.speciesId).generation : 0; // TODO: is the bang on fusionSpecies correct?
-    if (pokemon.isPlayer() && (baseGeneration !== this.value || (pokemon.isFusion() && fusionGeneration !== this.value))) {
-      valid.value = false;
-      return true;
-    }
-    return false;
-  }
-
-  applyFixedBattle(waveIndex: Number, battleConfig: FixedBattleConfig): boolean {
-    let trainerTypes: TrainerType[] = [];
-    switch (waveIndex) {
-    case 182:
-      trainerTypes = [ TrainerType.LORELEI ];
-      break;
-    case 184:
-      trainerTypes = [ TrainerType.BRUNO ];
-      break;
-    case 186:
-      trainerTypes = [ TrainerType.AGATHA ];
-      break;
-    case 188:
-      trainerTypes = [ TrainerType.LANCE ];
-      break;
-    case 190:
-      trainerTypes = [ TrainerType.BLUE, TrainerType.RED ];
-      break;
-    }
-    if (trainerTypes.length === 0) {
-      return false;
-    } else {
-      battleConfig.setBattleType(BattleType.TRAINER).setGetTrainerFunc(scene => new Trainer(scene, trainerTypes[this.value - 1], TrainerVariant.DEFAULT));
-      return true;
-    }
-  }
-
-  /**
-   * @overrides
-   */
-  getDifficulty(): number {
-    return this.value > 0 ? 1 : 0;
-  }
-
-  /**
-   * Returns the textual representation of a challenge's current value.
-   * @param {value} overrideValue The value to check for. If undefined, gets the current value.
-   * @returns {string} The localised name for the current value.
-   */
-  getValue(overrideValue?: integer): string {
-    if (overrideValue === undefined) {
-      overrideValue = this.value;
-    }
-    if (this.value === 0) {
-      return i18next.t("settings:off");
-    }
-    return i18next.t(`starterSelectUiHandler:gen${this.value}`);
-  }
-
-  /**
-   * Returns the description of a challenge's current value.
-   * @param {value} overrideValue The value to check for. If undefined, gets the current value.
-   * @returns {string} The localised description for the current value.
-   */
-  getDescription(overrideValue?: integer): string {
-    if (overrideValue === undefined) {
-      overrideValue = this.value;
-    }
-    if (this.value === 0) {
-      return i18next.t("challenges:singleGeneration.desc_default");
-    }
-    return i18next.t("challenges:singleGeneration.desc", { gen: i18next.t(`challenges:singleGeneration.gen_${this.value}`) });
-  }
-
-
-  static loadChallenge(source: SingleGenerationChallenge | any): SingleGenerationChallenge {
-    const newChallenge = new SingleGenerationChallenge();
-    newChallenge.value = source.value;
-    newChallenge.severity = source.severity;
-    return newChallenge;
-  }
-}
 
 /**
  * Implements a mono type challenge.
@@ -934,8 +820,6 @@ export function applyChallenges(gameMode: GameMode, challengeType: ChallengeType
  */
 export function copyChallenge(source: Challenge | any): Challenge {
   switch (source.id) {
-  case Challenges.SINGLE_GENERATION:
-    return SingleGenerationChallenge.loadChallenge(source);
   case Challenges.SINGLE_TYPE:
     return SingleTypeChallenge.loadChallenge(source);
   case Challenges.LOWER_MAX_STARTER_COST:
@@ -954,7 +838,6 @@ export const allChallenges: Challenge[] = [];
 
 export function initChallenges() {
   allChallenges.push(
-    new SingleGenerationChallenge(),
     new SingleTypeChallenge(),
     new FreshStartChallenge(),
     new InverseBattleChallenge(),

@@ -5,7 +5,7 @@ import * as Utils from "../utils";
 import { PlayerPokemon, PokemonMove } from "../field/pokemon";
 import { getStarterValueFriendshipCap, speciesStarters } from "../data/pokemon-species";
 import { argbFromRgba } from "@material/material-color-utilities";
-import { Type, getTypeRgb } from "../data/type";
+import { Type } from "../data/type";
 import { TextStyle, addBBCodeTextObject, addTextObject, getBBCodeFrag } from "./text";
 import Move, { MoveCategory } from "../data/move";
 import { getPokeballAtlasKey } from "../data/pokeball";
@@ -24,14 +24,14 @@ import {modifierSortFunc} from "../modifier/modifier";
 import { PlayerGender } from "#enums/player-gender";
 
 enum Page {
-  PROFILE,
-  STATS,
-  MOVES
+  PROFILE = "PROFILE",
+  STATS = "STATS",
+  MOVES = "MOVES",
 }
 
 export enum SummaryUiMode {
-  DEFAULT,
-  LEARN_MOVE
+  DEFAULT = "DEFAULT",
+  LEARN_MOVE = "LEARN_MOVE",
 }
 
 /** Holds all objects related to an ability for each iteration */
@@ -296,7 +296,6 @@ export default class SummaryUiHandler extends UiHandler {
     this.numberText.setShadowColor(this.getTextColor(!this.pokemon.isShiny() ? TextStyle.SUMMARY : TextStyle.SUMMARY_GOLD, true));
 
     this.pokemonSprite.play(this.pokemon.getSpriteKey(true));
-    this.pokemonSprite.setPipelineData("teraColor", getTypeRgb(this.pokemon.getTeraType()));
     this.pokemonSprite.setPipelineData("ignoreTimeTint", true);
     this.pokemonSprite.setPipelineData("spriteKey", this.pokemon.getSpriteKey());
     this.pokemonSprite.setPipelineData("shiny", this.pokemon.shiny);
@@ -712,16 +711,9 @@ export default class SummaryUiHandler extends UiHandler {
       typeLabel.setOrigin(0, 0);
       profileContainer.add(typeLabel);
 
-      const getTypeIcon = (index: integer, type: Type, tera: boolean = false) => {
+      const getTypeIcon = (index: integer, type: Type) => {
         const xCoord = typeLabel.width * typeLabel.scale + 9 + 34 * index;
-        const typeIcon = !tera
-          ? this.scene.add.sprite(xCoord, 42, Utils.getLocalizedSpriteKey("types"), Type[type].toLowerCase())
-          : this.scene.add.sprite(xCoord, 42, "type_tera");
-        if (tera) {
-          typeIcon.setScale(0.5);
-          const typeRgb = getTypeRgb(type);
-          typeIcon.setTint(Phaser.Display.Color.GetColor(typeRgb[0], typeRgb[1], typeRgb[2]));
-        }
+        const typeIcon = this.scene.add.sprite(xCoord, 42, Utils.getLocalizedSpriteKey("types"), Type[type].toLowerCase());
         typeIcon.setOrigin(0, 1);
         return typeIcon;
       };
@@ -730,9 +722,6 @@ export default class SummaryUiHandler extends UiHandler {
       profileContainer.add(getTypeIcon(0, types[0]));
       if (types.length > 1) {
         profileContainer.add(getTypeIcon(1, types[1]));
-      }
-      if (this.pokemon?.isTerastallized()) {
-        profileContainer.add(getTypeIcon(types.length, this.pokemon.getTeraType(), true));
       }
 
       if (this.pokemon?.getLuck()) {

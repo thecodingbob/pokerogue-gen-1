@@ -7,10 +7,10 @@ import { ConditionFn } from "#app/@types/common.js";
 import { trainerConfigs } from "#app/data/trainer-config.js";
 
 export enum VoucherType {
-  REGULAR,
-  PLUS,
-  PREMIUM,
-  GOLDEN
+  REGULAR = "REGULAR",
+  PLUS = "PLUS",
+  PREMIUM = "PREMIUM",
+  GOLDEN = "GOLDEN",
 }
 
 export class Voucher {

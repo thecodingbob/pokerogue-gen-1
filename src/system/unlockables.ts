@@ -2,10 +2,10 @@ import i18next from "i18next";
 import { GameMode, GameModes } from "../game-mode";
 
 export enum Unlockables {
-  ENDLESS_MODE,
-  MINI_BLACK_HOLE,
-  SPLICED_ENDLESS_MODE,
-  EVIOLITE
+  ENDLESS_MODE = "ENDLESS_MODE",
+  MINI_BLACK_HOLE = "MINI_BLACK_HOLE",
+  SPLICED_ENDLESS_MODE = "SPLICED_ENDLESS_MODE",
+  EVIOLITE = "EVIOLITE",
 }
 
 export function getUnlockableName(unlockable: Unlockables) {

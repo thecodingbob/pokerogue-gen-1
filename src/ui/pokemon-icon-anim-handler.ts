@@ -2,9 +2,9 @@ import BattleScene from "../battle-scene";
 import * as Utils from "../utils";
 
 export enum PokemonIconAnimMode {
-  NONE,
-  PASSIVE,
-  ACTIVE
+  NONE = "NONE",
+  PASSIVE = "PASSIVE",
+  ACTIVE = "ACTIVE",
 }
 
 type PokemonIcon = Phaser.GameObjects.Container | Phaser.GameObjects.Sprite;

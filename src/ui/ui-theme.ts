@@ -3,9 +3,9 @@ import { legacyCompatibleImages } from "#app/scene-base";
 import BattleScene from "../battle-scene";
 
 export enum WindowVariant {
-  NORMAL,
-  THIN,
-  XTHIN
+  NORMAL = "NORMAL",
+  THIN = "THIN",
+  XTHIN = "XTHIN",
 }
 
 export function getWindowVariantSuffix(windowVariant: WindowVariant): string {

@@ -72,15 +72,15 @@ export const biomeLinks: BiomeLinks = {
 export const biomeDepths: BiomeDepths = {};
 
 export enum BiomePoolTier {
-  COMMON,
-  UNCOMMON,
-  RARE,
-  SUPER_RARE,
-  ULTRA_RARE,
-  BOSS,
-  BOSS_RARE,
-  BOSS_SUPER_RARE,
-  BOSS_ULTRA_RARE
+  COMMON = "COMMON",
+  UNCOMMON = "UNCOMMON",
+  RARE = "RARE",
+  SUPER_RARE = "SUPER_RARE",
+  ULTRA_RARE = "ULTRA_RARE",
+  BOSS = "BOSS",
+  BOSS_RARE = "BOSS_RARE",
+  BOSS_SUPER_RARE = "BOSS_SUPER_RARE",
+  BOSS_ULTRA_RARE = "BOSS_ULTRA_RARE"
 }
 
 export const uncatchableSpecies: Species[] = [];
@@ -106,7 +106,7 @@ export interface BiomeTierTrainerPools {
 }
 
 export interface BiomeTrainerPools {
-  [key: integer]: BiomeTierTrainerPools
+  [key: BiomePoolTier]: BiomeTierTrainerPools
 }
 
 export const biomePokemonPools: BiomePokemonPools = {
@@ -2774,7 +2774,7 @@ export function initBiomes() {
 
   for (const b of Object.keys(biomePokemonPools)) {
     for (const t of Object.keys(biomePokemonPools[b])) {
-      const tier = parseInt(t) as BiomePoolTier;
+      const tier = t as BiomePoolTier;
       for (const tod of Object.keys(biomePokemonPools[b][t])) {
         const biomeTierTimePool = biomePokemonPools[b][t][tod];
         for (let e = 0; e < biomeTierTimePool.length; e++) {

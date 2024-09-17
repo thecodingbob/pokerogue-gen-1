@@ -11,9 +11,9 @@ import { ArenaTagType } from "#enums/arena-tag-type";
 import { Moves } from "#enums/moves";
 
 export enum ArenaTagSide {
-  BOTH,
-  PLAYER,
-  ENEMY
+  BOTH = "BOTH",
+  PLAYER = "PLAYER",
+  ENEMY = "ENEMY"
 }
 
 export abstract class ArenaTag {

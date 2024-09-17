@@ -3,11 +3,11 @@
  */
 export enum ShopCursorTarget {
   /** Cursor points to Reroll */
-  REROLL,
+  REROLL = "REROLL",
   /** Cursor points to Items */
-  ITEMS,
+  ITEMS = "ITEMS",
   /** Cursor points to Shop */
-  SHOP,
+  SHOP = "SHOP",
   /** Cursor points to Check Team */
-  CHECK_TEAM
+  CHECK_TEAM = "CHECK_TEAM",
 }

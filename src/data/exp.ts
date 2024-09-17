@@ -1,10 +1,10 @@
 export enum GrowthRate {
-  ERRATIC = 0,
-  FAST,
-  MEDIUM_FAST,
-  MEDIUM_SLOW,
-  SLOW,
-  FLUCTUATING
+  ERRATIC = "ERRATIC",
+  FAST = "FAST",
+  MEDIUM_FAST = "MEDIUM_FAST",
+  MEDIUM_SLOW = "MEDIUM_SLOW",
+  SLOW = "SLOW",
+  FLUCTUATING = "FLUCTUATING",
 }
 
 const expLevels = [

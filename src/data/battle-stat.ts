@@ -1,14 +1,14 @@
 import i18next, { ParseKeys } from "i18next";
 
 export enum BattleStat {
-  ATK,
-  DEF,
-  SPEC,
-  SPD,
-  ACC,
-  EVA,
-  RAND,
-  HP
+  ATK = "ATK",
+  DEF = "DEF",
+  SPEC = "SPEC",
+  SPD = "SPD",
+  ACC = "ACC",
+  EVA = "EVA",
+  RAND = "RAND",
+  HP = "HP"
 }
 
 export function getBattleStatName(stat: BattleStat) {

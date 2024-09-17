@@ -1,7 +1,8 @@
 import { Challenge, copyChallenge } from "#app/data/challenge.js";
+import { Challenges } from "#app/enums/challenges.js";
 
 export default class ChallengeData {
-  public id: integer;
+  public id: Challenges;
   public value: integer;
   public severity: integer;
 

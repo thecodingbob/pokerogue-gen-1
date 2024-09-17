@@ -1,4 +1,4 @@
 export enum MoneyFormat {
-  NORMAL,
-  ABBREVIATED
+  NORMAL = "NORMAL",
+  ABBREVIATED = "ABBREVIATED",
 }

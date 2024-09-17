@@ -2,7 +2,7 @@
  * enum for the players gender
  */
 export enum PlayerGender {
-  UNSET,
-  MALE,
-  FEMALE
+  UNSET = "UNSET",
+  MALE = "MALE",
+  FEMALE = "FEMALE",
 }

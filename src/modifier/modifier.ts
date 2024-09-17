@@ -15,7 +15,6 @@ import { getBerryEffectFunc, getBerryPredicate } from "../data/berry";
 import { BattlerTagType} from "#enums/battler-tag-type";
 import { BerryType } from "#enums/berry-type";
 import { StatusEffect, getStatusEffectHealText } from "../data/status-effect";
-import { achvs } from "../system/achv";
 import { VoucherType } from "../system/voucher";
 import { FormChangeItem, SpeciesFormChangeItemTrigger } from "../data/pokemon-forms";
 import Overrides from "#app/overrides";
@@ -607,61 +606,6 @@ export abstract class LapsingPokemonHeldItemModifier extends PokemonHeldItemModi
   }
 }
 
-export class TerastallizeModifier extends LapsingPokemonHeldItemModifier {
-  public teraType: Type;
-  readonly isTransferrable: boolean = false;
-
-  constructor(type: ModifierTypes.TerastallizeModifierType, pokemonId: integer, teraType: Type, battlesLeft?: integer, stackCount?: integer) {
-    super(type, pokemonId, battlesLeft || 10, stackCount);
-
-    this.teraType = teraType;
-  }
-
-  matchType(modifier: Modifier): boolean {
-    if (modifier instanceof TerastallizeModifier && modifier.teraType === this.teraType) {
-      return true;
-    }
-    return false;
-  }
-
-  clone(): TerastallizeModifier {
-    return new TerastallizeModifier(this.type as ModifierTypes.TerastallizeModifierType, this.pokemonId, this.teraType, this.battlesLeft, this.stackCount);
-  }
-
-  getArgs(): any[] {
-    return [ this.pokemonId, this.teraType, this.battlesLeft ];
-  }
-
-  apply(args: any[]): boolean {
-    const pokemon = args[0] as Pokemon;
-    if (pokemon.isPlayer()) {
-      pokemon.scene.validateAchv(achvs.TERASTALLIZE);
-      if (this.teraType === Type.STELLAR) {
-        pokemon.scene.validateAchv(achvs.STELLAR_TERASTALLIZE);
-      }
-    }
-    pokemon.updateSpritePipelineData();
-    return true;
-  }
-
-  lapse(args: any[]): boolean {
-    const ret = super.lapse(args);
-    if (!ret) {
-      const pokemon = args[0] as Pokemon;
-      pokemon.updateSpritePipelineData();
-    }
-    return ret;
-  }
-
-  getScoreMultiplier(): number {
-    return 1.25;
-  }
-
-  getMaxHeldItemCount(pokemon: Pokemon): integer {
-    return 1;
-  }
-}
-
 export class PokemonBaseStatModifier extends PokemonHeldItemModifier {
   protected stat: Stat;
   readonly isTransferrable: boolean = false;
@@ -1002,7 +946,7 @@ export class AttackTypeBoosterModifier extends PokemonHeldItemModifier {
   }
 
   shouldApply(args: any[]): boolean {
-    return super.shouldApply(args) && args.length === 3 && typeof args[1] === "number" && args[2] instanceof Utils.NumberHolder;
+    return super.shouldApply(args) && args.length === 3 && typeof args[1] === "string" && args[2] instanceof Utils.NumberHolder;
   }
 
   /**

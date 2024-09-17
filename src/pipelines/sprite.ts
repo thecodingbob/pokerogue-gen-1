@@ -27,7 +27,6 @@ uniform vec3 dayTint;
 uniform vec3 duskTint;
 uniform vec3 nightTint;
 uniform float teraTime;
-uniform vec3 teraColor;
 uniform int hasShadow;
 uniform int yCenter;
 uniform float fieldScale;
@@ -189,24 +188,6 @@ void main() {
     //  Multiply texture tint
     vec4 color = texture * texel;
 
-    if (color.a > 0.0 && teraColor.r > 0.0 && teraColor.g > 0.0 && teraColor.b > 0.0) {
-        vec2 relUv = vec2((outTexCoord.x - texFrameUv.x) / (size.x / texSize.x), (outTexCoord.y - texFrameUv.y) / (size.y / texSize.y));
-        vec2 teraTexCoord = vec2(relUv.x * (size.x / 200.0), relUv.y * (size.y / 120.0));
-        vec4 teraCol = texture2D(uMainSampler[1], teraTexCoord);
-        float floorValue = 86.0 / 255.0;
-        vec3 teraPatternHsv = rgb2hsv(teraCol.rgb);
-        teraCol.rgb = hsv2rgb(vec3((teraPatternHsv.b - floorValue) * 4.0 + teraTexCoord.x * fieldScale / 2.0 + teraTexCoord.y * fieldScale / 2.0 + teraTime * 255.0, teraPatternHsv.b, teraPatternHsv.b));
-
-        color.rgb = mix(color.rgb, blendHue(color.rgb, teraColor), 0.625);
-        teraCol.rgb = mix(teraCol.rgb, teraColor, 0.5);
-        color.rgb = blendOverlay(color.rgb, teraCol.rgb);
-
-        if (teraColor.r < 1.0 || teraColor.g < 1.0 || teraColor.b < 1.0) {
-            vec3 teraColHsv = rgb2hsv(teraColor);
-            color.rgb = mix(color.rgb, teraColor, (1.0 - teraColHsv.g) / 2.0);
-        }
-    }
-
     if (outTintEffect == 1.0) {
         //  Solid color + texture alpha
         color.rgb = mix(texture.rgb, outTint.bgr * outTint.a, texture.a);
@@ -330,7 +311,6 @@ export default class SpritePipeline extends FieldSpritePipeline {
     super.onPreRender();
 
     this.set1f("teraTime", 0);
-    this.set3fv("teraColor", [ 0, 0, 0 ]);
     this.set1i("hasShadow", 0);
     this.set1i("yCenter", 0);
     this.set2f("relPosition", 0, 0);
@@ -348,7 +328,6 @@ export default class SpritePipeline extends FieldSpritePipeline {
 
     const data = sprite.pipelineData;
     const tone = data["tone"] as number[];
-    const teraColor = data["teraColor"] as integer[] ?? [ 0, 0, 0 ];
     const hasShadow = data["hasShadow"] as boolean;
     const ignoreFieldPos = data["ignoreFieldPos"] as boolean;
     const ignoreOverride = data["ignoreOverride"] as boolean;
@@ -366,8 +345,6 @@ export default class SpritePipeline extends FieldSpritePipeline {
     if (sprite.originY === 0.5) {
       position[1] += (sprite.height / 2) * ((isEntityObj ? sprite.parentContainer : sprite).scale - 1) + (!ignoreFieldPos ? (sprite.y - field.y) : 0);
     }
-    this.set1f("teraTime", (this.game.getTime() % 500000) / 500000);
-    this.set3fv("teraColor", teraColor.map(c => c / 255));
     this.set1i("hasShadow", hasShadow ? 1 : 0);
     this.set1i("yCenter", sprite.originY === 0.5 ? 1 : 0);
     this.set1f("fieldScale", field?.scale || 1);

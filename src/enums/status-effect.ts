@@ -1,10 +1,10 @@
 export enum StatusEffect {
-  NONE,
-  POISON,
-  TOXIC,
-  PARALYSIS,
-  SLEEP,
-  FREEZE,
-  BURN,
-  FAINT,
+  NONE = "NONE",
+  POISON = "POISON",
+  TOXIC = "TOXIC",
+  PARALYSIS = "PARALYSIS",
+  SLEEP = "SLEEP",
+  FREEZE = "FREEZE",
+  BURN = "BURN",
+  FAINT = "FAINT",
 }

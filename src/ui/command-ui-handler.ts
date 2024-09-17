@@ -9,10 +9,10 @@ import { getPokemonNameWithAffix } from "#app/messages.js";
 import { CommandPhase } from "#app/phases/command-phase.js";
 
 export enum Command {
-  FIGHT = 0,
-  BALL,
-  POKEMON,
-  RUN
+  FIGHT = "FIGHT",
+  BALL = "BALL",
+  POKEMON = "POKEMON",
+  RUN = "RUN",
 }
 
 export default class CommandUiHandler extends UiHandler {

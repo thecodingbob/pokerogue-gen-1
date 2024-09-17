@@ -5,16 +5,16 @@ import { pokemonEvolutions } from "#app/data/pokemon-evolutions";
 import i18next from "i18next";
 import * as Utils from "../utils";
 import { PlayerGender } from "#enums/player-gender";
-import { Challenge, FreshStartChallenge, InverseBattleChallenge, SingleGenerationChallenge, SingleTypeChallenge } from "#app/data/challenge";
+import { Challenge, FreshStartChallenge, InverseBattleChallenge, SingleTypeChallenge } from "#app/data/challenge";
 import { Challenges } from "#app/enums/challenges";
 import { ConditionFn } from "#app/@types/common";
 
 export enum AchvTier {
-  COMMON,
-  GREAT,
-  ULTRA,
-  ROGUE,
-  MASTER
+  COMMON = "COMMON",
+  GREAT = "GREAT",
+  ULTRA = "ULTRA",
+  ROGUE = "ROGUE",
+  MASTER = "MASTER",
 }
 
 export class Achv {
@@ -321,15 +321,6 @@ export const achvs = {
   PERFECT_IVS: new Achv("PERFECT_IVS", "",  "PERFECT_IVS.description", "blunder_policy", 100),
   CLASSIC_VICTORY: new Achv("CLASSIC_VICTORY", "",  "CLASSIC_VICTORY.description", "relic_crown", 150, c => c.gameData.gameStats.sessionsWon === 0),
   UNEVOLVED_CLASSIC_VICTORY: new Achv("UNEVOLVED_CLASSIC_VICTORY", "", "UNEVOLVED_CLASSIC_VICTORY.description", "eviolite", 175, c => c.getParty().some(p => p.getSpeciesForm(true).speciesId in pokemonEvolutions)),
-  MONO_GEN_ONE_VICTORY: new ChallengeAchv("MONO_GEN_ONE", "",  "MONO_GEN_ONE.description", "ribbon_gen1", 100, (c, scene) => c instanceof SingleGenerationChallenge && c.value === 1 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_GEN_TWO_VICTORY: new ChallengeAchv("MONO_GEN_TWO", "",  "MONO_GEN_TWO.description", "ribbon_gen2", 100, (c, scene) => c instanceof SingleGenerationChallenge && c.value === 2 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_GEN_THREE_VICTORY: new ChallengeAchv("MONO_GEN_THREE", "",  "MONO_GEN_THREE.description", "ribbon_gen3", 100, (c, scene) => c instanceof SingleGenerationChallenge && c.value === 3 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_GEN_FOUR_VICTORY: new ChallengeAchv("MONO_GEN_FOUR", "",  "MONO_GEN_FOUR.description", "ribbon_gen4", 100, (c, scene) => c instanceof SingleGenerationChallenge && c.value === 4 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_GEN_FIVE_VICTORY: new ChallengeAchv("MONO_GEN_FIVE", "",  "MONO_GEN_FIVE.description", "ribbon_gen5", 100, (c, scene) => c instanceof SingleGenerationChallenge && c.value === 5 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_GEN_SIX_VICTORY: new ChallengeAchv("MONO_GEN_SIX", "",  "MONO_GEN_SIX.description", "ribbon_gen6", 100, (c, scene) => c instanceof SingleGenerationChallenge && c.value === 6 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_GEN_SEVEN_VICTORY: new ChallengeAchv("MONO_GEN_SEVEN", "",  "MONO_GEN_SEVEN.description", "ribbon_gen7", 100, (c, scene) => c instanceof SingleGenerationChallenge && c.value === 7 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_GEN_EIGHT_VICTORY: new ChallengeAchv("MONO_GEN_EIGHT", "",  "MONO_GEN_EIGHT.description", "ribbon_gen8", 100, (c, scene) => c instanceof SingleGenerationChallenge && c.value === 8 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
-  MONO_GEN_NINE_VICTORY: new ChallengeAchv("MONO_GEN_NINE", "",  "MONO_GEN_NINE.description", "ribbon_gen9", 100, (c, scene) => c instanceof SingleGenerationChallenge && c.value === 9 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_NORMAL: new ChallengeAchv("MONO_NORMAL", "", "MONO_NORMAL.description", "silk_scarf", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 1 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_FIGHTING: new ChallengeAchv("MONO_FIGHTING", "", "MONO_FIGHTING.description", "black_belt", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 2 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),
   MONO_FLYING: new ChallengeAchv("MONO_FLYING", "", "MONO_FLYING.description", "sharp_beak", 100, (c, scene) => c instanceof SingleTypeChallenge && c.value === 3 && !scene.gameMode.challenges.some(c => c.id === Challenges.INVERSE_BATTLE && c.value > 0)),

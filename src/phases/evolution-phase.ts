@@ -7,7 +7,6 @@ import * as Utils from "../utils";
 import { Mode } from "../ui/ui";
 import { cos, sin } from "../field/anims";
 import { PlayerPokemon } from "../field/pokemon";
-import { getTypeRgb } from "../data/type";
 import i18next from "i18next";
 import { getPokemonNameWithAffix } from "../messages";
 import { LearnMovePhase } from "./learn-move-phase";
@@ -99,7 +98,7 @@ export class EvolutionPhase extends Phase {
 
       [ this.pokemonSprite, this.pokemonTintSprite, this.pokemonEvoSprite, this.pokemonEvoTintSprite ].map(sprite => {
         sprite.play(this.pokemon.getSpriteKey(true));
-        sprite.setPipeline(this.scene.spritePipeline, { tone: [ 0.0, 0.0, 0.0, 0.0 ], hasShadow: false, teraColor: getTypeRgb(this.pokemon.getTeraType()) });
+        sprite.setPipeline(this.scene.spritePipeline, { tone: [ 0.0, 0.0, 0.0, 0.0 ], hasShadow: false });
         sprite.setPipelineData("ignoreTimeTint", true);
         sprite.setPipelineData("spriteKey", this.pokemon.getSpriteKey());
         sprite.setPipelineData("shiny", this.pokemon.shiny);

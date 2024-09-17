@@ -34,11 +34,11 @@ const useMaxWeightForOutput = false;
 type Modifier = Modifiers.Modifier;
 
 export enum ModifierPoolType {
-  PLAYER,
-  WILD,
-  TRAINER,
-  ENEMY_BUFF,
-  DAILY_STARTER
+  PLAYER = "PLAYER",
+  WILD = "WILD",
+  TRAINER = "TRAINER",
+  ENEMY_BUFF = "ENEMY_BUFF",
+  DAILY_STARTER = "DAILY_STARTER",
 }
 
 type NewModifierFunc = (type: ModifierType, args: any[]) => Modifier;
@@ -1036,28 +1036,6 @@ class FormChangeItemModifierTypeGenerator extends ModifierTypeGenerator {
 
       return new FormChangeItemModifierType(formChangeItemPool[Utils.randSeedInt(formChangeItemPool.length)]);
     });
-  }
-}
-
-export class TerastallizeModifierType extends PokemonHeldItemModifierType implements GeneratedPersistentModifierType {
-  private teraType: Type;
-
-  constructor(teraType: Type) {
-    super("", `${Type[teraType].toLowerCase()}_tera_shard`, (type, args) => new Modifiers.TerastallizeModifier(type as TerastallizeModifierType, (args[0] as Pokemon).id, teraType), "tera_shard");
-
-    this.teraType = teraType;
-  }
-
-  get name(): string {
-    return i18next.t("modifierType:ModifierType.TerastallizeModifierType.name", { teraType: i18next.t(`pokemonInfo:Type.${Type[this.teraType]}`) });
-  }
-
-  getDescription(scene: BattleScene): string {
-    return i18next.t("modifierType:ModifierType.TerastallizeModifierType.description", { teraType: i18next.t(`pokemonInfo:Type.${Type[this.teraType]}`) });
-  }
-
-  getPregenArgs(): any[] {
-    return [ this.teraType ];
   }
 }
 

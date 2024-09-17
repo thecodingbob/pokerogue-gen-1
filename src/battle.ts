@@ -16,17 +16,17 @@ import { TrainerType } from "#enums/trainer-type";
 import i18next from "#app/plugins/i18n";
 
 export enum BattleType {
-    WILD,
-    TRAINER,
-    CLEAR
+    WILD = "WILD",
+    TRAINER = "TRAINER",
+    CLEAR = "CLEAR"
 }
 
 export enum BattlerIndex {
-    ATTACKER = -1,
-    PLAYER,
-    PLAYER_2,
-    ENEMY,
-    ENEMY_2
+    ATTACKER = "ATTACKER",
+    PLAYER = "PLAYER",
+    PLAYER_2 = "PLAYER_2",
+    ENEMY = "ENEMY",
+    ENEMY_2 = "ENEMY_2"
 }
 
 export interface TurnCommand {

@@ -16,7 +16,7 @@ import { getLuckString, getLuckTextTint } from "../modifier/modifier-type";
 import RoundRectangle from "phaser3-rex-plugins/plugins/roundrectangle.js";
 import { Type, getTypeRgb } from "../data/type";
 import { getVariantTint } from "#app/data/variant";
-import { PokemonHeldItemModifier, TerastallizeModifier } from "../modifier/modifier";
+import { PokemonHeldItemModifier } from "../modifier/modifier";
 import {modifierSortFunc} from "../modifier/modifier";
 import { Species } from "#enums/species";
 import { PlayerGender } from "#enums/player-gender";
@@ -27,9 +27,9 @@ import { PlayerGender } from "#enums/player-gender";
  * HALL_OF_FAME, ENDING_ART, etc. <-- overlays that should return back to MAIN
  */
 enum RunInfoUiMode {
-  MAIN,
-  HALL_OF_FAME,
-  ENDING_ART
+  MAIN = "MAIN",
+  HALL_OF_FAME = "HALL_OF_FAME",
+  ENDING_ART = "ENDING_ART",
 }
 
 /**
@@ -296,18 +296,6 @@ export default class RunInfoUiHandler extends UiHandler {
       enemyContainer.add(tObjSprite);
     }
 
-    // Determining which Terastallize Modifier belongs to which Pokemon
-    // Creates a dictionary {PokemonId: TeraShardType}
-    const teraPokemon = {};
-    this.runInfo.enemyModifiers.forEach((m) => {
-      const modifier = m.toModifier(this.scene, this.modifiersModule[m.className]);
-      if (modifier instanceof TerastallizeModifier) {
-        const teraDetails = modifier?.getArgs();
-        const pkmnId = teraDetails[0];
-        teraPokemon[pkmnId] = teraDetails[1];
-      }
-    });
-
     // Creates the Pokemon icons + level information and adds it to enemyContainer
     // 2 Rows x 3 Columns
     const enemyPartyContainer = this.scene.add.container(0, 0);
@@ -320,18 +308,6 @@ export default class RunInfoUiHandler extends UiHandler {
       enemyData["player"] = true;
       const enemy = enemyData.toPokemon(this.scene);
       const enemyIcon = this.scene.addPokemonIcon(enemy, 0, 0, 0, 0);
-      // Applying Terastallizing Type tint to Pokemon icon
-      // If the Pokemon is a fusion, it has two sprites and so, the tint has to be applied to each icon separately
-      const enemySprite1 = enemyIcon.list[0] as Phaser.GameObjects.Sprite;
-      const enemySprite2 = (enemyIcon.list.length > 1) ? enemyIcon.list[1] as Phaser.GameObjects.Sprite : undefined;
-      if (teraPokemon[enemyData.id]) {
-        const teraTint = getTypeRgb(teraPokemon[enemyData.id]);
-        const teraColor = new Phaser.Display.Color(teraTint[0], teraTint[1], teraTint[2]);
-        enemySprite1.setTint(teraColor.color);
-        if (enemySprite2) {
-          enemySprite2.setTint(teraColor.color);
-        }
-      }
       enemyIcon.setPosition(39*(e%3)+5, (35*pokemonRowHeight));
       const enemyLevel = addTextObject(this.scene, 43*(e%3), (27*(pokemonRowHeight+1)), `${i18next.t("saveSlotSelectUiHandler:lv")}${Utils.formatLargeNumber(enemy.level, 1000)}`, isBoss ? TextStyle.PARTY_RED : TextStyle.PARTY, { fontSize: "54px" });
       enemyLevel.setShadow(0, 0, undefined);
@@ -465,9 +441,6 @@ export default class RunInfoUiHandler extends UiHandler {
     for (let i = 0; i < this.runInfo.challenges.length; i++) {
       if (this.runInfo.challenges[i].value !== 0) {
         switch (this.runInfo.challenges[i].id) {
-        case Challenges.SINGLE_GENERATION:
-          rules.push(i18next.t(`runHistory:challengeMonoGen${this.runInfo.challenges[i].value}`));
-          break;
         case Challenges.SINGLE_TYPE:
           rules.push(i18next.t(`pokemonInfo:Type.${Type[this.runInfo.challenges[i].value-1]}` as const));
           break;

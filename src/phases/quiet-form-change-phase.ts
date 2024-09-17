@@ -1,7 +1,6 @@
 import BattleScene from "#app/battle-scene.js";
 import { SemiInvulnerableTag } from "#app/data/battler-tags.js";
 import { SpeciesFormChange, getSpeciesFormChangeMessage } from "#app/data/pokemon-forms.js";
-import { getTypeRgb } from "#app/data/type.js";
 import { BattleSpec } from "#app/enums/battle-spec.js";
 import Pokemon, { EnemyPokemon } from "#app/field/pokemon.js";
 import { getPokemonNameWithAffix } from "#app/messages.js";
@@ -39,7 +38,7 @@ export class QuietFormChangePhase extends BattlePhase {
       const sprite = this.scene.addPokemonSprite(this.pokemon, this.pokemon.x + this.pokemon.getSprite().x, this.pokemon.y + this.pokemon.getSprite().y, "pkmn__sub");
       sprite.setOrigin(0.5, 1);
       sprite.play(this.pokemon.getBattleSpriteKey()).stop();
-      sprite.setPipeline(this.scene.spritePipeline, { tone: [ 0.0, 0.0, 0.0, 0.0 ], hasShadow: false, teraColor: getTypeRgb(this.pokemon.getTeraType()) });
+      sprite.setPipeline(this.scene.spritePipeline, { tone: [ 0.0, 0.0, 0.0, 0.0 ], hasShadow: false });
       [ "spriteColors", "fusionSpriteColors" ].map(k => {
         if (this.pokemon.summonData?.speciesForm) {
           k += "Base";

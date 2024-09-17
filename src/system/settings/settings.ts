@@ -57,9 +57,9 @@ const AUTO_DISABLED: SettingOption[] = [
  * Types for helping separate settings to different menus
  */
 export enum SettingType {
-  GENERAL,
-  DISPLAY,
-  AUDIO
+  GENERAL = "GENERAL",
+  DISPLAY = "DISPLAY",
+  AUDIO = "AUDIO",
 }
 
 type SettingOption = {

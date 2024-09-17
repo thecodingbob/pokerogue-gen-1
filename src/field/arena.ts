@@ -93,6 +93,7 @@ export class Arena {
     let tier = !isBoss
       ? tierValue >= 156 ? BiomePoolTier.COMMON : tierValue >= 32 ? BiomePoolTier.UNCOMMON : tierValue >= 6 ? BiomePoolTier.RARE : tierValue >= 1 ? BiomePoolTier.SUPER_RARE : BiomePoolTier.ULTRA_RARE
       : tierValue >= 20 ? BiomePoolTier.BOSS : tierValue >= 6 ? BiomePoolTier.BOSS_RARE : tierValue >= 1 ? BiomePoolTier.BOSS_SUPER_RARE : BiomePoolTier.BOSS_ULTRA_RARE;
+    console.log("Biome: " + this.biomeType + " " + Biome[this.biomeType]);
     console.log(BiomePoolTier[tier]);
     while (!this.pokemonPool[tier].length) {
       console.log(`Downgraded rarity tier from ${BiomePoolTier[tier]} to ${BiomePoolTier[tier - 1]}`);
@@ -106,7 +107,7 @@ export class Arena {
     } else {
       const entry = tierPool[Utils.randSeedInt(tierPool.length)];
       let species: Species;
-      if (typeof entry === "number") {
+      if (typeof entry === "string") {
         species = entry as Species;
       } else {
         const levelThresholds = Object.keys(entry);

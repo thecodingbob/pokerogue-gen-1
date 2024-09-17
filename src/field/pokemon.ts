@@ -7,10 +7,10 @@ import Move, { HighCritAttr, HitsTagAttr, applyMoveAttrs, FixedDamageAttr, Varia
 import { default as PokemonSpecies, PokemonSpeciesForm, SpeciesFormKey, getFusedSpeciesName, getPokemonSpecies, getPokemonSpeciesForm, getStarterValueFriendshipCap, speciesStarters, starterPassiveAbilities } from "../data/pokemon-species";
 import { Constructor } from "#app/utils";
 import * as Utils from "../utils";
-import { Type, TypeDamageMultiplier, getTypeDamageMultiplier, getTypeRgb } from "../data/type";
+import { Type, TypeDamageMultiplier, getTypeDamageMultiplier } from "../data/type";
 import { getLevelTotalExp } from "../data/exp";
 import { Stat } from "../data/pokemon-stat";
-import { DamageMoneyRewardModifier, EnemyDamageBoosterModifier, EnemyDamageReducerModifier, EnemyEndureChanceModifier, EnemyFusionChanceModifier, PokemonBaseStatModifier, PokemonFriendshipBoosterModifier, PokemonHeldItemModifier, ShinyRateBoosterModifier, SurviveDamageModifier, TempBattleStatBoosterModifier, StatBoosterModifier, CritBoosterModifier, TerastallizeModifier } from "../modifier/modifier";
+import { DamageMoneyRewardModifier, EnemyDamageBoosterModifier, EnemyDamageReducerModifier, EnemyEndureChanceModifier, EnemyFusionChanceModifier, PokemonBaseStatModifier, PokemonFriendshipBoosterModifier, PokemonHeldItemModifier, ShinyRateBoosterModifier, SurviveDamageModifier, TempBattleStatBoosterModifier, StatBoosterModifier, CritBoosterModifier } from "../modifier/modifier";
 import { PokeballType } from "../data/pokeball";
 import { Gender } from "../data/gender";
 import { initMoveAnim, loadMoveAnimAssets } from "../data/battle-anims";
@@ -59,9 +59,9 @@ import { SwitchSummonPhase } from "#app/phases/switch-summon-phase.js";
 import { ToggleDoublePositionPhase } from "#app/phases/toggle-double-position-phase.js";
 
 export enum FieldPosition {
-  CENTER,
-  LEFT,
-  RIGHT
+  CENTER = "CENTER",
+  LEFT = "LEFT",
+  RIGHT = "RIGHT",
 }
 
 export default abstract class Pokemon extends Phaser.GameObjects.Container {
@@ -241,7 +241,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     const getSprite = (hasShadow?: boolean) => {
       const ret = this.scene.addPokemonSprite(this, 0, 0, `pkmn__${this.isPlayer() ? "back__" : ""}sub`, undefined, true);
       ret.setOrigin(0.5, 1);
-      ret.setPipeline(this.scene.spritePipeline, { tone: [ 0.0, 0.0, 0.0, 0.0 ], hasShadow: !!hasShadow, teraColor: getTypeRgb(this.getTeraType()) });
+      ret.setPipeline(this.scene.spritePipeline, { tone: [ 0.0, 0.0, 0.0, 0.0 ], hasShadow: !!hasShadow });
       return ret;
     };
 
@@ -538,11 +538,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     this.setScale(this.getSpriteScale());
   }
 
-  updateSpritePipelineData(): void {
-    [ this.getSprite(), this.getTintSprite() ].filter(s => !!s).map(s => s.pipelineData["teraColor"] = getTypeRgb(this.getTeraType()));
-    this.updateInfo(true);
-  }
-
   initShinySparkle(): void {
     const keySuffix = this.variant ? `_${this.variant + 1}` : "";
     const key = `shiny${keySuffix}`;
@@ -644,7 +639,7 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     if (stat === Stat.HP) {
       return this.getStat(Stat.HP);
     }
-    const battleStat = (stat - 1) as BattleStat;
+    const battleStat = BattleStat[stat];
     const statLevel = new Utils.IntegerHolder(this.summonData.battleStats[battleStat]);
     if (opponent) {
       if (isCritical) {
@@ -875,22 +870,13 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
 
   /**
    * Gets the types of a pokemon
-   * @param includeTeraType boolean to include tera-formed type, default false
    * @param forDefend boolean if the pokemon is defending from an attack
    * @param ignoreOverride boolean if true, ignore ability changing effects
    * @returns array of {@linkcode Type}
    */
   getTypes(includeTeraType = false, forDefend: boolean = false, ignoreOverride?: boolean): Type[] {
     const types : Type[] = [];
-
-    if (includeTeraType) {
-      const teraType = this.getTeraType();
-      if (teraType !== Type.UNKNOWN) {
-        types.push(teraType);
-      }
-    }
-
-    if (!types.length || !includeTeraType) {
+    if (!types.length) {
       if (!ignoreOverride && this.summonData?.types && this.summonData.types.length !== 0) {
         this.summonData.types.forEach(t => types.push(t));
       } else {
@@ -1079,27 +1065,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     return weight.value;
   }
 
-  /**
-   * Gets the tera-formed type of the pokemon, or UNKNOWN if not present
-   * @returns the {@linkcode Type}
-   */
-  getTeraType(): Type {
-    // this.scene can be undefined for a fainted mon in doubles
-    if (this.scene !== undefined) {
-      const teraModifier = this.scene.findModifier(m => m instanceof TerastallizeModifier
-        && m.pokemonId === this.id && !!m.getBattlesLeft(), this.isPlayer()) as TerastallizeModifier;
-      // return teraType
-      if (teraModifier) {
-        return teraModifier.teraType;
-      }
-    }
-    // if scene is undefined, or if teraModifier is considered false, then return unknown type
-    return Type.UNKNOWN;
-  }
-
-  isTerastallized(): boolean {
-    return this.getTeraType() !== Type.UNKNOWN;
-  }
 
   isGrounded(): boolean {
     return !!this.getTag(GroundedTag) || (!this.isOfType(Type.FLYING, true, true) && !this.hasAbility(Abilities.LEVITATE) && !this.getTag(BattlerTagType.MAGNET_RISEN) && !this.getTag(SemiInvulnerableTag));
@@ -1883,8 +1848,6 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     switch (moveCategory) {
     case MoveCategory.ATTACK:
       const isPhysical = move.getDamageType() === MoveDamageType.PHYSICAL;
-      const sourceTeraType = source.getTeraType();
-
       const power = move.calculateBattlePower(source, this);
 
       if (cancelled.value) {
@@ -1968,17 +1931,10 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
         const sourceTypes = source.getTypes();
         const matchesSourceType = sourceTypes[0] === moveType || (sourceTypes.length > 1 && sourceTypes[1] === moveType);
         const stabMultiplier = new Utils.NumberHolder(1);
-        if (sourceTeraType === Type.UNKNOWN && matchesSourceType) {
-          stabMultiplier.value += 0.5;
-        } else if (sourceTeraType !== Type.UNKNOWN && sourceTeraType === moveType) {
+        if (matchesSourceType) {
           stabMultiplier.value += 0.5;
         }
-
         applyAbAttrs(StabBoostAbAttr, source, null, false, stabMultiplier);
-
-        if (sourceTeraType !== Type.UNKNOWN && matchesSourceType) {
-          stabMultiplier.value = Math.min(stabMultiplier.value + 0.5, 2.25);
-        }
 
         // 25% damage debuff on moves hitting more than one non-fainted target (regardless of immunities)
         const { targets, multiple } = getMoveTargets(source, move.id);
@@ -4085,31 +4041,31 @@ export class PokemonTurnData {
 }
 
 export enum AiType {
-  RANDOM,
-  SMART_RANDOM,
-  SMART
+  RANDOM = "RANDOM",
+  SMART_RANDOM = "SMART_RANDOM",
+  SMART = "SMART",
 }
 
 export enum MoveResult {
-  PENDING,
-  SUCCESS,
-  FAIL,
-  MISS,
-  OTHER
+  PENDING = "PENDING",
+  SUCCESS = "SUCCESS",
+  FAIL = "FAIL",
+  MISS = "MISS",
+  OTHER = "OTHER",
 }
 
 export enum HitResult {
-  EFFECTIVE = 1,
-  SUPER_EFFECTIVE,
-  NOT_VERY_EFFECTIVE,
-  ONE_HIT_KO,
-  NO_EFFECT,
-  STATUS,
-  HEAL,
-  FAIL,
-  MISS,
-  OTHER,
-  IMMUNE
+  EFFECTIVE = "EFFECTIVE",
+  SUPER_EFFECTIVE = "SUPER_EFFECTIVE",
+  NOT_VERY_EFFECTIVE = "NOT_VERY_EFFECTIVE",
+  ONE_HIT_KO = "ONE_HIT_KO",
+  NO_EFFECT = "NO_EFFECT",
+  STATUS = "STATUS",
+  HEAL = "HEAL",
+  FAIL = "FAIL",
+  MISS = "MISS",
+  OTHER = "OTHER",
+  IMMUNE = "IMMUNE",
 }
 
 export type DamageResult = HitResult.EFFECTIVE | HitResult.SUPER_EFFECTIVE | HitResult.NOT_VERY_EFFECTIVE | HitResult.ONE_HIT_KO | HitResult.OTHER;

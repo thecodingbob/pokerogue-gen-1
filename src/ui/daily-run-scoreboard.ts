@@ -13,8 +13,8 @@ interface RankingEntry {
 
 // Don't forget to update translations when adding a new category
 enum ScoreboardCategory {
-  DAILY,
-  WEEKLY
+  DAILY = "DAILY",
+  WEEKLY = "WEEKLY"
 }
 
 export class DailyRunScoreboard extends Phaser.GameObjects.Container {

@@ -1,305 +1,305 @@
 export enum Species {
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Bulbasaur_(Pokémon) | Source} */
-  BULBASAUR = 1,
+  BULBASAUR = "BULBASAUR",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Ivysaur_(Pokémon) | Source} */
-  IVYSAUR,
+  IVYSAUR = "IVYSAUR",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Venusaur_(Pokémon) | Source} */
-  VENUSAUR,
+  VENUSAUR = "VENUSAUR",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Charmander_(Pokémon) | Source} */
-  CHARMANDER,
+  CHARMANDER = "CHARMANDER",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Charmeleon_(Pokémon) | Source} */
-  CHARMELEON,
+  CHARMELEON = "CHARMELEON",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Charizard_(Pokémon) | Source} */
-  CHARIZARD,
+  CHARIZARD = "CHARIZARD",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Squirtle_(Pokémon) | Source} */
-  SQUIRTLE,
+  SQUIRTLE = "SQUIRTLE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Wartortle_(Pokémon) | Source} */
-  WARTORTLE,
+  WARTORTLE = "WARTORTLE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Blastoise_(Pokémon) | Source} */
-  BLASTOISE,
+  BLASTOISE = "BLASTOISE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Caterpie_(Pokémon) | Source} */
-  CATERPIE,
+  CATERPIE = "CATERPIE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Metapod_(Pokémon) | Source} */
-  METAPOD,
+  METAPOD = "METAPOD",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Butterfree_(Pokémon) | Source} */
-  BUTTERFREE,
+  BUTTERFREE = "BUTTERFREE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Weedle_(Pokémon) | Source} */
-  WEEDLE,
+  WEEDLE = "WEEDLE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Kakuna_(Pokémon) | Source} */
-  KAKUNA,
+  KAKUNA = "KAKUNA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Beedrill_(Pokémon) | Source} */
-  BEEDRILL,
+  BEEDRILL = "BEEDRILL",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Pidgey_(Pokémon) | Source} */
-  PIDGEY,
+  PIDGEY = "PIDGEY",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Pidgeotto_(Pokémon) | Source} */
-  PIDGEOTTO,
+  PIDGEOTTO = "PIDGEOTTO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Pidgeot_(Pokémon) | Source} */
-  PIDGEOT,
+  PIDGEOT = "PIDGEOT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Rattata_(Pokémon) | Source} */
-  RATTATA,
+  RATTATA = "RATTATA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Raticate_(Pokémon) | Source} */
-  RATICATE,
+  RATICATE = "RATICATE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Spearow_(Pokémon) | Source} */
-  SPEAROW,
+  SPEAROW = "SPEAROW",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Fearow_(Pokémon) | Source} */
-  FEAROW,
+  FEAROW = "FEAROW",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Ekans_(Pokémon) | Source} */
-  EKANS,
+  EKANS = "EKANS",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Arbok_(Pokémon) | Source} */
-  ARBOK,
+  ARBOK = "ARBOK",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Pikachu_(Pokémon) | Source} */
-  PIKACHU,
+  PIKACHU = "PIKACHU",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Raichu_(Pokémon) | Source} */
-  RAICHU,
+  RAICHU = "RAICHU",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Sandshrew_(Pokémon) | Source} */
-  SANDSHREW,
+  SANDSHREW = "SANDSHREW",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Sandslash_(Pokémon) | Source} */
-  SANDSLASH,
+  SANDSLASH = "SANDSLASH",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Nidoran_F_(Pokémon) | Source} */
-  NIDORAN_F,
+  NIDORAN_F = "NIDORAN_F",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Nidorina_(Pokémon) | Source} */
-  NIDORINA,
+  NIDORINA = "NIDORINA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Nidoqueen_(Pokémon) | Source} */
-  NIDOQUEEN,
+  NIDOQUEEN = "NIDOQUEEN",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Nidoran_M_(Pokémon) | Source} */
-  NIDORAN_M,
+  NIDORAN_M = "NIDORAN_M",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Nidorino_(Pokémon) | Source} */
-  NIDORINO,
+  NIDORINO = "NIDORINO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Nidoking_(Pokémon) | Source} */
-  NIDOKING,
+  NIDOKING = "NIDOKING",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Clefairy_(Pokémon) | Source} */
-  CLEFAIRY,
+  CLEFAIRY = "CLEFAIRY",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Clefable_(Pokémon) | Source} */
-  CLEFABLE,
+  CLEFABLE = "CLEFABLE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Vulpix_(Pokémon) | Source} */
-  VULPIX,
+  VULPIX = "VULPIX",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Ninetales_(Pokémon) | Source} */
-  NINETALES,
+  NINETALES = "NINETALES",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Jigglypuff_(Pokémon) | Source} */
-  JIGGLYPUFF,
+  JIGGLYPUFF = "JIGGLYPUFF",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Wigglytuff_(Pokémon) | Source} */
-  WIGGLYTUFF,
+  WIGGLYTUFF = "WIGGLYTUFF",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Zubat_(Pokémon) | Source} */
-  ZUBAT,
+  ZUBAT = "ZUBAT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Golbat_(Pokémon) | Source} */
-  GOLBAT,
+  GOLBAT = "GOLBAT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Oddish_(Pokémon) | Source} */
-  ODDISH,
+  ODDISH = "ODDISH",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Gloom_(Pokémon) | Source} */
-  GLOOM,
+  GLOOM = "GLOOM",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Vileplume_(Pokémon) | Source} */
-  VILEPLUME,
+  VILEPLUME = "VILEPLUME",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Paras_(Pokémon) | Source} */
-  PARAS,
+  PARAS = "PARAS",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Parasect_(Pokémon) | Source} */
-  PARASECT,
+  PARASECT = "PARASECT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Venonat_(Pokémon) | Source} */
-  VENONAT,
+  VENONAT = "VENONAT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Venomoth_(Pokémon) | Source} */
-  VENOMOTH,
+  VENOMOTH = "VENOMOTH",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Diglett_(Pokémon) | Source} */
-  DIGLETT,
+  DIGLETT = "DIGLETT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Dugtrio_(Pokémon) | Source} */
-  DUGTRIO,
+  DUGTRIO = "DUGTRIO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Meowth_(Pokémon) | Source} */
-  MEOWTH,
+  MEOWTH = "MEOWTH",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Persian_(Pokémon) | Source} */
-  PERSIAN,
+  PERSIAN = "PERSIAN",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Psyduck_(Pokémon) | Source} */
-  PSYDUCK,
+  PSYDUCK = "PSYDUCK",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Golduck_(Pokémon) | Source} */
-  GOLDUCK,
+  GOLDUCK = "GOLDUCK",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Mankey_(Pokémon) | Source} */
-  MANKEY,
+  MANKEY = "MANKEY",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Primeape_(Pokémon) | Source} */
-  PRIMEAPE,
+  PRIMEAPE = "PRIMEAPE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Growlithe_(Pokémon) | Source} */
-  GROWLITHE,
+  GROWLITHE = "GROWLITHE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Arcanine_(Pokémon) | Source} */
-  ARCANINE,
+  ARCANINE = "ARCANINE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Poliwag_(Pokémon) | Source} */
-  POLIWAG,
+  POLIWAG = "POLIWAG",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Poliwhirl_(Pokémon) | Source} */
-  POLIWHIRL,
+  POLIWHIRL = "POLIWHIRL",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Poliwrath_(Pokémon) | Source} */
-  POLIWRATH,
+  POLIWRATH = "POLIWRATH",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Abra_(Pokémon) | Source} */
-  ABRA,
+  ABRA = "ABRA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Kadabra_(Pokémon) | Source} */
-  KADABRA,
+  KADABRA = "KADABRA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Alakazam_(Pokémon) | Source} */
-  ALAKAZAM,
+  ALAKAZAM = "ALAKAZAM",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Machop_(Pokémon) | Source} */
-  MACHOP,
+  MACHOP = "MACHOP",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Machoke_(Pokémon) | Source} */
-  MACHOKE,
+  MACHOKE = "MACHOKE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Machamp_(Pokémon) | Source} */
-  MACHAMP,
+  MACHAMP = "MACHAMP",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Bellsprout_(Pokémon) | Source} */
-  BELLSPROUT,
+  BELLSPROUT = "BELLSPROUT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Weepinbell_(Pokémon) | Source} */
-  WEEPINBELL,
+  WEEPINBELL = "WEEPINBELL",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Victreebel_(Pokémon) | Source} */
-  VICTREEBEL,
+  VICTREEBEL = "VICTREEBEL",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Tentacool_(Pokémon) | Source} */
-  TENTACOOL,
+  TENTACOOL = "TENTACOOL",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Tentacruel_(Pokémon) | Source} */
-  TENTACRUEL,
+  TENTACRUEL = "TENTACRUEL",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Geodude_(Pokémon) | Source} */
-  GEODUDE,
+  GEODUDE = "GEODUDE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Graveler_(Pokémon) | Source} */
-  GRAVELER,
+  GRAVELER = "GRAVELER",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Golem_(Pokémon) | Source} */
-  GOLEM,
+  GOLEM = "GOLEM",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Ponyta_(Pokémon) | Source} */
-  PONYTA,
+  PONYTA = "PONYTA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Rapidash_(Pokémon) | Source} */
-  RAPIDASH,
+  RAPIDASH = "RAPIDASH",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Slowpoke_(Pokémon) | Source} */
-  SLOWPOKE,
+  SLOWPOKE = "SLOWPOKE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Slowbro_(Pokémon) | Source} */
-  SLOWBRO,
+  SLOWBRO = "SLOWBRO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Magnemite_(Pokémon) | Source} */
-  MAGNEMITE,
+  MAGNEMITE = "MAGNEMITE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Magneton_(Pokémon) | Source} */
-  MAGNETON,
+  MAGNETON = "MAGNETON",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Farfetchd_(Pokémon) | Source} */
-  FARFETCHD,
+  FARFETCHD = "FARFETCHD",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Doduo_(Pokémon) | Source} */
-  DODUO,
+  DODUO = "DODUO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Dodrio_(Pokémon) | Source} */
-  DODRIO,
+  DODRIO = "DODRIO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Seel_(Pokémon) | Source} */
-  SEEL,
+  SEEL = "SEEL",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Dewgong_(Pokémon) | Source} */
-  DEWGONG,
+  DEWGONG = "DEWGONG",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Grimer_(Pokémon) | Source} */
-  GRIMER,
+  GRIMER = "GRIMER",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Muk_(Pokémon) | Source} */
-  MUK,
+  MUK = "MUK",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Shellder_(Pokémon) | Source} */
-  SHELLDER,
+  SHELLDER = "SHELLDER",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Cloyster_(Pokémon) | Source} */
-  CLOYSTER,
+  CLOYSTER = "CLOYSTER",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Gastly_(Pokémon) | Source} */
-  GASTLY,
+  GASTLY = "GASTLY",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Haunter_(Pokémon) | Source} */
-  HAUNTER,
+  HAUNTER = "HAUNTER",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Gengar_(Pokémon) | Source} */
-  GENGAR,
+  GENGAR = "GENGAR",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Onix_(Pokémon) | Source} */
-  ONIX,
+  ONIX = "ONIX",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Drowzee_(Pokémon) | Source} */
-  DROWZEE,
+  DROWZEE = "DROWZEE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Hypno_(Pokémon) | Source} */
-  HYPNO,
+  HYPNO = "HYPNO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Krabby_(Pokémon) | Source} */
-  KRABBY,
+  KRABBY = "KRABBY",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Kingler_(Pokémon) | Source} */
-  KINGLER,
+  KINGLER = "KINGLER",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Voltorb_(Pokémon) | Source} */
-  VOLTORB,
+  VOLTORB = "VOLTORB",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Electrode_(Pokémon) | Source} */
-  ELECTRODE,
+  ELECTRODE = "ELECTRODE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Exeggcute_(Pokémon) | Source} */
-  EXEGGCUTE,
+  EXEGGCUTE = "EXEGGCUTE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Exeggutor_(Pokémon) | Source} */
-  EXEGGUTOR,
+  EXEGGUTOR = "EXEGGUTOR",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Cubone_(Pokémon) | Source} */
-  CUBONE,
+  CUBONE = "CUBONE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Marowak_(Pokémon) | Source} */
-  MAROWAK,
+  MAROWAK = "MAROWAK",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Hitmonlee_(Pokémon) | Source} */
-  HITMONLEE,
+  HITMONLEE = "HITMONLEE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Hitmonchan_(Pokémon) | Source} */
-  HITMONCHAN,
+  HITMONCHAN = "HITMONCHAN",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Lickitung_(Pokémon) | Source} */
-  LICKITUNG,
+  LICKITUNG = "LICKITUNG",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Koffing_(Pokémon) | Source} */
-  KOFFING,
+  KOFFING = "KOFFING",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Weezing_(Pokémon) | Source} */
-  WEEZING,
+  WEEZING = "WEEZING",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Rhyhorn_(Pokémon) | Source} */
-  RHYHORN,
+  RHYHORN = "RHYHORN",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Rhydon_(Pokémon) | Source} */
-  RHYDON,
+  RHYDON = "RHYDON",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Chansey_(Pokémon) | Source} */
-  CHANSEY,
+  CHANSEY = "CHANSEY",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Tangela_(Pokémon) | Source} */
-  TANGELA,
+  TANGELA = "TANGELA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Kangaskhan_(Pokémon) | Source} */
-  KANGASKHAN,
+  KANGASKHAN = "KANGASKHAN",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Horsea_(Pokémon) | Source} */
-  HORSEA,
+  HORSEA = "HORSEA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Seadra_(Pokémon) | Source} */
-  SEADRA,
+  SEADRA = "SEADRA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Goldeen_(Pokémon) | Source} */
-  GOLDEEN,
+  GOLDEEN = "GOLDEEN",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Seaking_(Pokémon) | Source} */
-  SEAKING,
+  SEAKING = "SEAKING",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Staryu_(Pokémon) | Source} */
-  STARYU,
+  STARYU = "STARYU",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Starmie_(Pokémon) | Source} */
-  STARMIE,
+  STARMIE = "STARMIE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Mr_Mime_(Pokémon) | Source} */
-  MR_MIME,
+  MR_MIME = "MR_MIME",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Scyther_(Pokémon) | Source} */
-  SCYTHER,
+  SCYTHER = "SCYTHER",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Jynx_(Pokémon) | Source} */
-  JYNX,
+  JYNX = "JYNX",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Electabuzz_(Pokémon) | Source} */
-  ELECTABUZZ,
+  ELECTABUZZ = "ELECTABUZZ",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Magmar_(Pokémon) | Source} */
-  MAGMAR,
+  MAGMAR = "MAGMAR",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Pinsir_(Pokémon) | Source} */
-  PINSIR,
+  PINSIR = "PINSIR",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Tauros_(Pokémon) | Source} */
-  TAUROS,
+  TAUROS = "TAUROS",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Magikarp_(Pokémon) | Source} */
-  MAGIKARP,
+  MAGIKARP = "MAGIKARP",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Gyarados_(Pokémon) | Source} */
-  GYARADOS,
+  GYARADOS = "GYARADOS",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Lapras_(Pokémon) | Source} */
-  LAPRAS,
+  LAPRAS = "LAPRAS",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Ditto_(Pokémon) | Source} */
-  DITTO,
+  DITTO = "DITTO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Eevee_(Pokémon) | Source} */
-  EEVEE,
+  EEVEE = "EEVEE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Vaporeon_(Pokémon) | Source} */
-  VAPOREON,
+  VAPOREON = "VAPOREON",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Jolteon_(Pokémon) | Source} */
-  JOLTEON,
+  JOLTEON = "JOLTEON",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Flareon_(Pokémon) | Source} */
-  FLAREON,
+  FLAREON = "FLAREON",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Porygon_(Pokémon) | Source} */
-  PORYGON,
+  PORYGON = "PORYGON",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Omanyte_(Pokémon) | Source} */
-  OMANYTE,
+  OMANYTE = "OMANYTE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Omastar_(Pokémon) | Source} */
-  OMASTAR,
+  OMASTAR = "OMASTAR",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Kabuto_(Pokémon) | Source} */
-  KABUTO,
+  KABUTO = "KABUTO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Kabutops_(Pokémon) | Source} */
-  KABUTOPS,
+  KABUTOPS = "KABUTOPS",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Aerodactyl_(Pokémon) | Source} */
-  AERODACTYL,
+  AERODACTYL = "AERODACTYL",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Snorlax_(Pokémon) | Source} */
-  SNORLAX,
+  SNORLAX = "SNORLAX",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Articuno_(Pokémon) | Source} */
-  ARTICUNO,
+  ARTICUNO = "ARTICUNO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Zapdos_(Pokémon) | Source} */
-  ZAPDOS,
+  ZAPDOS = "ZAPDOS",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Moltres_(Pokémon) | Source} */
-  MOLTRES,
+  MOLTRES = "MOLTRES",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Dratini_(Pokémon) | Source} */
-  DRATINI,
+  DRATINI = "DRATINI",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Dragonair_(Pokémon) | Source} */
-  DRAGONAIR,
+  DRAGONAIR = "DRAGONAIR",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Dragonite_(Pokémon) | Source} */
-  DRAGONITE,
+  DRAGONITE = "DRAGONITE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Mewtwo_(Pokémon) | Source} */
-  MEWTWO,
+  MEWTWO = "MEWTWO",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Mew_(Pokémon) | Source} */
-  MEW,
+  MEW = "MEW",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Chikorita_(Pokémon) | Source} */
 }

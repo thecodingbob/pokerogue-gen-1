@@ -24,13 +24,13 @@ import { ShowAbilityPhase } from "#app/phases/show-ability-phase.js";
 import { StatChangePhase, StatChangeCallback } from "#app/phases/stat-change-phase.js";
 
 export enum BattlerTagLapseType {
-  FAINT,
-  MOVE,
-  PRE_MOVE,
-  AFTER_MOVE,
-  MOVE_EFFECT,
-  TURN_END,
-  CUSTOM
+  FAINT = "FAINT",
+  MOVE = "MOVE",
+  PRE_MOVE = "PRE_MOVE",
+  AFTER_MOVE = "AFTER_MOVE",
+  MOVE_EFFECT = "MOVE_EFFECT",
+  TURN_END = "TURN_END",
+  CUSTOM = "CUSTOM",
 }
 
 export class BattlerTag {

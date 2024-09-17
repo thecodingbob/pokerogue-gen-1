@@ -6,12 +6,12 @@ import { UiTheme } from "#enums/ui-theme";
 import { addWindow, WindowVariant } from "./ui-theme";
 
 export enum DropDownColumn {
-  GEN,
-  TYPES,
-  CAUGHT,
-  UNLOCKS,
-  MISC,
-  SORT
+  GEN = "GEN",
+  TYPES = "TYPES",
+  CAUGHT = "CAUGHT",
+  UNLOCKS = "UNLOCKS",
+  MISC = "MISC",
+  SORT = "SORT",
 }
 
 export class FilterBar extends Phaser.GameObjects.Container {

@@ -225,7 +225,6 @@ export class LoadingScene extends SceneBase {
     this.loadAtlas("shiny", "effects");
     this.loadAtlas("shiny_2", "effects");
     this.loadAtlas("shiny_3", "effects");
-    this.loadImage("tera", "effects");
     this.loadAtlas("pb_particles", "effects");
     this.loadImage("evo_sparkle", "effects");
     this.loadAtlas("tera_sparkle", "effects");

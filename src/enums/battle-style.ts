@@ -4,6 +4,6 @@
  * - 'Set' - The option to switch the active pokemon at the start of a battle will not display.
 */
 export enum BattleStyle {
-    SWITCH,
-    SET
+    SWITCH = "SWITCH",
+    SET = "SET"
 }
