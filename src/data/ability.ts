@@ -11,13 +11,12 @@ import { Gender } from "./gender";
 import Move, { AttackMove, MoveCategory, MoveFlags, MoveTarget, FlinchAttr, OneHitKOAttr, HitHealAttr, allMoves, StatusMove, SelfStatusMove, VariablePowerAttr, applyMoveAttrs, IncrementMovePriorityAttr, VariableMoveTypeAttr, RandomMovesetMoveAttr, RandomMoveAttr, CopyMoveAttr, MoveAttr, MultiHitAttr, ChargeAttr, SacrificialAttr, SacrificialAttrOnHit, NeutralDamageAgainstFlyingTypeMultiplierAttr, MoveDamageType } from "./move";
 import { ArenaTagSide, ArenaTrapTag } from "./arena-tag";
 import { Stat, getStatName } from "./pokemon-stat";
-import { BerryModifier, PokemonHeldItemModifier } from "../modifier/modifier";
+import { PokemonHeldItemModifier } from "../modifier/modifier";
 import { TerrainType } from "./terrain";
 import { SpeciesFormChangeManualTrigger, SpeciesFormChangeRevertWeatherFormTrigger, SpeciesFormChangeWeatherTrigger } from "./pokemon-forms";
 import i18next from "i18next";
 import { Localizable } from "#app/interfaces/locales.js";
 import { Command } from "../ui/command-ui-handler";
-import { BerryModifierType } from "#app/modifier/modifier-type";
 import { getPokeballName } from "./pokeball";
 import { BattlerIndex } from "#app/battle";
 import { Abilities } from "#enums/abilities";
@@ -3183,82 +3182,6 @@ export class PostTurnResetStatusAbAttr extends PostTurnAbAttr {
 }
 
 /**
- * After the turn ends, try to create an extra item
- */
-export class PostTurnLootAbAttr extends PostTurnAbAttr {
-  /**
-   * @param itemType - The type of item to create
-   * @param procChance - Chance to create an item
-   * @see {@linkcode applyPostTurn()}
-   */
-  constructor(
-    /** Extend itemType to add more options */
-    private itemType: "EATEN_BERRIES" | "HELD_BERRIES",
-    private procChance: (pokemon: Pokemon) => number
-  ) {
-    super();
-  }
-
-  applyPostTurn(pokemon: Pokemon, simulated: boolean, args: any[]): boolean {
-    const pass = Phaser.Math.RND.realInRange(0, 1);
-    // Clamp procChance to [0, 1]. Skip if didn't proc (less than pass)
-    if (Math.max(Math.min(this.procChance(pokemon), 1), 0) < pass) {
-      return false;
-    }
-
-    if (this.itemType === "EATEN_BERRIES") {
-      return this.createEatenBerry(pokemon, simulated);
-    } else {
-      return false;
-    }
-  }
-
-  /**
-   * Create a new berry chosen randomly from the berries the pokemon ate this battle
-   * @param pokemon The pokemon with this ability
-   * @param simulated whether the associated ability call is simulated
-   * @returns whether a new berry was created
-   */
-  createEatenBerry(pokemon: Pokemon, simulated: boolean): boolean {
-    const berriesEaten = pokemon.battleData.berriesEaten;
-
-    if (!berriesEaten.length) {
-      return false;
-    }
-
-    if (simulated) {
-      return true;
-    }
-
-    const randomIdx = Utils.randSeedInt(berriesEaten.length);
-    const chosenBerryType = berriesEaten[randomIdx];
-    const chosenBerry = new BerryModifierType(chosenBerryType);
-    berriesEaten.splice(randomIdx); // Remove berry from memory
-
-    const berryModifier = pokemon.scene.findModifier(
-      (m) => m instanceof BerryModifier && m.berryType === chosenBerryType,
-      pokemon.isPlayer()
-    ) as BerryModifier | undefined;
-
-    if (!berryModifier) {
-      const newBerry = new BerryModifier(chosenBerry, pokemon.id, chosenBerryType, 1);
-      if (pokemon.isPlayer()) {
-        pokemon.scene.addModifier(newBerry);
-      } else {
-        pokemon.scene.addEnemyModifier(newBerry);
-      }
-    } else if (berryModifier.stackCount < berryModifier.getMaxHeldItemCount(pokemon)) {
-      berryModifier.stackCount++;
-    }
-
-    pokemon.scene.queueMessage(i18next.t("abilityTriggers:postTurnLootCreateEatenBerry", { pokemonNameWithAffix: getPokemonNameWithAffix(pokemon), berryName: chosenBerry.name }));
-    pokemon.scene.updateModifiers(pokemon.isPlayer());
-
-    return true;
-  }
-}
-
-/**
  * Attribute used for {@linkcode Abilities.MOODY}
  */
 export class MoodyAbAttr extends PostTurnAbAttr {
@@ -3582,54 +3505,6 @@ export class ReduceBurnDamageAbAttr extends AbAttr {
   }
 }
 
-export class DoubleBerryEffectAbAttr extends AbAttr {
-  apply(pokemon: Pokemon, simulated: boolean, cancelled: Utils.BooleanHolder, args: any[]): boolean {
-    (args[0] as Utils.NumberHolder).value *= 2;
-
-    return true;
-  }
-}
-
-export class PreventBerryUseAbAttr extends AbAttr {
-  apply(pokemon: Pokemon, simulated: boolean, cancelled: Utils.BooleanHolder, args: any[]): boolean {
-    cancelled.value = true;
-
-    return true;
-  }
-}
-
-/**
- * A Pokemon with this ability heals by a percentage of their maximum hp after eating a berry
- * @param healPercent - Percent of Max HP to heal
- * @see {@linkcode apply()} for implementation
- */
-export class HealFromBerryUseAbAttr extends AbAttr {
-  /** Percent of Max HP to heal */
-  private healPercent: number;
-
-  constructor(healPercent: number) {
-    super();
-
-    // Clamp healPercent so its between [0,1].
-    this.healPercent = Math.max(Math.min(healPercent, 1), 0);
-  }
-
-  apply(pokemon: Pokemon, simulated: boolean, ...args: [Utils.BooleanHolder, any[]]): boolean {
-    const { name: abilityName } = pokemon.getPassiveAbility();
-    if (!simulated) {
-      pokemon.scene.unshiftPhase(
-        new PokemonHealPhase(
-          pokemon.scene,
-          pokemon.getBattlerIndex(),
-          Utils.toDmgValue(pokemon.getMaxHp() * this.healPercent),
-          i18next.t("abilityTriggers:healFromBerryUse", { pokemonNameWithAffix: getPokemonNameWithAffix(pokemon), abilityName }),
-          true
-        )
-      );
-    }
-    return true;
-  }
-}
 
 export class RunSuccessAbAttr extends AbAttr {
   apply(pokemon: Pokemon, simulated: boolean, cancelled: Utils.BooleanHolder, args: any[]): boolean {
@@ -3967,23 +3842,6 @@ export class ForceSwitchOutImmunityAbAttr extends AbAttr {
   apply(pokemon: Pokemon, simulated: boolean, cancelled: Utils.BooleanHolder, args: any[]): boolean {
     cancelled.value = true;
     return true;
-  }
-}
-
-export class ReduceBerryUseThresholdAbAttr extends AbAttr {
-  constructor() {
-    super();
-  }
-
-  apply(pokemon: Pokemon, simulated: boolean, cancelled: Utils.BooleanHolder, args: any[]): boolean {
-    const hpRatio = pokemon.getHpRatio();
-
-    if (args[0].value < hpRatio) {
-      args[0].value *= 2;
-      return args[0].value >= hpRatio;
-    }
-
-    return false;
   }
 }
 
@@ -4781,8 +4639,6 @@ export function initAbilities() {
       .attr(BlockWeatherDamageAttr, WeatherType.HAIL)
       .condition(getWeatherCondition(WeatherType.HAIL, WeatherType.SNOW))
       .ignorable(),
-    new Ability(Abilities.GLUTTONY, 4)
-      .attr(ReduceBerryUseThresholdAbAttr),
     new Ability(Abilities.ANGER_POINT, 4)
       .attr(PostDefendCritStatChangeAbAttr, BattleStat.ATK, 6),
     new Ability(Abilities.UNBURDEN, 4)
@@ -4914,8 +4770,6 @@ export function initAbilities() {
     new Ability(Abilities.CONTRARY, 5)
       .attr(StatChangeMultiplierAbAttr, -1)
       .ignorable(),
-    new Ability(Abilities.UNNERVE, 5)
-      .attr(PreventBerryUseAbAttr),
     new Ability(Abilities.DEFIANT, 5)
       .attr(PostStatChangeStatChangeAbAttr, (target, statsChanged, levels) => levels < 0, [BattleStat.ATK], 2),
     new Ability(Abilities.DEFEATIST, 5)
@@ -4946,14 +4800,6 @@ export function initAbilities() {
       .attr(MovePowerBoostAbAttr, (user, target, move) => move.getDamageType() === MoveDamageType.PHYSICAL && (user?.status?.effect === StatusEffect.POISON || user?.status?.effect === StatusEffect.TOXIC), 1.5),
     new Ability(Abilities.FLARE_BOOST, 5)
       .attr(MovePowerBoostAbAttr, (user, target, move) => move.getDamageType() === MoveDamageType.SPECIAL && user?.status?.effect === StatusEffect.BURN, 1.5),
-    new Ability(Abilities.HARVEST, 5)
-      .attr(
-        PostTurnLootAbAttr,
-        "EATEN_BERRIES",
-        /** Rate is doubled when under sun {@link https://dex.pokemonshowdown.com/abilities/harvest} */
-        (pokemon) => 0.5 * (getWeatherCondition(WeatherType.SUNNY, WeatherType.HARSH_SUN)(pokemon) ? 2 : 1)
-      )
-      .partial(),
     new Ability(Abilities.TELEPATHY, 5)
       .attr(MoveImmunityAbAttr, (pokemon, attacker, move) => pokemon.getAlly() === attacker && move instanceof AttackMove)
       .ignorable(),
@@ -5034,9 +4880,6 @@ export function initAbilities() {
     new Ability(Abilities.FLOWER_VEIL, 6)
       .ignorable()
       .unimplemented(),
-    new Ability(Abilities.CHEEK_POUCH, 6)
-      .attr(HealFromBerryUseAbAttr, 1/3)
-      .partial(), // Healing not blocked by Heal Block
     new Ability(Abilities.PROTEAN, 6)
       .attr(PokemonTypeChangeAbAttr),
     //.condition((p) => !p.summonData?.abilitiesApplied.includes(Abilities.PROTEAN)), //Gen 9 Implementation
@@ -5295,8 +5138,6 @@ export function initAbilities() {
     new Ability(Abilities.ICE_SCALES, 8)
       .attr(ReceivedMoveDamageMultiplierAbAttr, (target, user, move) => move.getDamageType() === MoveDamageType.SPECIAL, 0.5)
       .ignorable(),
-    new Ability(Abilities.RIPEN, 8)
-      .attr(DoubleBerryEffectAbAttr),
     new Ability(Abilities.ICE_FACE, 8)
       .attr(UncopiableAbilityAbAttr)
       .attr(UnswappableAbilityAbAttr)
@@ -5315,7 +5156,7 @@ export function initAbilities() {
       .bypassFaint()
       .ignorable(),
     new Ability(Abilities.POWER_SPOT, 8)
-      .attr(AllyMoveDamageTypePowerBoostAbAttr, [MoveCategory.ATTACK], 1.3),
+      .attr(AllyMoveDamageTypePowerBoostAbAttr, [MoveDamageType.PHYSICAL, MoveDamageType.PHYSICAL], 1.3),
     new Ability(Abilities.MIMICRY, 8)
       .unimplemented(),
     new Ability(Abilities.PERISH_BODY, 8)
@@ -5360,20 +5201,6 @@ export function initAbilities() {
       .attr(PostVictoryStatChangeAbAttr, BattleStat.ATK, 1),
     new Ability(Abilities.GRIM_NEIGH, 8)
       .attr(PostVictoryStatChangeAbAttr, BattleStat.SPEC, 1),
-    new Ability(Abilities.AS_ONE_GLASTRIER, 8)
-      .attr(PostSummonMessageAbAttr, (pokemon: Pokemon) => i18next.t("abilityTriggers:postSummonAsOneGlastrier", { pokemonNameWithAffix: getPokemonNameWithAffix(pokemon) }))
-      .attr(PreventBerryUseAbAttr)
-      .attr(PostVictoryStatChangeAbAttr, BattleStat.ATK, 1)
-      .attr(UncopiableAbilityAbAttr)
-      .attr(UnswappableAbilityAbAttr)
-      .attr(UnsuppressableAbilityAbAttr),
-    new Ability(Abilities.AS_ONE_SPECTRIER, 8)
-      .attr(PostSummonMessageAbAttr, (pokemon: Pokemon) => i18next.t("abilityTriggers:postSummonAsOneSpectrier", { pokemonNameWithAffix: getPokemonNameWithAffix(pokemon) }))
-      .attr(PreventBerryUseAbAttr)
-      .attr(PostVictoryStatChangeAbAttr, BattleStat.SPEC, 1)
-      .attr(UncopiableAbilityAbAttr)
-      .attr(UnswappableAbilityAbAttr)
-      .attr(UnsuppressableAbilityAbAttr),
     new Ability(Abilities.LINGERING_AROMA, 9)
       .attr(PostDefendAbilityGiveAbAttr, Abilities.LINGERING_AROMA)
       .bypassFaint(),
@@ -5461,8 +5288,6 @@ export function initAbilities() {
       .conditionalAttr(getTerrainCondition(TerrainType.ELECTRIC), BattleStatMultiplierAbAttr, BattleStat.SPEC, 4 / 3),
     new Ability(Abilities.OPPORTUNIST, 9)
       .attr(StatChangeCopyAbAttr),
-    new Ability(Abilities.CUD_CHEW, 9)
-      .unimplemented(),
     new Ability(Abilities.SHARPNESS, 9)
       .attr(MovePowerBoostAbAttr, (user, target, move) => move.hasFlag(MoveFlags.SLICING_MOVE), 1.5),
     new Ability(Abilities.SUPREME_OVERLORD, 9)

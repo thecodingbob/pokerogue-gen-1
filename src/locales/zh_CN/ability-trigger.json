@@ -34,10 +34,8 @@
   "frisk": "{{pokemonNameWithAffix}}察觉到了\n{{opponentName}}的{{opponentAbilityName}}！",
   "postWeatherLapseHeal": "{{pokemonNameWithAffix}}因{{abilityName}}\n回复了少许HP！",
   "postWeatherLapseDamage": "{{pokemonNameWithAffix}}\n因{{abilityName}}而受到了伤害！",
-  "postTurnLootCreateEatenBerry": "{{pokemonNameWithAffix}}\n收获了{{berryName}}！",
   "postTurnHeal": "{{pokemonNameWithAffix}}因{{abilityName}}\n回复了少许HP！",
   "fetchBall": "{{pokemonNameWithAffix}}\n捡回了{{pokeballName}}！",
-  "healFromBerryUse": "{{pokemonNameWithAffix}}因{{abilityName}}\n回复了HP！",
   "arenaTrap": "因{{pokemonNameWithAffix}}的{{abilityName}}\n而无法进行替换！",
   "postBattleLoot": "{{pokemonNameWithAffix}}捡到了\n{{itemName}}！",
   "postFaintContactDamage": "{{pokemonNameWithAffix}}的{{abilityName}}\n使对方受到了伤害！",
@@ -51,11 +49,8 @@
   "postSummonDarkAura": "{{pokemonNameWithAffix}}\n正在释放暗黑气场！",
   "postSummonFairyAura": "{{pokemonNameWithAffix}}\n正在释放妖精气场！",
   "postSummonNeutralizingGas": "周围充满了\n{{pokemonNameWithAffix}}的化学变化气体！",
-  "postSummonAsOneGlastrier": "{{pokemonNameWithAffix}}\n同时拥有了两种特性！",
-  "postSummonAsOneSpectrier": "{{pokemonNameWithAffix}}\n同时拥有了两种特性！",
   "postSummonVesselOfRuin": "{{pokemonNameWithAffix}}的灾祸之鼎\n令周围的宝可梦的{{statName}}减弱了！",
   "postSummonSwordOfRuin": "{{pokemonNameWithAffix}}的灾祸之剑\n令周围的宝可梦的{{statName}}减弱了！",
   "postSummonTabletsOfRuin": "{{pokemonNameWithAffix}}的灾祸之简\n令周围的宝可梦的{{statName}}减弱了！",
-  "postSummonBeadsOfRuin": "{{pokemonNameWithAffix}}的灾祸之玉\n令周围的宝可梦的{{statName}}减弱了！",
-  "preventBerryUse": "{{pokemonNameWithAffix}}因太紧张\n而无法食用树果！"
+  "postSummonBeadsOfRuin": "{{pokemonNameWithAffix}}的灾祸之玉\n令周围的宝可梦的{{statName}}减弱了！"
 }

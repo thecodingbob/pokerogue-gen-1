@@ -1439,17 +1439,9 @@
     "name": "Saumure",
     "effect": "La puissance de cette capacité est doublée lorsque la cible a moins de la moitié de ses PV."
   },
-  "naturalGift": {
-    "name": "Don Naturel",
-    "effect": "Avant d’attaquer, le lanceur rassemble ses forces grâce à sa Baie. Elle détermine le type et la puissance de l’attaque."
-  },
   "feint": {
     "name": "Ruse",
     "effect": "Une attaque capable de toucher une cible qui utilise une capacité similaire à Détection ou Abri, et annule l’effet de cette capacité."
-  },
-  "pluck": {
-    "name": "Picore",
-    "effect": "Le lanceur picore la cible. Si cette dernière tient une Baie, le lanceur la mange et profite de ses effets."
   },
   "tailwind": {
     "name": "Vent Arrière",
@@ -1779,10 +1771,6 @@
     "name": "Jugement",
     "effect": "Le lanceur libère une myriade de rayons de lumière. Le type varie selon la plaque que tient le lanceur."
   },
-  "bugBite": {
-    "name": "Piqure",
-    "effect": "Le lanceur pique la cible. Si celle-ci tient une Baie, le lanceur la dévore et obtient son effet."
-  },
   "chargeBeam": {
     "name": "Rayon Chargé",
     "effect": "Le lanceur tire un rayon chargé d’électricité. Peut aussi augmenter son Attaque Spéciale."
@@ -2011,10 +1999,6 @@
     "name": "Projection",
     "effect": "Le lanceur fait une projection sur un Pokémon ennemi et le remplace par un autre. Lors d’un combat contre un Pokémon sauvage seul, cela met fin au combat."
   },
-  "incinerate": {
-    "name": "Calcination",
-    "effect": "Des flammes calcinent la cible. Si elle tient un objet, une Baie par exemple, celui-ci est brulé et devient inutilisable."
-  },
   "quash": {
     "name": "À la Queue",
     "effect": "Retient la cible de force, l’obligeant à agir en dernier."
@@ -2218,10 +2202,6 @@
   "matBlock": {
     "name": "Tatamigaeshi",
     "effect": "Retourne un tatami pour bloquer, comme avec un bouclier, les capacités visant le lanceur ou ses alliés. N’a pas d’effet sur les attaques de statut."
-  },
-  "belch": {
-    "name": "Éructation",
-    "effect": "Le lanceur se tourne vers la cible et lui éructe dessus, infligeant des dégâts. Ne fonctionne que si le lanceur consomme une Baie tenue."
   },
   "rototiller": {
     "name": "Fertilisation",
@@ -2959,10 +2939,6 @@
     "name": "Croque Fort",
     "effect": "Le lanceur et sa cible ne peuvent plus être échangés jusqu’à ce que l’un d’entre eux tombe K.O. L’effet est annulé si l’un des deux Pokémon quitte le terrain."
   },
-  "stuffCheeks": {
-    "name": "Garde-à-Joues",
-    "effect": "Le lanceur mange la Baie qu’il tient, ce qui augmente beaucoup sa Défense."
-  },
   "noRetreat": {
     "name": "Ultime Bastion",
     "effect": "Le lanceur voit toutes ses stats augmenter, mais en contrepartie, il ne peut plus quitter le terrain."
@@ -2978,10 +2954,6 @@
   "dragonDarts": {
     "name": "Draco-Flèches",
     "effect": "Le lanceur attaque en propulsant deux Fantyrm. S’il y a deux cibles, chacune d’entre elles est frappée par un Fantyrm."
-  },
-  "teatime": {
-    "name": "Thérémonie",
-    "effect": "Le lanceur invite tous les Pokémon sur le terrain à prendre le gouter autour d’une tasse de thé. Ceux qui tiennent une Baie la mangent."
   },
   "octolock": {
     "name": "Octoprise",
@@ -3374,138 +3346,6 @@
   "takeHeart": {
     "name": "Extravaillance",
     "effect": "Le lanceur fait preuve de bravoure pour soigner ses altérations de statut et augmenter sa puissance offensive et défensive."
-  },
-  "gMaxWildfire": {
-    "name": "Fournaise G-Max",
-    "effect": "Une attaque de type Feu que seul un Dracaufeu Gigamax peut utiliser. Pendant quatre tours, la cible continue de subir des dégâts."
-  },
-  "gMaxBefuddle": {
-    "name": "Illusion G-Max",
-    "effect": "Une attaque de type Insecte que seul un Papilusion Gigamax peut utiliser. Empoisonne, paralyse ou endort la cible."
-  },
-  "gMaxVoltCrash": {
-    "name": "Foudre G-Max",
-    "effect": "Une attaque de type Électrik que seul un Pikachu Gigamax peut utiliser. Paralyse la cible."
-  },
-  "gMaxGoldRush": {
-    "name": "Pactole G-Max",
-    "effect": "Une attaque de type Normal que seul un Miaouss Gigamax peut utiliser. Rend la cible confuse et permet d’obtenir de l’argent à la fin du combat."
-  },
-  "gMaxChiStrike": {
-    "name": "Frappe G-Max",
-    "effect": "Une attaque de type Combat que seul un Mackogneur Gigamax peut utiliser. Augmente le taux de critiques du lanceur et de ses alliés."
-  },
-  "gMaxTerror": {
-    "name": "Hantise G-Max",
-    "effect": "Une attaque de type Spectre que seul un Ectoplasma Gigamax peut utiliser. Empêche les Pokémon ennemis de quitter le combat."
-  },
-  "gMaxResonance": {
-    "name": "Résonance G-Max",
-    "effect": "Une attaque de type Glace que seul un Lokhlass Gigamax peut utiliser. Réduit les dégâts causés par des capacités pendant cinq tours."
-  },
-  "gMaxCuddle": {
-    "name": "Câlin G-Max",
-    "effect": "Une attaque de type Normal que seul un Évoli Gigamax peut utiliser. Rend la cible amoureuse."
-  },
-  "gMaxReplenish": {
-    "name": "Récolte G-Max",
-    "effect": "Une attaque de type Normal que seul un Ronflex Gigamax peut utiliser. Restaure une Baie tenue qui a déjà été mangée."
-  },
-  "gMaxMalodor": {
-    "name": "Pestilence G-Max",
-    "effect": "Une attaque de type Poison que seul un Miasmax Gigamax peut utiliser. Empoisonne la cible."
-  },
-  "gMaxStonesurge": {
-    "name": "Récif G-Max",
-    "effect": "Une attaque de type Eau que seul un Torgamord Gigamax peut utiliser. Disperse des pierres aiguisées sur le terrain."
-  },
-  "gMaxWindRage": {
-    "name": "Rafale G-Max",
-    "effect": "Une attaque de type Vol que seul un Corvaillus Gigamax peut utiliser. Permet de briser les barrières comme Protection et Mur Lumière."
-  },
-  "gMaxStunShock": {
-    "name": "Choc G-Max",
-    "effect": "Une attaque de type Électrik que seul un Salarsen Gigamax peut utiliser. Empoisonne ou paralyse la cible."
-  },
-  "gMaxFinale": {
-    "name": "Cure G-Max",
-    "effect": "Une attaque de type Fée que seul un Charmilly Gigamax peut utiliser. Restaure des PV aux alliés."
-  },
-  "gMaxDepletion": {
-    "name": "Usure G-Max",
-    "effect": "Une attaque de type Dragon que seul un Duralugon Gigamax peut utiliser. Baisse les PP de la dernière capacité utilisée par la cible."
-  },
-  "gMaxGravitas": {
-    "name": "Ondes G-Max",
-    "effect": "Une attaque de type Psy que seul un Astronelle Gigamax peut utiliser. Intensifie la gravité pendant cinq tours."
-  },
-  "gMaxVolcalith": {
-    "name": "Téphra G-Max",
-    "effect": "Une attaque de type Roche que seul un Monthracite Gigamax peut utiliser. Pendant quatre tours, la cible continue de subir des dégâts."
-  },
-  "gMaxSandblast": {
-    "name": "Enlisement G-Max",
-    "effect": "Une attaque de type Sol que seul un Dunaconda Gigamax peut utiliser. Emprisonne la cible dans une tempête de sable qui dure de quatre à cinq tours."
-  },
-  "gMaxSnooze": {
-    "name": "Torpeur G-Max",
-    "effect": "Une attaque de type Ténèbres que seul un Angoliath Gigamax peut utiliser. Fait bâiller la cible qui s’endort au tour suivant."
-  },
-  "gMaxTartness": {
-    "name": "Corrosion G-Max",
-    "effect": "Une attaque de type Plante que seul un Pomdrapi Gigamax peut utiliser. Réduit l’Esquive de la cible."
-  },
-  "gMaxSweetness": {
-    "name": "Nectar G-Max",
-    "effect": "Une attaque de type Plante que seul un Dratatin Gigamax peut utiliser. Soigne les altérations de statut des alliés."
-  },
-  "gMaxSmite": {
-    "name": "Sentence G-Max",
-    "effect": "Une attaque de type Fée que seul un Sorcilence Gigamax peut utiliser. Rend la cible confuse."
-  },
-  "gMaxSteelsurge": {
-    "name": "Percée G-Max",
-    "effect": "Une attaque de type Acier que seul un Pachyradjah Gigamax peut utiliser. Disperse des pics aiguisés sur le terrain."
-  },
-  "gMaxMeltdown": {
-    "name": "Fonte G-Max",
-    "effect": "Une attaque de type Acier que seul un Melmetal Gigamax peut utiliser. Empêche la cible d’utiliser la même capacité deux fois de suite."
-  },
-  "gMaxFoamBurst": {
-    "name": "Bulles G-Max",
-    "effect": "Une attaque de type Eau que seul un Krabboss Gigamax peut utiliser. Réduit beaucoup la Vitesse de la cible."
-  },
-  "gMaxCentiferno": {
-    "name": "Combustion G-Max",
-    "effect": "Une attaque de type Feu que seul un Scolocendre Gigamax peut utiliser. Emprisonne la cible dans un tourbillon de flammes qui dure de quatre à cinq tours."
-  },
-  "gMaxVineLash": {
-    "name": "Fouet G-Max",
-    "effect": "Une attaque de type Plante que seul un Florizarre Gigamax peut utiliser. Inflige des dégâts à la cible pendant quatre tours."
-  },
-  "gMaxCannonade": {
-    "name": "Canonnade G-Max",
-    "effect": "Une attaque de type Eau que seul un Tortank Gigamax peut utiliser. Inflige des dégâts à la cible pendant quatre tours."
-  },
-  "gMaxDrumSolo": {
-    "name": "Percussion G-Max",
-    "effect": "Une attaque de type Plante que seul un Gorythmic Gigamax peut utiliser. Ignore le talent de la cible."
-  },
-  "gMaxFireball": {
-    "name": "Pyroball G-Max",
-    "effect": "Une attaque de type Feu que seul un Pyrobut Gigamax peut utiliser. Ignore le talent de la cible."
-  },
-  "gMaxHydrosnipe": {
-    "name": "Gâchette G-Max",
-    "effect": "Une attaque de type Eau que seul un Lézargus Gigamax peut utiliser. Ignore le talent de la cible."
-  },
-  "gMaxOneBlow": {
-    "name": "Coup Final G-Max",
-    "effect": "Une attaque de type Ténèbres que seul un Shifours Gigamax peut utiliser. Cette frappe unique permet d’ignorer la capacité Gardomax."
-  },
-  "gMaxRapidFlow": {
-    "name": "Multicoup G-Max",
-    "effect": "Une attaque de type Eau que seul un Shifours Gigamax peut utiliser. Cet enchainement de coups permet d’ignorer la capacité Gardomax."
   },
   "teraBlast": {
     "name": "Téra Explosion",

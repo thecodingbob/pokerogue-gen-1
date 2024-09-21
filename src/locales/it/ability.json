@@ -323,10 +323,6 @@
     "name": "Mantelneve",
     "description": "Se grandina, l'elusione aumenta."
   },
-  "gluttony": {
-    "name": "Voracità",
-    "description": "Il Pokémon non attende di aver perso molti PS per mangiare certe bacche, ma lo fa non appena i suoi PS scendono a metà o meno."
-  },
   "angerPoint": {
     "name": "Grancollera",
     "description": "Se il Pokémon subisce un brutto colpo, monta su tutte le furie e il suo Attacco aumenta al massimo."
@@ -503,10 +499,6 @@
     "name": "Inversione",
     "description": "Le modifiche alle statistiche hanno effetto inverso: le statistiche aumentano quando dovrebbero diminuire e viceversa."
   },
-  "unnerve": {
-    "name": "Agitazione",
-    "description": "Il nemico viene intimidito e non può mangiare bacche."
-  },
   "defiant": {
     "name": "Agonismo",
     "description": "L'Attacco aumenta di molto quando le statistiche diminuiscono a causa di un nemico."
@@ -550,10 +542,6 @@
   "flareBoost": {
     "name": "Bruciaimpeto",
     "description": "Se il Pokémon è scottato, la potenza delle sue mosse speciali aumenta."
-  },
-  "harvest": {
-    "name": "Coglibacche",
-    "description": "Può ricreare una bacca utilizzata."
   },
   "telepathy": {
     "name": "Telepatia",
@@ -662,10 +650,6 @@
   "flowerVeil": {
     "name": "Fiorvelo",
     "description": "Rende gli alleati di tipo Erba immuni alla diminuzione delle statistiche e ai problemi di stato."
-  },
-  "cheekPouch": {
-    "name": "Guancegonfie",
-    "description": "Quando il Pokémon mangia una bacca, recupera anche dei PS."
   },
   "protean": {
     "name": "Mutatipo",
@@ -983,10 +967,6 @@
     "name": "Geloscaglie",
     "description": "Scaglie di ghiaccio proteggono il Pokémon dalle mosse speciali, dimezzandone i danni subiti."
   },
-  "ripen": {
-    "name": "Maturazione",
-    "description": "Fa maturare le bacche raddoppiandone gli effetti."
-  },
   "iceFace": {
     "name": "Gelofaccia",
     "description": "Grazie al ghiaccio sulla testa, il Pokémon può incassare i danni causati da mosse fisiche, ma cambia forma. Torna al suo stato originale quando grandina."
@@ -1058,14 +1038,6 @@
   "grimNeigh": {
     "name": "Nitrito Nero",
     "description": "Quando manda KO il nemico, emette un nitrito spettrale, aumentando il proprio Attacco Speciale."
-  },
-  "asOneGlastrier": {
-    "name": "Sintonia Equina",
-    "description": "Il Pokémon ha una doppia abilità: Agitazione di Calyrex e Nitrito Bianco di Glastrier"
-  },
-  "asOneSpectrier": {
-    "name": "Sintonia Equina",
-    "description": "Il Pokémon ha una doppia abilità: Agitazione di Calyrex e Nitrito Nero di Spectrier."
   },
   "lingeringAroma": {
     "name": "Odore Tenace",
@@ -1158,10 +1130,6 @@
   "opportunist": {
     "name": "Scrocco",
     "description": "Quando la statistica di un avversario viene aumentata, il Pokémon se ne approfitta e aumenta anche la propria."
-  },
-  "cudChew": {
-    "name": "Ruminante",
-    "description": "Se il Pokémon mangia una bacca, alla fine del turno successivo questa risale dal suo stomaco per essere mangiata una seconda volta."
   },
   "sharpness": {
     "name": "Affilama",

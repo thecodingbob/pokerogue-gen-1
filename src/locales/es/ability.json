@@ -323,10 +323,6 @@
     "name":  "Manto Níveo",
     "description": "Aumenta su Evasión cuando nieva."
   },
-  "gluttony": {
-    "name":  "Gula",
-    "description": "Cuando sus PS se ven reducidos a la mitad, engulle la baya que normalmente solo se comería cuando le quedasen pocos PS."
-  },
   "angerPoint": {
     "name":  "Irascible",
     "description": "Si recibe un golpe crítico, monta en cólera y su Ataque aumenta al máximo."
@@ -503,10 +499,6 @@
     "name":  "Respondón",
     "description": "Invierte los cambios en las características: bajan cuando les toca subir y suben cuando les toca bajar."
   },
-  "unnerve": {
-    "name":  "Nerviosismo",
-    "description": "Pone nervioso al rival y le impide comer bayas."
-  },
   "defiant": {
     "name":  "Competitivo",
     "description": "Aumenta mucho su Ataque cuando el rival le reduce cualquiera de sus características."
@@ -550,10 +542,6 @@
   "flareBoost": {
     "name":  "Ímpetu Ardiente",
     "description": "Aumenta la potencia de sus ataques especiales cuando sufre quemaduras."
-  },
-  "harvest": {
-    "name":  "Cosecha",
-    "description": "Puede reutilizar varias veces una misma baya."
   },
   "telepathy": {
     "name":  "Telepatía",
@@ -662,10 +650,6 @@
   "flowerVeil": {
     "name":  "Velo Flor",
     "description": "Evita que los Pokémon de tipo Planta aliados sufran problemas de estado o que les reduzcan sus características."
-  },
-  "cheekPouch": {
-    "name":  "Carrillo",
-    "description": "Recupera PS al comer cualquier baya."
   },
   "protean": {
     "name":  "Mutatipo",
@@ -983,10 +967,6 @@
     "name":  "Escama de Hielo",
     "description": "Las gélidas escamas que protegen su cuerpo reducen a la mitad el daño que le infligen los ataques especiales."
   },
-  "ripen": {
-    "name":  "Maduración",
-    "description": "Hace madurar las bayas, por lo que duplica sus efectos."
-  },
   "iceFace": {
     "name":  "Cara de Hielo",
     "description": "Absorbe el daño de un ataque físico con el hielo de la cabeza, tras lo cual cambia de forma. El hielo se regenerará la próxima vez que nieve."
@@ -1058,14 +1038,6 @@
   "grimNeigh": {
     "name":  "Relincho Negro",
     "description": "Al derrotar a un objetivo, emite un relincho aterrador y aumenta su Ataque Especial."
-  },
-  "asOneGlastrier": {
-    "name":  "Unidad Ecuestre",
-    "description": "El Pokémon tiene dos habilidades: Relincho Negro de Spectrier y Nerviosismo de Calyrex."
-  },
-  "asOneSpectrier": {
-    "name":  "Unidad Ecuestre",
-    "description": "El Pokémon tiene dos habilidades: Relincho Negro de Spectrier y Nerviosismo de Calyrex."
   },
   "lingeringAroma": {
     "name":  "Olor Persistente",
@@ -1158,10 +1130,6 @@
   "opportunist": {
     "name":  "Oportunista",
     "description": "Copia las mejoras en las características del rival, aprovechándose de la situación."
-  },
-  "cudChew": {
-    "name":  "Rumia",
-    "description": "Cuando ingiere una baya, la regurgita al final del siguiente turno y se la come por segunda vez."
   },
   "sharpness": {
     "name":  "Cortante",

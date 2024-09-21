@@ -43,7 +43,6 @@ import { applyChallenges, ChallengeType } from "#app/data/challenge.js";
 import { Abilities } from "#enums/abilities";
 import { BattleSpec } from "#enums/battle-spec";
 import { BattlerTagType } from "#enums/battler-tag-type";
-import { BerryType } from "#enums/berry-type";
 import { Biome } from "#enums/biome";
 import { Moves } from "#enums/moves";
 import { Species } from "#enums/species";
@@ -4016,7 +4015,6 @@ export class PokemonSummonData {
 export class PokemonBattleData {
   public hitCount: integer = 0;
   public endured: boolean = false;
-  public berriesEaten: BerryType[] = [];
   public abilitiesApplied: Abilities[] = [];
   public abilityRevealed: boolean = false;
 }

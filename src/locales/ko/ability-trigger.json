@@ -34,10 +34,8 @@
   "frisk": "{{pokemonNameWithAffix}}[[는]] {{opponentName}}의\n{{opponentAbilityName}}[[를]] 통찰했다!",
   "postWeatherLapseHeal": "{{pokemonNameWithAffix}}[[는]]\n{{abilityName}}[[로]] 체력이 회복되었다!",
   "postWeatherLapseDamage": "{{pokemonNameWithAffix}}[[는]]\n{{abilityName}}에 의한 데미지를 입었다!",
-  "postTurnLootCreateEatenBerry": "{{pokemonNameWithAffix}}[[는]]\n{{berryName}}[[를]] 수확했다!",
   "postTurnHeal": "{{pokemonNameWithAffix}}[[는]]\n{{abilityName}}[[로]] 체력이 회복되었다!",
   "fetchBall": "{{pokemonNameWithAffix}}[[는]]\n{{pokeballName}}[[를]] 주워 왔다!",
-  "healFromBerryUse": "{{pokemonNameWithAffix}}[[는]]\n{{abilityName}}[[로]] 체력이 회복되었다!",
   "arenaTrap": "{{pokemonNameWithAffix}}의 {{abilityName}} 때문에\n바꿀 수 없다!",
   "postBattleLoot": "{{pokemonNameWithAffix}}[[는]]\n{{itemName}}[[를]] 주웠다!",
   "postFaintContactDamage": "{{pokemonNameWithAffix}}[[는]] {{abilityName}}[[로]]\n상대에게 데미지를 입혔다!",
@@ -51,11 +49,8 @@
   "postSummonDarkAura": "{{pokemonNameWithAffix}}[[는]]\n다크오라를 발산하고 있다!",
   "postSummonFairyAura": "{{pokemonNameWithAffix}}[[는]]\n페어리오라를 발산하고 있다!",
   "postSummonNeutralizingGas": "주위가 화학변화가스로 가득 찼다!",
-  "postSummonAsOneGlastrier": "{{pokemonNameWithAffix}}[[는]]\n두 가지 특성을 겸비한다!",
-  "postSummonAsOneSpectrier": "{{pokemonNameWithAffix}}[[는]]\n두 가지 특성을 겸비한다!",
   "postSummonVesselOfRuin": "{{pokemonNameWithAffix}}의 재앙의그릇에 의해\n주위의 {{statName}}[[가]] 약해졌다!",
   "postSummonSwordOfRuin": "{{pokemonNameWithAffix}}의 재앙의검에 의해\n주위의 {{statName}}[[가]] 약해졌다!",
   "postSummonTabletsOfRuin": "{{pokemonNameWithAffix}}의 재앙의목간에 의해\n주위의 {{statName}}[[가]] 약해졌다!",
-  "postSummonBeadsOfRuin": "{{pokemonNameWithAffix}}의 재앙의구슬에 의해\n주위의 {{statName}}[[가]] 약해졌다!",
-  "preventBerryUse": "{{pokemonNameWithAffix}}[[는]] 긴장해서\n나무열매를 먹을 수 없게 되었다!"
+  "postSummonBeadsOfRuin": "{{pokemonNameWithAffix}}의 재앙의구슬에 의해\n주위의 {{statName}}[[가]] 약해졌다!"
 }

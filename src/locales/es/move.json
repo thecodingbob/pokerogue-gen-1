@@ -1439,17 +1439,9 @@
     "name": "Salmuera",
     "effect": "Si al objetivo le queda la mitad o menos de sus PS, el ataque será el doble de fuerte."
   },
-  "naturalGift": {
-    "name": "Don Natural",
-    "effect": "La baya que lleva presta su fuerza para atacar. El tipo de ataque y su fuerza dependen de la baya."
-  },
   "feint": {
     "name": "Amago",
     "effect": "Permite golpear a objetivos que han utilizado movimientos como Protección o Detección y anula sus efectos."
-  },
-  "pluck": {
-    "name": "Picoteo",
-    "effect": "Picotea al objetivo. Si este sostiene una baya, la picotea también y obtiene sus efectos."
   },
   "tailwind": {
     "name": "Viento Afín",
@@ -1779,10 +1771,6 @@
     "name": "Sentencia",
     "effect": "Emite incontables haces de luz. El tipo del movimiento varía según la tabla que lleve el usuario."
   },
-  "bugBite": {
-    "name": "Picadura",
-    "effect": "Pica al objetivo. Si el objetivo lleva una baya, el usuario se la come y se beneficia de su efecto."
-  },
   "chargeBeam": {
     "name": "Rayo Carga",
     "effect": "Lanza un rayo eléctrico contra el objetivo. Puede subir el Ataque Especial de quien lo usa."
@@ -2011,10 +1999,6 @@
     "name": "Llave Giro",
     "effect": "Lanza por los aires al objetivo y hace que salga otro Pokémon. Si es uno salvaje, acaba el combate."
   },
-  "incinerate": {
-    "name": "Calcinación",
-    "effect": "Llamas que golpean al objetivo. Si este lleva una baya o ciertos objetos, se quemarán y ya no se podrán usar."
-  },
   "quash": {
     "name": "Último Lugar",
     "effect": "Consigue que el objetivo sea el último en moverse."
@@ -2218,10 +2202,6 @@
   "matBlock": {
     "name": "Escudo Tatami",
     "effect": "El usuario usa un tatami para escudarse de los ataques enemigos. Protege también a los aliados. No funciona contra movimientos de estado."
-  },
-  "belch": {
-    "name": "Eructo",
-    "effect": "El usuario causa daño a su objetivo lanzándole un eructo. Para poder utilizar este movimiento, tiene que haberse comido una baya equipada."
   },
   "rototiller": {
     "name": "Fertilizante",
@@ -2959,10 +2939,6 @@
     "name": "Presa Maxilar",
     "effect": "Impide que tanto el atacante como el defensor puedan huir o ser cambiados por otros hasta que uno de ellos se debilite o abandone el terreno de combate."
   },
-  "stuffCheeks": {
-    "name": "Atiborramiento",
-    "effect": "El usuario ingiere la baya que lleva equipada para aumentar mucho su Defensa."
-  },
   "noRetreat": {
     "name": "Bastión Final",
     "effect": "El usuario aumenta todas sus características, pero ya no puede huir ni ser cambiado por otro."
@@ -2978,10 +2954,6 @@
   "dragonDarts": {
     "name": "Dracoflechas",
     "effect": "El usuario ataca propulsando a ambos Dreepy. En caso de haber dos adversarios, cada Dreepy golpea a su propio objetivo por separado."
-  },
-  "teatime": {
-    "name": "Hora del Té",
-    "effect": "El usuario invita a tomar el té a todos los presentes en el terreno de combate, lo que hace que ingieran las bayas que lleven equipadas."
   },
   "octolock": {
     "name": "Octopresa",
@@ -3374,134 +3346,6 @@
   "takeHeart": {
     "name": "Bálsamo Osado",
     "effect": "El usuario se envalentona y se cura de los problemas de estado. Además, aumenta su Ataque Especial y su Defensa Especial."
-  },
-  "gMaxWildfire": {
-    "name": "Gigallamarada",
-    "effect": "Ataque de tipo Fuego ejecutado por un Charizard Gigamax. Inflige daño durante cuatro turnos."
-  },
-  "gMaxBefuddle": {
-    "name": "Gigaestupor",
-    "effect": "Ataque de tipo Bicho ejecutado por un Butterfree Gigamax. Envenena, paraliza o duerme al objetivo."
-  },
-  "gMaxVoltCrash": {
-    "name": "Gigatronada",
-    "effect": "Ataque de tipo Eléctrico ejecutado por un Pikachu Gigamax. Paraliza al objetivo."
-  },
-  "gMaxGoldRush": {
-    "name": "Gigamonedas",
-    "effect": "Ataque de tipo Normal ejecutado por un Meowth Gigamax. Confunde al objetivo y aumenta la recompensa recibida tras el combate."
-  },
-  "gMaxChiStrike": {
-    "name": "Gigapuñición",
-    "effect": "Ataque de tipo Lucha ejecutado por un Machamp Gigamax. Aumenta las posibilidades de que el usuario y sus aliados asesten un golpe crítico."
-  },
-  "gMaxTerror": {
-    "name": "Gigaaparición",
-    "effect": "Ataque de tipo Fantasma ejecutado por un Gengar Gigamax. Impide que el objetivo sea cambiado por otro."
-  },
-  "gMaxResonance": {
-    "name": "Gigamelodía",
-    "effect": "Ataque de tipo Hielo ejecutado por un Lapras Gigamax. Reduce el daño recibido durante cinco turnos."
-  },
-  "gMaxCuddle": {
-    "name": "Gigaternura",
-    "effect": "Ataque de tipo Normal ejecutado por un Eevee Gigamax. Hace que el objetivo se enamore."
-  },
-  "gMaxReplenish": {
-    "name": "Gigarreciclaje",
-    "effect": "Ataque de tipo Normal ejecutado por un Snorlax Gigamax. Restaura las bayas que se hayan consumido."
-  },
-  "gMaxMalodor": {
-    "name": "Gigapestilencia",
-    "effect": "Ataque de tipo Veneno ejecutado por un Garbodor Gigamax. Envenena al objetivo."
-  },
-  "gMaxStonesurge": {
-    "name": "Gigatrampa Rocas",
-    "effect": "Ataque de tipo Agua ejecutado por un Drednaw Gigamax. Esparce rocas afiladas por el terreno de combate."
-  },
-  "gMaxWindRage": {
-    "name": "Gigahuracán",
-    "effect": "Ataque de tipo Volador ejecutado por un Corviknight Gigamax. Es capaz de destruir barreras como las creadas por Pantalla de Luz y Reflejo."
-  },
-  "gMaxStunShock": {
-    "name": "Gigadescarga",
-    "effect": "Ataque de tipo Eléctrico ejecutado por un Toxtricity Gigamax. Envenena o paraliza al objetivo."
-  },
-  "gMaxFinale": {
-    "name": "Gigacolofón",
-    "effect": "Ataque de tipo Hada ejecutado por un Alcremie Gigamax. Restaura los PS de tu bando."
-  },
-  "gMaxDepletion": {
-    "name": "Gigadesgaste",
-    "effect": "Ataque de tipo Dragón ejecutado por un Duraludon Gigamax. Reduce PP del último movimiento usado por el objetivo."
-  },
-  "gMaxGravitas": {
-    "name": "Gigabóveda",
-    "effect": "Ataque de tipo Psíquico ejecutado por un Orbeetle Gigamax. Intensifica la fuerza de gravedad durante cinco turnos."
-  },
-  "gMaxVolcalith": {
-    "name": "Gigarroca Ígnea",
-    "effect": "Ataque de tipo Roca ejecutado por un Coalossal Gigamax. Inflige daño durante cuatro turnos."
-  },
-  "gMaxSandblast": {
-    "name": "Gigapolvareda",
-    "effect": "Ataque de tipo Tierra ejecutado por un Sandaconda Gigamax. Enreda al objetivo en un remolino de arena de cuatro a cinco turnos."
-  },
-  "gMaxSnooze": {
-    "name": "Gigasopor",
-    "effect": "Ataque de tipo Siniestro ejecutado por un Grimmsnarl Gigamax. Induce al sueño al objetivo en el siguiente turno."
-  },
-  "gMaxTartness": {
-    "name": "Gigacorrosión",
-    "effect": "Ataque de tipo Planta ejecutado por un Flapple Gigamax. Reduce la Evasión del objetivo."
-  },
-  "gMaxSweetness": {
-    "name": "Giganéctar",
-    "effect": "Ataque de tipo Planta ejecutado por un Appletun Gigamax. Cura los problemas de estado de tu bando."
-  },
-  "gMaxSmite": {
-    "name": "Gigacastigo",
-    "effect": "Ataque de tipo Hada ejecutado por un Hatterene Gigamax. Confunde al objetivo."
-  },
-  "gMaxSteelsurge": {
-    "name": "Gigatrampa Acero",
-    "effect": "Ataque de tipo Acero ejecutado por un Copperajah Gigamax. Esparce púas de acero por el terreno de combate."
-  },
-  "gMaxMeltdown": {
-    "name": "Gigafundido",
-    "effect": "Ataque de tipo Acero ejecutado por un Melmetal Gigamax. Impide al objetivo usar el mismo movimiento dos veces seguidas."
-  },
-  "gMaxFoamBurst": {
-    "name": "Gigaespuma",
-    "effect": "Ataque de tipo Agua ejecutado por un Kingler Gigamax. Reduce mucho la Velocidad del objetivo."
-  },
-  "gMaxCentiferno": {
-    "name": "Gigacienfuegos",
-    "effect": "Ataque de tipo Fuego ejecutado por un Centiskorch Gigamax. Un aro de fuego atrapa al objetivo de cuatro a cinco turnos."
-  },
-  "gMaxVineLash": {
-    "name": "Gigalianas",
-    "effect": "Ataque de tipo Planta ejecutado por un Venusaur Gigamax. Inflige daño durante cuatro turnos."
-  },
-  "gMaxCannonade": {
-    "name": "Gigacañonazo",
-    "effect": "Ataque de tipo Agua ejecutado por un Blastoise Gigamax. Inflige daño durante cuatro turnos."
-  },
-  "gMaxDrumSolo": {
-    "name": "Gigarredoble",
-    "effect": "Ataque de tipo Planta ejecutado por un Rillaboom Gigamax. Ignora la habilidad del objetivo."
-  },
-  "gMaxFireball": {
-    "name": "Gigaesfera Ígnea",
-    "effect": "Ataque de tipo Fuego ejecutado por un Cinderace Gigamax. Ignora la habilidad del objetivo."
-  },
-  "gMaxHydrosnipe": {
-    "name": "Gigadisparo",
-    "effect": "Ataque de tipo Agua ejecutado por un Inteleon Gigamax. Ignora la habilidad del objetivo."
-  },
-  "gMaxOneBlow": {
-    "name": "Gigagolpe Brusco",
-    "effect": "Ataque de tipo Siniestro ejecutado por un Urshifu Gigamax. Propina un único golpe que acierta al objetivo aunque haya usado Maxibarrera."
   },
   "gMaxRapidFlow": {
     "name": "Gigagolpe Fluido",

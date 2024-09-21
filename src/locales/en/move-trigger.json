@@ -35,7 +35,6 @@
   "isOverflowingWithSpacePower": "{{pokemonName}} is overflowing\nwith space power!",
   "usedUpAllElectricity": "{{pokemonName}} used up all its electricity!",
   "stoleItem": "{{pokemonName}} stole\n{{targetName}}'s {{itemName}}!",
-  "incineratedItem": "{{pokemonName}} incinerated\n{{targetName}}'s {{itemName}}!",
   "knockedOffItem": "{{pokemonName}} knocked off\n{{targetName}}'s {{itemName}}!",
   "tookMoveAttack": "{{pokemonName}} took\nthe {{moveName}} attack!",
   "cutOwnHpAndMaximizedStat": "{{pokemonName}} cut its own HP\nand maximized its {{statName}}!",

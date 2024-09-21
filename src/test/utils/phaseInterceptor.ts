@@ -1,6 +1,5 @@
 import { Phase } from "#app/phase";
 import { BattleEndPhase } from "#app/phases/battle-end-phase";
-import { BerryPhase } from "#app/phases/berry-phase";
 import { CheckSwitchPhase } from "#app/phases/check-switch-phase";
 import { CommandPhase } from "#app/phases/command-phase";
 import { DamagePhase } from "#app/phases/damage-phase";
@@ -77,7 +76,6 @@ export default class PhaseInterceptor {
     [MoveEffectPhase, this.startPhase],
     [DamagePhase, this.startPhase],
     [FaintPhase, this.startPhase],
-    [BerryPhase, this.startPhase],
     [TurnEndPhase, this.startPhase],
     [BattleEndPhase, this.startPhase],
     [EggLapsePhase, this.startPhase],

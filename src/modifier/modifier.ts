@@ -11,9 +11,7 @@ import { FusionSpeciesFormEvolution, pokemonEvolutions } from "../data/pokemon-e
 import { getPokemonNameWithAffix } from "../messages";
 import * as Utils from "../utils";
 import { TempBattleStat } from "../data/temp-battle-stat";
-import { getBerryEffectFunc, getBerryPredicate } from "../data/berry";
 import { BattlerTagType} from "#enums/battler-tag-type";
-import { BerryType } from "#enums/berry-type";
 import { StatusEffect, getStatusEffectHealText } from "../data/status-effect";
 import { VoucherType } from "../system/voucher";
 import { FormChangeItem, SpeciesFormChangeItemTrigger } from "../data/pokemon-forms";
@@ -1233,85 +1231,6 @@ export class LevelIncrementBoosterModifier extends PersistentModifier {
   }
 }
 
-export class BerryModifier extends PokemonHeldItemModifier {
-  public berryType: BerryType;
-  public consumed: boolean;
-
-  constructor(type: ModifierType, pokemonId: integer, berryType: BerryType, stackCount?: integer) {
-    super(type, pokemonId, stackCount);
-
-    this.berryType = berryType;
-    this.consumed = false;
-  }
-
-  matchType(modifier: Modifier) {
-    return modifier instanceof BerryModifier && (modifier as BerryModifier).berryType === this.berryType;
-  }
-
-  clone() {
-    return new BerryModifier(this.type, this.pokemonId, this.berryType, this.stackCount);
-  }
-
-  getArgs(): any[] {
-    return super.getArgs().concat(this.berryType);
-  }
-
-  shouldApply(args: any[]): boolean {
-    return !this.consumed && super.shouldApply(args) && getBerryPredicate(this.berryType)(args[0] as Pokemon);
-  }
-
-  apply(args: any[]): boolean {
-    const pokemon = args[0] as Pokemon;
-
-    const preserve = new Utils.BooleanHolder(false);
-    pokemon.scene.applyModifiers(PreserveBerryModifier, pokemon.isPlayer(), pokemon, preserve);
-
-    getBerryEffectFunc(this.berryType)(pokemon);
-    if (!preserve.value) {
-      this.consumed = true;
-    }
-
-    return true;
-  }
-
-  getMaxHeldItemCount(pokemon: Pokemon): integer {
-    if ([BerryType.LUM, BerryType.LEPPA, BerryType.SITRUS, BerryType.ENIGMA].includes(this.berryType)) {
-      return 2;
-    }
-    return 3;
-  }
-}
-
-export class PreserveBerryModifier extends PersistentModifier {
-  constructor(type: ModifierType, stackCount?: integer) {
-    super(type, stackCount);
-  }
-
-  match(modifier: Modifier) {
-    return modifier instanceof PreserveBerryModifier;
-  }
-
-  clone() {
-    return new PreserveBerryModifier(this.type, this.stackCount);
-  }
-
-  shouldApply(args: any[]): boolean {
-    return super.shouldApply(args) && args[0] instanceof Pokemon && args[1] instanceof Utils.BooleanHolder;
-  }
-
-  apply(args: any[]): boolean {
-    if (!(args[1] as Utils.BooleanHolder).value) {
-      (args[1] as Utils.BooleanHolder).value = (args[0] as Pokemon).randSeedInt(10) < this.getStackCount() * 3;
-    }
-
-    return true;
-  }
-
-  getMaxStackCount(scene: BattleScene): integer {
-    return 3;
-  }
-}
-
 export class PokemonInstantReviveModifier extends PokemonHeldItemModifier {
   constructor(type: ModifierType, pokemonId: integer, stackCount?: integer) {
     super(type, pokemonId, stackCount);
@@ -2163,7 +2082,7 @@ export abstract class HeldItemTransferModifier extends PokemonHeldItemModifier {
     const transferredModifierTypes: ModifierTypes.ModifierType[] = [];
     const itemModifiers = pokemon.scene.findModifiers(m => m instanceof PokemonHeldItemModifier
         && m.pokemonId === targetPokemon.id && m.isTransferrable, targetPokemon.isPlayer()) as PokemonHeldItemModifier[];
-    let highestItemTier = itemModifiers.map(m => m.type.getOrInferTier(poolType)).reduce((highestTier, tier) => Math.max(tier!, highestTier), 0); // TODO: is this bang correct?
+    let highestItemTier = itemModifiers.map(m => m.type.getOrInferTier(poolType)).reduce((highestTier, tier) => getHighestRankedModifierPoolType(tier!, highestTier), 0); // TODO: is this bang correct?
     let tierItemModifiers = itemModifiers.filter(m => m.type.getOrInferTier(poolType) === highestItemTier);
 
     const heldItemTransferPromises: Promise<void>[] = [];

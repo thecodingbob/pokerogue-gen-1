@@ -34,10 +34,8 @@
   "frisk": "{{pokemonNameWithAffix}} perquisice {{opponentName}}\ne trova la sua abilità, {{opponentAbilityName}}!",
   "postWeatherLapseHeal": "{{pokemonNameWithAffix}} recupera alcuni PS\ncon {{abilityName}}!",
   "postWeatherLapseDamage": "{{pokemonNameWithAffix}} subisce danni\na causa della sua abilità, {{abilityName}}!",
-  "postTurnLootCreateEatenBerry": "{{pokemonNameWithAffix}} raccoglie una {{berryName}}!",
   "postTurnHeal": "{{pokemonNameWithAffix}} recupera alcuni PS\ncon {{abilityName}}!",
   "fetchBall": "{{pokemonNameWithAffix}} ha trovato una\n{{pokeballName}}!",
-  "healFromBerryUse": "{{abilityName}} di {{pokemonNameWithAffix}}\nristabilisce parte dei PS!",
   "arenaTrap": "L’abilità {{abilityName}} di {{pokemonNameWithAffix}}\nimpedisce la sostituzione!",
   "postBattleLoot": "{{pokemonNameWithAffix}} ha raccolto\nil/l'/lo/la {{itemName}}!",
   "postFaintContactDamage": "{{abilityName}} di {{pokemonNameWithAffix}}\nferisce il Pokémon che lo ha attaccato!",
@@ -51,11 +49,8 @@
   "postSummonDarkAura": "L’abilità Auratetra di {{pokemonNameWithAffix}} è attiva.",
   "postSummonFairyAura": "L’abilità Aurafolletto di {{pokemonNameWithAffix}} è attiva.",
   "postSummonNeutralizingGas": "Il Gas Reagente di {{pokemonNameWithAffix}}\nsi diffonde tutt’intorno!",
-  "postSummonAsOneGlastrier": "{{pokemonNameWithAffix}} ha due abilità!",
-  "postSummonAsOneSpectrier": "{{pokemonNameWithAffix}} ha due abilità!",
   "postSummonVesselOfRuin": "La/l'{{statName}} dei Pokémon intorno si indebolisce a causa\ndell'abilità Vaso Nefasto di {{pokemonNameWithAffix}}!",
   "postSummonSwordOfRuin": "La/l'{{statName}} dei Pokémon intorno si indebolisce a causa\ndell'abilità Spada Nefasta di {{pokemonNameWithAffix}}!",
   "postSummonTabletsOfRuin": "La/l'{{statName}} dei Pokémon intorno si indebolisce a causa\ndell'abilità Amuleto Nefasto di {{pokemonNameWithAffix}}!",
-  "postSummonBeadsOfRuin": "La/l'{{statName}} dei Pokémon intorno si indebolisce a causa\ndell'abilità Monile Nefasto di {{pokemonNameWithAffix}}!",
-  "preventBerryUse": "{{pokemonNameWithAffix}} non riesce a\nmangiare le bacche per l'agitazione!"
+  "postSummonBeadsOfRuin": "La/l'{{statName}} dei Pokémon intorno si indebolisce a causa\ndell'abilità Monile Nefasto di {{pokemonNameWithAffix}}!"
 }

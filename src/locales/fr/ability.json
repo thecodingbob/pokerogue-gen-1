@@ -323,10 +323,6 @@
     "name": "Rideau Neige",
     "description": "Augmente l’Esquive du Pokémon quand il neige."
   },
-  "gluttony": {
-    "name": "Gloutonnerie",
-    "description": "Si le Pokémon tient une Baie à manger en cas de PV bas, il la mange dès qu’il a perdu la moitié de ses PV."
-  },
   "angerPoint": {
     "name": "Colérique",
     "description": "Si le Pokémon subit un coup critique, il entre dans une colère noire qui augmente son Attaque au maximum."
@@ -503,10 +499,6 @@
     "name": "Contestation",
     "description": "Inverse les changements de stats : les augmentations de stats se transforment en baisses, et vice-versa."
   },
-  "unnerve": {
-    "name": "Tension",
-    "description": "Fait stresser l’adversaire, ce qui l’empêche de manger des Baies."
-  },
   "defiant": {
     "name": "Acharné",
     "description": "Augmente beaucoup l’Attaque du Pokémon quand ses stats sont baissées par l’adversaire."
@@ -550,10 +542,6 @@
   "flareBoost": {
     "name": "Rage Brûlure",
     "description": "Augmente la puissance des capacités spéciales quand le Pokémon est brulé."
-  },
-  "harvest": {
-    "name": "Récolte",
-    "description": "Permet de réutiliser une même Baie plusieurs fois."
   },
   "telepathy": {
     "name": "Télépathe",
@@ -662,10 +650,6 @@
   "flowerVeil": {
     "name": "Flora-Voile",
     "description": "Empêche les alliés de type Plante de subir des baisses de stats et des altérations de statut."
-  },
-  "cheekPouch": {
-    "name": "Bajoues",
-    "description": "Le Pokémon récupère des PV lorsqu’il consomme n’importe quelle Baie en plus de bénéficier de ses effets habituels."
   },
   "protean": {
     "name": "Protéen",
@@ -983,10 +967,6 @@
     "name": "Écailles Glacées",
     "description": "Le Pokémon est protégé par des écailles de glace. Les dégâts qu’il subit par des capacités spéciales sont divisés par deux."
   },
-  "ripen": {
-    "name": "Mûrissement",
-    "description": "Le Pokémon fait murir la Baie qu’il tient et double ainsi son effet."
-  },
   "iceFace": {
     "name": "Tête de Gel",
     "description": "Le glaçon sur sa tête encaisse les attaques physiques à la place du Pokémon, mais sa destruction modifie son apparence. Le glaçon se reforme quand il neige."
@@ -1058,14 +1038,6 @@
   "grimNeigh": {
     "name": "Sombre Ruade",
     "description": "Quand le Pokémon met un ennemi K.O., il émet un hennissement terrifiant qui augmente son Attaque Spéciale."
-  },
-  "asOneGlastrier": {
-    "name": "Osmose Équine",
-    "description": "Les talents Tension de Sylveroy et Blanche Ruade de Blizzeval sont cumulés."
-  },
-  "asOneSpectrier": {
-    "name": "Osmose Équine",
-    "description": "Les talents Tension de Sylveroy et Sombre Ruade de Spectreval sont cumulés."
   },
   "lingeringAroma": {
     "name": "Odeur Tenace",
@@ -1158,10 +1130,6 @@
   "opportunist": {
     "name": "Opportuniste",
     "description": "Quand les stats de l’ennemi augmentent, le Pokémon en profite pour augmenter ses stats de la même manière."
-  },
-  "cudChew": {
-    "name": "Ruminant",
-    "description": "Quand le Pokémon mange une Baie, il la régurgite à la fin du tour suivant et la mange une nouvelle fois."
   },
   "sharpness": {
     "name": "Incisif",

@@ -1439,17 +1439,9 @@
     "name": "Brine",
     "effect": "Se os PS do alvo estiverem pela metade ou menos, esse ataque terá o dobro do poder."
   },
-  "naturalGift": {
-    "name": "Natural Gift",
-    "effect": "O usuário canaliza o poder para atacar usando a Fruta que está segurando. A Fruta determina o tipo e o poder do movimento."
-  },
   "feint": {
     "name": "Feint",
     "effect": "Um ataque que acerta um alvo usando Proteção ou Detectar. Isso também extingue os efeitos desses movimentos."
-  },
-  "pluck": {
-    "name": "Pluck",
-    "effect": "O usuário bica o alvo. Caso o alvo esteja segurando uma Fruta, o usuário a come e ganha seu efeito."
   },
   "tailwind": {
     "name": "Tailwind",
@@ -1779,10 +1771,6 @@
     "name": "Judgment",
     "effect": "O usuário libera incontáveis tiros de luz no alvo. A tipagem desse movimento varia dependendo do tipo de Placa que o usuário está segurando."
   },
-  "bugBite": {
-    "name": "Bug Bite",
-    "effect": "O usuário morde o alvo. Caso o alvo esteja segurando uma Fruta, o usuário a come e ganha seu efeito."
-  },
   "chargeBeam": {
     "name": "Charge Beam",
     "effect": "O usuário ataca com uma carga elétrica. O usuário pode usar a eletricidade que sobrar para fortalecer seu Ataque Especial."
@@ -2011,10 +1999,6 @@
     "name": "Circle Throw",
     "effect": "O alvo é arremessado, e um Pokémon diferente é trazido para a batalha. Na natureza, isso termina uma batalha contra um único Pokémon."
   },
-  "incinerate": {
-    "name": "Incinerate",
-    "effect": "O usuário ataca o Pokémon oponente com fogo. Se um Pokémon estiver segurando um certo item, como uma Fruta, o item será queimado e inutilizado."
-  },
   "quash": {
     "name": "Quash",
     "effect": "O usuário reprime o alvo e o faz se mover por último."
@@ -2218,10 +2202,6 @@
   "matBlock": {
     "name": "Mat Block",
     "effect": "Usando uma esteira elevada como escudo, o usuário protege a si mesmo e a seus aliados de golpes que causam dano. Isso não previne condições negativas."
-  },
-  "belch": {
-    "name": "Belch",
-    "effect": "O usuário expurga um arroto danificante no alvo. O usuário deve comer uma Fruta para usar esse movimento."
   },
   "rototiller": {
     "name": "Rototiller",
@@ -2959,10 +2939,6 @@
     "name": "Jaw Lock",
     "effect": "Este movimento impede o usuário e o alvo de trocarem de lugar até que um deles desmaie. O efeito desaparece se qualquer um dos Pokémon deixar o campo."
   },
-  "stuffCheeks": {
-    "name": "Stuff Cheeks",
-    "effect": "O usuário come sua Fruta segurada, depois aumenta muito seu atributo de Defesa."
-  },
   "noRetreat": {
     "name": "No Retreat",
     "effect": "Este movimento aumenta todos os atributos do usuário, mas impede o usuário de trocar de lugar ou fugir."
@@ -2978,10 +2954,6 @@
   "dragonDarts": {
     "name": "Dragon Darts",
     "effect": "O usuário ataca duas vezes usando Dreepy. Se houver dois alvos, este movimento atinge cada alvo uma vez."
-  },
-  "teatime": {
-    "name": "Teatime",
-    "effect": "O usuário faz hora do chá com todos os Pokémon na batalha. Cada Pokémon come sua Fruta segurada."
   },
   "octolock": {
     "name": "Octolock",
@@ -3374,138 +3346,6 @@
   "takeHeart": {
     "name": "Take Heart",
     "effect": "O usuário levanta o espírito, curando suas próprias condições de status e aumentando seus atributos de Atq. Esp. e Def. Esp."
-  },
-  "gMaxWildfire": {
-    "name": "G-Max Wildfire",
-    "effect": "Um ataque do tipo Fogo que o Gigantamax Charizard usa. Este movimento continua causando dano aos oponentes por quatro turnos."
-  },
-  "gMaxBefuddle": {
-    "name": "G-Max Befuddle",
-    "effect": "Um ataque do tipo Inseto que o Gigantamax Butterfree usa. Este movimento inflige as condições de envenenado, paralisado ou adormecido nos oponentes."
-  },
-  "gMaxVoltCrash": {
-    "name": "G-Max Volt Crash",
-    "effect": "Um ataque do tipo Elétrico que o Gigantamax Pikachu usa. Este movimento paralisa os oponentes."
-  },
-  "gMaxGoldRush": {
-    "name": "G-Max Gold Rush",
-    "effect": "Um ataque do tipo Normal que o Gigantamax Meowth usa. Este movimento confunde os oponentes e também ganha dinheiro extra."
-  },
-  "gMaxChiStrike": {
-    "name": "G-Max Chi Strike",
-    "effect": "Um ataque do tipo Lutador que Gigantamax Machamp usa. Este movimento aumenta a chance de acertos críticos."
-  },
-  "gMaxTerror": {
-    "name": "G-Max Terror",
-    "effect": "Um ataque do tipo Fantasma que Gigantamax Gengar usa. Este Pokémon pisa na sombra do Pokémon adversário para impedi-lo de escapar."
-  },
-  "gMaxResonance": {
-    "name": "G-Max Resonance",
-    "effect": "Um ataque do tipo Gelo que Gigantamax Lapras usa. Este movimento reduz o dano recebido por cinco turnos."
-  },
-  "gMaxCuddle": {
-    "name": "G-Max Cuddle",
-    "effect": "Um ataque do tipo Normal que Gigantamax Eevee usa. Este movimento apaixona os oponentes."
-  },
-  "gMaxReplenish": {
-    "name": "G-Max Replenish",
-    "effect": "Um ataque do tipo Normal que Gigantamax Snorlax usa. Este movimento restaura Frutas que foram comidas."
-  },
-  "gMaxMalodor": {
-    "name": "G-Max Malodor",
-    "effect": "Um ataque do tipo Veneno que Gigantamax Garbodor usa. Este movimento envenena os oponentes."
-  },
-  "gMaxStonesurge": {
-    "name": "G-Max Stonesurge",
-    "effect": "Um ataque do tipo Água que Gigantamax Drednaw usa. Este movimento espalha pedras afiadas pelo campo."
-  },
-  "gMaxWindRage": {
-    "name": "G-Max Wind Rage",
-    "effect": "Um ataque do tipo Voador que Gigantamax Corviknight usa. Este movimento remove os efeitos de movimentos como Reflect e Light Screen."
-  },
-  "gMaxStunShock": {
-    "name": "G-Max Stun Shock",
-    "effect": "Um ataque do tipo Elétrico que Gigantamax Toxtricity usa. Este movimento envenena ou paralisa os oponentes."
-  },
-  "gMaxFinale": {
-    "name": "G-Max Finale",
-    "effect": "Um ataque do tipo Fada que Gigantamax Alcremie usa. Este movimento cura os PS dos aliados."
-  },
-  "gMaxDepletion": {
-    "name": "G-Max Depletion",
-    "effect": "Um ataque do tipo Dragão que Gigantamax Duraludon usa. Reduz o PP do último movimento usado."
-  },
-  "gMaxGravitas": {
-    "name": "G-Max Gravitas",
-    "effect": "Um ataque do tipo Psíquico que Gigantamax Orbeetle usa. Este movimento muda a gravidade por cinco turnos."
-  },
-  "gMaxVolcalith": {
-    "name": "G-Max Volcalith",
-    "effect": "Um ataque do tipo Pedra que Gigantamax Coalossal usa. Este movimento continua a causar dano aos oponentes por quatro turnos."
-  },
-  "gMaxSandblast": {
-    "name": "G-Max Sandblast",
-    "effect": "Um ataque do tipo Terra que Gigantamax Sandaconda usa. Os oponentes ficam presos em uma tempestade de areia furiosa por quatro a cinco turnos."
-  },
-  "gMaxSnooze": {
-    "name": "G-Max Snooze",
-    "effect": "Um ataque do tipo Sombrio que Gigantamax Grimmsnarl usa. O usuário solta um grande bocejo que faz com que os alvos adormeçam no próximo turno."
-  },
-  "gMaxTartness": {
-    "name": "G-Max Tartness",
-    "effect": "Um ataque do tipo Planta que Gigantamax Flapple usa. Este movimento reduz a Evasão dos oponentes."
-  },
-  "gMaxSweetness": {
-    "name": "G-Max Sweetness",
-    "effect": "Um ataque do tipo Planta que Gigantamax Appletun usa. Este movimento cura as condições de status dos aliados."
-  },
-  "gMaxSmite": {
-    "name": "G-Max Smite",
-    "effect": "Um ataque do tipo Fada que Gigantamax Hatterene usa. Este movimento confunde os oponentes."
-  },
-  "gMaxSteelsurge": {
-    "name": "G-Max Steelsurge",
-    "effect": "Um ataque do tipo Aço que Gigantamax Copperajah usa. Este movimento espalha estacas afiadas pelo campo."
-  },
-  "gMaxMeltdown": {
-    "name": "G-Max Meltdown",
-    "effect": "Um ataque do tipo Aço que Gigantamax Melmetal usa. Este movimento impede os oponentes de usar o mesmo movimento duas vezes seguidas."
-  },
-  "gMaxFoamBurst": {
-    "name": "G-Max Foam Burst",
-    "effect": "Um ataque do tipo Água que Gigantamax Kingler usa. Este movimento reduz drasticamente a Velocidade dos oponentes."
-  },
-  "gMaxCentiferno": {
-    "name": "G-Max Centiferno",
-    "effect": "Um ataque do tipo Fogo que Gigantamax Centiskorch usa. Este movimento prende os oponentes em chamas por quatro a cinco turnos."
-  },
-  "gMaxVineLash": {
-    "name": "G-Max Vine Lash",
-    "effect": "Um ataque do tipo Planta que Gigantamax Venusaur usa. Este movimento continua a causar dano aos oponentes por quatro turnos."
-  },
-  "gMaxCannonade": {
-    "name": "G-Max Cannonade",
-    "effect": "Um ataque do tipo Água que Gigantamax Blastoise usa. Este movimento continua a causar dano aos oponentes por quatro turnos."
-  },
-  "gMaxDrumSolo": {
-    "name": "G-Max Drum Solo",
-    "effect": "Um ataque do tipo Planta que Gigantamax Rillaboom usa. Este movimento pode ser usado no alvo independentemente de suas Habilidades."
-  },
-  "gMaxFireball": {
-    "name": "G-Max Fireball",
-    "effect": "Um ataque do tipo Fogo que Gigantamax Cinderace usa. Este movimento pode ser usado no alvo independentemente de suas Habilidades."
-  },
-  "gMaxHydrosnipe": {
-    "name": "G-Max Hydrosnipe",
-    "effect": "Um ataque do tipo Água que Gigantamax Inteleon usa. Este movimento pode ser usado no alvo independentemente de suas Habilidades."
-  },
-  "gMaxOneBlow": {
-    "name": "G-Max One Blow",
-    "effect": "Um ataque do tipo Sombrio que Gigantamax Urshifu usa. Este movimento único pode ignorar o Max Guard."
-  },
-  "gMaxRapidFlow": {
-    "name": "G-Max Rapid Flow",
-    "effect": "Um ataque do tipo Água que Gigantamax Urshifu usa. Este movimento rápido pode ignorar o Max Guard."
   },
   "teraBlast": {
     "name": "Tera Blast",

@@ -35,10 +35,8 @@
   "frisk": "{{pokemonNameWithAffix}}は　{{opponentName}}の\n{{opponentAbilityName}}を　お見通しだ！",
   "postWeatherLapseHeal": "{{pokemonNameWithAffix}}は　{{abilityName}}で\n体力を　回復した！",
   "postWeatherLapseDamage": "{{pokemonNameWithAffix}}は\n{{abilityName}}の　ダメージを　受けた！",
-  "postTurnLootCreateEatenBerry": "{{pokemonNameWithAffix}}は\n{{berryName}}を　収穫した！",
   "postTurnHeal": "{{pokemonNameWithAffix}}は　{{abilityName}}で\n体力を　回復した！",
   "fetchBall": "{{pokemonNameWithAffix}}は\n{{pokeballName}}を　拾ってきた！",
-  "healFromBerryUse": "{{pokemonNameWithAffix}}は　{{abilityName}}で\n体力を　回復した！",
   "arenaTrap": "{{pokemonNameWithAffix}}の　{{abilityName}}で\n入れ替えることが　できない！",
   "postBattleLoot": "{{pokemonNameWithAffix}}は\n{{itemName}}を　拾った！",
   "postFaintContactDamage": "{{pokemonNameWithAffix}}は {{abilityName}}で\n相手に ダメージを 与えた！",
@@ -52,11 +50,8 @@
   "postSummonDarkAura": "{{pokemonNameWithAffix}}は\nダークオーラを　放っている！",
   "postSummonFairyAura": "{{pokemonNameWithAffix}}は\nフェアリーオーラを　放っている！",
   "postSummonNeutralizingGas": "あたりに　かがくへんかガスが　充満した！",
-  "postSummonAsOneGlastrier": "{{pokemonNameWithAffix}}は\nふたつの　特性を　あわせ持つ！",
-  "postSummonAsOneSpectrier": "{{pokemonNameWithAffix}}は\nふたつの　特性を　あわせ持つ！",
   "postSummonVesselOfRuin": "{{pokemonNameWithAffix}}の　わざわいのうつわで\nまわりの　{{statName}}が　弱まった！",
   "postSummonSwordOfRuin": "{{pokemonNameWithAffix}}の　わざわいのつるぎで\nまわりの　{{statName}}が　弱まった！",
   "postSummonTabletsOfRuin": "{{pokemonNameWithAffix}}の　わざわいのおふだ\nまわりの　{{statName}}が　弱まった！",
-  "postSummonBeadsOfRuin": "{{pokemonNameWithAffix}}の　わざわいのたまで\nまわりの　{{statName}}が　弱まった！",
-  "preventBerryUse": "{{pokemonNameWithAffix}}は　緊張して\nきのみが　食べられなくなった！"
+  "postSummonBeadsOfRuin": "{{pokemonNameWithAffix}}の　わざわいのたまで\nまわりの　{{statName}}が　弱まった！"
 }

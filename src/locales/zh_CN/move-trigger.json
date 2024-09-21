@@ -35,7 +35,6 @@
   "isOverflowingWithSpacePower": "{{pokemonName}}身上\n溢出了宇宙之力！",
   "usedUpAllElectricity": "{{pokemonName}}\n用尽电力了！",
   "stoleItem": "{{pokemonName}}从{{targetName}}那里\n夺取了{{itemName}}！",
-  "incineratedItem": "{{pokemonName}}烧没了\n{{targetName}}的{{itemName}}！",
   "knockedOffItem": "{{pokemonName}}拍落了\n{{targetName}}的{{itemName}}！",
   "tookMoveAttack": "{{pokemonName}}\n受到了{{moveName}}的攻击！",
   "cutOwnHpAndMaximizedStat": "{{pokemonName}}\n削减了体力并释放了全部{{statName}}!",

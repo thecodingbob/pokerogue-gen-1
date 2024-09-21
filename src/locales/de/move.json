@@ -1439,17 +1439,9 @@
     "name": "Lake",
     "effect": "Hat das Ziel die Hälfte oder weniger seiner maximalen KP, trifft diese Attacke mit doppelter Kraft."
   },
-  "naturalGift": {
-    "name": "Beerenkräfte",
-    "effect": "Anwender zieht aus seiner derzeitigen Beere Kraft. Sie bestimmt Typ und Stärke der Attacke."
-  },
   "feint": {
     "name": "Offenlegung",
     "effect": "Ziele, die Schutzschild oder Scanner verwenden, werden getroffen. Entfernt Effekte dieser Attacken."
-  },
-  "pluck": {
-    "name": "Pflücker",
-    "effect": "Anwender pickt das Ziel, nimmt die Beere, falls das Ziel eine trägt, und erhält ihren Effekt."
   },
   "tailwind": {
     "name": "Rückenwind",
@@ -1779,10 +1771,6 @@
     "name": "Urteilskraft",
     "effect": "Anwender feuert unzählige Lichtstrahlen ab. Deren Typ hängt von der gehaltenen Tafel ab."
   },
-  "bugBite": {
-    "name": "Käferbiss",
-    "effect": "Anwender beißt das Ziel. Trägt dieses eine Beere, isst der Anwender sie und erhält ihren Effekt."
-  },
   "chargeBeam": {
     "name": "Ladestrahl",
     "effect": "Ziel wird von einem Elektrostrahl getroffen. Steigert eventuell Spezial-Angriff des Anwenders."
@@ -2011,10 +1999,6 @@
     "name": "Überkopfwurf",
     "effect": "Schleudert das Ziel davon und bewirkt damit, dass ein anderes Pokémon eingewechselt wird. Beendet Kämpfe gegen wilde Pokémon."
   },
-  "incinerate": {
-    "name": "Einäschern",
-    "effect": "Eine Feuer-Attacke. Trägt das Ziel eine Beere oder ein ähnliches Item bei sich, wird dieses von den Flammen verzehrt und geht verloren."
-  },
   "quash": {
     "name": "Verzögerung",
     "effect": "Anwender stemmt sich gegen das Ziel und bewirkt, dass dieses erst als Letztes angreift."
@@ -2218,10 +2202,6 @@
   "matBlock": {
     "name": "Tatami-Schild",
     "effect": "Der Anwender richtet eine Tatami-Matte auf, um sich und sein Team vor Schaden zu schützen. Kein Schutz vor Status-Attacken."
-  },
-  "belch": {
-    "name": "Rülpser",
-    "effect": "Der Anwender fügt dem Ziel Schaden zu, indem er es anrülpst. Diese Attacke gelingt nur nach dem Konsum einer getragenen Beere."
   },
   "rototiller": {
     "name": "Pflüger",
@@ -2959,10 +2939,6 @@
     "name": "Fesselbiss",
     "effect": "Anwender und Ziel können nicht ausgetauscht werden, bis einer von ihnen kampfunfähig wird. Der Effekt endet, wenn eines der Pokémon das Kampffeld verlässt."
   },
-  "stuffCheeks": {
-    "name": "Backenstopfer",
-    "effect": "Der Anwender frisst die Beere, die er trägt, wodurch seine Verteidigung stark erhöht wird."
-  },
   "noRetreat": {
     "name": "Finalformation",
     "effect": "Alle Statuswerte des Anwenders werden erhöht, aber dafür kann er weder ausgewechselt werden noch fliehen."
@@ -2978,10 +2954,6 @@
   "dragonDarts": {
     "name": "Drachenpfeile",
     "effect": "Der Anwender greift zweimal mit Grolldra an. Bei zwei Zielen werden beide jeweils einmal angegriffen."
-  },
-  "teatime": {
-    "name": "Teatime",
-    "effect": "Der Anwender lädt alle am Kampf beteiligten Pokémon zu einem Teekränzchen ein, woraufhin diese die Beeren essen, die sie bei sich tragen."
   },
   "octolock": {
     "name": "Octoklammer",
@@ -3374,138 +3346,6 @@
   "takeHeart": {
     "name": "Mutschub",
     "effect": "Der Anwender fasst sich ein Herz, befreit sich von Statusproblemen und erhöht außerdem seinen Spezial-Angriff und seine Spezial-Verteidigung."
-  },
-  "gMaxWildfire": {
-    "name": "Giga-Feuerflug",
-    "effect": "Eine Feuer-Attacke, die nur Gigadynamax-Glurak einsetzen kann. Fügt vier Runden lang Schaden zu."
-  },
-  "gMaxBefuddle": {
-    "name": "Giga-Benebelung",
-    "effect": "Eine Käfer-Attacke, die nur Gigadynamax-Smettbo einsetzen kann. Gegnerische Pokémon werden entweder vergiftet, paralysiert oder in Schlaf versetzt."
-  },
-  "gMaxVoltCrash": {
-    "name": "Giga-Blitzhagel",
-    "effect": "Eine Elektro-Attacke, die nur Gigadynamax-Pikachu einsetzen kann. Gegnerische Pokémon werden paralysiert."
-  },
-  "gMaxGoldRush": {
-    "name": "Giga-Münzregen",
-    "effect": "Eine Normal-Attacke, die nur Gigadynamax-Mauzi einsetzen kann. Verwirrt Gegner und bringt nach dem Kampf Geld ein."
-  },
-  "gMaxChiStrike": {
-    "name": "Giga-Fokusschlag",
-    "effect": "Eine Kampf-Attacke, die nur Gigadynamax-Machomei einsetzen kann. Erhöht die Volltrefferquote auf Mitstreiterseite."
-  },
-  "gMaxTerror": {
-    "name": "Giga-Spuksperre",
-    "effect": "Eine Geister-Attacke, die nur Gigadynamax-Gengar einsetzen kann. Hindert gegnerische Pokémon an der Flucht beziehungsweise am Auswechseln."
-  },
-  "gMaxResonance": {
-    "name": "Giga-Melodie",
-    "effect": "Eine Eis-Attacke, die nur Gigadynamax-Lapras einsetzen kann. Reduziert fünf Runden lang den erlittenen Schaden."
-  },
-  "gMaxCuddle": {
-    "name": "Giga-Gekuschel",
-    "effect": "Eine Normal-Attacke, die nur Gigadynamax-Evoli einsetzen kann. Gegnerische Pokémon verlieben sich in es."
-  },
-  "gMaxReplenish": {
-    "name": "Giga-Recycling",
-    "effect": "Eine Normal-Attacke, die nur Gigadynamax-Relaxo einsetzen kann. Stellt bereits verzehrte Beeren wieder her."
-  },
-  "gMaxMalodor": {
-    "name": "Giga-Gestank",
-    "effect": "Eine Gift-Attacke, die nur Gigadynamax-Deponitox einsetzen kann. Vergiftet gegnerische Pokémon."
-  },
-  "gMaxStonesurge": {
-    "name": "Giga-Geröll",
-    "effect": "Eine Wasser-Attacke, die nur Gigadynamax-Kamalm einsetzen kann. Verstreut viele spitze Steinbrocken auf dem Kampffeld."
-  },
-  "gMaxWindRage": {
-    "name": "Giga-Sturmstoß",
-    "effect": "Eine Flug-Attacke, die nur Gigadynamax-Krarmor einsetzen kann. Beseitigt die Effekte von Attacken wie Reflektor und Lichtschild.."
-  },
-  "gMaxStunShock": {
-    "name": "Giga-Voltschlag",
-    "effect": "Eine Elektro-Attacke, die nur Gigadynamax-Riffex einsetzen kann. Vergiftet oder paralysiert gegnerische Pokémon."
-  },
-  "gMaxFinale": {
-    "name": "Giga-Lichtblick",
-    "effect": "Eine Feen-Attacke, die nur Gigadynamax-Pokusan einsetzen kann. Füllt die KP auf Mitstreiterseite auf."
-  },
-  "gMaxDepletion": {
-    "name": "Giga-Dämpfer",
-    "effect": "Eine Drachen-Attacke, die nur Gigadynamax-Duraludon einsetzen kann. AP der letzten Attacke, die gegnerische Pokémon eingesetzt haben, werden gesenkt."
-  },
-  "gMaxGravitas": {
-    "name": "Giga-Astrowellen",
-    "effect": "Eine Psycho-Attacke, die nur Gigadynamax-Maritellit einsetzen kann. Ändert die Erdanziehung für fünf Runden."
-  },
-  "gMaxVolcalith": {
-    "name": "Giga-Schlacke",
-    "effect": "Eine Gesteins-Attacke, die nur Gigadynamax-Montecarbo einsetzen kann. Fügt vier Runden lang Schaden zu."
-  },
-  "gMaxSandblast": {
-    "name": "Giga-Sandstoß",
-    "effect": "Eine Boden-Attacke, die nur Gigadynamax-Sanaconda einsetzen kann. Eine Sandhose wütet für vier bis fünf Runden."
-  },
-  "gMaxSnooze": {
-    "name": "Giga-Gähnzwang",
-    "effect": "Eine Unlicht-Attacke, die nur Gigadynamax-Olangaar einsetzen kann. Mit einem großen Gähner wird das Ziel müde gemacht und schläft in der nächsten Runde ein."
-  },
-  "gMaxTartness": {
-    "name": "Giga-Säureguss",
-    "effect": "Eine Pflanzen-Attacke, die nur Gigadynamax-Drapfel einsetzen kann. Senkt den Ausweichwert der gegnerischen Pokémon."
-  },
-  "gMaxSweetness": {
-    "name": "Giga-Nektarflut",
-    "effect": "Eine Pflanzen-Attacke, die nur Gigadynamax-Schlapfel einsetzen kann. Heilt Statusprobleme auf Mitstreiterseite."
-  },
-  "gMaxSmite": {
-    "name": "Giga-Sanktion",
-    "effect": "Eine Feen-Attacke, die nur Gigadynamax-Silembrim einsetzen kann. Verwirrt gegnerische Pokémon."
-  },
-  "gMaxSteelsurge": {
-    "name": "Giga-Stahlschlag",
-    "effect": "Eine Stahl-Attacke, die nur Gigadynamax-Patinaraja einsetzen kann. Verstreut viele zackige Stahlsplitter auf dem Kampffeld."
-  },
-  "gMaxMeltdown": {
-    "name": "Giga-Schmelze",
-    "effect": "Eine Stahl-Attacke, die nur Gigadynamax-Melmetal einsetzen kann. Hindert Gegner am wiederholten Einsatz derselben Attacke."
-  },
-  "gMaxFoamBurst": {
-    "name": "Giga-Schaumbad",
-    "effect": "Eine Wasser-Attacke, die nur Gigadynamax-Kingler einsetzen kann. Senkt die Initiative der gegnerischen Pokémon stark."
-  },
-  "gMaxCentiferno": {
-    "name": "Giga-Feuerkessel",
-    "effect": "Eine Feuer-Attacke, die nur Gigadynamax-Infernopod einsetzen kann. Schließt gegnerische Pokémon vier bis fünf Runden in wirbelnden Flammen ein."
-  },
-  "gMaxVineLash": {
-    "name": "Giga-Geißel",
-    "effect": "Eine Pflanzen-Attacke, die nur Gigadynamax-Bisaflor einsetzen kann. Geißelt gegnerische Pokémon vier Runden lang mit peitschenartigen Ranken."
-  },
-  "gMaxCannonade": {
-    "name": "Giga-Beschuss",
-    "effect": "Eine Wasser-Attacke, die nur Gigadynamax-Turtok einsetzen kann. Schließt gegnerische Pokémon vier Runden lang in einem Wasserwirbel ein."
-  },
-  "gMaxDrumSolo": {
-    "name": "Giga-Getrommel",
-    "effect": "Eine Pflanzen-Attacke, die nur Gigadynamax-Gortrom einsetzen kann. Ignoriert die Effekte der gegnerischen Fähigkeiten."
-  },
-  "gMaxFireball": {
-    "name": "Giga-Brandball",
-    "effect": "Eine Feuer-Attacke, die nur Gigadynamax-Liberlo einsetzen kann. Ignoriert die Effekte der gegnerischen Fähigkeiten."
-  },
-  "gMaxHydrosnipe": {
-    "name": "Giga-Schütze",
-    "effect": "Eine Wasser-Attacke, die nur Gigadynamax-Intelleon einsetzen kann. Ignoriert die Effekte der gegnerischen Fähigkeiten."
-  },
-  "gMaxOneBlow": {
-    "name": "Giga-Einzelhieb",
-    "effect": "Eine Unlicht-Attacke, die nur Gigadynamax-Wulaosu einsetzen kann. Dieser Einzelhieb ignoriert die schützende Wirkung von Dyna-Wall."
-  },
-  "gMaxRapidFlow": {
-    "name": "Giga-Multihieb",
-    "effect": "Eine Wasser-Attacke, die nur Gigadynamax-Wulaosu einsetzen kann. Dieser Multihieb ignoriert die schützende Wirkung von Dyna-Wall."
   },
   "teraBlast": {
     "name": "Tera-Ausbruch",

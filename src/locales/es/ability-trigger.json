@@ -34,10 +34,8 @@
   "frisk": "¡{{pokemonNameWithAffix}} ha cacheado {{opponentAbilityName}} de {{opponentName}}!",
   "postWeatherLapseHeal": "¡{{pokemonNameWithAffix}} restauró algunos de sus PS gracias a {{abilityName}}!",
   "postWeatherLapseDamage": "¡{{pokemonNameWithAffix}} se hizo daño por su {{abilityName}}!",
-  "postTurnLootCreateEatenBerry": "¡{{pokemonNameWithAffix}} recogió una {{berryName}}!",
   "postTurnHeal": "¡{{pokemonNameWithAffix}} restauró algunos de sus PS gracias a {{abilityName}}!",
   "fetchBall": "¡{{pokemonNameWithAffix}} encontró {{pokeballName}}!",
-  "healFromBerryUse": "¡{{pokemonNameWithAffix}} se curó gracias a {{abilityName}}!",
   "arenaTrap": "¡{{pokemonNameWithAffix}} impide el cambio con {{abilityName}}!",
   "postBattleLoot": "¡{{pokemonNameWithAffix}} recogió {{itemName}}!",
   "postFaintContactDamage": "¡{{abilityName}} de {{pokemonNameWithAffix}} hizo daño a su atacante!",
@@ -51,11 +49,8 @@
   "postSummonDarkAura": "¡{{pokemonNameWithAffix}} irradia un aura oscura!",
   "postSummonFairyAura": "¡{{pokemonNameWithAffix}} irradia un aura feérica!",
   "postSummonNeutralizingGas": "¡El Gas Reactivo de {{pokemonNameWithAffix}} se propaga por toda la zona!",
-  "postSummonAsOneGlastrier": "¡{{pokemonNameWithAffix}} tiene dos Habilidades!",
-  "postSummonAsOneSpectrier": "¡{{pokemonNameWithAffix}} tiene dos Habilidades!",
   "postSummonVesselOfRuin": "¡{{pokemonNameWithAffix}} ha mermado {{statName}} de los demás Pokémon con Caldero Debacle!",
   "postSummonSwordOfRuin": "¡{{pokemonNameWithAffix}} ha mermado {{statName}} de los demás Pokémon con Espada Debacle!",
   "postSummonTabletsOfRuin": "¡{{pokemonNameWithAffix}} ha mermado {{statName}} de los demás Pokémon con Tablilla Debacle!",
-  "postSummonBeadsOfRuin": "¡{{pokemonNameWithAffix}} ha mermado {{statName}} de los demás Pokémon con Abalorio Debacle!",
-  "preventBerryUse": "{{pokemonNameWithAffix}} está muy nervioso y no puede comer bayas!"
+  "postSummonBeadsOfRuin": "¡{{pokemonNameWithAffix}} ha mermado {{statName}} de los demás Pokémon con Abalorio Debacle!"
 }

@@ -51,8 +51,6 @@
   "runAwayCannotEscape": "你無法逃脫！",
   "escapeVerbSwitch": "切換",
   "escapeVerbFlee": "逃跑",
-  "ppHealBerry": "{{pokemonNameWithAffix}}用{{berryName}}\n回復了{{moveName}}的PP！",
-  "hpHealBerry": "{{pokemonNameWithAffix}}用{{berryName}}\n回復了體力！",
   "notDisabled": "{{moveName}} 不再被禁用！",
   "skipItemQuestion": "你要跳過拾取道具嗎？",
   "itemStackFull": "{{fullItemName}}持有數已達到上限，\n你獲得了{{itemName}}作爲代替。",

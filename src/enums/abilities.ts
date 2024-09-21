@@ -161,8 +161,6 @@ export enum Abilities {
   STEADFAST = "STEADFAST",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Snow_Cloak_(ability) | Source} */
   SNOW_CLOAK = "SNOW_CLOAK",
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Gluttony_(ability) | Source} */
-  GLUTTONY = "GLUTTONY",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Anger_Point_(ability) | Source} */
   ANGER_POINT = "ANGER_POINT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Unburden_(ability) | Source} */
@@ -251,8 +249,6 @@ export enum Abilities {
   SHEER_FORCE = "SHEER_FORCE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Contrary_(ability) | Source} */
   CONTRARY = "CONTRARY",
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Unnerve_(ability) | Source} */
-  UNNERVE = "UNNERVE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Defiant_(ability) | Source} */
   DEFIANT = "DEFIANT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Defeatist_(ability) | Source} */
@@ -275,8 +271,6 @@ export enum Abilities {
   TOXIC_BOOST = "TOXIC_BOOST",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Flare_Boost_(ability) | Source} */
   FLARE_BOOST = "FLARE_BOOST",
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Harvest_(ability) | Source} */
-  HARVEST = "HARVEST",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Telepathy_(ability) | Source} */
   TELEPATHY = "TELEPATHY",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Moody_(ability) | Source} */
@@ -327,8 +321,6 @@ export enum Abilities {
   AROMA_VEIL = "AROMA_VEIL",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Flower_Veil_(ability) | Source} */
   FLOWER_VEIL = "FLOWER_VEIL",
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Cheek_Pouch_(ability) | Source} */
-  CHEEK_POUCH = "CHEEK_POUCH",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Protean_(ability) | Source} */
   PROTEAN = "PROTEAN",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Fur_Coat_(ability) | Source} */
@@ -477,8 +469,6 @@ export enum Abilities {
   SAND_SPIT = "SAND_SPIT",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Ice_Scales_(ability) | Source} */
   ICE_SCALES = "ICE_SCALES",
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Ripen_(ability) | Source} */
-  RIPEN = "RIPEN",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Ice_Face_(ability) | Source} */
   ICE_FACE = "ICE_FACE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Power_Spot_(ability) | Source} */
@@ -513,10 +503,6 @@ export enum Abilities {
   CHILLING_NEIGH = "CHILLING_NEIGH",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Grim_Neigh_(ability) | Source} */
   GRIM_NEIGH = "GRIM_NEIGH",
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/As_One_Glastrier_(ability) | Source} */
-  AS_ONE_GLASTRIER = "AS_ONE_GLASTRIER",
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/As_One_Spectrier_(ability) | Source} */
-  AS_ONE_SPECTRIER = "AS_ONE_SPECTRIER",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Lingering_Aroma_(ability) | Source} */
   LINGERING_AROMA = "LINGERING_AROMA",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Seed_Sower_(ability) | Source} */
@@ -563,8 +549,6 @@ export enum Abilities {
   HADRON_ENGINE = "HADRON_ENGINE",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Opportunist_(ability) | Source} */
   OPPORTUNIST = "OPPORTUNIST",
-  /**{@link https://bulbapedia.bulbagarden.net/wiki/Cud_Chew_(ability) | Source} */
-  CUD_CHEW = "CUD_CHEW",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Sharpness_(ability) | Source} */
   SHARPNESS = "SHARPNESS",
   /**{@link https://bulbapedia.bulbagarden.net/wiki/Supreme_Overlord_(ability) | Source} */

@@ -290,10 +290,6 @@
       "name": "糖果罐",
       "description": "神奇糖果提供的升級提升1級。"
     },
-    "BERRY_POUCH": {
-      "name": "樹果袋",
-      "description": "使用樹果時有30%的幾率不會消耗樹果。"
-    },
     "FOCUS_BAND": {
       "name": "氣勢頭帶",
       "description": "攜帶該道具的寶可夢有10%幾率在受到\n攻擊而將陷入瀕死狀態時，保留1點HP不陷入瀕死狀態。"

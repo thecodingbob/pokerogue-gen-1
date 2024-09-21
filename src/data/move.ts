@@ -9,15 +9,14 @@ import { Constructor } from "#app/utils";
 import * as Utils from "../utils";
 import { WeatherType } from "./weather";
 import { ArenaTagSide, ArenaTrapTag, WeakenMoveTypeTag } from "./arena-tag";
-import { BlockRecoilDamageAttr, BlockOneHitKOAbAttr, IgnoreContactAbAttr, MaxMultiHitAbAttr, applyAbAttrs, BlockNonDirectDamageAbAttr, MoveAbilityBypassAbAttr, ReverseDrainAbAttr, FieldPreventExplosiveMovesAbAttr, ForceSwitchOutImmunityAbAttr, BlockItemTheftAbAttr, applyPostAttackAbAttrs, ConfusionOnStatusEffectAbAttr, HealFromBerryUseAbAttr, IgnoreProtectOnContactAbAttr, IgnoreMoveEffectsAbAttr, applyPreDefendAbAttrs, MoveEffectChanceMultiplierAbAttr, WonderSkinAbAttr, applyPreAttackAbAttrs, MoveTypeChangeAbAttr, UserFieldMoveTypePowerBoostAbAttr, FieldMoveTypePowerBoostAbAttr, AllyMoveDamageTypePowerBoostAbAttr, VariableMovePowerAbAttr } from "./ability";
-import { PokemonHeldItemModifier, BerryModifier, PreserveBerryModifier, PokemonMoveAccuracyBoosterModifier, AttackTypeBoosterModifier, PokemonMultiHitModifier } from "../modifier/modifier";
+import { BlockRecoilDamageAttr, BlockOneHitKOAbAttr, IgnoreContactAbAttr, MaxMultiHitAbAttr, applyAbAttrs, BlockNonDirectDamageAbAttr, MoveAbilityBypassAbAttr, ReverseDrainAbAttr, FieldPreventExplosiveMovesAbAttr, ForceSwitchOutImmunityAbAttr, applyPostAttackAbAttrs, ConfusionOnStatusEffectAbAttr, IgnoreProtectOnContactAbAttr, IgnoreMoveEffectsAbAttr, applyPreDefendAbAttrs, MoveEffectChanceMultiplierAbAttr, WonderSkinAbAttr, applyPreAttackAbAttrs, MoveTypeChangeAbAttr, UserFieldMoveTypePowerBoostAbAttr, FieldMoveTypePowerBoostAbAttr, AllyMoveDamageTypePowerBoostAbAttr, VariableMovePowerAbAttr } from "./ability";
+import { PokemonHeldItemModifier, PokemonMoveAccuracyBoosterModifier, AttackTypeBoosterModifier, PokemonMultiHitModifier } from "../modifier/modifier";
 import { BattlerIndex, BattleType } from "../battle";
 import { Stat } from "./pokemon-stat";
 import { TerrainType } from "./terrain";
 import { ModifierPoolType } from "#app/modifier/modifier-type";
 import i18next from "i18next";
 import { Localizable } from "#app/interfaces/locales";
-import { getBerryEffectFunc } from "./berry";
 import { Abilities } from "#enums/abilities";
 import { ArenaTagType } from "#enums/arena-tag-type";
 import { BattlerTagType } from "#enums/battler-tag-type";
@@ -1856,9 +1855,9 @@ export class MultiHitAttr extends MoveAttr {
    * @returns True
    */
   apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const hitType = new Utils.NumberHolder(this.multiHitType);
+    const hitType = this.multiHitType;
     applyMoveAttrs(ChangeMultiHitTypeAttr, user, target, move, hitType);
-    this.multiHitType = hitType.value;
+    this.multiHitType = hitType;
 
     (args[0] as Utils.NumberHolder).value = this.getHitCount(user, target);
     return true;
@@ -2061,174 +2060,6 @@ export class StealHeldItemChanceAttr extends MoveEffectAttr {
   }
 }
 
-/**
- * Removes a random held item (or berry) from target.
- * Used for Incinerate and Knock Off.
- * Not Implemented Cases: (Same applies for Thief)
- * "If the user faints due to the target's Ability (Rough Skin or Iron Barbs) or held Rocky Helmet, it cannot remove the target's held item."
- * "If Knock Off causes a Pokémon with the Sticky Hold Ability to faint, it can now remove that Pokémon's held item."
- */
-export class RemoveHeldItemAttr extends MoveEffectAttr {
-
-  /** Optional restriction for item pool to berries only i.e. Differentiating Incinerate and Knock Off */
-  private berriesOnly: boolean;
-
-  constructor(berriesOnly: boolean) {
-    super(false, MoveEffectTrigger.HIT);
-    this.berriesOnly = berriesOnly;
-  }
-
-  /**
-   *
-   * @param user {@linkcode Pokemon} that used the move
-   * @param target Target {@linkcode Pokemon} that the moves applies to
-   * @param move {@linkcode Move} that is used
-   * @param args N/A
-   * @returns {boolean} True if an item was removed
-   */
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (!this.berriesOnly && target.isPlayer()) { // "Wild Pokemon cannot knock off Player Pokemon's held items" (See Bulbapedia)
-      return false;
-    }
-
-    const cancelled = new Utils.BooleanHolder(false);
-    applyAbAttrs(BlockItemTheftAbAttr, target, cancelled); // Check for abilities that block item theft
-
-    if (cancelled.value === true) {
-      return false;
-    }
-
-    // Considers entire transferrable item pool by default (Knock Off). Otherwise berries only if specified (Incinerate).
-    let heldItems = this.getTargetHeldItems(target).filter(i => i.isTransferrable);
-
-    if (this.berriesOnly) {
-      heldItems = heldItems.filter(m => m instanceof BerryModifier && m.pokemonId === target.id, target.isPlayer());
-    }
-
-    if (heldItems.length) {
-      const removedItem = heldItems[user.randSeedInt(heldItems.length)];
-
-      // Decrease item amount and update icon
-      !--removedItem.stackCount;
-      target.scene.updateModifiers(target.isPlayer());
-
-      if (this.berriesOnly) {
-        user.scene.queueMessage(i18next.t("moveTriggers:incineratedItem", {pokemonName: getPokemonNameWithAffix(user), targetName: getPokemonNameWithAffix(target), itemName: removedItem.type.name}));
-      } else {
-        user.scene.queueMessage(i18next.t("moveTriggers:knockedOffItem", {pokemonName: getPokemonNameWithAffix(user), targetName: getPokemonNameWithAffix(target), itemName: removedItem.type.name}));
-      }
-    }
-
-    return true;
-  }
-
-  getTargetHeldItems(target: Pokemon): PokemonHeldItemModifier[] {
-    return target.scene.findModifiers(m => m instanceof PokemonHeldItemModifier
-      && m.pokemonId === target.id, target.isPlayer()) as PokemonHeldItemModifier[];
-  }
-
-  getUserBenefitScore(user: Pokemon, target: Pokemon, move: Move): number {
-    const heldItems = this.getTargetHeldItems(target);
-    return heldItems.length ? 5 : 0;
-  }
-
-  getTargetBenefitScore(user: Pokemon, target: Pokemon, move: Move): number {
-    const heldItems = this.getTargetHeldItems(target);
-    return heldItems.length ? -5 : 0;
-  }
-}
-
-/**
- * Attribute that causes targets of the move to eat a berry. Used for Teatime, Stuff Cheeks
- */
-export class EatBerryAttr extends MoveEffectAttr {
-  protected chosenBerry: BerryModifier | undefined;
-  constructor() {
-    super(true, MoveEffectTrigger.HIT);
-  }
-  /**
-   * Causes the target to eat a berry.
-   * @param user {@linkcode Pokemon} Pokemon that used the move
-   * @param target {@linkcode Pokemon} Pokemon that will eat a berry
-   * @param move {@linkcode Move} The move being used
-   * @param args Unused
-   * @returns {boolean} true if the function succeeds
-   */
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    if (!super.apply(user, target, move, args)) {
-      return false;
-    }
-
-    const heldBerries = this.getTargetHeldBerries(target);
-    if (heldBerries.length <= 0) {
-      return false;
-    }
-    this.chosenBerry = heldBerries[user.randSeedInt(heldBerries.length)];
-    const preserve = new Utils.BooleanHolder(false);
-    target.scene.applyModifiers(PreserveBerryModifier, target.isPlayer(), target, preserve); // check for berry pouch preservation
-    if (!preserve.value) {
-      this.reduceBerryModifier(target);
-    }
-    this.eatBerry(target);
-    return true;
-  }
-
-  getTargetHeldBerries(target: Pokemon): BerryModifier[] {
-    return target.scene.findModifiers(m => m instanceof BerryModifier
-      && (m as BerryModifier).pokemonId === target.id, target.isPlayer()) as BerryModifier[];
-  }
-
-  reduceBerryModifier(target: Pokemon) {
-    if (this.chosenBerry?.stackCount === 1) {
-      target.scene.removeModifier(this.chosenBerry, !target.isPlayer());
-    } else if (this.chosenBerry !== undefined && this.chosenBerry.stackCount > 1) {
-      this.chosenBerry.stackCount--;
-    }
-    target.scene.updateModifiers(target.isPlayer());
-  }
-
-  eatBerry(consumer: Pokemon) {
-    getBerryEffectFunc(this.chosenBerry!.berryType)(consumer); // consumer eats the berry
-    applyAbAttrs(HealFromBerryUseAbAttr, consumer, new Utils.BooleanHolder(false));
-  }
-}
-
-/**
- *  Attribute used for moves that steal a random berry from the target. The user then eats the stolen berry.
- *  Used for Pluck & Bug Bite.
- */
-export class StealEatBerryAttr extends EatBerryAttr {
-  constructor() {
-    super();
-  }
-  /**
-   * User steals a random berry from the target and then eats it.
-   * @param {Pokemon} user Pokemon that used the move and will eat the stolen berry
-   * @param {Pokemon} target Pokemon that will have its berry stolen
-   * @param {Move} move Move being used
-   * @param {any[]} args Unused
-   * @returns {boolean} true if the function succeeds
-   */
-  apply(user: Pokemon, target: Pokemon, move: Move, args: any[]): boolean {
-    const cancelled = new Utils.BooleanHolder(false);
-    applyAbAttrs(BlockItemTheftAbAttr, target, cancelled); // check for abilities that block item theft
-    if (cancelled.value === true) {
-      return false;
-    }
-
-    const heldBerries = this.getTargetHeldBerries(target);
-    if (heldBerries.length <= 0) {
-      return false;
-    }
-    // if the target has berries, pick a random berry and steal it
-    this.chosenBerry = heldBerries[user.randSeedInt(heldBerries.length)];
-    const message = i18next.t("battle:stealEatBerry", {pokemonName: user.name, targetName: target.name, berryName: this.chosenBerry.type.name});
-    user.scene.queueMessage(message);
-    this.reduceBerryModifier(target);
-    this.eatBerry(user);
-    return true;
-  }
-}
 
 /**
  * Move attribute that signals that the move should cure a status effect

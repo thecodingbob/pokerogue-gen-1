@@ -1439,17 +1439,9 @@
     "name": "Acquadisale",
     "effect": "Se i PS del nemico sono scesi a metà o meno, questa mossa colpirà con il doppio della potenza."
   },
-  "naturalGift": {
-    "name": "Dononaturale",
-    "effect": "Chi la usa trae forza dalla Bacca che tiene. Da questa dipendono il tipo e la forza dell'attacco."
-  },
   "feint": {
     "name": "Fintoattacco",
     "effect": "Un attacco che colpisce un nemico che ha usato Protezione od Individua. Ne rimuoverà inoltre gli effetti."
-  },
-  "pluck": {
-    "name": "Spennata",
-    "effect": "Chi la usa becca il bersaglio. Inoltre, se questi tiene una Bacca, gliela ruba e ne sfrutta gli effetti."
   },
   "tailwind": {
     "name": "Ventoincoda",
@@ -1779,10 +1771,6 @@
     "name": "Giudizio",
     "effect": "Chi la usa rilascia numerosi colpi di luce. Il tipo varia a seconda della Lastra tenuta."
   },
-  "bugBite": {
-    "name": "Coleomorso",
-    "effect": "Chi la usa morde il nemico. Inoltre, se questi tiene una Bacca, gliela ruba e ne sfrutta gli effetti."
-  },
   "chargeBeam": {
     "name": "Raggioscossa",
     "effect": "Chi la usa lancia un fascio di elettricità molto intensa. Può anche aumentare il suo Attacco Speciale."
@@ -2011,10 +1999,6 @@
     "name": "Ribaltiro",
     "effect": "Il bersaglio è scaraventato via ed è costretto a lasciare il posto a un altro. Se è selvatico, la lotta finisce."
   },
-  "incinerate": {
-    "name": "Bruciatutto",
-    "effect": "Attacca il nemico con una fiammata. Se il nemico ha una Bacca, viene divorata dalle fiamme."
-  },
   "quash": {
     "name": "Spintone",
     "effect": "Chi la usa trattiene il bersaglio, costringendolo ad agire per ultimo."
@@ -2218,10 +2202,6 @@
   "matBlock": {
     "name": "Ribaltappeto",
     "effect": "Chi la usa protegge se stesso e i propri alleati dai danni di mosse nemiche, adoperando un tappetino come scudo. Non è efficace contro mosse di stato."
-  },
-  "belch": {
-    "name": "Rutto",
-    "effect": "Chi la usa attacca il bersaglio con un rutto potente. Per utilizzare questa mossa, il Pokémon deve mangiare la bacca che possiede."
   },
   "rototiller": {
     "name": "Aracampo",
@@ -2959,10 +2939,6 @@
     "name": "Morsostretto",
     "effect": "Impedisce a chi la usa e al bersaglio di essere sostituiti finché non vanno KO. L'effetto svanisce se uno dei due lascia il campo."
   },
-  "stuffCheeks": {
-    "name": "Riempiguance",
-    "effect": "Se chi la usa ha con sé una bacca, la mangia e la sua Difesa aumenta di molto."
-  },
   "noRetreat": {
     "name": "Spalle al Muro",
     "effect": "Il Pokémon aumenta tutte le sue statistiche ma non può più fuggire o essere sostituito."
@@ -2978,10 +2954,6 @@
   "dragonDarts": {
     "name": "Dragofrecce",
     "effect": "L'utilizzatore attacca due volte usando Dreepy. Se ci sono due obiettivi, questa mossa colpisce una volta ogni obiettivo."
-  },
-  "teatime": {
-    "name": "Ora del Tè",
-    "effect": "Chi la usa invita tutti i Pokémon in campo a prendere il tè. Quelli che hanno con sé una bacca la mangiano."
   },
   "octolock": {
     "name": "Tentacolock",
@@ -3374,138 +3346,6 @@
   "takeHeart": {
     "name": "Baldimpulso",
     "effect": "Il Pokémon prende coraggio e guarisce dai problemi di stato. Inoltre, aumenta l'Attacco Speciale e la Difesa Speciale."
-  },
-  "gMaxWildfire": {
-    "name": "Gigavampa",
-    "effect": "Attacco di tipo Fuoco eseguito da Charizard Gigamax. Infligge danni per quattro turni."
-  },
-  "gMaxBefuddle": {
-    "name": "Gigastupore",
-    "effect": "Attacco di tipo Coleottero eseguito da Butterfree Gigamax. Avvelena, paralizza o addormenta i nemici."
-  },
-  "gMaxVoltCrash": {
-    "name": "Gigapikafolgori",
-    "effect": "Attacco di tipo Elettro eseguito da Pikachu Gigamax. Paralizza i nemici."
-  },
-  "gMaxGoldRush": {
-    "name": "Gigamonete",
-    "effect": "Attacco di tipo Normale eseguito da Meowth Gigamax. Confonde i nemici e permette anche di ricevere una ricompensa maggiore."
-  },
-  "gMaxChiStrike": {
-    "name": "Gigapugnointuito",
-    "effect": "Attacco di tipo Lotta eseguito da Machamp Gigamax. Aumenta la probabilità di sferrare brutti colpi."
-  },
-  "gMaxTerror": {
-    "name": "Gigaillusione",
-    "effect": "Attacco di tipo Spettro eseguito da Gengar Gigamax. Il Pokémon calpesta l'ombra del nemico impedendogli la fuga o la sostituzione."
-  },
-  "gMaxResonance": {
-    "name": "Gigamelodia",
-    "effect": "Attacco di tipo Ghiaccio eseguito da Lapras Gigamax. Riduce i danni subiti per cinque turni."
-  },
-  "gMaxCuddle": {
-    "name": "Gigabbraccio",
-    "effect": "Attacco di tipo Normale eseguito da Eevee Gigamax. Fa infatuare i nemici."
-  },
-  "gMaxReplenish": {
-    "name": "Gigarinnovamento",
-    "effect": "Attacco di tipo Normale eseguito da Snorlax Gigamax. Rigenera le bacche mangiate."
-  },
-  "gMaxMalodor": {
-    "name": "Gigafetore",
-    "effect": "Attacco di tipo Veleno eseguito da Garbodor Gigamax. Avvelena i nemici."
-  },
-  "gMaxStonesurge": {
-    "name": "Gigarocciagetto",
-    "effect": "Attacco di tipo Acqua eseguito da Drednaw Gigamax. Sparge rocce aguzze sul campo di lotta."
-  },
-  "gMaxWindRage": {
-    "name": "Gigaciclone",
-    "effect": "Attacco di tipo Volante eseguito da Corviknight Gigamax. Annulla l'effetto di mosse come Riflesso e Schermoluce."
-  },
-  "gMaxStunShock": {
-    "name": "Gigatoxiscossa",
-    "effect": "Attacco di tipo Elettro eseguito da Toxtricity Gigamax. Avvelena o paralizza i nemici."
-  },
-  "gMaxFinale": {
-    "name": "Gigagranfinale",
-    "effect": "Attacco di tipo Folletto eseguito da Alcremie Gigamax. Fa recuperare PS agli alleati."
-  },
-  "gMaxDepletion": {
-    "name": "Gigalogoramento",
-    "effect": "Attacco di tipo Drago eseguito da Duraludon Gigamax. Toglie PP all'ultima mossa usata dai nemici."
-  },
-  "gMaxGravitas": {
-    "name": "Gigagravitoforza",
-    "effect": "Attacco di tipo Psico eseguito da Orbeetle Gigamax. Cambia la gravità per cinque turni."
-  },
-  "gMaxVolcalith": {
-    "name": "Gigalapilli",
-    "effect": "Attacco di tipo Roccia eseguito da Coalossal Gigamax. Infligge danni per quattro turni."
-  },
-  "gMaxSandblast": {
-    "name": "Gigavortisabbia",
-    "effect": "Attacco di tipo Terra eseguito da Sandaconda Gigamax. Scatena un turbine di sabbia per quattro o cinque turni."
-  },
-  "gMaxSnooze": {
-    "name": "Gigatorpore",
-    "effect": "Attacco di tipo Buio eseguito da Grimmsnarl Gigamax. Chi la usa fa un grande sbadiglio che fa addormentare il nemico al turno successivo."
-  },
-  "gMaxTartness": {
-    "name": "Gigattaccoacido",
-    "effect": "Attacco di tipo Erba eseguito da Flapple Gigamax. Riduce l’elusione dei nemici."
-  },
-  "gMaxSweetness": {
-    "name": "Gigambrosia",
-    "effect": "Attacco di tipo Erba eseguito da Appletun Gigamax. Cura i problemi di stato degli alleati."
-  },
-  "gMaxSmite": {
-    "name": "Gigacastigo",
-    "effect": "Attacco di tipo Folletto eseguito da Hatterene Gigamax. Confonde i nemici."
-  },
-  "gMaxSteelsurge": {
-    "name": "Gigaferroaculei",
-    "effect": "Attacco di tipo Acciaio eseguito da Copperajah Gigamax. Sparge pezzi di metallo acuminati sul campo di lotta."
-  },
-  "gMaxMeltdown": {
-    "name": "Gigaliquefazione",
-    "effect": "ERAttacco di tipo Acciaio eseguito da Melmetal Gigamax. Impedisce ai nemici di usare la stessa mossa due volte di seguito.RORE"
-  },
-  "gMaxFoamBurst": {
-    "name": "Gigaschiuma",
-    "effect": "Attacco di tipo Acqua eseguito da Kingler Gigamax. Riduce di molto la Velocità dei nemici."
-  },
-  "gMaxCentiferno": {
-    "name": "Gigamillefiamme",
-    "effect": "Attacco di tipo Fuoco eseguito da Centiskorch Gigamax. Intrappola i nemici nelle fiamme per quattro o cinque turni."
-  },
-  "gMaxVineLash": {
-    "name": "Gigasferzata",
-    "effect": "Attacco di tipo Erba eseguito da Venusaur Gigamax. Infligge danni per quattro turni."
-  },
-  "gMaxCannonade": {
-    "name": "Gigacannonata",
-    "effect": "Attacco di tipo Acqua eseguito da Blastoise Gigamax. Infligge danni per quattro turni."
-  },
-  "gMaxDrumSolo": {
-    "name": "Gigarullio",
-    "effect": "Attacco di tipo Erba eseguito da Rillaboom Gigamax. Ignora le abilità dei nemici."
-  },
-  "gMaxFireball": {
-    "name": "Gigafiammopalla",
-    "effect": "Attacco di tipo Fuoco eseguito da Cinderace Gigamax. Ignora le abilità dei nemici."
-  },
-  "gMaxHydrosnipe": {
-    "name": "Gigasparomirato",
-    "effect": "Attacco di tipo Acqua eseguito da Inteleon Gigamax. Ignora le abilità dei nemici."
-  },
-  "gMaxOneBlow": {
-    "name": "Gigasingolcolpo",
-    "effect": "Attacco di tipo Buio eseguito da Urshifu Gigamax che ignora gli effetti della Dynabarriera."
-  },
-  "gMaxRapidFlow": {
-    "name": "Gigapluricolpo",
-    "effect": "\tAttacco di tipo Acqua eseguito da Urshifu Gigamax che ignora gli effetti della Dynabarriera."
   },
   "teraBlast": {
     "name": "Terascoppio",

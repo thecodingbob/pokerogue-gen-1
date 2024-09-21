@@ -323,10 +323,6 @@
     "name": "Snow Cloak",
     "description": "Boosts the Pokémon's evasiveness in snow."
   },
-  "gluttony": {
-    "name": "Gluttony",
-    "description": "Makes the Pokémon eat a held Berry when its HP drops to half or less, which is sooner than usual."
-  },
   "angerPoint": {
     "name": "Anger Point",
     "description": "The Pokémon is angered when it takes a critical hit, and that maxes its Attack stat."
@@ -503,10 +499,6 @@
     "name": "Contrary",
     "description": "Makes stat changes have an opposite effect."
   },
-  "unnerve": {
-    "name": "Unnerve",
-    "description": "Unnerves opposing Pokémon and makes them unable to eat Berries."
-  },
   "defiant": {
     "name": "Defiant",
     "description": "Boosts the Pokémon's Attack stat sharply when its stats are lowered."
@@ -550,10 +542,6 @@
   "flareBoost": {
     "name": "Flare Boost",
     "description": "Powers up special attacks when the Pokémon is burned."
-  },
-  "harvest": {
-    "name": "Harvest",
-    "description": "May create another Berry after one is used."
   },
   "telepathy": {
     "name": "Telepathy",
@@ -662,10 +650,6 @@
   "flowerVeil": {
     "name": "Flower Veil",
     "description": "Ally Grass-type Pokémon are protected from status conditions and the lowering of their stats."
-  },
-  "cheekPouch": {
-    "name": "Cheek Pouch",
-    "description": "Restores HP as well when the Pokémon eats a Berry."
   },
   "protean": {
     "name": "Protean",
@@ -983,10 +967,6 @@
     "name": "Ice Scales",
     "description": "The Pokémon is protected by ice scales, which halve the damage taken from special moves."
   },
-  "ripen": {
-    "name": "Ripen",
-    "description": "Ripens Berries and doubles their effect."
-  },
   "iceFace": {
     "name": "Ice Face",
     "description": "The Pokémon's ice head can take a physical attack as a substitute, but the attack also changes the Pokémon's appearance. The ice will be restored when it hails."
@@ -1058,14 +1038,6 @@
   "grimNeigh": {
     "name": "Grim Neigh",
     "description": "When the Pokémon knocks out a target, it utters a terrifying neigh, which boosts its Sp. Atk stat."
-  },
-  "asOneGlastrier": {
-    "name": "As One",
-    "description": "This Ability combines the effects of both Calyrex's Unnerve Ability and Glastrier's Chilling Neigh Ability."
-  },
-  "asOneSpectrier": {
-    "name": "As One",
-    "description": "This Ability combines the effects of both Calyrex's Unnerve Ability and Spectrier's Grim Neigh Ability."
   },
   "lingeringAroma": {
     "name": "Lingering Aroma",
@@ -1158,10 +1130,6 @@
   "opportunist": {
     "name": "Opportunist",
     "description": "If an opponent's stat is boosted, the Pokémon seizes the opportunity to boost the same stat for itself."
-  },
-  "cudChew": {
-    "name": "Cud Chew",
-    "description": "When the Pokémon eats a Berry, it will regurgitate that Berry at the end of the next turn and eat it one more time."
   },
   "sharpness": {
     "name": "Sharpness",

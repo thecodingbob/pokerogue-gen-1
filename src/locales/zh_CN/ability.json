@@ -323,10 +323,6 @@
     "name": "雪隐",
     "description": "下雪天气时，闪避率会提高。"
   },
-  "gluttony": {
-    "name": "贪吃鬼",
-    "description": "原本ＨＰ变得很少时才会吃树果，\n在ＨＰ还有一半时就会把它吃掉。"
-  },
   "angerPoint": {
     "name": "愤怒穴位",
     "description": "要害被击中时，会大发雷霆，攻击\n力变为最大。"
@@ -503,10 +499,6 @@
     "name": "唱反调",
     "description": "能力的变化发生逆转，原本提高时\n会降低，而原本降低时会提高。"
   },
-  "unnerve": {
-    "name": "紧张感",
-    "description": "让对手紧张，使其无法食用树果。"
-  },
   "defiant": {
     "name": "不服输",
     "description": "被对手降低能力时，攻击会大幅提\n高。"
@@ -550,10 +542,6 @@
   "flareBoost": {
     "name": "受热激升",
     "description": "变为灼伤状态时，特殊招式的威力\n会提高。"
-  },
-  "harvest": {
-    "name": "收获",
-    "description": "可以多次制作出已被使用掉的树果\n。"
   },
   "telepathy": {
     "name": "心灵感应",
@@ -662,10 +650,6 @@
   "flowerVeil": {
     "name": "花幕",
     "description": "我方的草属性宝可梦能力不会降低\n，也不会变为异常状态。"
-  },
-  "cheekPouch": {
-    "name": "颊囊",
-    "description": "无论是哪种树果，食用后，ＨＰ都\n会回复。"
   },
   "protean": {
     "name": "变幻自如",
@@ -983,10 +967,6 @@
     "name": "冰鳞粉",
     "description": "由于有冰鳞粉的守护，受到的特殊\n攻击伤害会减半。"
   },
-  "ripen": {
-    "name": "熟成",
-    "description": "使树果成熟，效果变为２倍。"
-  },
   "iceFace": {
     "name": "结冻头",
     "description": "头部的冰会代替自己承受物理攻击\n，但是样子会改变。下雪时，冰会\n恢复原状。"
@@ -1058,14 +1038,6 @@
   "grimNeigh": {
     "name": "漆黑嘶鸣",
     "description": "打倒对手时会用恐怖的声音嘶鸣并\n提高特攻。"
-  },
-  "asOneGlastrier": {
-    "name": "人马一体",
-    "description": "兼备蕾冠王的紧张感和雪暴马的苍\n白嘶鸣这两种特性。"
-  },
-  "asOneSpectrier": {
-    "name": "人马一体",
-    "description": "兼备蕾冠王的紧张感和灵幽马的漆\n黑嘶鸣这两种特性。"
   },
   "lingeringAroma": {
     "name": "甩不掉的气味",
@@ -1158,10 +1130,6 @@
   "opportunist": {
     "name": "跟风",
     "description": "对手的能力提高时，自己也会趁机\n同样地提高能力。"
-  },
-  "cudChew": {
-    "name": "反刍",
-    "description": "吃了树果后，会在下一回合结束时\n从胃反刍出来再吃１次。"
   },
   "sharpness": {
     "name": "锋锐",

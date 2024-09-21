@@ -323,10 +323,6 @@
     "name": "Snow Cloak",
     "description": "Aumenta a evasão numa tempestade de granizo."
   },
-  "gluttony": {
-    "name": "Gluttony",
-    "description": "Se estiver segurando uma fruta, a consumirá quando seus PS caírem abaixo da metade, o que é mais cedo que o usual."
-  },
   "angerPoint": {
     "name": "Anger Point",
     "description": "Quando recebe um acerto crítico se enraivece, e com isso, aumenta seu Ataque."
@@ -503,10 +499,6 @@
     "name": "Contrary",
     "description": "Faz as mudanças de atributos terem efeito contrário."
   },
-  "unnerve": {
-    "name": "Unnerve",
-    "description": "Enerva Pokémon adversários, impossibilitando que eles consumam Frutas."
-  },
   "defiant": {
     "name": "Defiant",
     "description": "Aumenta bruscamente o Ataque do Pokémon quando seus atributos são diminuídos pelo adversário."
@@ -550,10 +542,6 @@
   "flareBoost": {
     "name": "Flare Boost",
     "description": "Fortalece ataques especiais quando o Pokémon está queimado."
-  },
-  "harvest": {
-    "name": "Harvest",
-    "description": "Pode criar outra Fruta após consumir uma."
   },
   "telepathy": {
     "name": "Telepathy",
@@ -662,10 +650,6 @@
   "flowerVeil": {
     "name": "Flower Veil",
     "description": "Pokémon aliados do tipo Grama são protegidos de mudanças de estado e diminuição de seus atributos."
-  },
-  "cheekPouch": {
-    "name": "Cheek Pouch",
-    "description": "Quando o Pokémon consome uma Fruta, também recupera um pouco de PS."
   },
   "protean": {
     "name": "Protean",
@@ -983,10 +967,6 @@
     "name": "Ice Scales",
     "description": "As gélidas escamas que rodeiam seu corpo reduzem à metade o dano recebido por movimentos especiais."
   },
-  "ripen": {
-    "name": "Ripen",
-    "description": "Amadurece Frutas e dobram seus efeitos."
-  },
   "iceFace": {
     "name": "Ice Face",
     "description": "Sua cabeça de gelo pode receber ataques físicos como substituto, mas faz com que a aparência do Pokémon mude. O gelo é restaurado no granizo."
@@ -1058,14 +1038,6 @@
   "grimNeigh": {
     "name": "Grim Neigh",
     "description": "Quando o Pokémon derrota um alvo, emite um relincho assustador que aumenta seu Ataque Esp."
-  },
-  "asOneGlastrier": {
-    "name": "As One",
-    "description": "Esta habilidade combina os efeitos da habilidade Unnerve de Calyrex e da habilidade Chilling Neigh de Glastrier."
-  },
-  "asOneSpectrier": {
-    "name": "As One",
-    "description": "Essa Habilidade combina os efeitos das Habilidades Enervar de Calyrex e Relincho Negro de Spectrier."
   },
   "lingeringAroma": {
     "name": "Lingering Aroma",
@@ -1158,10 +1130,6 @@
   "opportunist": {
     "name": "Opportunist",
     "description": "Se um atributo de um oponente for aumentado, o Pokémon aproveita a oportunidade para aumentar o mesmo atributo para si mesmo."
-  },
-  "cudChew": {
-    "name": "Cud Chew",
-    "description": "Quando o Pokémon come uma Berry, ele a regurgita no final do próximo turno e come novamente."
   },
   "sharpness": {
     "name": "Sharpness",

@@ -49,14 +49,6 @@ export interface PokemonInfoTranslationEntries {
     Type: SimpleTranslationEntries,
   }
 
-export interface BerryTranslationEntry {
-    name: string,
-    effect: string,
-  }
-
-export interface BerryTranslationEntries {
-    [key: string]: BerryTranslationEntry
-  }
 
 export interface StatusEffectTranslationEntries {
   [key: string]: StatusEffectTranslationEntry

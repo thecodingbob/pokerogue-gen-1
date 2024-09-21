@@ -294,10 +294,6 @@
       "name": "Barattolo di caramelle",
       "description": "Aumenta di 1 il numero di livelli aggiunti dalle caramelle rare."
     },
-    "BERRY_POUCH": {
-      "name": "Porta bacche",
-      "description": "Aggiunge il 30% di possibilità che una bacca usata non venga consumata."
-    },
     "FOCUS_BAND": {
       "name": "Bandana",
       "description": "Il possessore ottiene il 10% di possibilità aggiuntivo di evitare un potenziale KO e rimanere con un solo PS."

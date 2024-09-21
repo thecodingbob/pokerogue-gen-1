@@ -1,5 +1,4 @@
 import Move from "../data/move";
-import { BerryModifier } from "../modifier/modifier";
 
 /** Alias for all {@linkcode BattleScene} events */
 export enum BattleSceneEventType {
@@ -14,12 +13,6 @@ export enum BattleSceneEventType {
    * @see {@linkcode MoveUsedEvent}
    */
   MOVE_USED = "onMoveUsed",
-  /**
-   * Triggers when a berry gets successfully used
-   * @see {@linkcode BerryUsedEvent}
-   */
-  BERRY_USED = "onBerryUsed",
-
   /**
    * Triggers at the start of each new encounter
    * @see {@linkcode EncounterPhaseEvent}
@@ -74,19 +67,6 @@ export class MoveUsedEvent extends Event {
     this.pokemonId = userId;
     this.move = move;
     this.ppUsed = ppUsed;
-  }
-}
-/**
- * Container class for {@linkcode BattleSceneEventType.BERRY_USED} events
- * @extends Event
-*/
-export class BerryUsedEvent extends Event {
-  /** The {@linkcode BerryModifier} being used */
-  public berryModifier: BerryModifier;
-  constructor(berry: BerryModifier) {
-    super(BattleSceneEventType.BERRY_USED);
-
-    this.berryModifier = berry;
   }
 }
 

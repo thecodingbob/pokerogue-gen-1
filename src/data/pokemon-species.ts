@@ -1202,7 +1202,7 @@ export const starterPassiveAbilities = {
   [Species.DROWZEE]: Abilities.MAGICIAN,
   [Species.KRABBY]: Abilities.UNBURDEN,
   [Species.VOLTORB]: Abilities.TRANSISTOR,
-  [Species.EXEGGCUTE]: Abilities.RIPEN,
+  [Species.EXEGGCUTE]: Abilities.NONE, //TODO: fix
   [Species.CUBONE]: Abilities.PARENTAL_BOND,
   [Species.HITMONLEE]: Abilities.MOXIE,
   [Species.HITMONCHAN]: Abilities.MOXIE,
@@ -1230,7 +1230,7 @@ export const starterPassiveAbilities = {
   [Species.OMANYTE]: Abilities.STURDY,
   [Species.KABUTO]: Abilities.TOUGH_CLAWS,
   [Species.AERODACTYL]: Abilities.ORICHALCUM_PULSE,
-  [Species.SNORLAX]: Abilities.RIPEN,
+  [Species.SNORLAX]: Abilities.NONE, //TODO: fix
   [Species.ARTICUNO]: Abilities.SNOW_WARNING,
   [Species.ZAPDOS]: Abilities.DRIZZLE,
   [Species.MOLTRES]: Abilities.DROUGHT,

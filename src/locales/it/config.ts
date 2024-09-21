@@ -10,7 +10,6 @@ import battleScene from "./battle-scene.json";
 import battleInfo from "./battle-info.json";
 import battleMessageUiHandler from "./battle-message-ui-handler.json";
 import battlerTags from "./battler-tags.json";
-import berry from "./berry.json";
 import bgmName from "./bgm-name.json";
 import biome from "./biome.json";
 import challenges from "./challenges.json";
@@ -64,7 +63,6 @@ export const itConfig = {
   battleMessageUiHandler,
   battlePokemonForm,
   battlerTags,
-  berry,
   bgmName,
   biome,
   challenges,

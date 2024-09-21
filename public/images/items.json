@@ -1459,27 +1459,6 @@
 					}
 				},
 				{
-					"filename": "berry_pouch",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 4,
-						"y": 5,
-						"w": 23,
-						"h": 23
-					},
-					"frame": {
-						"x": 102,
-						"y": 74,
-						"w": 23,
-						"h": 23
-					}
-				},
-				{
 					"filename": "aerodactylite",
 					"rotated": false,
 					"trimmed": true,
@@ -1685,27 +1664,6 @@
 					"frame": {
 						"x": 70,
 						"y": 302,
-						"w": 24,
-						"h": 24
-					}
-				},
-				{
-					"filename": "salac_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 4,
-						"y": 4,
-						"w": 24,
-						"h": 24
-					},
-					"frame": {
-						"x": 70,
-						"y": 326,
 						"w": 24,
 						"h": 24
 					}
@@ -2189,27 +2147,6 @@
 					"frame": {
 						"x": 94,
 						"y": 325,
-						"w": 24,
-						"h": 23
-					}
-				},
-				{
-					"filename": "leppa_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 4,
-						"y": 5,
-						"w": 24,
-						"h": 23
-					},
-					"frame": {
-						"x": 94,
-						"y": 348,
 						"w": 24,
 						"h": 23
 					}
@@ -3349,27 +3286,6 @@
 					}
 				},
 				{
-					"filename": "apicot_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 6,
-						"y": 6,
-						"w": 19,
-						"h": 20
-					},
-					"frame": {
-						"x": 172,
-						"y": 102,
-						"w": 19,
-						"h": 20
-					}
-				},
-				{
 					"filename": "ground_tera_shard",
 					"rotated": false,
 					"trimmed": true,
@@ -3454,27 +3370,6 @@
 					}
 				},
 				{
-					"filename": "lansat_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 5,
-						"y": 4,
-						"w": 21,
-						"h": 23
-					},
-					"frame": {
-						"x": 172,
-						"y": 213,
-						"w": 21,
-						"h": 23
-					}
-				},
-				{
 					"filename": "leaf_stone",
 					"rotated": false,
 					"trimmed": true,
@@ -3517,27 +3412,6 @@
 					}
 				},
 				{
-					"filename": "berry_pot",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 7,
-						"y": 5,
-						"w": 18,
-						"h": 22
-					},
-					"frame": {
-						"x": 177,
-						"y": 283,
-						"w": 18,
-						"h": 22
-					}
-				},
-				{
 					"filename": "normal_tera_shard",
 					"rotated": false,
 					"trimmed": true,
@@ -3553,27 +3427,6 @@
 					},
 					"frame": {
 						"x": 188,
-						"y": 63,
-						"w": 22,
-						"h": 23
-					}
-				},
-				{
-					"filename": "petaya_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 5,
-						"y": 5,
-						"w": 22,
-						"h": 23
-					},
-					"frame": {
-						"x": 210,
 						"y": 63,
 						"w": 22,
 						"h": 23
@@ -4210,27 +4063,6 @@
 					}
 				},
 				{
-					"filename": "enigma_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 5,
-						"y": 5,
-						"w": 22,
-						"h": 22
-					},
-					"frame": {
-						"x": 215,
-						"y": 168,
-						"w": 22,
-						"h": 22
-					}
-				},
-				{
 					"filename": "fairy_memory",
 					"rotated": false,
 					"trimmed": true,
@@ -4310,27 +4142,6 @@
 					"frame": {
 						"x": 193,
 						"y": 256,
-						"w": 22,
-						"h": 22
-					}
-				},
-				{
-					"filename": "ganlon_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 5,
-						"y": 5,
-						"w": 22,
-						"h": 22
-					},
-					"frame": {
-						"x": 215,
-						"y": 212,
 						"w": 22,
 						"h": 22
 					}
@@ -4651,27 +4462,6 @@
 					}
 				},
 				{
-					"filename": "liechi_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 5,
-						"y": 6,
-						"w": 22,
-						"h": 21
-					},
-					"frame": {
-						"x": 237,
-						"y": 257,
-						"w": 22,
-						"h": 21
-					}
-				},
-				{
 					"filename": "potion",
 					"rotated": false,
 					"trimmed": true,
@@ -4819,27 +4609,6 @@
 					}
 				},
 				{
-					"filename": "sitrus_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 6,
-						"y": 5,
-						"w": 20,
-						"h": 22
-					},
-					"frame": {
-						"x": 239,
-						"y": 278,
-						"w": 20,
-						"h": 22
-					}
-				},
-				{
 					"filename": "upgrade",
 					"rotated": false,
 					"trimmed": true,
@@ -4858,27 +4627,6 @@
 						"y": 149,
 						"w": 22,
 						"h": 19
-					}
-				},
-				{
-					"filename": "starf_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 5,
-						"y": 5,
-						"w": 22,
-						"h": 22
-					},
-					"frame": {
-						"x": 259,
-						"y": 168,
-						"w": 22,
-						"h": 22
 					}
 				},
 				{
@@ -5824,27 +5572,6 @@
 						"y": 385,
 						"w": 22,
 						"h": 22
-					}
-				},
-				{
-					"filename": "lum_berry",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 6,
-						"y": 7,
-						"w": 20,
-						"h": 19
-					},
-					"frame": {
-						"x": 160,
-						"y": 407,
-						"w": 20,
-						"h": 19
 					}
 				},
 				{
@@ -8090,27 +7817,6 @@
 					"frame": {
 						"x": 393,
 						"y": 348,
-						"w": 16,
-						"h": 16
-					}
-				},
-				{
-					"filename": "strawberry_sweet",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 9,
-						"y": 7,
-						"w": 16,
-						"h": 16
-					},
-					"frame": {
-						"x": 409,
-						"y": 284,
 						"w": 16,
 						"h": 16
 					}

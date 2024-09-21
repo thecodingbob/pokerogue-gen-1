@@ -34,10 +34,8 @@
   "frisk": "{{pokemonNameWithAffix}} frisked {{opponentName}}'s {{opponentAbilityName}}!",
   "postWeatherLapseHeal": "{{pokemonNameWithAffix}}'s {{abilityName}}\nrestored its HP a little!",
   "postWeatherLapseDamage": "{{pokemonNameWithAffix}} is hurt\nby its {{abilityName}}!",
-  "postTurnLootCreateEatenBerry": "{{pokemonNameWithAffix}} harvested one {{berryName}}!",
   "postTurnHeal": "{{pokemonNameWithAffix}}'s {{abilityName}}\nrestored its HP a little!",
   "fetchBall": "{{pokemonNameWithAffix}} found a\n{{pokeballName}}!",
-  "healFromBerryUse": "{{pokemonNameWithAffix}}'s {{abilityName}}\nrestored its HP!",
   "arenaTrap": "{{pokemonNameWithAffix}}'s {{abilityName}}\nprevents switching!",
   "postBattleLoot": "{{pokemonNameWithAffix}} picked up\n{{itemName}}!",
   "postFaintContactDamage": "{{pokemonNameWithAffix}}'s {{abilityName}}\nhurt its attacker!",
@@ -51,11 +49,8 @@
   "postSummonDarkAura": "{{pokemonNameWithAffix}} is radiating a Dark Aura!",
   "postSummonFairyAura": "{{pokemonNameWithAffix}} is radiating a Fairy Aura!",
   "postSummonNeutralizingGas": "{{pokemonNameWithAffix}}'s Neutralizing Gas filled the area!",
-  "postSummonAsOneGlastrier": "{{pokemonNameWithAffix}} has two Abilities!",
-  "postSummonAsOneSpectrier": "{{pokemonNameWithAffix}} has two Abilities!",
   "postSummonVesselOfRuin": "{{pokemonNameWithAffix}}'s Vessel of Ruin lowered the {{statName}}\nof all surrounding Pokémon!",
   "postSummonSwordOfRuin": "{{pokemonNameWithAffix}}'s Sword of Ruin lowered the {{statName}}\nof all surrounding Pokémon!",
   "postSummonTabletsOfRuin": "{{pokemonNameWithAffix}}'s Tablets of Ruin lowered the {{statName}}\nof all surrounding Pokémon!",
-  "postSummonBeadsOfRuin": "{{pokemonNameWithAffix}}'s Beads of Ruin lowered the {{statName}}\nof all surrounding Pokémon!",
-  "preventBerryUse": "{{pokemonNameWithAffix}} is too\nnervous to eat berries!"
+  "postSummonBeadsOfRuin": "{{pokemonNameWithAffix}}'s Beads of Ruin lowered the {{statName}}\nof all surrounding Pokémon!"
 }

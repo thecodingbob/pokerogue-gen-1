@@ -34,7 +34,6 @@
   "isOverflowingWithSpacePower": "{{pokemonName}}に\nうちゅうの　ちからが　あふれだす！",
   "usedUpAllElectricity": "{{pokemonName}}は\nでんきを　つかいきった！",
   "stoleItem": "{{pokemonName}}は\n{{targetName}}の {{itemName}}を　ぬすんだ！",
-  "incineratedItem": "{{pokemonName}}は\n{{targetName}}の {{itemName}}を　もやした！",
   "knockedOffItem": "{{pokemonName}}は\n{{targetName}}の {{itemName}}を　はたきおとした！",
   "tookMoveAttack": "{{pokemonName}}は\n{{moveName}}の　こうげきを　うけた！",
   "cutOwnHpAndMaximizedStat": "{{pokemonName}}は\nたいりょくを　けずって　{{statName}}ぜんかい！",

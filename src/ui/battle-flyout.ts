@@ -3,8 +3,7 @@ import { addTextObject, TextStyle } from "./text";
 import * as Utils from "../utils";
 import BattleScene from "#app/battle-scene.js";
 import Move from "#app/data/move.js";
-import { BattleSceneEventType, BerryUsedEvent, MoveUsedEvent } from "../events/battle-scene";
-import { BerryType } from "#enums/berry-type";
+import { BattleSceneEventType, MoveUsedEvent } from "../events/battle-scene";
 import { Moves } from "#enums/moves";
 import { UiTheme } from "#enums/ui-theme";
 import { getPokemonNameWithAffix } from "#app/messages.js";
@@ -61,7 +60,6 @@ export default class BattleFlyout extends Phaser.GameObjects.Container {
 
   // Stores callbacks in a variable so they can be unsubscribed from when destroyed
   private readonly onMoveUsedEvent = (event: Event) => this.onMoveUsed(event);
-  private readonly onBerryUsedEvent = (event: Event) => this.onBerryUsed(event);
 
   constructor(scene: Phaser.Scene, player: boolean) {
     super(scene, 0, 0);
@@ -118,7 +116,6 @@ export default class BattleFlyout extends Phaser.GameObjects.Container {
     this.flyoutParent.name = `Flyout Parent ${getPokemonNameWithAffix(this.pokemon)}`;
 
     this.battleScene.eventTarget.addEventListener(BattleSceneEventType.MOVE_USED, this.onMoveUsedEvent);
-    this.battleScene.eventTarget.addEventListener(BattleSceneEventType.BERRY_USED, this.onBerryUsedEvent);
   }
 
   /** Sets and formats the text property for all {@linkcode Phaser.GameObjects.Text} in the flyoutText array */
@@ -155,23 +152,6 @@ export default class BattleFlyout extends Phaser.GameObjects.Container {
     this.setText();
   }
 
-  private onBerryUsed(event: Event) {
-    const berryUsedEvent = event as BerryUsedEvent;
-    if (!berryUsedEvent
-      || berryUsedEvent.berryModifier.pokemonId !== this.pokemon?.id
-      || berryUsedEvent.berryModifier.berryType !== BerryType.LEPPA) { // We only care about Leppa berries
-      return;
-    }
-
-    const foundInfo = this.moveInfo.find(info => info.ppUsed === info.maxPp);
-    if (!foundInfo) { // This will only happen on a de-sync of PP tracking
-      return;
-    }
-    foundInfo.ppUsed = Math.max(foundInfo.ppUsed - 10, 0);
-
-    this.setText();
-  }
-
   /** Animates the flyout to either show or hide it by applying a fade and translation */
   toggleFlyout(visible: boolean): void {
     this.flyoutVisible = visible;
@@ -187,7 +167,6 @@ export default class BattleFlyout extends Phaser.GameObjects.Container {
 
   destroy(fromScene?: boolean): void {
     this.battleScene.eventTarget.removeEventListener(BattleSceneEventType.MOVE_USED, this.onMoveUsedEvent);
-    this.battleScene.eventTarget.removeEventListener(BattleSceneEventType.BERRY_USED, this.onBerryUsedEvent);
 
     super.destroy(fromScene);
   }

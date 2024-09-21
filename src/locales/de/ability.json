@@ -323,10 +323,6 @@
     "name": "Schneemantel",
     "description": "Erhöht bei Hagel den Ausweichwert."
   },
-  "gluttony": {
-    "name": "Völlerei",
-    "description": "Setzt bestimmte Beeren nicht erst in einer Notlage ein, sondern bereits dann, wenn seine KP auf die Hälfte des Maximalwerts fallen."
-  },
   "angerPoint": {
     "name": "Kurzschluss",
     "description": "Wird nach Einstecken eines Volltreffers wütend und maximiert dabei seinen Angriffs-Wert."
@@ -503,10 +499,6 @@
     "name": "Umkehrung",
     "description": "Statusveränderungen werden umgekehrt: Statuswerte, die eigentlich erhöht werden sollten, sinken und umgekehrt."
   },
-  "unnerve": {
-    "name": "Anspannung",
-    "description": "Erzeugt bei Gegnern Stress und hindert sie so daran, Beeren zu konsumieren."
-  },
   "defiant": {
     "name": "Siegeswille",
     "description": "Erhöht den Angriff stark, wenn ein Statuswert gesenkt wurde."
@@ -550,10 +542,6 @@
   "flareBoost": {
     "name": "Hitzewahn",
     "description": "Erhöht bei Verbrennungen die Stärke von Spezial-Attacken."
-  },
-  "harvest": {
-    "name": "Reiche Ernte",
-    "description": "Dieselbe Beere kann mehrmals verwendet werden."
   },
   "telepathy": {
     "name": "Telepathie",
@@ -662,10 +650,6 @@
   "flowerVeil": {
     "name": "Blütenhülle",
     "description": "Schützt Mitstreiter vom Typ Pflanze vor dem Senken ihrer Statuswerte sowie vor Statusproblemen."
-  },
-  "cheekPouch": {
-    "name": "Backentaschen",
-    "description": "Regeneriert beim Konsum von Beeren ungeachtet der Beerensorte KP."
   },
   "protean": {
     "name": "Wandlungskunst",
@@ -983,10 +967,6 @@
     "name": "Eisflügelstaub",
     "description": "Halbiert mithilfe von schützendem Eisflügelstaub den Schaden, den das Pokémon durch Spezial-Attacken erleidet."
   },
-  "ripen": {
-    "name": "Heranreifen",
-    "description": "Verdoppelt den Effekt von Beeren, indem es sie heranreifen lässt."
-  },
   "iceFace": {
     "name": "Tiefkühlkopf",
     "description": "Der Eisblock um seinen Kopf blockt eine physische Attacke ab. Dies bewirkt jedoch einen Formwechsel. Durch Hagel wird der Eisblock wiederhergestellt."
@@ -1058,14 +1038,6 @@
   "grimNeigh": {
     "name": "Dunkles Wiehern",
     "description": "Besiegt es ein Pokémon, stößt es ein furchteinflößendes Wiehern aus und erhöht damit seinen Spezial-Angriff."
-  },
-  "asOneGlastrier": {
-    "name": "Reitgespann",
-    "description": "Das Pokémon verfügt sowohl über Coronospas Fähigkeit Anspannung als auch über Polaross’ Fähigkeit Helles Wiehern."
-  },
-  "asOneSpectrier": {
-    "name": "Reitgespann",
-    "description": "Das Pokémon verfügt sowohl über Coronospas Fähigkeit Anspannung als auch über Phantoross’ Fähigkeit Dunkles Wiehern."
   },
   "lingeringAroma": {
     "name": "Duftschwade",
@@ -1158,10 +1130,6 @@
   "opportunist": {
     "name": "Profiteur",
     "description": "Wenn ein Statuswert eines Gegners steigt, profitiert das Pokémon ebenfalls davon und der gleiche Statuswert steigt auch bei ihm."
-  },
-  "cudChew": {
-    "name": "Wiederkäuer",
-    "description": "Wenn ein Pokémon eine Beere isst, stößt es diese am Ende der nächsten Runde wieder aus seinem Magen auf und verspeist diese erneut."
   },
   "sharpness": {
     "name": "Scharfkantig",

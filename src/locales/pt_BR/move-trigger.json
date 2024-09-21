@@ -35,7 +35,6 @@
   "isOverflowingWithSpacePower": "{{pokemonName}} está sobrecarregado\ncom energia espacial!",
   "usedUpAllElectricity": "{{pokemonName}} usou toda a sua eletricidade!",
   "stoleItem": "{{pokemonName}} roubou/no(a) {{itemName}} de {{targetName}}!",
-  "incineratedItem": "{{pokemonName}} incinerou\na {{itemName}} de {{targetName}}!",
   "knockedOffItem": "{{pokemonName}} derrubou\no(a) {{itemName}} de {{targetName}}!",
   "tookMoveAttack": "{{pokemonName}} pegou\no movimento {{moveName}}!",
   "cutOwnHpAndMaximizedStat": "{{pokemonName}} reduziu seus PS\ne maximizou seu atributo de {{statName}}!",

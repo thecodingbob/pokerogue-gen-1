@@ -9,7 +9,6 @@ import { Type } from "../data/type";
 import PartyUiHandler, { PokemonMoveSelectFilter, PokemonSelectFilter } from "../ui/party-ui-handler";
 import * as Utils from "../utils";
 import { TempBattleStat, getTempBattleStatBoosterItemName, getTempBattleStatName } from "../data/temp-battle-stat";
-import { getBerryEffectDescription, getBerryName } from "../data/berry";
 import { Unlockables } from "../system/unlockables";
 import { StatusEffect, getStatusEffectDescriptor } from "../data/status-effect";
 import { SpeciesFormKey } from "../data/pokemon-species";
@@ -23,7 +22,6 @@ import Overrides from "#app/overrides";
 import { MoneyMultiplierModifier } from "./modifier";
 import { Abilities } from "#enums/abilities";
 import { BattlerTagType } from "#enums/battler-tag-type";
-import { BerryType } from "#enums/berry-type";
 import { Moves } from "#enums/moves";
 import { Species } from "#enums/species";
 import { getPokemonNameWithAffix } from "#app/messages.js";
@@ -39,6 +37,15 @@ export enum ModifierPoolType {
   TRAINER = "TRAINER",
   ENEMY_BUFF = "ENEMY_BUFF",
   DAILY_STARTER = "DAILY_STARTER",
+}
+
+const rankedModifierPoolTypes = [ModifierPoolType.PLAYER, ModifierPoolType.WILD, ModifierPoolType.TRAINER, ModifierPoolType.ENEMY_BUFF, ModifierPoolType.DAILY_STARTER];
+
+export function getHighestRankedModifierPoolType(type1: ModifierPoolType, type2: ModifierPoolType) {
+  if (rankedModifierPoolTypes.indexof(type1) >= rankedModifierPoolTypes.indexof(type2)) {
+    return type1;
+  }
+  return type2;
 }
 
 type NewModifierFunc = (type: ModifierType, args: any[]) => Modifier;
@@ -442,28 +449,6 @@ export class TempBattleStatBoosterModifierType extends ModifierType implements G
 
   getPregenArgs(): any[] {
     return [ this.tempBattleStat ];
-  }
-}
-
-export class BerryModifierType extends PokemonHeldItemModifierType implements GeneratedPersistentModifierType {
-  private berryType: BerryType;
-
-  constructor(berryType: BerryType) {
-    super("", `${BerryType[berryType].toLowerCase()}_berry`, (type, args) => new Modifiers.BerryModifier(type, (args[0] as Pokemon).id, berryType), "berry");
-
-    this.berryType = berryType;
-  }
-
-  get name(): string {
-    return getBerryName(this.berryType);
-  }
-
-  getDescription(scene: BattleScene): string {
-    return getBerryEffectDescription(this.berryType);
-  }
-
-  getPregenArgs(): any[] {
-    return [ this.berryType ];
   }
 }
 
@@ -1166,10 +1151,6 @@ export type GeneratorModifierOverride = {
       type?: Type;
     }
   | {
-      name: keyof Pick<typeof modifierTypes, "BERRY">;
-      type?: BerryType;
-    }
-  | {
       name: keyof Pick<typeof modifierTypes, "EVOLUTION_ITEM" | "RARE_EVOLUTION_ITEM">;
       type?: EvolutionItem;
     }
@@ -1280,24 +1261,6 @@ export const modifierTypes = {
     return new TerastallizeModifierType(type);
   }),
 
-  BERRY: () => new ModifierTypeGenerator((party: Pokemon[], pregenArgs?: any[]) => {
-    if (pregenArgs && (pregenArgs.length === 1) && (pregenArgs[0] in BerryType)) {
-      return new BerryModifierType(pregenArgs[0] as BerryType);
-    }
-    const berryTypes = Utils.getEnumValues(BerryType);
-    let randBerryType: BerryType;
-    const rand = Utils.randSeedInt(12);
-    if (rand < 2) {
-      randBerryType = BerryType.SITRUS;
-    } else if (rand < 4) {
-      randBerryType = BerryType.LUM;
-    } else if (rand < 6) {
-      randBerryType = BerryType.LEPPA;
-    } else {
-      randBerryType = berryTypes[Utils.randSeedInt(berryTypes.length - 3) + 2];
-    }
-    return new BerryModifierType(randBerryType);
-  }),
 
   TM_COMMON: () => new TmModifierTypeGenerator(ModifierTier.COMMON),
   TM_GREAT: () => new TmModifierTypeGenerator(ModifierTier.GREAT),
@@ -1341,8 +1304,6 @@ export const modifierTypes = {
 
   HEALING_CHARM: () => new ModifierType("modifierType:ModifierType.HEALING_CHARM", "healing_charm", (type, _args) => new Modifiers.HealingBoosterModifier(type, 1.1)),
   CANDY_JAR: () => new ModifierType("modifierType:ModifierType.CANDY_JAR", "candy_jar", (type, _args) => new Modifiers.LevelIncrementBoosterModifier(type)),
-
-  BERRY_POUCH: () => new ModifierType("modifierType:ModifierType.BERRY_POUCH", "berry_pouch", (type, _args) => new Modifiers.PreserveBerryModifier(type)),
 
   FOCUS_BAND: () => new PokemonHeldItemModifierType("modifierType:ModifierType.FOCUS_BAND", "focus_band", (type, args) => new Modifiers.SurviveDamageModifier(type, (args[0] as Pokemon).id)),
 
@@ -1420,7 +1381,6 @@ const modifierPool: ModifierPool = {
     }, 3),
     new WeightedModifierType(modifierTypes.LURE, skipInLastClassicWaveOrDefault(2)),
     new WeightedModifierType(modifierTypes.TEMP_STAT_BOOSTER, 4),
-    new WeightedModifierType(modifierTypes.BERRY, 2),
     new WeightedModifierType(modifierTypes.TM_COMMON, 2),
   ].map(m => {
     m.setTier(ModifierTier.COMMON); return m;
@@ -1556,7 +1516,6 @@ const modifierPool: ModifierPool = {
     new WeightedModifierType(modifierTypes.RELIC_GOLD, skipInLastClassicWaveOrDefault(2)),
     new WeightedModifierType(modifierTypes.LEFTOVERS, 3),
     new WeightedModifierType(modifierTypes.SHELL_BELL, 3),
-    new WeightedModifierType(modifierTypes.BERRY_POUCH, 4),
     new WeightedModifierType(modifierTypes.GRIP_CLAW, 5),
     new WeightedModifierType(modifierTypes.SCOPE_LENS, 4),
     new WeightedModifierType(modifierTypes.BATON, 2),
@@ -1588,7 +1547,7 @@ const modifierPool: ModifierPool = {
 
 const wildModifierPool: ModifierPool = {
   [ModifierTier.COMMON]: [
-    new WeightedModifierType(modifierTypes.BERRY, 1)
+    new WeightedModifierType(modifierTypes.BASE_STAT_BOOSTER, 1)
   ].map(m => {
     m.setTier(ModifierTier.COMMON); return m;
   }),
@@ -1617,7 +1576,6 @@ const wildModifierPool: ModifierPool = {
 
 const trainerModifierPool: ModifierPool = {
   [ModifierTier.COMMON]: [
-    new WeightedModifierType(modifierTypes.BERRY, 8),
     new WeightedModifierType(modifierTypes.BASE_STAT_BOOSTER, 3)
   ].map(m => {
     m.setTier(ModifierTier.COMMON); return m;
@@ -1695,7 +1653,6 @@ const enemyBuffModifierPool: ModifierPool = {
 const dailyStarterModifierPool: ModifierPool = {
   [ModifierTier.COMMON]: [
     new WeightedModifierType(modifierTypes.BASE_STAT_BOOSTER, 1),
-    new WeightedModifierType(modifierTypes.BERRY, 3),
   ].map(m => {
     m.setTier(ModifierTier.COMMON); return m;
   }),

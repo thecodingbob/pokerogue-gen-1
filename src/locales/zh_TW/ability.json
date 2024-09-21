@@ -323,10 +323,6 @@
     "name": "雪隱",
     "description": "天氣為下雪時，閃避率會提\n高。"
   },
-  "gluttony": {
-    "name": "貪吃鬼",
-    "description": "原本ＨＰ變得很少時才會吃\n樹果，在ＨＰ還有一半時就\n會把它吃掉。"
-  },
   "angerPoint": {
     "name": "憤怒穴位",
     "description": "要害被擊中時會大發雷霆。\n攻擊力會提高到最大。"
@@ -503,10 +499,6 @@
     "name": "唱反調",
     "description": "能力的變化會逆轉，原本提\n高時會降低，原本降低時會\n提高。"
   },
-  "unnerve": {
-    "name": "緊張感",
-    "description": "讓對手感到緊張，無法吃樹\n果。"
-  },
   "defiant": {
     "name": "不服輸",
     "description": "被對手降低能力時，攻擊會\n大幅提高。"
@@ -550,10 +542,6 @@
   "flareBoost": {
     "name": "受熱激升",
     "description": "陷入灼傷狀態時，特殊招式\n的威力會提高。"
-  },
-  "harvest": {
-    "name": "收穫",
-    "description": "可多次採收已被使用過的樹果。"
   },
   "telepathy": {
     "name": "心靈感應",
@@ -662,10 +650,6 @@
   "flowerVeil": {
     "name": "花幕",
     "description": "我方的草屬性寶可夢能力不\n會降低。也不會陷入異常狀\n態。"
-  },
-  "cheekPouch": {
-    "name": "頰囊",
-    "description": "無論是哪種樹果，吃下去後\nＨＰ都會回復。"
   },
   "protean": {
     "name": "變幻自如",
@@ -983,10 +967,6 @@
     "name": "冰鱗粉",
     "description": "得到冰鱗粉的守護，受到的\n特殊攻擊傷害會減半。"
   },
-  "ripen": {
-    "name": "熟成",
-    "description": "讓樹果成熟，使效果變為２\n倍。"
-  },
   "iceFace": {
     "name": "結凍頭",
     "description": "頭部的冰會代替自己承受物\n理攻擊，但是樣子會改變。\n下雪時，冰會恢復原狀。"
@@ -1058,14 +1038,6 @@
   "grimNeigh": {
     "name": "漆黑嘶鳴",
     "description": "打倒對手時會用恐怖的聲音\n嘶鳴並提高特攻。"
-  },
-  "asOneGlastrier": {
-    "name": "人馬一體",
-    "description": "兼備蕾冠王的緊張感和雪暴\n馬的蒼白嘶鳴這２種特性。"
-  },
-  "asOneSpectrier": {
-    "name": "人馬一體",
-    "description": "兼備蕾冠王的緊張感和靈幽\n馬的漆黑嘶鳴這２種特性。"
   },
   "lingeringAroma": {
     "name": "甩不掉的氣味",
@@ -1158,10 +1130,6 @@
   "opportunist": {
     "name": "跟風",
     "description": "對手的能力提高時，自己也\n會跟著提高能力。"
-  },
-  "cudChew": {
-    "name": "反芻",
-    "description": "食用樹果後，會在下一回合\n結束時從胃裡取出，以１次\n為限再次食用。"
   },
   "sharpness": {
     "name": "鋒銳",
